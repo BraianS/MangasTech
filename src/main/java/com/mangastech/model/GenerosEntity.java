@@ -16,7 +16,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -31,8 +34,10 @@ public class GenerosEntity implements Serializable {
 	private Long id;
 	private String nome;
 	
+	//@JsonIgnoreProperties("genero")
+	
 	@JsonIgnore
-	private List<MangasEntity> manga ;
+	private List<MangasEntity> manga  ;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,8 +58,7 @@ public class GenerosEntity implements Serializable {
 		this.nome = nome;
 	}
 	
-	@ManyToMany(cascade=CascadeType.ALL,mappedBy="genero" )
-	
+	@ManyToMany(mappedBy="genero", cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
 	public List<MangasEntity> getManga() {
 		return manga;
 	}
@@ -68,13 +72,7 @@ public class GenerosEntity implements Serializable {
 	}
 
 	public GenerosEntity(Long id) {
-		super();
-		this.id = id;
+			this.id = id;
 	}
-	
-	
-	
-	
-	
-	
+
 }

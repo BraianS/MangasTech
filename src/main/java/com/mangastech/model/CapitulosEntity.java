@@ -1,6 +1,7 @@
 package com.mangastech.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,7 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +26,7 @@ public class CapitulosEntity {
 	
 	private Set<GruposEntity> grupo;
 	private Set<MangasEntity> manga;
+	private List<PaginasEntity> pagina;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,6 +67,16 @@ public class CapitulosEntity {
 	public void setManga(Set<MangasEntity> manga) {
 		this.manga = manga;
 	}
+	@OneToMany( mappedBy = "capitulo", targetEntity = PaginasEntity.class)	
+	public List<PaginasEntity> getPagina() {
+		return pagina;
+	}
+	public void setPagina(List<PaginasEntity> pagina) {
+		this.pagina = pagina;
+	}
+	
+	
+	
 	
 	
 }

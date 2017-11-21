@@ -1,0 +1,81 @@
+<div>
+	
+	<input type="text" ng-model="manga.nome"/>
+	<select ng-model="manga.status" ng-options="s for s in status"></select>
+	
+	
+	
+	
+	<div>
+	<label>Anos:</label>
+		<select ng-model="manga.dataLancado" ng-options="year.value as year.value for year in years"></select>
+	</div>	
+	
+	<div>
+	<label>Autor</label>
+		<select ng-model="manga.autor" ng-options="a.nome for a in autors"></select> 
+	</div>
+	
+	<br/>
+	
+	<!-- <div>
+	 <label> Genero</label>
+	 <select ng-model="manga.genero[1]" ng-options="genero.id for genero in generos"></select>
+	 </div>
+	  -->
+	  <div>
+	  <h3>Generosssssss</h3>
+	 <label ng-repeat="genero in generolist ">
+	 	<input type="checkbox" checklist-model="selected.generos" checklist-value="genero" data-ng-model="manga.genero"/> {{genero.nome}}
+	 </label>
+	 <pre>{{selected.generos|json}}</pre>
+	  
+	  
+	<input type="button" value="Salvar" ng-click="salvarMangas()"/>
+		</div>
+ <br>
+	 
+ <div ng-repeat="m in mangas">
+ 	Manga {{m.id +' - ' + m.nome}} <br/> 
+ 	Status: {{ m.status }}<br/>
+ 	Data Lancamento: {{m.dataLancado}} <br/>
+ 	Autor: {{m.autor.nome }}
+ 		<span ng-repeat="g in m.genero">
+ 		 {{g.nome}}
+ 		 </span>
+ 		 <br/>
+ 	 <input type="button" value="Excluir" ng-click="excluirMangas(m)"/>
+ 	  <input type="button" value="Alterar" ng-click="alterarMangas(m)"/>
+ 	  <input type="button" value="cancelar" ng-click="cancelar()"/>  <br/>
+ 		
+ 	 <p/> <hr/>
+ </div>
+	<div>
+		<label ng-repeat="(index,role) in roles ">
+		  <input type="checkbox" checklist-model="user.roles" checklist-value="role" ng-model="manga.genero[$index].role.id"> 
+			{{role.text}}
+		</label>
+	
+		 <button ng-click="checkAll()" style="margin-right: 10px">Check all</button>
+          <button ng-click="uncheckAll()" style="margin-right: 10px">Uncheck all</button>
+          <button ng-click="checkFirst()">Check first</button>
+          <button ng-click="setToNull()" ng-if="setToNull">Set to null</button>
+          <button ng-click="user()">xxx</button>
+          
+          
+          <h3>user.roles</h3>
+          <pre>{{user.roles|json}}</pre>
+          
+          <h3>Generos</h3>
+          
+          <div>
+          		<label ng-repeat="genero in generos">
+          			<input type="checkbox" check-model="user.roles" checklist-value="genero">
+          			{{genero.nome}}
+          		
+          		</label>
+          		
+          </div>
+          
+        </div>
+</div>

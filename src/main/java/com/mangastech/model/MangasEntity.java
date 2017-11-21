@@ -2,15 +2,14 @@ package com.mangastech.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,32 +17,37 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.Cascade;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 
 
 @Entity
 @Table(name = "Mangas")
-public class MangasEntity {
-	
-	
+
+//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
+public class MangasEntity implements Serializable {
+		
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nome;
 	private  Status status;
-	private Date dataLancado;	
-	private AutorEntity autor;
-	private List<GenerosEntity> genero;
+	private int dataLancado;
+	
+	@JsonIgnoreProperties("manga")	
+	private  AutorEntity autor;
+	
+	private List<GenerosEntity> genero = new ArrayList<>();
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,34 +80,33 @@ public class MangasEntity {
 		this.status = status;
 	}
 	
-	@Temporal(TemporalType.DATE)
-	public Date getDataLancado() {
+	@Column
+	public int getDataLancado() {
 		return dataLancado;
 	}
 
-	public void setDataLancado(Date dataLancado) {
+	public void setDataLancado(int dataLancado) {
 		this.dataLancado = dataLancado;
 	}
 	
-
-	
-	@ManyToOne	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name="mangas_autor",
 	joinColumns=@JoinColumn(name="manga_id",referencedColumnName="id"),
 	inverseJoinColumns = @JoinColumn(name="autor_id",referencedColumnName="id"))
+	
 	public AutorEntity getAutor() {
 		return autor;
 	}
-	@Autowired
+	
 	public void setAutor(AutorEntity autor) {
 		this.autor = autor;
 	}
 
 	
-	@ManyToMany
-	@JoinTable(name="mangas_generos",
-	joinColumns=@JoinColumn(name="manga_id"),
-	inverseJoinColumns=@JoinColumn(name="genero_id")
+	@ManyToMany(targetEntity = GenerosEntity.class)
+	@JoinTable(name="mangas_generos", 
+	joinColumns=@JoinColumn(name="manga_id", referencedColumnName="id"),
+	inverseJoinColumns=@JoinColumn(name="genero_id", referencedColumnName="id")
 	)
 	
 	public List<GenerosEntity> getGenero() {
@@ -111,17 +114,30 @@ public class MangasEntity {
 	}
 	
 	
-	public void setGenero(List<GenerosEntity> genero) {
-		this.genero = genero;
+	public void setGenero(List<GenerosEntity> g_genero) {
+		this.genero = g_genero;
 	}
 
 	public MangasEntity() {
 		super();
 	}
 	
+	
+	public MangasEntity(Long id, String nome, Status status, int dataLancado, AutorEntity autor,
+			List<GenerosEntity> genero) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.status = status;
+		this.dataLancado = dataLancado;
+		this.autor = autor;
+		this.genero = genero;
+	}
+
 	public MangasEntity(Long id){
 		this.id = id;
 	}
+	
 	
 	
 	

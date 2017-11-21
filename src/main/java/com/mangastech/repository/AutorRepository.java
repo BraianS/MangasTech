@@ -17,8 +17,11 @@ import com.mangastech.model.AutorEntity;
 public interface AutorRepository extends JpaRepository<AutorEntity, Long> {
 	
 	//Busca o Id e Nome do Autor
-	@Query("SELECT  a.id, a.nome FROM AutorEntity a  ") 
+	@Query("SELECT  a.id,a.nome  FROM AutorEntity a, MangasEntity m GROUP BY a.nome") 
 	List<AutorEntity> buscarAutores();
+	
+	@Query ("SELECT a FROM AutorEntity a JOIN a.manga m GROUP BY a")
+	List<AutorEntity> buscarTodos();
 	
 	//Busca o autor pelo ID
 	@Query("Select a FROM AutorEntity a WHERE a.id=:id")

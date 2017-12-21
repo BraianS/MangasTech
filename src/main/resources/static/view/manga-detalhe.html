@@ -1,0 +1,55 @@
+<div ng-repeat="c in vm.Model.ListCapitulos">
+		
+	Capitulo : {{c.capitulo}} <br/>
+	Data Lancamento: {{c.lancamento}} <br/>
+	Grupo : {{c.grupo.nome}} <br/>
+		
+			 <a href="manga/capitulo/{{c.id}}/1">Detalhe do capitulo</a>
+			 <a ui-sref="capituloDetalhe({capituloId:c.id})">Ui router</a>
+			  <div ng-repeat="pagina in c.pagina">
+			  	<img data-ng-src="data:image/jpeg;base64,{{pagina.foto}}">
+			  </div>
+			 			 
+	<hr/>
+	
+</div>
+
+<h1>Add pagina</h1>
+<form class="vertical-center" enctype="multipart/form-data">
+	
+		<select ng-options="c.id for c in vm.Model.ListCapitulos" ng-model="vm.Model.addPagina.capitulo">
+		</select>
+	
+	
+		<label>Numero da pagina</label>
+		<input type="text" ng-model="vm.Model.addPagina.numeroPagina">
+	
+	
+		<label>Adicionar pagina</label>
+		<input type="file"id="example"  ng-file-model="customer.fotos" multiple/>
+		<label> TEste</label>
+		<button ngf-select="vm.uploadFiles2($files)" multiple 
+            accept="image/*">Select Files</button>
+		
+		<label> Testando paginas</label>
+	<button ngf-select="vm.uploadFiles($files, $invalidFiles)" multiple
+		type="button" class="btn btn-adicionar" eturn-button>
+		Adicionar arquivos</button>
+
+	<input type="button" value="salvarPaginas" ng-click="Submit()"/>
+		
+		</br>
+		
+		<label>Adicionar pagina 2</label>
+		<input type="file"id="example2"  file-model="files" multiple/>
+		
+		<label>Submit 2</label>
+		<input type="button" value="salvarPaginas" ng-click="uploadFiles()"/>
+		
+		
+			
+		
+		<p ng-repeat="file in fotos">
+			{{file.name}}
+		</p>
+</form>

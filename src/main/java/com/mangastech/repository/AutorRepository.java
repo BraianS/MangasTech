@@ -17,7 +17,7 @@ import com.mangastech.model.AutorEntity;
 public interface AutorRepository extends JpaRepository<AutorEntity, Long> {
 	
 	//Busca o Id e Nome do Autor
-	@Query("SELECT  a.id,a.nome  FROM AutorEntity a, MangasEntity m GROUP BY a.nome") 
+	@Query("SELECT  a.nome FROM AutorEntity a") 
 	List<AutorEntity> buscarAutores();
 	
 	@Query ("SELECT a FROM AutorEntity a JOIN a.manga m GROUP BY a")
@@ -28,6 +28,6 @@ public interface AutorRepository extends JpaRepository<AutorEntity, Long> {
 	public AutorEntity buscarAutorpeloNome(@Param("id") Long id);
 	
 	//Busca o Autor 
-	@Query("Select a FROM AutorEntity a")
+	@Query("SELECT manga FROM AutorEntity a INNER JOIN a.manga manga GROUP BY a.nome ")
 	public List<AutorEntity> buscarAutorEMangas();
 }

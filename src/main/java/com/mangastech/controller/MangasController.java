@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.mangastech.model.AutorEntity;
+import com.mangastech.model.CapitulosEntity;
 import com.mangastech.model.GenerosEntity;
 import com.mangastech.model.MangasEntity;
 import com.mangastech.repository.AutorRepository;
@@ -26,6 +27,7 @@ import com.mangastech.service.MangaService;
 
 @RestController
 @Transactional
+@RequestMapping("/manga")
 public class MangasController {
 	
 	@Autowired
@@ -36,19 +38,19 @@ public class MangasController {
 	}*/
 	
 	//Cadastra novo Manga
-	@RequestMapping(value="/manga", method=RequestMethod.POST)
+	@RequestMapping( method=RequestMethod.POST)
 	public MangasEntity cadastrarManga(@Valid @RequestBody MangasEntity manga){
 		return mangaRepository.save(manga);
 	}
 	
 	
 	//Busca todos os Mangas
-	@RequestMapping(value="/manga",method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public List<MangasEntity> getClientes() {
 		return mangaRepository.findAll();
 	}	
 	//Busca o ID do Manga
-	@RequestMapping(value="/manga/{id}", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	/*@RequestMapping(value="/{id}", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MangasEntity> buscarPorId(@PathVariable(value="id") Long id){
 		MangasEntity manga = mangaRepository.findOne(id);
 		
@@ -57,9 +59,11 @@ public class MangasController {
 		}
 		
 		return new ResponseEntity<>(manga, HttpStatus.OK);
-	}
+	}*/
+	
+	
 	// Deletar Manga
-	@RequestMapping(value="/manga/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<MangasEntity> deletarManga(@PathVariable(value = "id") Long id) {
 		MangasEntity manga = mangaRepository.findOne(id);
 		

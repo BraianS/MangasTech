@@ -1,0 +1,19 @@
+<div>
+	<h3>Ola, eu sou lista de Generos</h3>
+
+	<div ng-repeat="genero in vm.Model.generos">
+		<h3>Genero {{genero.nome}}</h3>
+		
+		<h3>manga</h3>
+		<div ng-repeat="manga in genero.manga ">
+
+			Nome: {{manga.nome}} <br />
+			Status: {{manga.status}} <br />
+			Data Lancamento: {{manga.dataLancado}} <br/>
+			Autor: {{manga.autor.nome}}
+			<br />
+			<hr />
+
+		</div>
+	</div>
+</div>

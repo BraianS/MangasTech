@@ -33,7 +33,16 @@ public class AutorController {
 		List<AutorEntity> autor =  autorRepository.findAll();
 		
 		return autor;
-	}	
+	}
+	
+	//Busca Todos os Autores
+		@RequestMapping(value="/autor1", method = RequestMethod.GET)
+		public ResponseEntity<List<AutorEntity>> ProcurarAutorEManga() {
+			
+			List<AutorEntity> autor =  autorRepository.findAll();
+			
+			return new ResponseEntity<>(autor, HttpStatus.OK);
+		}
 	
 	//Cadastra o Autor	
 		@RequestMapping(value="/autor", method= RequestMethod.POST)

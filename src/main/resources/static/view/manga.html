@@ -1,81 +1,60 @@
 <div>
 	
-	<input type="text" ng-model="manga.nome"/>
-	<select ng-model="manga.status" ng-options="s for s in status"></select>
-	
-	
+	<input type="text" ng-model="vm.Model.Manga.nome"/>
+	<select ng-model="vm.Model.Manga.status" ng-options="s for s in vm.status"></select>
 	
 	
 	<div>
 	<label>Anos:</label>
-		<select ng-model="manga.dataLancado" ng-options="year.value as year.value for year in years"></select>
+		<select ng-model="vm.Model.Manga.dataLancado" ng-options="year.value as year.value for year in years"></select>
 	</div>	
 	
 	<div>
 	<label>Autor</label>
-		<select ng-model="manga.autor" ng-options="a.nome for a in autors"></select> 
+		<select ng-model="vm.Model.Manga.autor" ng-options="autor.nome for autor in vm.Model.autor"></select> 
 	</div>
 	
-	<br/>
 	
-	<!-- <div>
-	 <label> Genero</label>
-	 <select ng-model="manga.genero[1]" ng-options="genero.id for genero in generos"></select>
-	 </div>
-	  -->
-	  <div>
-	  <h3>Generosssssss</h3>
-	 <label ng-repeat="genero in generolist ">
-	 	<input type="checkbox" checklist-model="selected.generos" checklist-value="genero" data-ng-model="manga.genero"/> {{genero.nome}}
-	 </label>
-	 <pre>{{selected.generos|json}}</pre>
-	  
-	  
-	<input type="button" value="Salvar" ng-click="salvarMangas()"/>
+	<input type="button" value="Salvar" ng-click="vm.salvarMangas()"/>
 		</div>
  <br>
 	 
- <div ng-repeat="m in mangas">
+ <div ng-repeat="m in vm.Model.Mangas">
  	Manga {{m.id +' - ' + m.nome}} <br/> 
  	Status: {{ m.status }}<br/>
  	Data Lancamento: {{m.dataLancado}} <br/>
- 	Autor: {{m.autor.nome }}
- 		<span ng-repeat="g in m.genero">
- 		 {{g.nome}}
- 		 </span>
+ 	Autor: {{m.autor.nome }} <br/>
+ 	Generos:<div ng-repeat="_generos in m.genero">
+ 		{{_generos.nome}}
+ 	</div>
  		 <br/>
- 	 <input type="button" value="Excluir" ng-click="excluirMangas(m)"/>
- 	  <input type="button" value="Alterar" ng-click="alterarMangas(m)"/>
- 	  <input type="button" value="cancelar" ng-click="cancelar()"/>  <br/>
+ 	 <input type="button" value="Excluir" ng-click="vm.excluirMangas(m)"/>
+ 	  <input type="button" value="Alterar" ng-click="vm.alterarMangas(m)"/>
+ 	  <input type="button" value="cancelar" ng-click="vm.Cancelar()"/>  <br/>
+ 	  <a href="mangas/{{m.id}}">Detalhe</a>
+ 	  <a ui-sref="mangasDetalhe({mangasId:m.id})">See the party</a>
+ 	  
  		
  	 <p/> <hr/>
  </div>
 	<div>
-		<label ng-repeat="(index,role) in roles ">
-		  <input type="checkbox" checklist-model="user.roles" checklist-value="role" ng-model="manga.genero[$index].role.id"> 
-			{{role.text}}
-		</label>
-	
-		 <button ng-click="checkAll()" style="margin-right: 10px">Check all</button>
-          <button ng-click="uncheckAll()" style="margin-right: 10px">Uncheck all</button>
-          <button ng-click="checkFirst()">Check first</button>
-          <button ng-click="setToNull()" ng-if="setToNull">Set to null</button>
-          <button ng-click="user()">xxx</button>
+		
           
-          
-          <h3>user.roles</h3>
-          <pre>{{user.roles|json}}</pre>
-          
-          <h3>Generos</h3>
-          
-          <div>
-          		<label ng-repeat="genero in generos">
-          			<input type="checkbox" check-model="user.roles" checklist-value="genero">
-          			{{genero.nome}}
-          		
-          		</label>
-          		
-          </div>
+          <h3>GENEROS ARRAY </h3>
+          <div class="form-group">
+			<ul>
+				<li ng-repeat="_genero in vm.Model.Generos">
+					<label>
+			 			<input ng-model="_genero.Selecionado"
+			 					ng-change="vm.Selecionar()"
+			 					type="checkbox" />
+			 			<span ng-bind="_genero.nome"></span>			 			
+			 		</label>
+				</li>
+			</ul>
+			 
+			</div>
+			<pre ng-bind="vm.Model | json"></pre>
           
         </div>
 </div>

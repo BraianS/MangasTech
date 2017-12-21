@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,12 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -42,13 +43,28 @@ public class MangasEntity implements Serializable {
 	private Long id;
 	private String nome;
 	private  Status status;
-	private int dataLancado;
+	private Integer dataLancado;
 	
-	@JsonIgnoreProperties("manga")	
-	private  AutorEntity autor;
+	@JsonIgnoreProperties("manga")
+	private AutorEntity autor;
 	
+	@JsonIgnoreProperties("manga")
 	private List<GenerosEntity> genero = new ArrayList<>();
 	
+	@JsonIgnore
+	private transient List<CapitulosEntity> capitulo = new ArrayList<>();
+	
+	
+	@OneToMany(mappedBy = "manga", orphanRemoval = true, targetEntity = CapitulosEntity.class)
+	@Cascade({CascadeType.ALL})
+	public List<CapitulosEntity> getCapitulo() {
+		return capitulo;
+	}
+
+	public void setCapitulo(List<CapitulosEntity> capitulo) {
+		this.capitulo = capitulo;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -80,15 +96,16 @@ public class MangasEntity implements Serializable {
 		this.status = status;
 	}
 	
-	@Column
-	public int getDataLancado() {
+	
+	@Column(name="lancamento")
+	public Integer getDataLancado() {
 		return dataLancado;
 	}
 
-	public void setDataLancado(int dataLancado) {
+	public void setDataLancado(Integer dataLancado) {
 		this.dataLancado = dataLancado;
 	}
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name="mangas_autor",
 	joinColumns=@JoinColumn(name="manga_id",referencedColumnName="id"),
@@ -123,17 +140,6 @@ public class MangasEntity implements Serializable {
 	}
 	
 	
-	public MangasEntity(Long id, String nome, Status status, int dataLancado, AutorEntity autor,
-			List<GenerosEntity> genero) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.status = status;
-		this.dataLancado = dataLancado;
-		this.autor = autor;
-		this.genero = genero;
-	}
-
 	public MangasEntity(Long id){
 		this.id = id;
 	}

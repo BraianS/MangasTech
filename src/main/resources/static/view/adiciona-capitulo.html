@@ -1,0 +1,26 @@
+<div>
+	ola, vou add os capitulos 
+	<br/>
+	{{vm.Model.title}}
+	<br/>
+	<label>Capitulo</label>
+	<input type="text" ng-model="vm.Model.Capitulo.capitulo"/>
+	
+	<br/>
+	
+	<label>Manga</label>
+		<select ng-model="vm.Model.Capitulo.manga" ng-options=" manga.id as manga.nome for manga in vm.Model.Mangas">
+		</select>
+	
+	<label> Grupos</label>
+		<select ng-model="vm.Model.Capitulo.grupo" ng-options="grupo as grupo.nome for grupo in vm.Model.Grupos">
+		</select>
+		
+	<input type="date" id="exampleInput" name="input" ng-model="vm.Model.Capitulo.lancamento" min="2017-01-01" max="2017-12-30" placeholder="yyyy-MM-dd" />
+
+		
+	<input type="button" value="salvar" ng-click="vm.salvarCapitulos()"/>
+	
+	<br/>
+	<pre>{{vm.Model | json}}</pre>
+</div>

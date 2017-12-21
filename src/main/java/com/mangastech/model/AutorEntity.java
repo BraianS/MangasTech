@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
@@ -40,8 +41,8 @@ public class AutorEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nome;
+	
 	@JsonIgnoreProperties("autor")
-	//@JsonIgnore
 	private  Set<MangasEntity> manga;
 		
 	
@@ -65,11 +66,11 @@ public class AutorEntity implements Serializable {
 		this.nome = nome;
 	}
 	
-	//@ManyToOne(cascade = CascadeType.ALL,targetEntity=MangasEntity.class)
-	@OneToMany(mappedBy="autor",targetEntity= MangasEntity.class, fetch = FetchType.LAZY)
+	
+	/*@OneToMany(mappedBy="autor",targetEntity= MangasEntity.class,fetch = FetchType.LAZY)*/
+	@OneToMany(mappedBy="autor",targetEntity= MangasEntity.class, fetch = FetchType.LAZY, orphanRemoval = true)
 	
 	 @Cascade({CascadeType.ALL,CascadeType.DELETE})
-	
 	public Set<MangasEntity> getManga() {
 		return manga;
 	}

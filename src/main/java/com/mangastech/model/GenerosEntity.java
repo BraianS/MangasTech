@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -37,6 +38,7 @@ public class GenerosEntity implements Serializable {
 	@JsonIgnoreProperties("genero")
 	
 	/*@JsonIgnore*/
+	
 	private List<MangasEntity> manga = new ArrayList<>(); ;
 	
 	@Id

@@ -5,6 +5,7 @@
 <meta charset="UTF-8"/>
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-animate.js"></script>
 <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
  <!-- <script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script> 
@@ -17,25 +18,34 @@
 <script src="/js/controller/adiciona-capitulo.js"></script>
 <script src="/js/controller/grupo-controller.js"></script>
 <script src="/js/controller/capitulo-controller.js"></script>
-<script src="/js/controller/adiciona-pagina.js"></script>
 <script src="/js/controller/ng-file-upload.js"></script>
 <script src="/js/controller/ng-file-upload.min.js"></script>
 <script src="/js/controller/ng-file-upload-shim.min.js"></script>
-
-
+<script src="/js/controller/autor-controller.js"></script>
+<script src="/js/controller/lista-controller.js"></script>
+<script src="/js/controller/login-controller.js"></script>
+<script src="/js/controller/acesso-negado-controller.js"></script>
+<script data-require="ui-bootstrap@*" data-semver="0.13.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.min.js"></script>
+<link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<link href="/css/style.css" rel="stylesheet" type="text/css"/>
 </head>
-<body>
+<body ng-controller ="mainController">
 
 
-
-	ola, eu sou o template :)
+	<h1>ola, eu sou o template :)</h1>
 	
-	<a href="/">Home</a>
-	<a href="/manga">Lista de Mangas</a>
-	<a href="/generos">Generos</a>
-	<a href="/capitulos"> Adicionar Capitulos</a>
-	<a href="/grupos"> Grupos</a>
-	<a href="/paginas">Paginas</a>
+	<div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+        <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
+        <li ng-class="{ active: isActive('/manga?page=2')}"><a href="/manga?">Lista de Mangas</a></li>
+        <li ng-class="{ active: isActive('/generos')}"><a href="/generos">Generos</a></li>
+         <li ng-class="{ active: isActive('/capitulos')}"><a href="/capitulos">Adicionar Capitulos</a></li>
+          <li ng-class="{ active: isActive('/grupos')}"><a href="/grupos">Grupos</a></li>
+          <li ng-class="{ active: isActive('/autor')}"><a href="/autor">Autor</a></li>
+           <li><a href="/login">Login</a> </li>
+              
+    </ul>
+</div>
 	
 	<br/>
 	Path {{$location.path()}}
@@ -46,7 +56,8 @@
 	</div>
 
      <ui-view></ui-view>
-
-
+     
+	
+ 	<div class="hello-world"></div>
 </body>
 </html>

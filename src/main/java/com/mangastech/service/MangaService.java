@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.mangastech.model.AutorEntity;
 import com.mangastech.model.MangasEntity;
 import com.mangastech.repository.MangasRepository;
-import com.sun.xml.internal.stream.Entity;
+
 
 @Service
 public class MangaService {

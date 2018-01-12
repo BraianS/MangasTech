@@ -3,8 +3,20 @@
 	Ola, eu sou grupos :3
 	
 	{{vm.title}}
+	
+	<h1>Adicionar GRUPO</h1>
+	
+	<label> Adicionar Grupo</label>
+	<input type="text" ng-model="vm.Grupo.nome">
+	
+	<input type="button" value="salvar" ng-click="vm.salvarGrupos()">
+	
 	<hr/>
-	<span ng-repeat="grupo in vm.Model.Grupos">
-	{{grupo.nome}} <br/>
-	</span>
+	<div ng-repeat = "grupos in vm.Grupos">
+		Grupos: {{grupos.nome}}
+		<input type="button" value="deletar" ng-click="vm.deletarGrupos(grupos)">
+		<input type="button" value="alterar" ng-click="vm.alterarGrupos(grupos)"/>
+		<input type="button" value="cancelar" ng-click="vm.cancelar()">
+	
+	</div>
 </div>

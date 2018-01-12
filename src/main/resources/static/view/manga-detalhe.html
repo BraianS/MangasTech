@@ -1,18 +1,25 @@
-<div ng-repeat="c in vm.Model.ListCapitulos">
+<h3>Tabela</h3>
+	<table style="width:100%" >
+	 <tr>
+		<th>Capitulos </th>
+		<th>Data Lancamento</th>
+		<th>Grupo</th>
+		<th>Ler</th>
+	 </tr>
 		
-	Capitulo : {{c.capitulo}} <br/>
-	Data Lancamento: {{c.lancamento}} <br/>
-	Grupo : {{c.grupo.nome}} <br/>
 		
-			 <a href="manga/capitulo/{{c.id}}/1">Detalhe do capitulo</a>
-			 <a ui-sref="capituloDetalhe({capituloId:c.id})">Ui router</a>
-			  <div ng-repeat="pagina in c.pagina">
-			  	<img data-ng-src="data:image/jpeg;base64,{{pagina.foto}}">
-			  </div>
-			 			 
-	<hr/>
+	<tr ng-repeat="c in vm.Model.ListCapitulos">
+		<td>{{c.capitulo}}</td>
+		<td>{{c.lancamento}}</td>
+		<td>{{c.grupo.nome}}</td>	
+		<td>
+		 <a ui-sref="capituloDetalhe({capituloId:c.id})">Ler o capitulo</a>
+		</td>
 	
-</div>
+	</table>
+
+
+
 
 <h1>Add pagina</h1>
 <form class="vertical-center" enctype="multipart/form-data">
@@ -25,31 +32,29 @@
 		<input type="text" ng-model="vm.Model.addPagina.numeroPagina">
 	
 	
-		<label>Adicionar pagina</label>
-		<input type="file"id="example"  ng-file-model="customer.fotos" multiple/>
-		<label> TEste</label>
+		
+		<label> ADICIONA PAGINA</label>
 		<button ngf-select="vm.uploadFiles2($files)" multiple 
             accept="image/*">Select Files</button>
+		<hr/>
 		
-		<label> Testando paginas</label>
-	<button ngf-select="vm.uploadFiles($files, $invalidFiles)" multiple
+		
+	<!-- adiciona foto por foto usando diretiva MULTIPARTFORM -->	
+	<!-- <label>Adicionar pagina</label>
+		<input type="file"id="example"  ng-file-model="customer.fotos" multiple/>
+	<input type="button" value="salvarPaginas" ng-click="Submit()"/>
+	
+		
+		<br/>
+		
+		PERCORRE FOTO POR FOTO PARA ADICIONAR
+		<label> Testando paginas 1</label>
+		<button ngf-select="vm.uploadFiles($files, $invalidFiles)" multiple
 		type="button" class="btn btn-adicionar" eturn-button>
 		Adicionar arquivos</button>
-
-	<input type="button" value="salvarPaginas" ng-click="Submit()"/>
 		
-		</br>
-		
-		<label>Adicionar pagina 2</label>
-		<input type="file"id="example2"  file-model="files" multiple/>
-		
-		<label>Submit 2</label>
-		<input type="button" value="salvarPaginas" ng-click="uploadFiles()"/>
-		
+		</br> -->
 		
 			
 		
-		<p ng-repeat="file in fotos">
-			{{file.name}}
-		</p>
 </form>

@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="Capitulos")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+/*@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")*/
 
 public class CapitulosEntity {
 	private Long id;
@@ -41,9 +41,9 @@ public class CapitulosEntity {
 	private int capitulo;
 	
 	private GruposEntity grupo;
-	private MangasEntity manga;
 	
-	/*@JsonIgnoreProperties("capitulo")	*/
+	private MangasEntity manga;
+		
 	
 	private List<PaginasEntity> pagina = new ArrayList<>();
 	
@@ -80,7 +80,8 @@ public class CapitulosEntity {
 	public void setGrupo(GruposEntity grupo) {
 		this.grupo = grupo;
 	}
-	@ManyToOne(targetEntity= MangasEntity.class, fetch = FetchType.LAZY)
+	
+	@ManyToOne(targetEntity= MangasEntity.class, fetch = FetchType.EAGER)
 	/*@Cascade({CascadeType.ALL, CascadeType.DELETE})*/
 	@JoinColumn(name="manga_id")
 	public MangasEntity getManga() {
@@ -89,6 +90,7 @@ public class CapitulosEntity {
 	public void setManga(MangasEntity manga) {
 		this.manga = manga;
 	}
+	@JsonIgnoreProperties("capitulo")
 	@OneToMany( mappedBy = "capitulo", targetEntity = PaginasEntity.class, fetch = FetchType.LAZY,orphanRemoval=true)
 	
 	public List<PaginasEntity> getPagina() {

@@ -31,8 +31,8 @@
  	 <input type="button" value="Excluir" ng-click="vm.excluirMangas(m)"/>
  	  <input type="button" value="Alterar" ng-click="vm.alterarMangas(m)"/>
  	  <input type="button" value="cancelar" ng-click="vm.Cancelar()"/>  <br/>
- 	  <a href="mangas/{{m.id}}">Detalhe</a>
- 	  <a ui-sref="mangasDetalhe({mangasId:m.id})">See the party</a>
+ 	  <!-- <a href="mangas/{{m.id}}">Detalhe</a> -->
+ 	  <a ui-sref="mangasDetalhe({mangasId:m.id})">Detalhe do manga</a>
  	  
  		
  	 <p/> <hr/>
@@ -43,7 +43,7 @@
           <h3>GENEROS ARRAY </h3>
           <div class="form-group">
 			<ul>
-				<li ng-repeat="_genero in vm.Model.Generos">
+				<li ng-repeat="_genero in vm.Model.generos">
 					<label>
 			 			<input ng-model="_genero.Selecionado"
 			 					ng-change="vm.Selecionar()"

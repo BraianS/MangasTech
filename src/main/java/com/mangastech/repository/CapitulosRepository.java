@@ -15,7 +15,8 @@ import com.mangastech.model.PaginasEntity;
 @Repository
 public interface CapitulosRepository extends JpaRepository<CapitulosEntity, Long>{
 	
-	@Query("SELECT c FROM CapitulosEntity c where c.manga =:id ")
+	@Query("SELECT c FROM CapitulosEntity as c where c.manga =:id ")
+	/*@Query(value="SELECT NEW map(c.capitulo) FROM capitulos c RIGHT JOIN mangas m ON m.id = c.manga_id WHERE c.manga_id =?1",nativeQuery=true)*/
 	List<CapitulosEntity> findByManga(@Param("id") MangasEntity id);
 	
 	List<CapitulosEntity> findByMangaAndCapitulo(@Param("id") MangasEntity id, @Param("id") Long idc);

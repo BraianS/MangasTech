@@ -1,11 +1,66 @@
 angular
-.module("appCliente")
-.controller("mangasController", function($scope, $http, $q, $timeout,$window,$filter) {
-	
+.module('appCliente')
+.controller('listaController', ['$http','$stateParams','$state','$scope','$filter','multipartForm','Upload', function ($http,$stateParams,$state,$scope,$filter,multipartForm,Upload) {
 	var vm = this;
-	 vm.Model = {};
+	vm.Model = {};
+	vm.title = 'hello world mudafuck';
 	
 	
+	
+	vm.page = parseInt($stateParams.pages, 10);
+		
+	vm.Mangas = [];
+	vm.number = [];
+	vm.numero = 0;
+	vm.totalDePaginas = [];
+	
+	
+	vm.pageChanged = function() {
+		console.log("page changed to: " + $scope.number);
+	}
+	vm.index =[];
+	vm.carregarMangas2 = function() {
+		$http({
+			method: 'GET', url: 'http://localhost:8080/manga?page='+vm.page})
+			.then(function (response) {
+				vm.Mangas = response.data.content;
+				vm.number = response.data.number;
+				vm.totalDePaginas = response.data.totalPages;
+				vm.items = response.data.totalElements;
+				
+				
+				console.log(response);
+				console.log(response.data);
+			}, function (response) {
+				console.log(response);
+				console.log(response.data);
+			});
+	};
+	
+	vm.carregarMangas2();
+	
+	
+	
+	vm.nextPage = function() {
+		if(vm.page < vm.totalDePaginas ) {
+			$state.go('.', {pages: vm.page +1});
+		}
+		else {
+			console.log("chegou no limite de paginas");
+		}
+		
+	};
+	
+	vm.prevPage = function() {
+		if (vm.page > 0) {
+			$state.go('.', {pages: vm.page -1});
+		}
+	};
+	
+	
+	//MANGA DETALHE
+	
+
 	vm.status = [
 		"COMPLETO",
 		"PAUSADO"
@@ -49,8 +104,22 @@ angular
 		        "id": 4,
 		        "nome": "ROMANCE"
 		    }
-		];*/
-	    
+		];
+	    */
+		
+		 vm.users = [{
+			    name: 'Andrew'
+			  }, {
+			    name: 'Mike'
+			  }, {
+			    name: 'Tony'
+			  }, {
+			    name: 'Jim'
+			  }, {
+			    name: 'Leo'
+			  }];
+
+			
 	    
 	    vm.salvarMangas= function() {
 			$http({
@@ -60,6 +129,7 @@ angular
 					  vm.Model.Manga = {};
 					  vm.Load();
 					  vm.carregarMangas();
+					  vm.carregarMangas2();
 								  
 				  }, function (response) {
 				    console.log(response.data);
@@ -119,6 +189,7 @@ angular
 				pos = vm.Model.Mangas.indexOf(vm.Model.Manga);
 				vm.Model.Mangas.splice(pos,1);
 				vm.carregarMangas();
+				vm.carregarMangas2();
 			  
 			  }, function (response) {
 			    console.log(response.data);
@@ -167,5 +238,45 @@ angular
 	vm.Cancelar = function() {
 		vm.Model.Manga = {};
 	}
-		
-}) ;
+	
+	 var str = "abcdefghijklmnopqrstuvwxyz";
+	  vm.alphabet = str.toUpperCase().split("");
+
+	  vm.activeLetter = '';
+
+	  vm.activateLetter = function(letter) {
+	    
+	    alert("foi");
+	      $http({method: 'GET', url: 'http://localhost:8080/manga/az/'+letter})
+	      .then(function (response) {
+	    	  vm.activeLetter = letter;
+	    	  vm.abarreta = response.data.content;
+	    	  console.log(response.data.content);
+	    	  $state.go('.', {ordenado: vm.activeLetter});
+	    	  
+	    	  
+	    }, function (response){
+	    	console.log(response);
+	    	console.log(response.data);
+	    	console.log(response.data.content);
+	    })
+	  }
+}]);
+
+angular
+.module('appCliente')
+.filter('startsWithLetter', function() {
+	  return function(items, letter) {
+
+	    var filtered = [];
+	    var letterMatch = new RegExp(letter, 'i');
+	    for (var i = 0; i < items.length; i++) {
+	      var item = items[i];
+	      if (letterMatch.test(item.name.substring(0, 1))) {
+	        filtered.push(item);
+	      }
+	    }
+	    return filtered;
+	  };
+	});
+

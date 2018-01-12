@@ -8,14 +8,14 @@ angular
 	vm.Genero = {};
 	
 	vm.title = "funcionando";
-	vm.Model.Generos = [];
+	vm.Generos = [];
 	
 	
 	vm.carregarGeneros = function() {
 		$http({
 			method: 'GET', url: 'http://localhost:8080/genero'})
 			.then(function (response) {
-			vm.Model.Generos = response.data;
+			vm.Generos = response.data;
 			console.log(response.data);
 			console.log(response.status);
 			
@@ -24,5 +24,41 @@ angular
 				console.log(response.status);
 			});
 	};
+	
+	vm.salvarGeneros = function() {
+		$http({
+			method: 'POST', url: 'http://localhost:8080/genero',data:vm.Genero})
+			.then(function (response) {
+				vm.Genero = {};
+				console.log(response.data);
+				console.log(response.status);
+				vm.carregarGeneros();
+			}, function (response) {
+				console.log(response.data);
+				console.log(response.status);
+			});
+	};
+	
+	vm.deletarGeneros = function (genero) {
+		$http({
+			method: 'DELETE', url: "http://localhost:8080/genero/"+genero.id
+		}).then(function (response){
+			pos = vm.Generos.indexOf(vm.Genero);
+			vm.Generos.splice(pos,1);
+			console.log("deletado com sucesso");
+		},function (response){
+			console.log(response);
+			console.log(response.data);
+		});
+	}
+	
 	vm.carregarGeneros();
+	
+	vm.cancelar = function () {
+		vm.Genero = {};
+	}
+	
+	vm.alterarGeneros = function (genero) {
+		vm.Genero = genero;
+	}
 }]);

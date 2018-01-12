@@ -5,6 +5,8 @@ angular
 	$scope.mangasId = $stateParams.mangasId;
 		
 	$scope.customer = {};
+	
+	//usa a diretiva MULTIPARTFORM pra salvar foto por foto.
 	$scope.Submit = function(){
 		var uploadUrl = 'http://localhost:8080/pagina';
 		multipartForm.post(uploadUrl,$scope.customer),
@@ -13,18 +15,27 @@ angular
 		
 	var vm = this;
 	vm.Model = {};
-	
+	vm.Model.addPagina = [];
 	vm.Model.ListCapitulos = {};
 	
-	
-	$http.get("manga/"+$stateParams.mangasId).then(function (response) {
+	vm.carregarMangas = function () {
+		$http({
+			method : "http://localhost:8080/manga/"+$stateParams.mangasId
+		}).then(function (response){
+			vm.Model.ListaCapitulos = response.data;
+		}, function (response){
+			console.log(response);
+			console.log(response.data);
+		})
+	}
+	/*$http.get("manga/"+$stateParams.mangasId).then(function (response) {
 		vm.Model.ListCapitulos = response.data;
 	console.log(response.data);
 	console.log(response.status);
 	}, function (response) {
 		console.log(response);
-	});
-	
+	});*/
+	vm.carregarMangas();
 	
 	$scope.uploadFiles2 = function(files, errFiles) {
 		files.forEach(function(e){$scope.files.push(e)})
@@ -43,6 +54,8 @@ angular
 	        }
 	/*$scope.files = {};
 	$scope.files.fotos = "";*/
+	
+	//percorre cada foto adicionando uma de cada vez
 	vm.uploadFiles = function (files, errFiles) {  		
 		  angular.forEach(files, function (fotos) {                
 		    fotos.upload = Upload.upload({
@@ -55,9 +68,9 @@ angular
 		     
 		    });
 		    fotos.upload.then(function (response) {
-		      console.log("sucesso, contador é: "+ counter);
+		      console.log("sucesso, contador é: ");
 		      files = "";
-		      counter++;
+		      
 		      
 		    }, function (response) {
 		      console.log("error");
@@ -65,6 +78,8 @@ angular
 		  });
 		};
 		
+		
+		//adiciona multiplas fotos, um array de fotos
 		vm.uploadFiles2 = function (fotos) {
 			vm.files = fotos; 
 			if (fotos && fotos.length) {

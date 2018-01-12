@@ -26,17 +26,9 @@ public class AutorController {
 	@Autowired
 	private AutorRepository autorRepository;
 		
-	//Busca Todos os Autores
-	@RequestMapping(value="/autor", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<AutorEntity> ProcurarAutores() {
 		
-		List<AutorEntity> autor =  autorRepository.findAll();
-		
-		return autor;
-	}
-	
 	//Busca Todos os Autores
-		@RequestMapping(value="/autor1", method = RequestMethod.GET)
+		@RequestMapping(value="/autor", method = RequestMethod.GET)
 		public ResponseEntity<List<AutorEntity>> ProcurarAutorEManga() {
 			
 			List<AutorEntity> autor =  autorRepository.findAll();

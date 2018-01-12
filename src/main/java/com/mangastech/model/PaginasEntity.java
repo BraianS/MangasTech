@@ -19,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+
 
 
 @Entity
@@ -27,12 +29,10 @@ public class PaginasEntity {
 	
 	private Long id;	
 	private int numeroPagina;
-	private Blob pages;	
 	private byte[] fotos;
 	
-	
 	@Column
-	@Lob
+	@Lob	
 	public byte[] getFotos() {
 		return fotos;
 	}
@@ -61,17 +61,7 @@ public class PaginasEntity {
 	public void setNumeroPagina(int string) {
 		this.numeroPagina = string;
 	}
-	
-	@Column
-	@Lob
-	public Blob getPages() {
-		return pages;
-	}
-
-	public void setPages(Blob pages) {
-		this.pages = pages;
-	}
-	
+		
 	@ManyToOne(targetEntity = CapitulosEntity.class, fetch = FetchType.LAZY)	
 	@JoinColumn(name="capitulo_id")
 	public CapitulosEntity getCapitulo() {
@@ -82,12 +72,9 @@ public class PaginasEntity {
 		
 		this.capitulo = capitulo;
 	}
-	
-	
-	
+		
 	public PaginasEntity() {
 		
 	}
-	
 	
 }

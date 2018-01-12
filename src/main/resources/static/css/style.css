@@ -1,0 +1,25 @@
+.carousel-indicators li { 
+    background-size : 42px 22px;
+    background-color: black;
+    width : 42px;
+    height: 22px;
+    background-repeat : no-repeat;
+    background-position : center;
+    cursor : pointer;
+  }
+  
+.intro {
+	background-color: black
+}
+
+.active {
+  color: Red
+}
+.filter li {
+  display: inline;
+  padding: 5px;
+}
+ul {
+  list-style-type: none;
+}
+

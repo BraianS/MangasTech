@@ -45,7 +45,7 @@ public class MangasEntity implements Serializable {
 	private  Status status;
 	private Integer dataLancado;
 	
-	@JsonIgnoreProperties("manga")
+	@JsonIgnoreProperties("manga")	
 	private AutorEntity autor;
 	
 	@JsonIgnoreProperties("manga")
@@ -142,6 +142,23 @@ public class MangasEntity implements Serializable {
 	
 	public MangasEntity(Long id){
 		this.id = id;
+	}
+
+	public MangasEntity(Long id, String nome, Status status, Integer dataLancado, AutorEntity autor,
+			List<GenerosEntity> genero, List<CapitulosEntity> capitulo) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.status = status;
+		this.dataLancado = dataLancado;
+		this.autor = autor;
+		this.genero = genero;
+		this.capitulo = capitulo;
+	}
+
+	public MangasEntity(String nome) {
+		super();
+		this.nome = nome;
 	}
 	
 	

@@ -1,8 +1,20 @@
 <div>
 	<h3>Ola, eu sou lista de Generos</h3>
+	
+	
+	<div>
+		<label>Nome</label>
+		<input type="text" ng-model="vm.Genero.nome"/>
+		
+		<input type="button" value="salvar" ng-click="vm.salvarGeneros()">
+	
+	</div>
 
-	<div ng-repeat="genero in vm.Model.generos">
+	<div ng-repeat="genero in vm.Generos">
 		<h3>Genero {{genero.nome}}</h3>
+		<input type="button" value="cancelar" ng-click="vm.cancelar()">
+		<input type="button" value="alterar" ng-click="vm.alterarGeneros(genero)">
+		<input type="button" value="deletar" ng-click="vm.deletarGeneros(genero)">
 		
 		<h3>manga</h3>
 		<div ng-repeat="manga in genero.manga ">

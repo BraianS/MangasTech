@@ -22,5 +22,8 @@ public interface PaginasRepository extends CrudRepository<PaginasEntity, Long> {
 	@Query("SELECT p.fotos FROM PaginasEntity p WHERE p.capitulo.id =?1 and p.numeroPagina=?2")
 	byte[] procurarFotosPorCapitulos(Long id, int id2);
 	
+	@Query("SELECT p FROM PaginasEntity as p WHERE p.capitulo =:id ")
+	List<PaginasEntity> FindByCapitulos(@Param("id") CapitulosEntity id);
+	
 	PaginasEntity save(File file) throws IOException;
 }

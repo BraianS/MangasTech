@@ -67,7 +67,7 @@ public class PaginasController {
 			int count = 1;
 			if(!files.isEmpty()) {
 				for(MultipartFile file : files) {
-					
+					CapitulosEntity c = new CapitulosEntity();
 					PaginasEntity pag = new PaginasEntity();
 					pag.setFotos(file.getBytes());
 					pag.setNumeroPagina(count);
@@ -83,7 +83,7 @@ public class PaginasController {
 		
 	}
 	
-	@RequestMapping(value="/capitulo/{id}", method = RequestMethod.GET)
+	/*@RequestMapping(value="/capitulo/{id}", method = RequestMethod.GET)
 	public HttpEntity<byte[]> procurarPorCapitulo(@PathVariable(value="id") Long id) {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.IMAGE_JPEG);
@@ -91,12 +91,36 @@ public class PaginasController {
 		return new ResponseEntity<byte[]>(pagRepository.findOne(id).getFotos(), httpHeaders, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/capitulo/{id}/{id2}", method = RequestMethod.GET)
+	@RequestMapping(value="/capitulo2/{id}/{id2}", method = RequestMethod.GET)
 	public HttpEntity<byte[]> procurarPorCapitulo2(@PathVariable(value="id") Long id, @PathVariable(value="id2") int id2) {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.IMAGE_JPEG);
-		/*List<PaginasEntity> pagina = pagRepository.procurarFotosPorCapitulos(id);*/
+		List<PaginasEntity> pagina = pagRepository.procurarFotosPorCapitulos(id);
 		return new ResponseEntity<byte[]>(pagRepository.procurarFotosPorCapitulos(id, id2), httpHeaders, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/capitulo3/{id}", method = RequestMethod.GET)
+	public HttpEntity<byte[]> procurarPorCapitulo3(@PathVariable final Long id) {
+		final HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.IMAGE_JPEG);
+		
+		PaginasEntity m = pagRepository.findOne(id);
+		
+		byte [] image = m.getFotos();
+		
+		
+		return new ResponseEntity<byte[]>(pagRepository.findOne(id).getFotos(), httpHeaders, HttpStatus.OK);
+	  
+		return new ResponseEntity<byte[]>(image, httpHeaders, HttpStatus.CREATED);*/
+		
+		/*List<PaginasEntity> pagina = pagRepository.procurarFotosPorCapitulos(id);*/
+	/*	return new ResponseEntity<byte[]>(pagRepository.procurarFotosPorCapitulos(id, id2), httpHeaders, HttpStatus.OK);
+	}*/
+	@RequestMapping(value="/capitulo/{id}", method = RequestMethod.GET)
+	public List<PaginasEntity> procurarPorCapitulo(@PathVariable(value="id") CapitulosEntity id) {
+		List<PaginasEntity> pagina = pagRepository.FindByCapitulos(id);
+		
+		return pagina;
 	}
 	
 }

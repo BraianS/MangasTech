@@ -1,0 +1,106 @@
+<div>
+	
+	<input type="text" ng-model="vm.Model.Manga.nome"/>
+	<select ng-model="vm.Model.Manga.status" ng-options="s for s in vm.status"></select>
+	
+	
+	<div>
+	<label>Anos:</label>
+		<select ng-model="vm.Model.Manga.dataLancado" ng-options="year.value as year.value for year in years"></select>
+	</div>	
+	
+	<div>
+	<label>Autor</label>
+		<select ng-model="vm.Model.Manga.autor" ng-options="autor.nome for autor in vm.Model.autor"></select> 
+	</div>
+	
+	
+	<input type="button" value="Salvar" ng-click="vm.salvarMangas()"/>
+		</div>
+ <br>
+ 
+ <ul class="filter">
+ <label>Teste</label>
+      <li ng-click="vm.activateLetter('')" ng-class="{'active':vm.activeLetter==''}">ALL</li>
+      <label>Teste 2</label>
+      <li ng-repeat="letter in vm.alphabet track by $index " ng-click="vm.activateLetter(letter)" ng-class="{'active':letter==vm.activeLetter}">{{letter}}</li>
+ </ul>
+	 
+	  <div ng-repeat="user in vm.users | startsWithLetter : vm.activeLetter">
+      {{user.name}} + {{vm.abarreta}}
+    </div>
+    
+    <span ng-repeat="lista in vm.abarreto">
+    	nome: {{lista}}
+    	
+    </span>
+    
+    
+<!--  <div ng-repeat="m in vm.Model.Mangas">
+ 	Manga {{m.id +' - ' + m.nome}} <br/> 
+ 	Status: {{ m.status }}<br/>
+ 	Data Lancamento: {{m.dataLancado}} <br/>
+ 	Autor: {{m.autor.nome }} <br/>
+ 	Generos:<div ng-repeat="_generos in m.genero">
+ 		{{_generos.nome}}
+ 	</div>
+ 		 <br/>
+ 	 <input type="button" value="Excluir" ng-click="vm.excluirMangas(m)"/>
+ 	  <input type="button" value="Alterar" ng-click="vm.alterarMangas(m)"/>
+ 	  <input type="button" value="cancelar" ng-click="vm.Cancelar()"/>  <br/>
+ 	  <a href="mangas/{{m.id}}">Detalhe</a>
+ 	  <a ui-sref="mangasDetalhe({mangasId:m.id})">Detalhe do manga</a>
+ 	  
+ 		
+ 	 <p/> <hr/>
+ </div> -->
+	<div>
+		
+          
+          <h3>GENEROS ARRAY </h3>
+          <div class="form-group">
+			<ul>
+				<li ng-repeat="_genero in vm.Model.generos">
+					<label>
+			 			<input ng-model="_genero.Selecionado"
+			 					ng-change="vm.Selecionar()"
+			 					type="checkbox" />
+			 			<span ng-bind="_genero.nome"></span>			 			
+			 		</label>
+				</li>
+			</ul>
+			 
+			</div>
+			<pre ng-bind="vm.Model | json"></pre>
+          
+        </div>
+</div>
+	
+	
+	
+	<h1>{{vm.page}}</h1>
+	<h1>{{vm.numero}}</h1>
+	
+	<input ng-model="q" id="search" class="form-control" placeholder="Filter text"/>
+	
+	<div  ng-repeat="manga in vm.Mangas | startFrom:0 | limitTo: 20 | filter:q">
+		{{manga.id}} - {{manga.nome}} - {{manga.autor.nome}}		
+		status: {{manga.status}}
+		Lancamento: {{manga.dataLancado}}
+		Generos:<div ng-repeat="_generos in manga.genero">
+ 		{{_generos.nome}}
+ 				</div>
+		<input type="button" value="Excluir" ng-click="vm.excluirMangas(manga)"/>
+ 	  <input type="button" value="Alterar" ng-click="vm.alterarMangas(manga)"/>
+ 	  <input type="button" value="cancelar" ng-click="vm.Cancelar()"/>  <br/>	
+		 <a ui-sref="mangasDetalhe({mangasId:manga.id})">Detalhe do manga</a>
+	</div>	  
+	
+	<input type="button" value="next" ng-click="vm.nextPage()" ng-disabled="vm.totalDePaginas < vm.page"/>
+	
+	{{vm.page}} / {{vm.totalDePaginas}}
+	<input type="button" value="previous" ng-click="vm.prevPage()">
+	
+	    
+	
+</div>

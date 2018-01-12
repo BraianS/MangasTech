@@ -14,4 +14,7 @@ public interface GeneroRepository extends JpaRepository<GenerosEntity, Long>{
 	@Query("Select  g,m FROM GenerosEntity g join g.manga m  where g.id =1  ")
 		public List<GenerosEntity> lista();
 	
+	@Query("SELECT g FROM GenerosEntity g")
+		public List<GenerosEntity> todosOsGeneros();
+	
 }

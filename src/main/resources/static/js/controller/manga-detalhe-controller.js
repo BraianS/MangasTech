@@ -3,6 +3,8 @@ angular
 .controller("mangaDetalheController",['$scope', '$routeParams','$http','multipartForm','Upload','$stateParams',function ($scope, $routeParams, $http, multipartForm,Upload,$stateParams){
 
 	$scope.mangasId = $stateParams.mangasId;
+	
+	$scope.ola = "ola mundo eu sou o manga detalhe";
 		
 	$scope.customer = {};
 	
@@ -12,17 +14,45 @@ angular
 		multipartForm.post(uploadUrl,$scope.customer),
 		 alert("file uploaded successfully.");
 	}
+	
+	$scope.mmm = [];
+	
+	
 		
 	var vm = this;
 	vm.Model = {};
 	vm.Model.addPagina = [];
-	vm.Model.ListCapitulos = {};
+	vm.Model.ListCapitulos = [];
+	vm.Model.manga = [];
 	
-	vm.carregarMangas = function () {
+	$scope.items = [
+		{id:1, name:'foo'},
+		{id:2, name:'bar'},
+		{id:3,name: 'bla'}
+	]
+	
+		
+	vm.carregarMangas = function() {
 		$http({
-			method : "http://localhost:8080/manga/"+$stateParams.mangasId
+			method: 'GET', url: 'http://localhost:8080/manga/'+$stateParams.mangasId
+		}).then(function(response) {
+			console.log(response);
+			console.log(response.data);
+			$scope.mmm = response.data;
+			vm.Model.manga = response.data;
+		}, function (res) {
+			console.log(res);
+			console.log(res.data);
+		})
+	};
+	vm.carregarMangas();
+	vm.carregarCapitulos = function () {
+		$http({
+			method :'GET', url : "capitulo/"+$stateParams.mangasId
 		}).then(function (response){
-			vm.Model.ListaCapitulos = response.data;
+			vm.Model.ListCapitulos = response.data;
+			console.log(response);
+			console.log(response.data);
 		}, function (response){
 			console.log(response);
 			console.log(response.data);
@@ -35,7 +65,8 @@ angular
 	}, function (response) {
 		console.log(response);
 	});*/
-	vm.carregarMangas();
+	vm.carregarCapitulos();
+	
 	
 	$scope.uploadFiles2 = function(files, errFiles) {
 		files.forEach(function(e){$scope.files.push(e)})
@@ -44,9 +75,11 @@ angular
 	        	files.upload = Upload.upload({
 	                url: 'http://localhost:8080/pagina',
 	                method: 'POST',
+	                
 	                data: {
 	                	files: files,
-	                	 arrayKey: '[]'	                	
+	                	 arrayKey: '[]',
+	                	 
 	                }
 	            });
 
@@ -63,9 +96,10 @@ angular
 		      method: 'POST',
 		      headers: { 'Content-Type':undefined},
 		      arrayKey: '',
-		      data: { fotos: fotos
+		      data: { 'nome' : vm.c
 		      },
-		     
+		      fields: {'nome': vm.c},
+		      fotos: fotos,
 		    });
 		    fotos.upload.then(function (response) {
 		      console.log("sucesso, contador é: ");
@@ -78,22 +112,39 @@ angular
 		  });
 		};
 		
+		vm.c = [];
+		
+		$scope.nome = [];
+		$scope.capitulo = [];
 		
 		//adiciona multiplas fotos, um array de fotos
-		vm.uploadFiles2 = function (fotos) {
-			vm.files = fotos; 
+		vm.uploadFiles2 = function (fotos) {			
 			if (fotos && fotos.length) {
 				Upload.upload({
 					url : 'http://localhost:8080/pagina',
-						method: 'POST',
-						 headers: { 'Content-Type':undefined},
+						method: 'POST',	
+						params: {nome:$scope.nome, capitulo: $scope.capitulo},
 					      arrayKey: '',
-					      data: { fotos: fotos
-					      },
+					      data: { /* nome:$scope.nome,*/ fotos: fotos},
+					      /*fields: {
+					    	  nome:$scope.nome
+					      },*/
+					      headers: { 'Content-Type':undefined}/*,
+					      transformRequest: function (data, headersGetter) {
+		                        var formData = new FormData();
+		                        angular.forEach(data, function (value, key) {
+		                            formData.append(key, value);
+		                        });
+		                        return formData;
+					    	  
+					      }*/
 				}).then (function (response) {
 					console.log("sucesso");
+					console.log();
+					alert("salvo com sucesso");
 				}), function(response) {
 					console.log("error");
+					alert("deu erro");
 				}
 			}
 		}

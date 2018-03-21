@@ -1,0 +1,23 @@
+<div>
+	<h1>Autores</h1>
+
+	
+		<label>Autor</label>
+		<input type="text" ng-model="vm.autores.nome">
+		
+		<label>Descricao</label>
+		<input type="text" ng-model="vm.autores.info">
+		<input type="button" value="salvar" ng-click="vm.salvarAutores()"/>
+		
+	<div>
+	
+		<div ng-repeat="autor in vm.autor">
+		id: {{autor.id}}
+		autor: {{autor.nome}}
+			<input type="button" value="excluir" ng-click="vm.excluirAutor(autor)">
+			 <input type="button" value="cancelar" ng-click="vm.cancelar()"/>
+			 <input type="button" value="alterar" ng-click="vm.alterarAutores(autor)"/>
+		</div>
+	</div>
+
+</div>

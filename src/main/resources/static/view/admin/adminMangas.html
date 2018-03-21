@@ -1,0 +1,64 @@
+<div class="jumbotron">
+	<div class="container">
+	 <div class="row">		
+			<div class="form-group">
+				<form name="form-novo-manga" ng-submit="vm.salvarMangas()">
+
+					<div class="form-group">
+						<label for="nome-manga">Nome</label>
+						 <input type="text" class="form-control" ng-model="vm.Model.Manga.nome" placeholder="Nome do Manga" />
+					</div>
+
+					<div class="form-group">
+						<label for="opcao-manga">Opcao</label>
+						 <select ng-model="vm.Model.Manga.status" ng-options="s for s in vm.status"></select>
+					</div>
+					
+					<div class="form-group">
+						<label for="grupo-manga">Anos:</label>
+						 <select ng-model="vm.Model.Manga.dataLancado"	ng-options="year.value as year.value for year in years"></select>
+					</div>
+
+					<div class="form-group">
+						<label for="autor-manga">Autor</label>
+						 <select ng-model="vm.Model.Manga.autor" ng-options="autor.nome for autor in vm.Model.autor"
+							placeholder="Escolha o autor"></select>
+					</div>
+
+					<div class="form-group">
+						<label for="descricao-manga">Descricao</label>
+						 <input type="text" class="form-control" ng-model="vm.Model.Manga.descricao" placeholder="Escreva a descricao">
+					</div>
+					
+					 <div>          
+          <h3>GENEROS ARRAY </h3>
+          <div class="form-group">
+			<ul>
+				<li ng-repeat="_genero in vm.Model.generos">
+					<label>
+			 			<input ng-model="_genero.Selecionado"
+			 					ng-change="vm.Selecionar()"
+			 					type="checkbox" />
+			 			<span ng-bind="_genero.nome"></span>			 			
+			 		</label>
+				</li>
+			</ul>			 
+			</div>			
+     </div>
+					
+
+					<input type="submit" value="Salvar" />
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+<br>
+        
+<div ng-repeat="manga in vm.Mangas">
+	{{manga}} <input type="button" value='excluir' ng-click="vm.excluirMangas(manga)">excluir</input>
+	
+</div>
+
+

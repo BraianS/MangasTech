@@ -20,12 +20,13 @@
     <div class="hello-world"></div>
     directive:hello-world  -->
     
+    Eu sou {{vm.nome}}
     
     <h1>UI-Bootstrap Carousel</h1>
 	<div ng-controller="capituloController as CarouselDemoCtrl">
 		<div style="height: 1200px">
 			<carousel>
-			 <slide ng-repeat="slide in vm.foto"> <img
+			 <slide ng-repeat="slide in vm.fotos"> <img
 				data-ng-src="data:image/jpeg;base64,{{slide.fotos}}"
 				style="margin: auto;">
 			<div class="carousel-caption">

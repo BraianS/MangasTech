@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,19 +17,19 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -40,13 +41,13 @@ public class CapitulosEntity {
 	private Date lancamento;
 	private int capitulo;
 	
-	private GruposEntity grupo;
 	
+	@JsonIgnoreProperties(value="capitulo",allowGetters = false)
+	private GruposEntity grupo;	
+	
+	@JsonIgnoreProperties(value={"capitulo"})
 	private MangasEntity manga;
 		
-	
-	private List<PaginasEntity> pagina = new ArrayList<>();
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -71,18 +72,9 @@ public class CapitulosEntity {
 	public void setCapitulo(int capitulo) {
 		this.capitulo = capitulo;
 	}
+		
 	
-	@ManyToOne(targetEntity=GruposEntity.class)
-	@JoinColumn(name="grupo_id")
-	public GruposEntity getGrupo() {
-		return grupo;
-	}
-	public void setGrupo(GruposEntity grupo) {
-		this.grupo = grupo;
-	}
-	
-	@ManyToOne(targetEntity= MangasEntity.class, fetch = FetchType.EAGER)
-	/*@Cascade({CascadeType.ALL, CascadeType.DELETE})*/
+	@ManyToOne(targetEntity = MangasEntity.class)
 	@JoinColumn(name="manga_id")
 	public MangasEntity getManga() {
 		return manga;
@@ -90,16 +82,7 @@ public class CapitulosEntity {
 	public void setManga(MangasEntity manga) {
 		this.manga = manga;
 	}
-	@JsonIgnoreProperties("capitulo")
-	@OneToMany( mappedBy = "capitulo", targetEntity = PaginasEntity.class, fetch = FetchType.LAZY,orphanRemoval=true)
-	
-	public List<PaginasEntity> getPagina() {
-		return pagina;
-	}
-	public void setPagina(List<PaginasEntity> pagina) {
-		this.pagina = pagina;
-	}
-	
+
 	
 	public CapitulosEntity(Long id, Date lancamento, int capitulo, GruposEntity grupo, MangasEntity manga) {
 		super();
@@ -115,8 +98,13 @@ public class CapitulosEntity {
 		super();
 	}
 	
-	
-	
-	
-	
+	@ManyToOne(targetEntity = GruposEntity.class, fetch = FetchType.LAZY)
+	@JoinColumn(name="grupo_id")
+	public GruposEntity getGrupo() {
+		return grupo;
+	}
+	public void setGrupo(GruposEntity grupo) {
+		this.grupo = grupo;
+	}
+		
 }

@@ -1,0 +1,20 @@
+<div>
+	<h3>{{vm.generosDetalhe.nome}} </h3>
+	<div class="jumbotron">
+		<div class=container>
+				<div ng-repeat="manga in vm.generosDetalhe.manga" class="col-sm-4">
+					<div class="pabel panel">
+						<div class="panel-body">
+							<div class="panel-info">
+								Nome: <a ui-sref="mangaDetalhe({mangasId:manga.id})"> {{manga.nome}} </a></br>
+								id: {{manga.id}} </br>
+								Status : {{manga.status}} </br>
+								Data Lancamento: {{manga.dataLancamento}} </br>
+								Autor : {{manga.autor.nome}}
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>		
+	</div>	
+</div>

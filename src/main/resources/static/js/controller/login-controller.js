@@ -1,6 +1,6 @@
 angular
 .module("appCliente")
-.controller('loginController', function (usuarioService,$http) {
+.controller('loginController', function ($http,$scope,$state,AuthService,$rootScope) {
 	var vm = this;
 	
 	vm.logar = function(user) {
@@ -8,21 +8,46 @@ angular
 	};
 	
 	vm.usuario = {};
-	
+	vm.token = [];
 		
 	vm.logout = function() {
 		usuarioService.logout();
 	}
 	
 	vm.autenticar = function() {
-		$http.post("/autenticar", vm.usuario).then(function(response) {
-			console.log("Sucess " + response.data);
-		}, function(response) {
-			console.log("Falha " + response);
-		})
-	}
+		$http({
+			method : 'POST',
+			url: 'autenticar',
+			params: {
+				username : $scope.username,
+				password : $scope.password
+			}
+		}).then(function(res){
+			$scope.password = null;
+			if(res.data.token) {
+				$scope.message = '';
+				
+				$http.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token;
+				
+				AuthService.user = res.data.user;
+				$rootScope.$broadcast('LoginSuccessful');
+								
+				$state.go('home');
+			} else {
+				$scope.message = 'Authentication Failed';
+				
+			}
+				
+			
+		}, function (res) {
+			$scope.message = 'Authentication Failed !';
+		});
+		
+	};
 	
-})/*
+		
+	
+});/*
 .service ('usuarioService',function ($rootScope, $location) {
 	var vm = this;
 	

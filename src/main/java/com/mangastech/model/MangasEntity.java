@@ -2,7 +2,9 @@ package com.mangastech.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,10 +23,12 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.springframework.data.annotation.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -42,20 +46,33 @@ public class MangasEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nome;
-	private  Status status;
+	private Status status;
 	private Integer dataLancado;
+	private String descricao;
 	
-	@JsonIgnoreProperties("manga")	
+	
+	@Column(columnDefinition = "TEXT")
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	@JsonIgnoreProperties(value = {"manga"})	
 	private AutorEntity autor;
 	
 	@JsonIgnoreProperties("manga")
-	private List<GenerosEntity> genero = new ArrayList<>();
-	
-	@JsonIgnore
-	private transient List<CapitulosEntity> capitulo = new ArrayList<>();
+	private Set<GenerosEntity> genero = new HashSet<>();
 	
 	
-	@OneToMany(mappedBy = "manga", orphanRemoval = true, targetEntity = CapitulosEntity.class)
+	
+	/*@JsonIgnore
+	private transient List<CapitulosEntity> capitulo = new ArrayList<>();*/
+	
+	
+	/*@OneToMany(mappedBy = "manga", orphanRemoval = true, targetEntity = CapitulosEntity.class)
 	@Cascade({CascadeType.ALL})
 	public List<CapitulosEntity> getCapitulo() {
 		return capitulo;
@@ -63,7 +80,7 @@ public class MangasEntity implements Serializable {
 
 	public void setCapitulo(List<CapitulosEntity> capitulo) {
 		this.capitulo = capitulo;
-	}
+	}*/
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -106,7 +123,7 @@ public class MangasEntity implements Serializable {
 		this.dataLancado = dataLancado;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = AutorEntity.class, fetch = FetchType.LAZY)
 	@JoinTable(name="mangas_autor",
 	joinColumns=@JoinColumn(name="manga_id",referencedColumnName="id"),
 	inverseJoinColumns = @JoinColumn(name="autor_id",referencedColumnName="id"))
@@ -126,12 +143,12 @@ public class MangasEntity implements Serializable {
 	inverseJoinColumns=@JoinColumn(name="genero_id", referencedColumnName="id")
 	)
 	
-	public List<GenerosEntity> getGenero() {
+	public Set<GenerosEntity> getGenero() {
 		return genero;
 	}
 	
 	
-	public void setGenero(List<GenerosEntity> g_genero) {
+	public void setGenero(Set<GenerosEntity> g_genero) {
 		this.genero = g_genero;
 	}
 
@@ -143,8 +160,10 @@ public class MangasEntity implements Serializable {
 	public MangasEntity(Long id){
 		this.id = id;
 	}
+	
+	
 
-	public MangasEntity(Long id, String nome, Status status, Integer dataLancado, AutorEntity autor,
+	/*public MangasEntity(Long id, String nome, Status status, Integer dataLancado, AutorEntity autor,
 			List<GenerosEntity> genero, List<CapitulosEntity> capitulo) {
 		super();
 		this.id = id;
@@ -154,14 +173,22 @@ public class MangasEntity implements Serializable {
 		this.autor = autor;
 		this.genero = genero;
 		this.capitulo = capitulo;
-	}
+	}*/
+	
+	
 
 	public MangasEntity(String nome) {
 		super();
 		this.nome = nome;
 	}
 	
-	
-	
+	public MangasEntity(String nome, Status status, Integer dataLancado, AutorEntity autor) {
+		super();
+		this.nome = nome;
+		this.status = status;
+		this.dataLancado = dataLancado;
+		this.autor = autor;
+		
+	}
 	
 }

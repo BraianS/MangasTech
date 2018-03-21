@@ -27,4 +27,7 @@ public interface MangasRepository extends JpaRepository<MangasEntity, Long>{
 	@Query("SELECT m FROM MangasEntity m where m.nome LIKE :nome%")
 	Page<MangasEntity> procurarPorNome( @Param("nome") String nome,Pageable pageable);
 	
+	
+	
+	
 }

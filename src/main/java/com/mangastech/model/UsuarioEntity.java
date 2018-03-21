@@ -1,51 +1,147 @@
 package com.mangastech.model;
 
+import java.beans.Transient;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Usuario")
-public class UsuarioEntity {
-	
-	
-	public Long id;
-	public String nome;
-	public String senha;
-	
-	
+public class UsuarioEntity implements UserDetails{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
-	public Long getId() {
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
+	private int id;
+	
+	/*@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private List<Role> roles;
+	*/
+	@ElementCollection
+	private List<String> roles = new ArrayList<>();
+	
+
+	private String username;
+	private String password;
+	
+	
+	
+	
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+
+	public void setId(int id) {
 		this.id = id;
 	}
-	
-	@Column
-	public String getNome() {
-		return nome;
+
+	/*public List<Role> getRoles() {
+		return roles;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}*/
+//	public void addRole(Role r) {
+//		this.roles.add(r);
+//		r.getUsuarios().add(this);
+//	}
+	
+	@JsonIgnore
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+	Collection<GrantedAuthority> authorities = new ArrayList<>();
+	for (String rr : roles) {
+		authorities.add(new SimpleGrantedAuthority(rr));
 	}
-	@Column
-	public String getSenha() {
-		return senha;
+		return authorities;
 	}
-	public void setSenha(String senha) {
-		this.senha = senha;
+	
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
 	}
-	public UsuarioEntity() {
-		super();
+	
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return password;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return username;
 	}
 	
 	
-	
-	
+		
 }

@@ -9,15 +9,18 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.mangastech.model.AutorEntity;
 import com.mangastech.model.CapitulosEntity;
@@ -41,6 +44,7 @@ public class MangasController {
 	}*/
 	
 	//Cadastra novo Manga
+	
 	@RequestMapping( method=RequestMethod.POST)
 	public MangasEntity cadastrarManga(@Valid @RequestBody MangasEntity manga){
 		return mangaRepository.save(manga);
@@ -53,7 +57,7 @@ public class MangasController {
 		return mangaRepository.findAll();
 	}	*/
 	
-	
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(/*value="/teste",*/ method = RequestMethod.GET)
 	public @ResponseBody Page<MangasEntity> listar(Pageable pageable) {
 		Page<MangasEntity> mangas = mangaRepository.procurarportodos(pageable);
@@ -102,5 +106,15 @@ public class MangasController {
 		Page<MangasEntity> manga = mangaRepository.procurarPorNome(nome,pageable);
 		return new ResponseEntity<>(manga, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
+	public ResponseEntity<MangasEntity> detalheManga(@PathVariable(value="id") Long id) {
+		
+		MangasEntity manga = mangaRepository.findOne(id);
+		
+		return new ResponseEntity<MangasEntity>(manga, HttpStatus.OK);
+	}
+	
+	
 	
 }

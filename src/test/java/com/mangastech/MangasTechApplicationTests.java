@@ -25,10 +25,13 @@ import static java.util.Collections.singletonList;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mangastech.model.AutorEntity;
+import com.mangastech.model.GenerosEntity;
 import com.mangastech.model.MangasEntity;
+import com.mangastech.model.Status;
 import com.mangastech.repository.MangasRepository;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -52,27 +55,28 @@ public class MangasTechApplicationTests {
 	@Test
 	public void setUp() throws Exception {
 		
-		mangaRepository.deleteAll();
-		for(int i = 0; i < 50; i++) {
-			mangaRepository.save(new MangasEntity("AGATA"));
-			mangaRepository.save(new MangasEntity("XULIPA"));
-			mangaRepository.save(new MangasEntity("BLEACH"));
-			mangaRepository.save(new MangasEntity("BOKU NO HERO ACADEMIA"));
-			mangaRepository.save(new MangasEntity("BAKUGAN"));
-		}
+		AutorEntity autor = new AutorEntity();
+		autor.setId(1L);
 		
+		Integer x = 2010;		
+		
+		//mangaRepository.deleteAll();
+		for(int i = 0; i < 20; i++) {
+			mangaRepository.save(new MangasEntity("one piece", Status.COMPLETO, x, autor));
+			
+		}
 		
 		restTemplate = new RestTemplate();
 	}
 	
-	@Test
-	public void testCreatePerson () throws JsonProcessingException {
-		MangasEntity manga = new MangasEntity("XUXINHA");
-		
-		MangasEntity response = restTemplate.postForObject(BASE_PATH, manga, MangasEntity.class);
-		
-		Assert.assertEquals("XUXINH", response.getNome() + " " + response.getId());
-	}
+//	@Test
+//	public void testCreatePerson () throws JsonProcessingException {
+//		MangasEntity manga = new MangasEntity("XUXINHA");
+//		
+//		MangasEntity response = restTemplate.postForObject(BASE_PATH, manga, MangasEntity.class);
+//		
+//		Assert.assertEquals("XUXINH", response.getNome() + " " + response.getId());
+//	}
 	
 	
 

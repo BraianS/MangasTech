@@ -42,6 +42,9 @@ public class AutorEntity implements Serializable {
 	private Long id;
 	private String nome;
 	
+	
+	private String info;
+	
 	@JsonIgnoreProperties("autor")
 	private  Set<MangasEntity> manga;
 		
@@ -82,6 +85,21 @@ public class AutorEntity implements Serializable {
 	public AutorEntity() {
 		this.manga = new HashSet<>();
 	}
+
+	@Column(columnDefinition = "TEXT")
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	@Override
+	public String toString() {
+		return "AutorEntity [id=" + id + ", nome=" + nome + ", info=" + info + ", manga=" + manga + "]";
+	}
 	
+		
 	
 }

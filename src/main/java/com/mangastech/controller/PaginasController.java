@@ -60,25 +60,32 @@ public class PaginasController {
 	}*/
 	
 	
-	@RequestMapping(value="/pagina", method = RequestMethod.POST) 
+	@RequestMapping(value="/pagina", method = RequestMethod.POST, consumes = {"multipart/form-data"}) 
 	public @ResponseBody ResponseEntity<PaginasEntity> cadastrarPaginas(@RequestParam(value="fotos")List<MultipartFile> files/*,
-			@RequestParam(value="numeroPagina") Long number,
-			@RequestParam(value="capitulo") CapitulosEntity capitulo*/) throws IOException{
+			@RequestParam(value="numeroPagina") Long number*/
+			, @RequestParam(value="nome") String nome, @RequestParam(value="capitulo") Long Capitulo) throws IOException{
 			int count = 1;
 			if(!files.isEmpty()) {
 				for(MultipartFile file : files) {
+					
 					CapitulosEntity c = new CapitulosEntity();
+					c.setId(Capitulo);
+					
 					PaginasEntity pag = new PaginasEntity();
 					pag.setFotos(file.getBytes());
-					pag.setNumeroPagina(count);
-					pag.setCapitulo(null);
+					pag.setNome(nome);
+					pag.setNumeroPagina(count);	
+					pag.setCapitulo(c);
 					pagRepository.save(pag);
 					count++;
+			
 				}
 			}
 			else {
 				System.out.println("error");
 			}
+			System.out.println(nome);
+			System.out.println(Capitulo);
 		return  ResponseEntity.ok().build();
 		
 	}
@@ -116,7 +123,7 @@ public class PaginasController {
 		/*List<PaginasEntity> pagina = pagRepository.procurarFotosPorCapitulos(id);*/
 	/*	return new ResponseEntity<byte[]>(pagRepository.procurarFotosPorCapitulos(id, id2), httpHeaders, HttpStatus.OK);
 	}*/
-	@RequestMapping(value="/capitulo/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/pagina/{id}", method = RequestMethod.GET)
 	public List<PaginasEntity> procurarPorCapitulo(@PathVariable(value="id") CapitulosEntity id) {
 		List<PaginasEntity> pagina = pagRepository.FindByCapitulos(id);
 		

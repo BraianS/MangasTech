@@ -14,6 +14,8 @@ angular
 	vm.numero = 0;
 	vm.totalDePaginas = [];
 	
+	vm.nome = 'BRAIAN';
+	
 	
 	vm.pageChanged = function() {
 		console.log("page changed to: " + $scope.number);
@@ -56,89 +58,20 @@ angular
 			$state.go('.', {pages: vm.page -1});
 		}
 	};
-	
-	
 	//MANGA DETALHE
 	
-
 	vm.status = [
 		"COMPLETO",
 		"PAUSADO"
 	];
-	
-	
+		
 	vm.Model.Mangas = [];
 	vm.Model.Manga = {};
 	vm.Model.generos = {};
 	vm.Model.autor = [];
 	
-	
-	$scope.dates = {};
-	$scope.years = [{value: 'Year', disabled : true}];
-	for(var i = 1990; i <= 2020; i++) {
-		$scope.years.push({value: i});
-	}
-	   var d = new Date();
-	    var n = d.getFullYear();
-
-	    $scope.dates.startYear = n;
-	    console.log(n);
-	
 	    $scope.mangas = [];
 		$scope.manga = {};
-		
-		/*vm.Model.Generos=[
-		 	{
-		        "id": 1,
-		        "nome": "TERROR"
-		    },
-		    {
-		        "id": 2,
-		        "nome": "ACAO"
-		    },
-		    {
-		        "id": 3,
-		        "nome": "AVENTURA"
-		    },
-		    {
-		        "id": 4,
-		        "nome": "ROMANCE"
-		    }
-		];
-	    */
-		
-		 vm.users = [{
-			    name: 'Andrew'
-			  }, {
-			    name: 'Mike'
-			  }, {
-			    name: 'Tony'
-			  }, {
-			    name: 'Jim'
-			  }, {
-			    name: 'Leo'
-			  }];
-
-			
-	    
-	    vm.salvarMangas= function() {
-			$http({
-				  method: 'POST', url: 'http://localhost:8080/manga',data:vm.Model.Manga})
-				  .then(function (response) {
-					  				
-					  vm.Model.Manga = {};
-					  vm.Load();
-					  vm.carregarMangas();
-					  vm.carregarMangas2();
-								  
-				  }, function (response) {
-				    console.log(response.data);
-				    console.log(response.status);
-				  });
-			};
-	    
-	      
-	 
 	
 	vm.Model.carregarGeneros= function() {
 			$http({
@@ -154,8 +87,6 @@ angular
 				  });
 			};
 				
-	
-	
 	vm.carregarMangas = function() {
 	$http({
 		  method: 'GET', url: 'http://localhost:8080/manga'})
@@ -182,23 +113,7 @@ angular
 			  });
 	};
 	
-	vm.excluirMangas=function(Manga) {
-		$http({
-			  method: 'DELETE', url: 'http://localhost:8080/manga/'+Manga.id})
-			  .then(function (response) {
-				pos = vm.Model.Mangas.indexOf(vm.Model.Manga);
-				vm.Model.Mangas.splice(pos,1);
-				vm.carregarMangas();
-				vm.carregarMangas2();
-			  
-			  }, function (response) {
-			    console.log(response.data);
-			    console.log(response.status)
-			  });
-	};
-	
 	//Aqui vem a chamada da API dos generos
-	
 	
 	//no then do manga ele executa e atualiza a lista de generos
 	vm.Load= function (){
@@ -211,11 +126,6 @@ angular
 		};
 	};
 
-	//função após mudar os checkboxes
-	vm.Selecionar = function  (argument) {
-		vm.Model.Manga.genero = $filter('filter')(vm.Model.generos,{Selecionado: true});
-		console.log($filter('filter')(vm.Model.generos, {Selecionado: true}));
-	}
 	
 	vm.Model.carregarGeneros();
 	vm.carregarMangas();
@@ -223,22 +133,7 @@ angular
 	vm.Model.carregarautor();
 	vm.Load();
 		
-		$scope.alterarMangas = function(manga) {
-			$scope.manga = angular.copy(manga);
-		}
 		
-		$scope.cancelar = function() {
-						$scope.manga = {};
-		};
-		
-	vm.alterarMangas = function(manga) {
-		vm.Model.Manga = manga;
-	}
-	
-	vm.Cancelar = function() {
-		vm.Model.Manga = {};
-	}
-	
 	 var str = "abcdefghijklmnopqrstuvwxyz";
 	  vm.alphabet = str.toUpperCase().split("");
 
@@ -263,20 +158,4 @@ angular
 	  }
 }]);
 
-angular
-.module('appCliente')
-.filter('startsWithLetter', function() {
-	  return function(items, letter) {
-
-	    var filtered = [];
-	    var letterMatch = new RegExp(letter, 'i');
-	    for (var i = 0; i < items.length; i++) {
-	      var item = items[i];
-	      if (letterMatch.test(item.name.substring(0, 1))) {
-	        filtered.push(item);
-	      }
-	    }
-	    return filtered;
-	  };
-	});
 

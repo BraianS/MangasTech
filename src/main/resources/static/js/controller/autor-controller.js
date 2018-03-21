@@ -19,44 +19,6 @@ angular
 		})
 	};
 	
-	
-	vm.salvarAutores = function() {
-		$http({
-			method: 'POST', url: 'http://localhost:8080/autor',data:vm.autores})
-			.then(function(response) {
-				vm.autores = {}
-				console.log("salvo com sucesso");
-				console.log(response.data);
-				console.log(response.status);
-				vm.carregarAutores();
-			}, function (response) {
-				
-				console.log(response.data);
-				console.log(response.status);
-			})
-	};
-	
-	vm.excluirAutor = function(autor) {
-		$http({
-			method: 'DELETE', url : 'http://localhost:8080/autor/'+autor.id})
-			.then(function (response) {
-				pos = vm.autor.indexOf(vm.autores);
-				vm.autor.splice(pos,1);
-				console.log("deletado");
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			})
-	}
-	
-	vm.cancelar = function () {
-		vm.autores = {};
-	};
-	
-	vm.alterarAutores = function(autor) {
-		vm.autores = autor;
-	}
-	
 	vm.carregarAutores();
 	
 }]);

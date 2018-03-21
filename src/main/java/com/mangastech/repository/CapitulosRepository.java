@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.mangastech.model.CapitulosEntity;
+import com.mangastech.model.GruposEntity;
 import com.mangastech.model.MangasEntity;
 import com.mangastech.model.PaginasEntity;
 
@@ -20,4 +21,18 @@ public interface CapitulosRepository extends JpaRepository<CapitulosEntity, Long
 	List<CapitulosEntity> findByManga(@Param("id") MangasEntity id);
 	
 	List<CapitulosEntity> findByMangaAndCapitulo(@Param("id") MangasEntity id, @Param("id") Long idc);
+	
+	@Query(value="SELECT * FROM Capitulos ORDER BY lancamento DESC LIMIT 10", nativeQuery = true)
+	List<CapitulosEntity> findByTop10();
+	
+	@Query(value="SELECT c.* FROM capitulos c JOIN mangas m ON c.manga_id = m.id WHERE m.id = ?",nativeQuery = true)
+	List<CapitulosEntity> buscarcapitulos(@Param("id") CapitulosEntity id);
+	
+	@Query(value="SELECT  g.capitulo FROM GruposEntity g where g.id =?")
+	List<GruposEntity> findGrupoById(@Param("id") Long id);
+
+	CapitulosEntity findByGrupo(GruposEntity id);
+	
+	@Query("SELECT DISTINCT c.manga FROM CapitulosEntity c JOIN c.grupo g WHERE g.id = ?" )
+	List<CapitulosEntity> buscarIdGrupo(@Param("id") Long id);
 }

@@ -30,6 +30,7 @@ public class PaginasEntity {
 	private Long id;	
 	private int numeroPagina;
 	private byte[] fotos;
+	private String nome;
 	
 	@Column
 	@Lob	
@@ -76,5 +77,15 @@ public class PaginasEntity {
 	public PaginasEntity() {
 		
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	
 	
 }

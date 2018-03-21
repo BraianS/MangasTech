@@ -1,25 +1,12 @@
-<div>
-	<h1>Autores</h1>
-
-	
-		<label>Autor</label>
-		<input type="text" ng-model="vm.autores.nome">
-		<input type="button" value="salvar" ng-click="vm.salvarAutores()"/>
-		
-		
+<div class="panel panel-default">
+	<div class="panel-heading"><h1>Autores</h1></div>
 	<div>
 	
-		<div ng-repeat="autor in vm.autor">
-		id: {{autor.id}}
-		autor: {{autor.nome}}
-			<input type="button" value="excluir" ng-click="vm.excluirAutor(autor)">
-			 <input type="button" value="cancelar" ng-click="vm.cancelar()"/>
-			 <input type="button" value="alterar" ng-click="vm.alterarAutores(autor)"/>
+		<div ng-repeat="autor in vm.autor" class="panel-body">
+		<p> <a ui-sref="autorDetalhe({autorId:autor.id})">{{autor.nome}} </a> </p>
+		<p> {{autor.info}}</p>
+			
 		</div>
-		
-	
-		
-		
 	</div>
 
 </div>

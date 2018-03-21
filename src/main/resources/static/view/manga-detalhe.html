@@ -1,4 +1,17 @@
+<div class=jumbotron>
+	<div class="container">
+		<div class=row>
+			<p> {{mmm.nome}} <p> 
+			<p> {{mmm.status}} </p>
+			<p>{{mmm.dataLancado}}</p>
+			<p>{{mmm.descricao}}</p>
+		</div>
+	</div>
+</div>
+
+
 <h3>Tabela</h3>
+<div>
 	<table style="width:100%" >
 	 <tr>
 		<th>Capitulos </th>
@@ -9,52 +22,52 @@
 		
 		
 	<tr ng-repeat="c in vm.Model.ListCapitulos">
-		<td>{{c.capitulo}}</td>
+		<td>{{c.capitulo}} - {{c.id}}</td>
 		<td>{{c.lancamento}}</td>
 		<td>{{c.grupo.nome}}</td>	
 		<td>
-		 <a ui-sref="capituloDetalhe({capituloId:c.id})">Ler o capitulo</a>
+		 <a ui-sref="capituloDetalhes({capituloId:c.id})">Ler o capitulo</a>
 		</td>
 	
 	</table>
-
-
+</div>
+{{vm.ola}}
 
 
 <h1>Add pagina</h1>
 <form class="vertical-center" enctype="multipart/form-data">
-	
-		<select ng-options="c.id for c in vm.Model.ListCapitulos" ng-model="vm.Model.addPagina.capitulo">
-		</select>
-	
-	
-		<label>Numero da pagina</label>
-		<input type="text" ng-model="vm.Model.addPagina.numeroPagina">
-	
-	
-		
-		<label> ADICIONA PAGINA</label>
-		<button ngf-select="vm.uploadFiles2($files)" multiple 
-            accept="image/*">Select Files</button>
-		<hr/>
-		
-		
-	<!-- adiciona foto por foto usando diretiva MULTIPARTFORM -->	
-	<!-- <label>Adicionar pagina</label>
-		<input type="file"id="example"  ng-file-model="customer.fotos" multiple/>
-	<input type="button" value="salvarPaginas" ng-click="Submit()"/>
-	
-		
-		<br/>
-		
+	<H1>vm.uploadFiles1</H1>
 		PERCORRE FOTO POR FOTO PARA ADICIONAR
 		<label> Testando paginas 1</label>
 		<button ngf-select="vm.uploadFiles($files, $invalidFiles)" multiple
 		type="button" class="btn btn-adicionar" eturn-button>
 		Adicionar arquivos</button>
-		
-		</br> -->
-		
 			
+	
 		
-</form>
+		
+		<br/>
+			<H1>vm.uploadFiles2</H1>
+		
+		<label>Capitulo</label>	
+		<input type="text" ng-model="nome">
+		<label>Capitulo NUMERO</label>
+		<input type="text" ng-model="capitulo"> 	
+		<label> ADICIONA PAGINA</label>
+		<button ngf-select="vm.uploadFiles2($files)" multiple     accept="image/*">Select Files</button>
+		<hr/>
+		
+		
+		<br/>
+		<select ng-model="selectedItem" ng-options="item as item.capitulo for item in vm.Model.ListCapitulos"></select>
+		<h3>the selected item</h3>
+		<pre> {{selectedItem|json}}</pre>
+		
+		<label>Capitulo NUMERO</label>
+		<input type="text" ng-bind="item">
+		<h3> the inner html of the selected</h3>
+		<pre id="options" class="prettify html"></pre>
+		
+</form> 
+
+{{manga | json}}

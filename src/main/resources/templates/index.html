@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html ng-app="appCliente">
-<base href="/" />
+
 <head>
 <meta charset="UTF-8"/>
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-animate.js"></script>
-<script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
- <!-- <script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script> -->
+<!-- <script src="//unpkg.com/@uirouter/angularjs@1.0.7/release/angular-ui-router.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script> 
 <script src="/js/app.js"></script>
 <script src="/js/controller/manga-controller.js"></script>
@@ -15,7 +16,6 @@
 <script src="/js/controller/genero-controller.js"></script>
 <script src="/js/controller/main-controller.js"></script>
 <script src="/js/controller/manga-detalhe-controller.js"></script>
-<script src="/js/controller/adiciona-capitulo.js"></script>
 <script src="/js/controller/grupo-controller.js"></script>
 <script src="/js/controller/capitulo-controller.js"></script>
 <script src="/js/controller/ng-file-upload.js"></script>
@@ -25,39 +25,37 @@
 <script src="/js/controller/lista-controller.js"></script>
 <script src="/js/controller/login-controller.js"></script>
 <script src="/js/controller/acesso-negado-controller.js"></script>
-<script data-require="ui-bootstrap@*" data-semver="0.13.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.min.js"></script>
+<script src="/js/controller/adm-grupo-controller.js"></script>
+<script src="/js/controller/adm-generos-controller.js"></script>
+<script src="/js/controller/adm-autor-controller.js"></script>
+<script src="/js/controller/adm-manga-controller.js"></script>
+<script src="/js/controller/adm-capitulo-controller.js"></script>
+<script src="/js/controller/nav-controller.js"></script>
+<script src="/js/controller/registrar-controller.js"></script>
+<script src="/js/route.js"></script>
+<script src="/js/controller/AuthService.js"></script>
+<script src="/js/controller/home-controller.js"></script>
+<script src="/js/controller/generodetalhe.js"></script>
+<script src="/js/controller/generoservice.js"></script>
+<script src="/js/controller/autor-detalhe-controller.js"></script>
+<script src="/js/controller/grupo-detalhe-controller.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  -->
+<!-- <script data-require="ui-bootstrap@*" data-semver="1.3.0" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.0/ui-bootstrap-tpls.min.js"></script> -->  
+   <!-- <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>  -->
+ <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>  
+
 <link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 <link href="/css/style.css" rel="stylesheet" type="text/css"/>
 </head>
-<body ng-controller ="mainController">
-
-
-	<h1>ola, eu sou o template :)</h1>
+<body ng-app="appCliente">
 	
-	<div class="collapse navbar-collapse">
-    <ul class="nav navbar-nav">
-        <li ng-class="{ active: isActive('/')}"><a href="/">Home</a></li>
-        <li ng-class="{ active: isActive('/manga?page=2')}"><a href="/manga?">Lista de Mangas</a></li>
-        <li ng-class="{ active: isActive('/generos')}"><a href="/generos">Generos</a></li>
-         <li ng-class="{ active: isActive('/capitulos')}"><a href="/capitulos">Adicionar Capitulos</a></li>
-          <li ng-class="{ active: isActive('/grupos')}"><a href="/grupos">Grupos</a></li>
-          <li ng-class="{ active: isActive('/autor')}"><a href="/autor">Autor</a></li>
-           <li><a href="/login">Login</a> </li>
-              
-    </ul>
-</div>
+	<div ui-view="nav"></div>
 	
-	<br/>
-	Path {{$location.path()}}
-	Template URL {{$route.current.templateUrl}}
-	Parametros: {{$routeParams}}
-	<div ui-view="ui-view">
-	
+	<div class="container" style="margin-top: 50px;">
+		<!-- Main view for showing all views -->
+		<div ui-view="content"></div>
 	</div>
-
-     <ui-view></ui-view>
-     
 	
- 	<div class="hello-world"></div>
+ 	
 </body>
 </html>

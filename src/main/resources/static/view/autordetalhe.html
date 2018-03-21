@@ -1,0 +1,19 @@
+<h3>Bem Vindo a autor detalhe</h3>
+
+{{vm.ola}} - {{vm.id}}
+
+<div class="jumbotron">
+	<div class="container">
+		<div class="col-sm-4" ng-repeat="autor in vm.autor.manga">
+			<div class="panel panel">
+				<div class="panel-body">
+					<div class="panel-info">
+						<p>{{autor.nome}}</p>
+						<p>{{autor.status}}</p>
+						<p>{{autor.dataLancado}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

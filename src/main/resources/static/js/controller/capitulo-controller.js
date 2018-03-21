@@ -7,6 +7,8 @@ angular
 	$scope.capituloId = $stateParams.capituloId;
 	
 	vm.foto = {};
+	
+	vm.nome = "CAPITULO";
 		
 	$http.get("capitulo/"+$stateParams.capituloId).then(function (response) {
 		vm.foto = response.data;
@@ -16,6 +18,23 @@ angular
 		console.log(response);
 	});
 	
+	vm.carregarcapitulo = function() {
+		$http({
+			method : 'GET',
+			url: 'http://localhost:8080/pagina/'+$stateParams.capituloId
+		})
+		.then(function (response){
+			
+			vm.fotos = response.data;
+			console.log(response);
+			console.log(response.data);
+		}, function(response) {
+			console.log(response);
+			console.log(response.data);
+		})
+	}
+	
+	vm.carregarcapitulo();
 	
 }]);
 

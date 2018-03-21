@@ -1,22 +1,10 @@
-<div>
+<div class="panel panel-default">
+	<div class="panel-heading"><h3>Ola, eu sou grupos :3</h3> </div>
+	
+	{{vm.title}}	
 
-	Ola, eu sou grupos :3
-	
-	{{vm.title}}
-	
-	<h1>Adicionar GRUPO</h1>
-	
-	<label> Adicionar Grupo</label>
-	<input type="text" ng-model="vm.Grupo.nome">
-	
-	<input type="button" value="salvar" ng-click="vm.salvarGrupos()">
-	
-	<hr/>
-	<div ng-repeat = "grupos in vm.Grupos">
-		Grupos: {{grupos.nome}}
-		<input type="button" value="deletar" ng-click="vm.deletarGrupos(grupos)">
-		<input type="button" value="alterar" ng-click="vm.alterarGrupos(grupos)"/>
-		<input type="button" value="cancelar" ng-click="vm.cancelar()">
-	
+	<div ng-repeat = "grupos in vm.Grupos" class="panel-body">
+	<p><a ui-sref="grupodetalhe({gruposId:grupos.id})">{{grupos.nome}}</a></p>
+		
 	</div>
 </div>

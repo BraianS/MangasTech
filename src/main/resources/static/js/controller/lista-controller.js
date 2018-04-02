@@ -1,6 +1,6 @@
 angular
 .module('appCliente')
-.controller('listaController', ['$http','$stateParams','$state','$scope','$filter','multipartForm','Upload', function ($http,$stateParams,$state,$scope,$filter,multipartForm,Upload) {
+.controller('listaController', ['$http','$stateParams','$state','$scope','$filter','multipartForm','Upload','$log', function ($http,$stateParams,$state,$scope,$filter,multipartForm,Upload,$log) {
 	var vm = this;
 	vm.Model = {};
 	vm.title = 'hello world mudafuck';
@@ -8,28 +8,46 @@ angular
 	
 	
 	vm.page = parseInt($stateParams.pages, 10);
-		
+	
 	vm.Mangas = [];
 	vm.number = [];
 	vm.numero = 0;
 	vm.totalDePaginas = [];
+	vm.size = [];
+	vm.items = [];
+	vm.pagina = 1;
 	
-	vm.nome = 'BRAIAN';
+	
+	vm.pagina = 1;
+	
+	vm.pageChange= function() {
+	    $log.log('Page changed to: ' + vm.pagina);
+	  };
+	
+	  
+	  $scope.$watch("vm.pagina + vm.size", function() {
+		    var begin = ((vm.pagina - 1) * vm.size)
+		    , end = begin + vm.size;
+
+		    vm.filtro = vm.Mangas.slice(begin, end);
+		  });
+
+	 $scope.$watch('currentPage', function(){
+	    alert(vm.pageChange);
+	   });
 	
 	
-	vm.pageChanged = function() {
-		console.log("page changed to: " + $scope.number);
-	}
 	vm.index =[];
 	vm.carregarMangas2 = function() {
 		$http({
-			method: 'GET', url: 'http://localhost:8080/manga?page='+vm.page})
+		
+			method: 'GET', url: 'http://localhost:8080/manga?page='+vm.pagina})
 			.then(function (response) {
 				vm.Mangas = response.data.content;
 				vm.number = response.data.number;
 				vm.totalDePaginas = response.data.totalPages;
 				vm.items = response.data.totalElements;
-				
+				vm.size = response.data.size;
 				
 				console.log(response);
 				console.log(response.data);
@@ -40,25 +58,6 @@ angular
 	};
 	
 	vm.carregarMangas2();
-	
-	
-	
-	vm.nextPage = function() {
-		if(vm.page < vm.totalDePaginas ) {
-			$state.go('.', {pages: vm.page +1});
-		}
-		else {
-			console.log("chegou no limite de paginas");
-		}
-		
-	};
-	
-	vm.prevPage = function() {
-		if (vm.page > 0) {
-			$state.go('.', {pages: vm.page -1});
-		}
-	};
-	//MANGA DETALHE
 	
 	vm.status = [
 		"COMPLETO",

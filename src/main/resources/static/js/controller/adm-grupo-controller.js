@@ -9,14 +9,21 @@ angular
 	vm.Model = {};
 	vm.Grupos = [];
 	vm.Grupo = {};
+	vm.pagina = 0;
+	vm.number = [];
+	vm.totalDePaginas = [];
+	vm.items = [];
+	vm.size = [];
 	
 	vm.title = "sou grupos, prazer";
+	
+	vm.pageChange = function(){
+		alert("pagina atual e:"+vm.pagina)
+	}
 	
 	vm.init = function () {
 		$http.get('/user').then(function(res) {
 			$scope.users = res;
-			
-			
 			$scope.message = '';
 			$scope.appUser = null;
 			$scope.buttonText = 'Create';
@@ -28,9 +35,14 @@ angular
 	
 	vm.carregarGrupos = function () {
 		$http({
-			method: 'GET', url: 'http://localhost:8080/grupo'})
+			method: 'GET', url: 'http://localhost:8080/grupo?page='+vm.pagina})
 			.then(function (response){
-				vm.Grupos = response.data;
+				vm.Grupos = response.data.content;
+				vm.number = response.data.number;
+				vm.totalDePaginas = response.data.totalPages;
+				vm.items = response.data.totalElements;
+				vm.size = response.data.size;
+				
 				}, function (response) {
 					console.log(response.data);
 					console.log(response.status);
@@ -40,7 +52,7 @@ angular
 		
 		vm.salvarGrupos = function () {
 			$http({
-				method: 'POST', url: 'grupo',data: vm.Grupo})
+				method: 'POST', url: '/grupo',data: vm.Grupo})
 				.then(function (response) {
 					vm.Grupo = {};
 					vm.carregarGrupos();
@@ -56,6 +68,7 @@ angular
 				.then( function (response) {
 					pos = vm.Grupos.indexOf(vm.Grupo);
 					vm.Grupos.splice(pos,1);
+					vm.carregarGrupos();
 					console.log("deletado com sucesso");
 				}, function (response) {
 					console.log(response.data);

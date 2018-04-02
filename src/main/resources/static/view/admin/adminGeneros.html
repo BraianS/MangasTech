@@ -1,31 +1,47 @@
-<div>
-	<h3>Ola, eu sou lista de Generos</h3>
+<div class="panel panel-default">
+	<div class="panel-heading">Adm Generos</div>
 	
-	
-	<div>
-		<label>Nome</label>
-		<input type="text" ng-model="vm.Genero.nome"/>
-		
-		<input type="button" value="salvar" ng-click="vm.salvarGeneros()">
-	
-	</div>
-
-	<div ng-repeat="genero in vm.Generos">
-		<h3>Genero {{genero.nome}}</h3>
-		<input type="button" value="cancelar" ng-click="vm.cancelar()">
-		<input type="button" value="alterar" ng-click="vm.alterarGeneros(genero)">
-		<input type="button" value="deletar" ng-click="vm.deletarGeneros(genero)">
-		
-		<h3>manga</h3>
-		<div ng-repeat="manga in genero.manga ">
-
-			Nome: {{manga.nome}} <br />
-			Status: {{manga.status}} <br />
-			Data Lancamento: {{manga.dataLancado}} <br/>
-			Autor: {{manga.autor.nome}}
-			<br />
-			<hr />
-
+	<div class="jumbotron"> 
+		<div class="container">
+			<div class="row">
+				<div class="form-group">
+					<form name="form-genero-grupo" ng-submit="vm.salvarGeneros()">
+						<div class="form-group">
+							<label for="nome-genero">Nome</label>
+							<input type="text" class="form-control" ng-model="vm.Genero.nome">
+						</div>
+						
+						
+						<input type="submit" value="salvar">
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+
+<table class="table">
+	<tr>
+		<th>Nome</th>
+		<th>Edit</th>
+	</tr>
+	<tr ng-repeat="genero in vm.Generos">
+		<td><a ui-sref="generosDetalhe({generoId:genero.id})">{{genero.nome}}</a></td>
+		<td>
+			<div class="btn-group btn-group-xs">
+				<button type="button" class="btn-default">
+					<span class="glyphicon glyphicon-remove" ng-click="vm.deletarGeneros(genero)"></span>
+				</button>
+				<button type="button" class="btn-default"> 
+						<span class="glyphicon glyphicon-pencil" ng-click="vm.alterarGeneros(genero)"></span>
+				</button>
+				<button type="button" class="btn-default">
+					<span class="glyphicon glyphicon-asterisk" ng-click="vm.cancelar()"></span>
+				</button>
+			
+			</div>
+		</td>
+	</tr>
+	
+	
+</table>

@@ -1,9 +1,6 @@
 package com.mangastech.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -18,32 +15,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.springframework.data.annotation.Transient;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-
 
 @Entity
 @Table(name = "Mangas")
 
 //@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
-public class MangasEntity implements Serializable {
-		
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class MangasEntity  {
+			
 	private Long id;
 	private String nome;
 	private Status status;
@@ -65,22 +46,7 @@ public class MangasEntity implements Serializable {
 	
 	@JsonIgnoreProperties("manga")
 	private Set<GenerosEntity> genero = new HashSet<>();
-	
-	
-	
-	/*@JsonIgnore
-	private transient List<CapitulosEntity> capitulo = new ArrayList<>();*/
-	
-	
-	/*@OneToMany(mappedBy = "manga", orphanRemoval = true, targetEntity = CapitulosEntity.class)
-	@Cascade({CascadeType.ALL})
-	public List<CapitulosEntity> getCapitulo() {
-		return capitulo;
-	}
-
-	public void setCapitulo(List<CapitulosEntity> capitulo) {
-		this.capitulo = capitulo;
-	}*/
+		
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

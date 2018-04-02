@@ -35,4 +35,6 @@ public interface CapitulosRepository extends JpaRepository<CapitulosEntity, Long
 	
 	@Query("SELECT DISTINCT c.manga FROM CapitulosEntity c JOIN c.grupo g WHERE g.id = ?" )
 	List<CapitulosEntity> buscarIdGrupo(@Param("id") Long id);
+	
+	
 }

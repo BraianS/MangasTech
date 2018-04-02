@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,4 +31,7 @@ public interface AutorRepository extends JpaRepository<AutorEntity, Long> {
 	//Busca o Autor 
 	@Query("SELECT manga FROM AutorEntity a INNER JOIN a.manga manga GROUP BY a.nome ")
 	public List<AutorEntity> buscarAutorEMangas();
+	
+	@Query("SELECT a FROM AutorEntity a")
+	Page<AutorEntity> buscarAutor(Pageable page);
 }

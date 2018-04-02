@@ -11,7 +11,7 @@ angular
 	
 	vm.carregarAutores = function() {
 		$http.get('http://localhost:8080/autor').then(function (response) {
-			vm.autor = response.data;
+			vm.autor = response.data.content;
 			console.log(response.data);
 			console.log(response.status);
 		}, function (response){

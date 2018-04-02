@@ -12,6 +12,8 @@ angular
 	$scope.ola = "ola mundo";
 	
 	vm.capnews = [];
+	vm.nome = [];
+	vm.d = [];
 	
 	vm.carregarNovidades = function() {
 		$http({
@@ -28,4 +30,18 @@ angular
 	}
 	
 	vm.carregarNovidades();
+	
+	vm.pesquisarNome = function(nome){
+		$http({
+			method: 'GET',
+			url: 'manga/nome/'+nome
+		}).then(function(res) {
+			console.log(res);
+			console.log(res.data);
+			vm.d = res.data;
+		}, function(res) {
+			console.log(res);
+			console.log(res.data);
+		})
+	}
 })

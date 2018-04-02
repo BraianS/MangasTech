@@ -1,7 +1,7 @@
 
 <div class="jumbotron" >
 	<div class="container">
-	<div class="col-sm-4" ng-repeat="m in vm.Mangas">
+	<div class="col-sm-4"  ng-if="vm.items" data-ng-repeat="m in vm.Mangas | filter:searchValue  ">
 		
 		<div class="panel panel" >
 			<div class="panel-body">
@@ -20,13 +20,17 @@
 		
 	</div>
 	</div>
+	<pagination max-size = "vm.size" ng-change="vm.pageChange()" ng-if="vm.items" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarMangas2()"items-per-page="vm.size" boundary-links="true"></pagination>
+     <h1>pagina</h1> : {{vm.pagina}} ; vmpage = {{vm.page}}
+     
+     p: {{p}}
 </div>		
-	<input ng-model="q" id="search" class="form-control" placeholder="Filter text"/>
+	<input ng-model="searchValue" id="search" class="form-control" placeholder="Filter text"/>
+	<h1>pagina</h1>
 	
-	<div  ng-repeat="m in vm.Mangas | startFrom:0 | limitTo: 20 | filter:q">
-		
-	</div>	  
-	
+	 
+  
+     <br/>
 	<input type="button" value="next" ng-click="vm.nextPage()" ng-disabled="vm.totalDePaginas < vm.page"/>
 	
 	{{vm.page}} / {{vm.totalDePaginas}}

@@ -1,13 +1,27 @@
 <h1>Bem vindo a pagina de registrar</h1>
 
-<div>
-	<label>username</label>
-	<input type="text" placeholder="username" ng-model="vm.reg.username"/>
-	</br>
-	<label>password</label>
-	<input type="text" placeholder="password" ng-model="vm.reg.password">
-	</br>
-	<input type="button" value="salvar" ng-click="vm.registrar()"/>	
+<div class="container" style="padding-top:10px">
+	<h3>Registrar</h3>
 	
-	<button class="btn btn-default" ui-sref="login">Login </button>	
+	<form class="form-horizontal" ng-submit="vm.registrar()">
+		<div class="form-group">
+			<label class="control-label col-xs-2">Nome: </label>
+			<div class="col-xs-6">
+				<input class="form-control" type="text" ng-model="vm.reg.username" id="username">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="control-label col-xs-2" >Senha</label>
+			<div class="col-xs-6">
+				<input class="form-control col-xs-6" type="password" ng-model="vm.reg.password" id="pwd">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-xs-10" >
+				<button class="btn btn-default" type="submit">Salvar</button>
+			
+			</div>		
+		</div>		
+	</form>		
 </div>

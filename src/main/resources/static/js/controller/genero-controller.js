@@ -15,7 +15,7 @@ angular
 		$http({
 			method: 'GET', url: 'http://localhost:8080/genero'})
 			.then(function (response) {
-			vm.Generos = response.data;
+			vm.Generos = response.data.content;
 			vm.Manga = response.data.manga;
 			console.log(response.data);
 			console.log(response.status);

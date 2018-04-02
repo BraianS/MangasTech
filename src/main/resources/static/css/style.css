@@ -23,7 +23,12 @@ ul {
   list-style-type: none;
 }
 
+.panel-body {
+	font-size: 15px;
+	padding: 10px 15px;
+}
 
-
-
+.panel-info {
+	font-size : 15px;
+}
 

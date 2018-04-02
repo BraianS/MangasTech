@@ -1,10 +1,16 @@
 <div class="panel panel-default">
-	<div class="panel-heading"><h3>Ola, eu sou grupos :3</h3> </div>
+	<div class="panel-heading"><h3> Gupos :3</h3> </div>
 	
-	{{vm.title}}	
-
-	<div ng-repeat = "grupos in vm.Grupos" class="panel-body">
+	<div ng-repeat ="grupos in vm.Grupos" class="panel-body">
 	<p><a ui-sref="grupodetalhe({gruposId:grupos.id})">{{grupos.nome}}</a></p>
 		
 	</div>
+
+<h1>Pagination</h1>
+<div class="panel-footer">
+	<pagination max-size = "vm.size"   ng-change="vm.pageChange()" ng-if="vm.totalElementos" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarGrupos(vm.pagina)" items-per-page="vm.size" boundary-links="true"></pagination>
+	
 </div>
+    		
+</div>	
+

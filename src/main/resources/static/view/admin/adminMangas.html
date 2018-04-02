@@ -27,7 +27,7 @@
 
 					<div class="form-group">
 						<label for="descricao-manga">Descricao</label>
-						 <input type="text" class="form-control" ng-model="vm.Model.Manga.descricao" placeholder="Escreva a descricao">
+						 <textarea  class="form-control" ng-model="vm.Model.Manga.descricao" placeholder="Escreva a descricao"></textarea>
 					</div>
 					
 					 <div>          
@@ -55,10 +55,61 @@
 	</div>
 </div>
 <br>
-        
-<div ng-repeat="manga in vm.Mangas">
-	{{manga}} <input type="button" value='excluir' ng-click="vm.excluirMangas(manga)">excluir</input>
+
+<div class="panel panel-default">
+	<div class="panel-heading">Panel heading</div>
+
+	<table class="table " >
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Autor</th>
+				<th>Lancamento</th>
+				<th>Status</th>
+				<th>editar</th>
+			</tr>
+		</thead>
+
+		<tbody ng-repeat="manga in vm.Mangas | startFrom: 0 | limitTo:20: filter:q">
+			<tr>
+				<td>{{manga.nome}}</td>
+				<td>{{manga.autor.nome}}</td>
+				<td>{{manga.dataLancado}}</td>
+				<td>{{manga.status}}</td>
+				<td>
+					<div class="btn-group btn-group-xs" role="group" ng-init="editmode=false">
+						<button type="button" class="btn btn-default" ng-click="vm.excluirMangas(manga)">
+						<span class="glyphicon glyphicon-remove"></span>						
+						</button>
+						
+						<button type="button" class="btn btn-default" ng-click="vm.alterarMangas(manga)">
+						<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+						
+						<button type="button" class="btn btn-default" ng-click="vm.Cancelar()">
+							<span class="glyphicon glyphicon-asterisk"></span>
+						</button>
+				
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	
+	<pagination max-size = "vm.size"   ng-change="vm.pageChange()" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarMangas2()" items-per-page="vm.size" boundary-links="true"></pagination></div>
+	
+
 </div>
+  ola
+  <input ng-model="searchValue" id="search" class="form-control" placeholder="Filter text"/>
+	
+	<div  ng-repeat="m in vm.Mangas | startFrom:0 | limitTo: 20 | filter:q">
+    </div>
+    <input type="button" value="next" ng-click="vm.nextPage()" ng-disabled="vm.totalDePaginas < vm.page"/>
+    {{vm.page}} / {{vm.totalDePaginas}}
+    
+    <input type="button" value="previous" ng-click="vm.prevPage()">
+    
+
 
 

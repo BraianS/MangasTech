@@ -8,7 +8,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,9 +60,21 @@ public class MangasController {
 	}	*/
 	
 	@PreAuthorize("hasRole('USER')")
-	@RequestMapping(/*value="/teste",*/ method = RequestMethod.GET)
-	public @ResponseBody Page<MangasEntity> listar(Pageable pageable) {
-		Page<MangasEntity> mangas = mangaRepository.procurarportodos(pageable);
+	@RequestMapping(method = RequestMethod.GET)
+	public @ResponseBody Page<MangasEntity> listar(Integer page) {
+		
+		
+		if(page == null) {
+			page = 0;
+		}
+		
+		if(page >= 1) {
+			page --;
+		}
+		
+		Pageable pageable = new PageRequest(page, 20);
+		
+		Page<MangasEntity> mangas = mangaRepository.buscarMangas(pageable);
 		return mangas;
 	}
 	//Busca o ID do Manga
@@ -89,9 +103,7 @@ public class MangasController {
 	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<MangasEntity> alterarManga(@RequestBody MangasEntity mangas) {
 		
-		mangas = mangaRepository.save(mangas);
-		
-		
+		mangas = mangaRepository.save(mangas);		
 		
 		return new ResponseEntity<>(mangas, HttpStatus.OK);
 	}
@@ -115,6 +127,12 @@ public class MangasController {
 		return new ResponseEntity<MangasEntity>(manga, HttpStatus.OK);
 	}
 	
-	
+	@RequestMapping(value = "/nome/{nome}", method = RequestMethod.GET)
+	public ResponseEntity<List<MangasEntity>> procurarPeloNome(@PathVariable(value="nome") String nome) {
+		List<MangasEntity> manga = mangaRepository.procurarPorNome2(nome);
+		
+		return new ResponseEntity<>(manga, HttpStatus.OK);
+		
+	}
 	
 }

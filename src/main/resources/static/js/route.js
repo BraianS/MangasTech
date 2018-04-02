@@ -2,11 +2,7 @@ angular
 .module('appCliente')
 .config(function($httpProvider ,$locationProvider,$stateProvider , $urlRouterProvider) {
 $urlRouterProvider.otherwise('/pagina-nao-encontrada');
-	
-	/* $compileProvider.imgSrcSanitizationWhitelist(/^\s(https|file|blob|cdvfile):|data:image\//);*/
-	
-	// $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-	 
+		
 	 $locationProvider.html5Mode({
 		  enabled: true	,
 		requireBase: false
@@ -187,7 +183,18 @@ $urlRouterProvider.otherwise('/pagina-nao-encontrada');
 		}
 		
 	})
-	.state('admgrupo',{
+	.state('pesquisa',{
+	parent: 'nav',
+	url: '/pesquisa',
+		views: {
+			'content@' : {
+				templateUrl: '/view/pesquisa.html',
+				controller: 'pesquisaController',
+				controllerAs: 'vm'				
+			}
+		}
+	})
+	/*.state('admgrupo',{
 		parent : 'nav',
 		url: '/admgrupo',
 		data : {
@@ -266,7 +273,7 @@ $urlRouterProvider.otherwise('/pagina-nao-encontrada');
 			}
 		}
 		
-	})
+	})*/
 	.state('lista',{
 		parent : 'nav',
 		url: '/manga?page:pages',
@@ -290,6 +297,105 @@ $urlRouterProvider.otherwise('/pagina-nao-encontrada');
 			}
 		}
 		
+	})
+	.state('admin',{
+		parent: 'nav',
+		url:'/admin',
+		data: {
+			role: 'ADMIN'
+		},
+		views : {
+			'content@': {
+				templateUrl: '/view/admin/admin.html'
+			}
+		}		
+	})
+	
+	.state('admcap',{
+		parent: 'admin',
+		url: '/capitulo',
+		data : {
+			role : 'ADMIN'
+		},
+		needToLogin: true,
+		views : {
+			'admin@' : {				
+				url: '/admin/admcapitulo',
+				templateUrl: '/view/admin/adminCapitulos.html',
+				controller: 'admCapituloController',
+				controllerAs: 'vm'
+			}
+		}
+		
+	})
+	.state('admmangar',{
+		parent : 'admin',
+		url: '/admmangas',
+		data : {
+			role : 'ADMIN'
+		},
+		needToLogin: true,
+		views : {
+			'admin@' :{
+				url: '/admin/admmangas',
+				controller: 'admMangaController',
+				templateUrl:'/view/admin/adminMangas.html',
+				controllerAs: "vm"
+			}
+		},
+		params: {
+			pages : {
+				value : 0,
+				squash: true
+			}
+		}
+	})
+	.state('admautorr',{
+		parent :'admin',
+		url:'/admautor',
+		data : {
+			role : 'ADMIN'
+		},
+		needToLogin: true,
+		views : {
+			'admin@' :{
+				url:'/admin/admautor',
+				templateUrl: '/view/admin/adminAutor.html',
+				controller:'admAutorController',
+				controllerAs: "vm"
+			}
+		}
+	})
+	.state('admgrupor',{
+		parent : 'admin',
+		url: '/admgrupo',
+		data : {
+			role : 'ADMIN'
+		},
+		needToLogin: true,
+		views : {
+			'admin@' : {
+				templateUrl : '/view/admin/adminGrupos.html',
+				controller:'adminGruposController',
+				controllerAs : 'vm'
+			}
+		}
+	})
+	.state('admgenerorr',{
+		parent :'admin',
+		url: '/admgenero',
+		data : {
+			role : 'ADMIN'
+		},
+		needToLogin: true,
+		views : {
+			'admin@' : {
+				url:'/admin/admgenero',
+				controller:'admGenerosController',
+				templateUrl: '/view/admin/adminGeneros.html',
+				controllerAs: "vm"
+			}
+		}
 	})
 	/*.state('listaOrdenada',{
 		parent: 'nav',

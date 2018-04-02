@@ -5,6 +5,9 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,13 +27,22 @@ public class GeneroController {
 	private GeneroRepository generoRepository;
 	
 	@RequestMapping(value="/genero", method = RequestMethod.GET)
-	public List<GenerosEntity> getAll(){
-		return  generoRepository.todosOsGeneros();
+	public Page<GenerosEntity> getAll(Integer page){
+		
+		if(page == null) {
+			page = 0;
+		}
+		if(page >= 1) {
+			page --;
+		}
+		Pageable pageable = new PageRequest(page, 20);
+		
+		return  generoRepository.buscarTodos(pageable);
 	}
 	
 	@RequestMapping(value="/genero/{id}", method = RequestMethod.GET)
 	public ResponseEntity<GenerosEntity> buscarPorId(@PathVariable(value="id") Long id) {
-		GenerosEntity genero = generoRepository.findOne(id);
+		GenerosEntity genero = generoRepository.findOneByOderByNomeAsc(id);
 		return new ResponseEntity<>(genero,HttpStatus.OK);		
 	}
 	

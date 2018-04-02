@@ -1,6 +1,6 @@
 angular
 .module("appCliente")
-.controller("admMangaController", function($http,$scope,$filter){
+.controller("admMangaController", function($http,$scope,$filter,$stateParams,$state){
 	var vm = this;
 	
 	vm.hello = "MANGAS";
@@ -23,11 +23,36 @@ angular
 	vm.Mangas = [];
 	vm.Model.Mangas = [];
 	
+	vm.pagina = 0;
+	vm.size = [];
+	vm.totalPaginas = [];
+	vm.totalElementos = [];
+	
 	vm.status = [
 		"COMPLETO",
 		"PAUSADO"
 	];
 	
+	vm.page = parseInt($stateParams.pages, 10);
+	
+	
+	
+	
+	vm.nextPage = function() {
+		if(vm.page < vm.totalDePaginas ) {
+			$state.go('.', {pages: vm.page +1});
+		}
+		else {
+			console.log("chegou no limite de paginas");
+		}
+		
+	};
+	
+	vm.prevPage = function() {
+		if (vm.page > 0) {
+			$state.go('.', {pages: vm.page -1});
+		}
+	};
 	
 	 vm.salvarMangas= function() {
 			$http({
@@ -38,6 +63,7 @@ angular
 					 console.log(response.data);
 					  vm.Model.Manga = {};
 					  vm.Load();
+					  vm.carregarMangas2();
 								  
 				  }, function (response) {
 				    console.log(response.data);
@@ -65,7 +91,7 @@ angular
 				$http({
 					  method: 'GET', url: 'http://localhost:8080/genero'})
 					  .then(function (response) {
-						  vm.Model.generos = response.data;
+						  vm.Model.generos = response.data.content;
 						console.log("genero buscado com sucesso");
 					   console.log(response.data);
 					   console.log(response.status);
@@ -79,7 +105,7 @@ angular
 					$http({
 						  method: 'GET', url: 'http://localhost:8080/autor'})
 						  .then(function (response) {
-							  vm.Model.autor =response.data;
+							  vm.Model.autor =response.data.content;
 							  console.log(response);
 							  console.log(response.data);
 						  }, function (response) {
@@ -108,6 +134,9 @@ angular
 						  method: 'GET', url: 'http://localhost:8080/manga'})
 						  .then(function (response) {
 							  vm.Model.Mangas =response.data.content;
+							  vm.size = response.data.size;
+							  vm.totalPaginas = response.data.totalPages;
+							  vm.totalElements = response.data.totalElements;
 						   console.log(response.data);
 						   console.log(response.status);
 						  }, function (response) {
@@ -115,15 +144,19 @@ angular
 						    console.log(response.status);
 						  });
 					};
+					
+					vm.pageChange = function() {
+						alert("pagina atual e : "+vm.pagina)
+					}
 				
 				vm.carregarMangas2 = function() {
 					$http({
-						method: 'GET', url: 'http://localhost:8080/manga'})
+						method: 'GET', url: 'http://localhost:8080/manga?page='+vm.pagina})
 						.then(function (response) {
 							vm.Mangas = response.data.content;
-							vm.number = response.data.number;
 							vm.totalDePaginas = response.data.totalPages;
-							vm.items = response.data.totalElements;
+							vm.totalElementos = response.data.totalElements;
+							vm.size = response.data.size;
 							
 							
 							console.log(response);

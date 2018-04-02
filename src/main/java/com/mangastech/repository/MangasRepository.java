@@ -17,17 +17,14 @@ import com.mangastech.model.MangasEntity;
 @Repository
 @Transactional
 public interface MangasRepository extends JpaRepository<MangasEntity, Long>{
-	
-	/*@Query("SELECT c FROM CapitulosEntity c where c.manga =:id ")*/
-	/*List<MangasEntity> findBycapitulo(@Param("id") Long id);*/
-	
-	@Query("SELECT c FROM MangasEntity c")
-	Page<MangasEntity> procurarportodos(Pageable pageable);
+			
+	@Query("SELECT c FROM MangasEntity c ORDER BY c.nome ASC")
+	Page<MangasEntity> buscarMangas(Pageable pageable);
 	
 	@Query("SELECT m FROM MangasEntity m where m.nome LIKE :nome%")
 	Page<MangasEntity> procurarPorNome( @Param("nome") String nome,Pageable pageable);
 	
-	
-	
+	@Query("SELECT m FROM MangasEntity m where m.nome LIKE %:nome%")
+	List<MangasEntity> procurarPorNome2( @Param("nome") String nome);
 	
 }

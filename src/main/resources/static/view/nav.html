@@ -16,7 +16,19 @@
 			<a class="navbar-brand" ui-sref="generos">Generos</a>
 			<a class="navbar-brand" ui-sref="grupos">grupos</a>			
 			<a class="navbar-brand" ui-sref="autor">Autor</a>
-			<ul class="nav navbar-nav">
+			<div class="col-sm-3 col-md-3" >
+				<form class="navbar-form" role="search">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Search" name="q" ng-model="vm.nome" >
+					<div class="input-group-btn">
+						<button class="btn btn-default" type="submit" ng-click="vm.service(vm.nome)" ui-sref="pesquisa" ui-sref-opts="{reload:true, notify:true}"><i class="glyphicon glyphicon-search"></i></button>
+						
+					</div>
+				</div>
+				
+				</form>
+			</div>
+			<!-- <ul class="nav navbar-nav">
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -27,7 +39,8 @@
 							<li><a ui-sref="admcapitulo">Adiciona Capitulo</a></li>
 						</ul>
 				</li>
-			</ul>
+			</ul> -->
+			<a class="navbar-brand" ui-sref="admin">admin</a>
 			<ul class="nav navbar-nav navbar-right">
 				<li ><a ui-sref="registrar"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 				<li><a ui-sref="login"><span class="glyphicon glyphicon-log-in"> Login</span></a></li>

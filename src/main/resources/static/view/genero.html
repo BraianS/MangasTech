@@ -1,23 +1,10 @@
-<div class="panel panel-default">
+<div class="panel panel-default" >
 	<div class="panel-heading"><h3>Ola, eu sou lista de Generos</h3> </div>
 	
-		<div ng-repeat="genero in vm.Generos" class="panel-body">
+		<div class="panel-body" ng-repeat="genero in vm.Generos" >
 		
 		<p><strong> <a ui-sref="generosDetalhe({generoId:genero.id})">{{genero.nome}}</a></strong></p>
 		<p> Total de Mangas -  {{genero.manga.length}}</p>
 		
-		
-		
-		<!-- <h3>manga</h3>
-		<div ng-repeat="manga in genero.manga ">
-
-			Nome: {{manga.nome}} <br />
-			Status: {{manga.status}} <br />
-			Data Lancamento: {{manga.dataLancado}} <br/>
-			Autor: {{manga.autor.nome}}
-			<br />
-			<hr />
-
-		</div> -->
 	</div>
 </div>

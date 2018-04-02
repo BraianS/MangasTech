@@ -8,17 +8,27 @@ angular
 	
 	vm.autor = [];
 	vm.autores = {};
+	vm.pagina = 0;
+	vm.totalPalginas = [];
+	vm.totalItems = [];
+	vm.size = [];
 	
 	vm.carregarAutores = function() {
-		$http.get('http://localhost:8080/autor').then(function (response) {
-			vm.autor = response.data;
-			console.log(response.data);
+		$http.get('http://localhost:8080/autor?page='+vm.pagina).then(function (response) {
+			vm.autor = response.data.content;
+			vm.totalPaginas = response.data.totalPages;
+			vm.totalItems = response.data.totalElements;
+			vm.size = response.data.size;
+			console.log(response.data.content);
 			console.log(response.status);
 		}, function (response){
-			console.log(response);
+			console.log(response.content);
 		})
 	};
 	
+	vm.pageChange = function () {
+		alert("pagina atual e: "+ vm.pagina)
+	}
 	
 	vm.salvarAutores = function() {
 		$http({
@@ -43,6 +53,7 @@ angular
 				pos = vm.autor.indexOf(vm.autores);
 				vm.autor.splice(pos,1);
 				console.log("deletado");
+				vm.carregarAutores();
 			}, function (response) {
 				console.log(response.data);
 				console.log(response.status);

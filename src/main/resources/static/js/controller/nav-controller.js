@@ -1,6 +1,6 @@
 angular
 .module("appCliente")
-.controller("navController",['$scope','$location','$route','$routeParams','AuthService', function($scope, $location,$route, $routeParams,AuthService){
+.controller("navController",['$scope','$location','$route','$routeParams','AuthService','$http','$rootScope','pesquisaService', function($scope, $location,$route, $routeParams,AuthService,$http,$rootScope,pesquisaService){
 	$scope.$location = $location;
 	$scope.$route=$route;
 	$scope.$routeParams = $routeParams;
@@ -11,7 +11,32 @@ angular
 	
 	$scope.$on('LoginSuccessful', function() {
 		$scope.user = null;
-	})
+	});
+	
+	
+	var vm = this;
+	
+	vm.d = [];
+	vm.nome = [];
+	
+	vm.service = function(nome) {
+		pesquisaService.setValue(nome);
+		vm.nome = [];
+	}
+	
+		vm.pesquisarNome = function(nome){
+		$http({
+			method: 'GET',
+			url: 'manga/nome/'+nome
+		}).then(function(res) {
+			console.log(res);
+			console.log(res.data);
+			vm.d = res.data;
+		}, function(res) {
+			console.log(res);
+			console.log(res.data);
+		})
+	}
 	
 	
 	var vm = this;

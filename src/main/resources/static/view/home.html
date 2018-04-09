@@ -16,19 +16,21 @@
         <div class="col-md-6">
         	
         </div>
-        <div class="col-md-3"><div class="panel panel-default">
-	<div class="panel-heading">
-	<h5>Lancamentos</h5>
-	</div>
+        <div class="col-md-3">
+          <div class="panel panel-default">
+			<div class="panel-heading">
+				<h5>Lancamentos</h5>
+			</div>
 	
-		<div class="panel-body">
-			<div class="panel-info">
-				<div ng-repeat="c in vm.capnews" class="">
-			 <a ui-sref="mangaDetalhe({mangasId:c.manga.id})">{{c.manga.nome}} </a> <strong>{{c.capitulo}}</div></strong> </p>
+				<div class="panel-body">
+					<div class="panel-info">
+						<div   ng-repeat="c in vm.capnews">
+					<p> <a ui-sref="mangaDetalhe({mangasId:c.manga.id})">{{c.manga.nome}} <strong>{{c.capitulo}}</div></strong> </p> </a></p>
+					</div>
+				</div>
 			</div>
 		</div>
+	</div>
 </div>
-		</div></div>
-    </div>
     
     

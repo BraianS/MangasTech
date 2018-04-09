@@ -4,15 +4,18 @@
 			<p> {{mmm.nome}} <p> 
 			<p> {{mmm.status}} </p>
 			<p>{{mmm.dataLancado}}</p>
+			<label>descricao</label>
 			<p>{{mmm.descricao}}</p>
 		</div>
 	</div>
 </div>
 
 
-<h3>Tabela</h3>
-<div>
-	<table style="width:100%" >
+<div class="panel panel-default">
+	<div class="panel-heading">Tabela</div>
+	<div class="panel-body">
+		<div>
+	<table class="table-striped" style="width:100%" >
 	 <tr>
 		<th>Capitulos </th>
 		<th>Data Lancamento</th>
@@ -31,43 +34,8 @@
 	
 	</table>
 </div>
-{{vm.ola}}
-
-
-<h1>Add pagina</h1>
-<form class="vertical-center" enctype="multipart/form-data">
-	<H1>vm.uploadFiles1</H1>
-		PERCORRE FOTO POR FOTO PARA ADICIONAR
-		<label> Testando paginas 1</label>
-		<button ngf-select="vm.uploadFiles($files, $invalidFiles)" multiple
-		type="button" class="btn btn-adicionar" eturn-button>
-		Adicionar arquivos</button>
-			
+		
 	
-		
-		
-		<br/>
-			<H1>vm.uploadFiles2</H1>
-		
-		<label>Capitulo</label>	
-		<input type="text" ng-model="nome">
-		<label>Capitulo NUMERO</label>
-		<input type="text" ng-model="capitulo"> 	
-		<label> ADICIONA PAGINA</label>
-		<button ngf-select="vm.uploadFiles2($files)" multiple     accept="image/*">Select Files</button>
-		<hr/>
-		
-		
-		<br/>
-		<select ng-model="selectedItem" ng-options="item as item.capitulo for item in vm.Model.ListCapitulos"></select>
-		<h3>the selected item</h3>
-		<pre> {{selectedItem|json}}</pre>
-		
-		<label>Capitulo NUMERO</label>
-		<input type="text" ng-bind="item">
-		<h3> the inner html of the selected</h3>
-		<pre id="options" class="prettify html"></pre>
-		
-</form> 
+	</div>
+</div>
 
-{{manga | json}}

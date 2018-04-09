@@ -11,57 +11,30 @@ angular
 	
 	$scope.mangasId = $stateParams.mangasId;
 	
-	vm.select = select;
-	vm.selectedScreen = null;
-	vm.selectedScreenIndex = null;
-	vm.screens = [{
-	    id: 0,
-	    name: 'Screen0',
-	    sections: [{
-	      id: 0,
-	      sectionItems: []
-	    }, {
-	      id: 1,
-	      sectionItems: []
-	    }, {
-	      id: 2,
-	      sectionItems: []
-	    }]
-	  }, {
-	    id: 1,
-	    name: 'Screen1',
-	    sections: [{
-	      id: 0,
-	      sectionItems: []
-	    }, {
-	      id: 1,
-	      sectionItems: []
-	    }, {
-	      id: 2,
-	      sectionItems: []
-	    }]
-	  }, {
-	    id: 2,
-	    name: 'Screen2',
-	    sections: [{
-	      id: 0,
-	      sectionItems: []
-	    }, {
-	      id: 1,
-	      sectionItems: []
-	    }, {
-	      id: 2,
-	      sectionItems: []
-	    }]
-	  }];
 	
-	function select(){
-	  	vm.screens.forEach(function(item){
-	    	if(item.id == vm.selectedScreenIndex){
-	      	vm.selectedItem = item;
-	      }
-	    });
-	  }
+	
+	vm.selectI = null;
+	vm.selecionar = sel;
+	vm.selecionarItem = [];
+	function sel(){
+		vm.Model.Mangas.forEach(function(item){
+			if(item.id == vm.selectI){
+				vm.selecionarItem = item
+				alert(vm.selecionarItem.id);
+			}
+		});
+	}
+	
+	vm.xele = null;
+	vm.sele = sell;
+	
+	function sell(){
+		vm.Model.capituloManga.forEach(function(item){
+			if(item.id == vm.xele) {
+				vm.xelecionaItem = item;
+			}
+		})
+	}
 	
 	vm.Model.ListCapitulos = [];
 	
@@ -78,7 +51,29 @@ angular
 		})
 	};
 	
-	vm.carregarCapitulos();
+	vm.numero = [];
+	
+	vm.Model.capituloManga = [];
+	
+	vm.capManga = function () {
+	$http({
+		method :'GET', url : 'http://localhost:8080/capitulo/'+vm.selecionarItem
+	}).then(function (response){
+		vm.Model.capituloManga = response.data;
+		console.log(response);
+		console.log(response.data);
+	}, function (response){
+		console.log(response);
+		console.log(response.data);
+	})
+}
+	
+	vm.valor = 1;
+	vm.meuMetodo = function(){
+		alert(vm.valor);
+	}
+	
+	vm.capManga();
 	
 	vm.Model.title = "ola eu sou o adicionaController.js";
 	
@@ -108,7 +103,7 @@ angular
 		$http({
 			method: 'GET' , url: 'http://localhost:8080/grupo'})
 			.then(function (response) {
-				vm.Model.Grupos = response.data;
+				vm.Model.Grupos = response.data.content;
 			}, function (response) {
 				console.log(response.data);
 				console.log(response.status);
@@ -133,7 +128,7 @@ angular
 			Upload.upload({
 				url : 'http://localhost:8080/pagina',
 					method: 'POST',	
-					params: {nome:$scope.nome, capitulo: $scope.capitulo},
+					params: {nome:$scope.nome, capitulo: vm.valor},
 				      arrayKey: '',
 				      data: { /* nome:$scope.nome,*/ fotos: fotos},
 				      /*fields: {

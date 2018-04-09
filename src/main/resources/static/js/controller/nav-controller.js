@@ -1,15 +1,16 @@
 angular
 .module("appCliente")
-.controller("navController",['$scope','$location','$route','$routeParams','AuthService','$http','$rootScope','pesquisaService', function($scope, $location,$route, $routeParams,AuthService,$http,$rootScope,pesquisaService){
+.controller("navController",['$scope','$location','$route','$routeParams','AuthService','$http','$rootScope','pesquisaService','$transitions',
+	function($scope, $location,$route, $routeParams,AuthService,$http,$rootScope,pesquisaService,$transitions){
 	$scope.$location = $location;
 	$scope.$route=$route;
 	$scope.$routeParams = $routeParams;
 	
-	$scope.$on('LoginSuccessful', function() {
+	  $transitions.onEnter({entering: 'LoginSuccessful'}, function() {
 		$scope.user = AuthService.user;
 	});
 	
-	$scope.$on('LoginSuccessful', function() {
+	$transitions.onEnter({entering:'LoginSuccessful'}, function() {
 		$scope.user = null;
 	});
 	

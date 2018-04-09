@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mangastech.model.CapitulosEntity;
@@ -33,7 +34,7 @@ public class CapitulosController {
 	}
 	
 	@RequestMapping(value="/capitulo/{id}", method = RequestMethod.GET)
-	public List<CapitulosEntity> aaa(@PathVariable(value="id") CapitulosEntity id ) {
+	public @ResponseBody List<CapitulosEntity> aaa(@PathVariable(value="id") Long id ) {
 		List<CapitulosEntity> cao = capitulosRepository.buscarcapitulos(id);
 		
 		return cao;

@@ -27,4 +27,6 @@ public interface MangasRepository extends JpaRepository<MangasEntity, Long>{
 	@Query("SELECT m FROM MangasEntity m where m.nome LIKE %:nome%")
 	List<MangasEntity> procurarPorNome2( @Param("nome") String nome);
 	
+	@Query(value ="SELECT c.*,m.autor_id,m.descricao,m.nome,m.status FROM Mangas m LEFT JOIN Capitulos c ON c.manga_id = m.id", nativeQuery = true)
+	List<MangasEntity> mangaECapitulos();
 }

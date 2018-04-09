@@ -3,7 +3,7 @@ package com.mangastech.model;
 import java.io.Serializable;
 
 import java.util.HashSet;
-
+import java.util.List;
 import java.util.Set;
 
 
@@ -42,8 +42,7 @@ public class AutorEntity implements Serializable {
 	private String info;
 	
 	@JsonIgnoreProperties("autor")
-	private  Set<MangasEntity> manga;
-		
+	private  List<MangasEntity> manga;		
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,17 +68,17 @@ public class AutorEntity implements Serializable {
 	/*@OneToMany(mappedBy="autor",targetEntity= MangasEntity.class,fetch = FetchType.LAZY)*/
 	@OneToMany(mappedBy="autor",targetEntity= MangasEntity.class, fetch = FetchType.LAZY, orphanRemoval = true)
 	
-	 @Cascade({CascadeType.ALL,CascadeType.DELETE})
-	public Set<MangasEntity> getManga() {
+	 @Cascade({CascadeType.PERSIST,CascadeType.MERGE})
+	public List<MangasEntity> getManga() {
 		return manga;
 	}
 	
-	public void setManga(Set<MangasEntity> manga) {
+	public void setManga(List<MangasEntity> manga) {
 		this.manga = manga;
 	}
 	
 	public AutorEntity() {
-		this.manga = new HashSet<>();
+		super();
 	}
 
 	@Column(columnDefinition = "TEXT")

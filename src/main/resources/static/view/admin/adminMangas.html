@@ -2,32 +2,37 @@
 	<div class="container">
 	 <div class="row">		
 			<div class="form-group">
-				<form name="form-novo-manga" ng-submit="vm.salvarMangas()">
+				<form novalidate name="formNovoManga" ng-submit="vm.salvarMangas()">
 
 					<div class="form-group">
 						<label for="nome-manga">Nome</label>
-						 <input type="text" class="form-control" ng-model="vm.Model.Manga.nome" placeholder="Nome do Manga" />
+						 <input name="nome" ng-minLength="2" type="text" class="form-control" ng-model="vm.Model.Manga.nome" placeholder="Nome do Manga" id="nome" required/>
+						 <span ng-show="formNovoManga.nome.$error.required && formNovoManga.nome.$dirty">Campo Nome Obrigatorio</span>
 					</div>
 
 					<div class="form-group">
 						<label for="opcao-manga">Opcao</label>
-						 <select ng-model="vm.Model.Manga.status" ng-options="s for s in vm.status"></select>
+						 <select name="opcao" ng-model="vm.Model.Manga.status" ng-options="s for s in vm.status" required></select>
+						 <span ng-show="formNovoManga.opcao.$error.required && formNovoManga.opcao.$dirty">Campo Opcao E Obrigatorio</span>
 					</div>
 					
 					<div class="form-group">
 						<label for="grupo-manga">Anos:</label>
-						 <select ng-model="vm.Model.Manga.dataLancado"	ng-options="year.value as year.value for year in years"></select>
+						 <select name="anos" ng-model="vm.Model.Manga.dataLancado"	ng-options="year.value as year.value for year in years"></select>
+						 <span ng-show="formNovoManga.anos.$error.required && formnNovoManga.anos.$dirty">Campo Anos e Obrigatorio</span>
 					</div>
 
 					<div class="form-group">
 						<label for="autor-manga">Autor</label>
-						 <select ng-model="vm.Model.Manga.autor" ng-options="autor.nome for autor in vm.Model.autor"
+						 <select name="grupo" ng-model="vm.Model.Manga.autor" ng-options="autor.nome for autor in vm.Model.autor"
 							placeholder="Escolha o autor"></select>
+							<span ng-show="formNovoManga.grupo.$error.required && formNovoManga.grupo.$dirty">Campo Autor e Obrigatorio</span>
 					</div>
 
 					<div class="form-group">
 						<label for="descricao-manga">Descricao</label>
-						 <textarea  class="form-control" ng-model="vm.Model.Manga.descricao" placeholder="Escreva a descricao"></textarea>
+						 <textarea  name="descricao" class="form-control" ng-model="vm.Model.Manga.descricao" placeholder="Escreva a descricao" required></textarea>
+						 <span ng-show="formNovoManga.descricao.$error.required && formNovoManga.descricao.$dirty">Campo Descricao Obrigatorio</span>
 					</div>
 					
 					 <div>          
@@ -44,17 +49,38 @@
 				</li>
 			</ul>			 
 			</div>			
-     </div>
-					
+     </div>				
 
-					<input type="submit" value="Salvar" />
+					<input type="submit" value="Salvar" class="btn btn-primary" ng-disabled="formNovoManga.$invalid"/>
+					
+					
 				</form>
+				
+				<fieldset>
+					<legend>Formulario</legend>
+					Valid: {{formNovoManga.$valid}}
+				</fieldset>
+				
+				<fieldset>
+					<legend>nome</legend>
+					Valid: {{formNovoManga.nome.$valid}} <br/>
+					Pristine: {{formNovoManga.nome.$pristine}} <br/>
+					Dirty: {{formNovoManga.nome.$dirty}} <br/>
+					Error Min Length: {{formNovo.nome.$error.minLength}}
+				</fieldset>
+				
+				<fieldset>
+					<legend>descricao</legend>
+					Valid: {{formNovoManga.descricao.$valid}} <br/>
+					Pristine: {{formNovoManga.descricao.$pristine}} <br/>
+					Dirty: {{formNovoManga.descricao.$dirty}} <br/>
+				</fieldset>
 			</div>
 
 		</div>
 	</div>
 </div>
-<br>
+
 
 <div class="panel panel-default">
 	<div class="panel-heading">Panel heading</div>
@@ -66,7 +92,9 @@
 				<th>Autor</th>
 				<th>Lancamento</th>
 				<th>Status</th>
+				<th>descricao</th>
 				<th>editar</th>
+				
 			</tr>
 		</thead>
 
@@ -76,6 +104,7 @@
 				<td>{{manga.autor.nome}}</td>
 				<td>{{manga.dataLancado}}</td>
 				<td>{{manga.status}}</td>
+				<td class="text"><span>{{manga.descricao}}</span></td>
 				<td>
 					<div class="btn-group btn-group-xs" role="group" ng-init="editmode=false">
 						<button type="button" class="btn btn-default" ng-click="vm.excluirMangas(manga)">

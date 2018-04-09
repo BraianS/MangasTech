@@ -1,64 +1,101 @@
 <div>
-	ola, vou add os capitulos 
-	<br/>
-	{{vm.Model.title}}
-	<br/>
-	<label>Capitulo</label>
-	<input type="number" ng-model="vm.Model.Capitulo.capitulo"/>
-	
-	<br/>
-	
-	<label>Manga</label>
-		<select ng-model="vm.Model.Capitulo.manga" ng-options=" manga.id as manga.nome for manga in vm.Model.Mangas">
-		</select>
-	
-	<label> Grupos</label>
-		<select ng-model="vm.Model.Capitulo.grupo" ng-options="grupo as grupo.nome for grupo in vm.Model.Grupos">
-		</select>
+	<div class="panel panel-default">
+		<div class="panel-heading">Salvar Capitulo</div>
 		
-	<input type="date" id="exampleInput" name="input" ng-model="vm.Model.Capitulo.lancamento" min="2017-01-01" max="2017-12-30" placeholder="yyyy-MM-dd" />
-
+		<div class="panel-body">
+			<div class="container">
+		<h3>Salvar Capitulo</h3>
+		<form class="form-horizontal" ng-submit="vm.salvarCapitulos()">
+			
+			<div class="form-group">
+				<label class="control-label col-xs-2" >Capitulo</label>
+				<div class="col-xs-6">
+					<input class="form-control" type="number" ng-model="vm.Model.Capitulo.capitulo">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-xs-2">Manga</label>
+				<select ng-model="vm.Model.Capitulo.manga" ng-options="manga.id as manga.nome for manga in vm.Model.Mangas">
+				</select>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-xs-2">Grupos</label>
+				<select ng-model="vm.Model.Capitulo.grupo" ng-options="grupo as grupo.nome for grupo in vm.Model.Grupos">
+				</select>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-xs-2">Data</label>
+				<input type="date" id="exampleInput" name="input" ng-model="vm.Model.Capitulo.lancamento" min="2018-01-01" max="2018-12-30" placeholder="yyyy-MM=dd"/>
+			</div>
+			
+			<button type="submit" class="btn btn-default" >Salvar</button>
+		</form>
+	</div>
+		</div>
+	</div>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">Salvar Paginas</div>
 		
-	<input type="button" value="salvar" ng-click="vm.salvarCapitulos()"/>
-	
-	<br/>
-	<!-- <pre>{{vm.Model | json}}</pre> -->
-	
-	<select ng-options="size as size.name for size in sizes" ng-model="item" ng-change="update()"></select>
-	
-	<select ng-model="item">{{item}}</select>
-	<p>{{item.name}} - {{item.name}}</p>
-	
-	<p>Enter Your Name: <input type="text" ng-model="name"></p>
-	<p> Hello <span ng-bind="name"></span></p>
-	<p> Hi <input type="text" value="{{name}}"></p>
-	<p>Ahoy <input type="text" ng-value="name"></p>
-	
-	<H1>vm.uploadFiles2</H1>
-		
-		<label>info</label>	
-		<input type="text" ng-model="nome">
-		<label>Capitulo NUMERO</label>
-		<input type="text" ng-model="capitulo" ng-bind="vm.Model.Capitulo.capitulo"> 	
-		<label> ADICIONA PAGINA</label>
-		<button ngf-select="vm.uploadFiles2($files)" multiple     accept="image/*">Select Files</button>
-		<hr/>
+		<div class="panel-body">
+			<div class="container">
+				<div class="form-horizontal">
 				
-		<br/>
+				<div class="form-group">
+					<label class="control-label col-xs-2">Selecionar o Manga para salvar</label>
+					<div class="col-xs-6">
+						<select ng-model="vm.selectI" ng-change="vm.selecionar()" ng-click="vm.capManga()">
+							<option value="{{manga.id}}" ng-repeat="manga in vm.Model.Mangas">
+								{{manga.nome}}
+							</option>
+						</select>
+						
+						<ul>
+							<li ng-repeat="a in vm.selecionarItem">{{a}}</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-panel col-xs-2">Selecionar Capitulo</label>
+					<div class="col-xs-6">
+						<select id="mySelect" ng-model="vm.valor" ng-change="vm.meuMetodo()" ng-show="vm.selectI">
+                        <option ng-repeat="o in vm.Model.capituloManga" value="{{o.id}}" material-select watch>{{o.capitulo}}</option>
+						</select>
+					</div>
+				</div>
+				
+				
+					<div class="form-group">
+						<label class="control-label col-xs-2"> Descricao</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" ng-model="nome">	
+						</div>
+										
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-xs-2">Capitulo Numero</label>
+						<div class="col-xs-6">
+							<input type="textbox" class="form-control" ng-model="vm.valor">
+						</div>
+						
+					</div>
+					
+					<button ngf-select="vm.uploadFiles2($files)" multiple accept="image/*">Selecinar Fotos</button>
+					
+				</div>
+			
+			</div>
 		
-		<hr/>
-		
-		
-    <select data-ng-model="vm.selectedScreenIndex" data-ng-change="vm.select()">
-      <option 
-      value="{{screen.id}}" 
-      ng-repeat="screen in vm.screens">
-       {{screen.name}}
-      </option>
-  </select>
-  <ul>
-    <li data-ng-repeat="sectionItems in vm.selectedItem.sections">{{sectionItems}}</li>
-  </ul>
+		</div>
+	</div>
+	
+	
+	
+	<br/>
+	<!--  <pre>{{vm.Model | json}}</pre>  -->
   
- 
-</div>

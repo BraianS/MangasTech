@@ -135,4 +135,8 @@ public class MangasController {
 		
 	}
 	
+	@GetMapping(value = "/teste")
+	public List<MangasEntity> mangaECapitulos() {
+		return mangaRepository.mangaECapitulos();
+	}
 }

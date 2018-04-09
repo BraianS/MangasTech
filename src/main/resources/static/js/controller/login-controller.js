@@ -15,6 +15,7 @@ angular
 	}
 	
 	vm.autenticar = function() {
+		if(vm.formLogin.$valid) {
 		$http({
 			method : 'POST',
 			url: 'autenticar',
@@ -43,6 +44,10 @@ angular
 			$scope.message = 'Authentication Failed !';
 		});
 		
+		}
+		else {
+			alert("Formulario e invalido")
+		}
 	};
 	
 		

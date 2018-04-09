@@ -90,10 +90,7 @@ public class MangasEntity  {
 	}
 
 	@ManyToOne(targetEntity = AutorEntity.class, fetch = FetchType.LAZY)
-	@JoinTable(name="mangas_autor",
-	joinColumns=@JoinColumn(name="manga_id",referencedColumnName="id"),
-	inverseJoinColumns = @JoinColumn(name="autor_id",referencedColumnName="id"))
-	
+	@JoinColumn(name = "autor_id")
 	public AutorEntity getAutor() {
 		return autor;
 	}

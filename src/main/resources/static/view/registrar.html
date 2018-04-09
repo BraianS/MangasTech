@@ -3,25 +3,47 @@
 <div class="container" style="padding-top:10px">
 	<h3>Registrar</h3>
 	
-	<form class="form-horizontal" ng-submit="vm.registrar()">
+	<form name="vm.formRegistrar" class="form-horizontal" ng-submit="vm.registrar()">
 		<div class="form-group">
 			<label class="control-label col-xs-2">Nome: </label>
 			<div class="col-xs-6">
-				<input class="form-control" type="text" ng-model="vm.reg.username" id="username">
+				<input name="nome" class="form-control" type="text" ng-model="vm.reg.username" id="username" required>
+				<span ng-show="vm.formRegistrar.nome.$error.required && vm.formRegistrar.nome.$dirty ">Campo Nome Obrigatorio</span>
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label class="control-label col-xs-2" >Senha</label>
 			<div class="col-xs-6">
-				<input class="form-control col-xs-6" type="password" ng-model="vm.reg.password" id="pwd">
+				<input name="senha" class="form-control col-xs-6" type="password" ng-model="vm.reg.password" id="pwd" required>
+				<span ng-show="vm.formRegistrar.senha.$dirty && vm.formRegistrar.senha.$error.required">Campo Senha Obrigatorio</span>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-xs-10" >
-				<button class="btn btn-default" type="submit">Salvar</button>
+				<button class="btn btn-primary" type="submit" ng-disabled="vm.vm.formRegistrar.$invalid">Salvar</button>
 			
 			</div>		
 		</div>		
-	</form>		
+	</form>	
+	
+	
+	
+		<fieldset>
+			<legend>Formulario</legend>
+			Valido: {{vm.formRegistrar.$valid}} <br/>
+			Dirty: {{vm.formRegistrar.$dirty}} <br/>
+			Error Required: {{vm.formRegistrar.nome.$error.required}} <br/>
+			Error Required && Dirty: {{vm.formRegistrar.nome.$error.required && vm.formRegistrar.nome.$dirty}}
+		</fieldset>
+	
+	<fieldset>
+		<legend>Nome</legend>
+		dirty : {{vm.formRegistrar.nome.$dirty}} <br/>
+	</fieldset>
+	
+	<fieldset>
+		<legend>Senha</legend>
+		Error Required: {{vm.formRegistrar.senha.$error.required}}<br/>
+	</fieldset>	
 </div>

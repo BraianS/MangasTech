@@ -65,7 +65,8 @@ public class PaginasEntity {
 	public PaginasEntity() {
 		
 	}
-
+	
+	@Column(name="nome", columnDefinition = "varchar(50)")
 	public String getNome() {
 		return nome;
 	}

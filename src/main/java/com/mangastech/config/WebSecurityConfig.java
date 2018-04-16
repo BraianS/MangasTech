@@ -4,7 +4,6 @@ package com.mangastech.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.mangastech.repository.UsuarioRepository;
 
 @Configuration
@@ -34,9 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 				//.permitAll();
 				//.httpBasic();
-		
-		
-			
 	
 		
 		//---------------------BUSCA PADRÃO
@@ -87,7 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		// starts authorizing configurations
 		.authorizeRequests()
-		.antMatchers(HttpMethod.GET,"/manga","/grupo", "/home2").anonymous().and()
+		.antMatchers(HttpMethod.GET,"/manga","/grupo", "/home2").permitAll().and()
 		// authenticate all remaining URLS
 		.authorizeRequests().anyRequest().authenticated().and()
 		// adding JWT filter
@@ -120,15 +114,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/favicon.ico",
 	       		 "/",
 	       		 "/index.html",
-	       		 "/view/**",
 	       		 "/registrar",
 	       		 "/autenticar",
-	       		 "/autenticar2",
-	       		 "/registrar",
-	       		 "/js/**",
-	       		 "/css/**",
-	       		 "/grupo/**",
-	       		 "/autor/**",
+	       		 "/pagina/**",
+	       		/*
+	       		       		      		 
+	       		 "/grupo",
+	       		 "/autor/*",
+	       		 "/autor",
 	       		 "/manga/**",
 	       		 "/capitulodetalhe/**",
 	       		 "/capitulo/**",
@@ -136,9 +129,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	       		 "/genero/**",
 	       		 "/grupo1",
 	       		 "/home3/**",
-	       		 "/home3");
+	       		 "/home3",*/
+	       		 "/user/genero/**",
+	       		 "/capituloDetalhe/**",
+	       		 "/capitulo/**",
+	       		 "/user/grupo/**",
+	       		 "/user/manga/**",
+	       		 "/user/autor/**",
+	       		 "/app/**");
 	}
-	
-
-	
 }

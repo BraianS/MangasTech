@@ -1,13 +1,10 @@
 package com.mangastech.service;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import com.mangastech.model.AutorEntity;
 import com.mangastech.model.MangasEntity;
 import com.mangastech.repository.MangasRepository;
 
@@ -23,7 +20,19 @@ public class MangaService {
 			return mangaRepository.save(manga);
 	}
 	
-	public List<MangasEntity> buscarTodos(){
-		return mangaRepository.findAll();
+	public Page<MangasEntity> buscarTodos(Pageable pageable){
+		return mangaRepository.findAll(pageable);
+	}
+
+	public void excluir(Long id) {
+		 mangaRepository.delete(id);		
+	}
+
+	public MangasEntity alterar(MangasEntity mangas) {
+			return mangaRepository.save(mangas);
+	}
+
+	public Page<MangasEntity> buscarPorNome(String nome, Pageable pageable) {
+		return mangaRepository.procurarPorNome(nome, pageable);		
 	}
 }

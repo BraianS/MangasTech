@@ -1,0 +1,18 @@
+
+    
+    <h1>UI-Bootstrap Carousel</h1>
+	<div ng-controller="capituloController as CarouselDemoCtrl">
+		<div style="height: 1200px">
+			<carousel>
+			 <slide ng-repeat="slide in vm.fotos"> <img
+				data-ng-src="data:image/jpeg;base64,{{slide.fotos}}"
+				style="margin: auto;">
+			<div class="carousel-caption">
+				<h4>Slide {{$index}}</h4>
+				<p>{{slide.text}}</p>
+			</div>
+			</slide>
+          </carousel>
+		</div>
+		
+	</div>

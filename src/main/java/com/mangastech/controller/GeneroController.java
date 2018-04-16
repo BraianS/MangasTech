@@ -1,9 +1,6 @@
 package com.mangastech.controller;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.mangastech.model.GenerosEntity;
 import com.mangastech.repository.GeneroRepository;
+import com.mangastech.service.GeneroService;
 
 @RestController
 @Transactional
@@ -26,8 +23,11 @@ public class GeneroController {
 	@Autowired
 	private GeneroRepository generoRepository;
 	
-	@RequestMapping(value="/genero", method = RequestMethod.GET)
-	public Page<GenerosEntity> getAll(Integer page){
+	@Autowired
+	private GeneroService generoService;
+	
+	@RequestMapping(value="/user/genero", method = RequestMethod.GET)
+	public ResponseEntity<Page<GenerosEntity>> getAll(Integer page){
 		
 		if(page == null) {
 			page = 0;
@@ -36,26 +36,28 @@ public class GeneroController {
 			page --;
 		}
 		Pageable pageable = new PageRequest(page, 20);
+		 Page<GenerosEntity> genero = generoService.buscarTodos(pageable);
+		 
+		return new ResponseEntity<>(genero,HttpStatus.OK);
 		
-		return  generoRepository.buscarTodos(pageable);
 	}
 	
-	@RequestMapping(value="/genero/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/admin/genero/{id}", method = RequestMethod.GET)
 	public ResponseEntity<GenerosEntity> buscarPorId(@PathVariable(value="id") Long id) {
-		GenerosEntity genero = generoRepository.findOneByOderByNomeAsc(id);
+		GenerosEntity genero = generoService.buscarPorId(id);
 		return new ResponseEntity<>(genero,HttpStatus.OK);		
 	}
 	
 	
-	@RequestMapping(value="/genero", method = RequestMethod.POST)
-	public ResponseEntity<GenerosEntity> salvarGeneros(@RequestBody GenerosEntity generos){
-		
-		generoRepository.save(generos);
+	@RequestMapping(value="/admin/genero", method = RequestMethod.POST)
+	public ResponseEntity<GenerosEntity> salvarGeneros(@RequestBody GenerosEntity genero){
+				
+		generoService.cadastrar(genero);
 		
 		return  ResponseEntity.ok().build();
 	}
 	
-	@RequestMapping(value = "/genero/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/admin/genero/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<GenerosEntity> deletarGeneros(@PathVariable(value="id") Long id){
 		
 		GenerosEntity genero = generoRepository.findOne(id);
@@ -63,15 +65,17 @@ public class GeneroController {
 		if(genero == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		
-		generoRepository.delete(id);
+				
+		generoService.excluir(id);
 		
 		return ResponseEntity.ok().build();
 	}
 	
-	@RequestMapping(value = "/genero", method = RequestMethod.PUT)
+	@RequestMapping(value = "/admin/genero", method = RequestMethod.PUT)
 	public ResponseEntity<GenerosEntity> alterarGeneros(@RequestBody GenerosEntity genero) {
-			 genero = generoRepository.save(genero);
+			 
+			 
+			 genero = generoService.alterar(genero);
 		return ResponseEntity.ok().body(genero);
 	}
 }

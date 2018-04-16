@@ -5,29 +5,21 @@ import java.util.HashSet;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.OneToMany;
-
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
-@Table(name="Grupos")/*
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")*/
+@Table(name="Grupos")
 public class GruposEntity {
 	
 	private Long id;
-	private String nome;
-	
-	/*@JsonIgnoreProperties(value="grupo")
-	private Set<CapitulosEntity> capitulo = new HashSet<>();	*/
+	private String nome;	
 	
 	private Set<CapitulosEntity> capitulo = new HashSet<CapitulosEntity>();
 	
@@ -39,9 +31,11 @@ public class GruposEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	@Column(columnDefinition ="varchar(50)")
 	public String getNome() {
 		return nome;
 	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
@@ -52,8 +46,7 @@ public class GruposEntity {
 	}
 	public GruposEntity() {
 		super();
-	}
-	
+	}	
 	
 	@OneToMany(mappedBy = "grupo",targetEntity = CapitulosEntity.class, fetch = FetchType.LAZY)
 	public Set<CapitulosEntity> getCapitulo() {
@@ -62,26 +55,4 @@ public class GruposEntity {
 	public void setCapitulo(Set<CapitulosEntity> capitulo) {
 		this.capitulo = capitulo;
 	}
-	
-	
-	
-	/*@OneToMany(mappedBy = "grupo", fetch = FetchType.EAGER)
-	@Cascade({CascadeType.PERSIST})
-	
-	public Set<CapitulosEntity> getCapitulo() {
-		return capitulo;
-	}
-	public void setCapitulo(Set<CapitulosEntity> capitulo) {
-		this.capitulo = capitulo;
-	}*/
-	
-	/*@OneToMany(mappedBy = "grupo", fetch = FetchType.LAZY)	
-	@Cascade({CascadeType.ALL})
-	public Set<CapitulosEntity> getCapitulo() {
-		return capitulo;
-	}
-	public void setCapitulo(Set<CapitulosEntity> capitulo) {
-		this.capitulo = capitulo;
-	}*/
-		
 }

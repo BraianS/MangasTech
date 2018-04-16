@@ -44,17 +44,17 @@ public class UsuarioController {
 	public ResponseEntity<UsuarioEntity> registrar(@RequestBody UsuarioEntity usuario)  {
 		
 		if(usuarioRepository.findOneByUsername(usuario.getUsername()) != null) {
-			throw new RuntimeException("Username already exist");
+			throw new RuntimeException("Usuario Ja existe");
 		}
 		List<String> roles = new ArrayList<>();
-		roles.add("ADMIN");
+		
 		roles.add("USER");
 		
 		usuario.setRoles(roles);
 		
 		usuarioRepository.save(usuario);
 	
-		return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+		return new ResponseEntity<UsuarioEntity>(usuario, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/role", method = RequestMethod.POST)

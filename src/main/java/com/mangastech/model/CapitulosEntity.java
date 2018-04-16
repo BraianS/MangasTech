@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="Capitulos")
-
 public class CapitulosEntity {
 	private Long id;
 	private Date lancamento;

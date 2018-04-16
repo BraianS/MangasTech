@@ -8,6 +8,5 @@ import com.mangastech.model.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 	
-	public Role findByRole(String role);
 	
 }

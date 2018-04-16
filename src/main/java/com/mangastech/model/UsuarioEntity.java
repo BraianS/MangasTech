@@ -17,6 +17,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name = "Usuario")
@@ -28,46 +30,36 @@ public class UsuarioEntity implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
+	@Column(name = "id")
 	private int id;
+	private String nome;
+	private String username;
+	private String password;
 	
-	/*@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private List<Role> roles;
-	*/
 	@ElementCollection
 	private List<String> roles = new ArrayList<>();
 	
 
-	private String username;
-	private String password;
-	
-	
-	
-	
-
-	public List<String> getRoles() {
-		return roles;
+	@Column(name="username", columnDefinition = "varchar(50)")
+	public String getNome() {
+		return nome;
 	}
-
-
-
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
-	}
-
-
-
+	
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}	
+	
+	@Column(name="password", columnDefinition = "varchar(50)")
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	
-	
+	}	
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -75,25 +67,23 @@ public class UsuarioEntity implements UserDetails{
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 
-	/*public List<Role> getRoles() {
+	public List<String> getRoles() {
 		return roles;
 	}
-
-	public void setRoles(List<Role> roles) {
+	
+	public void setRoles(List<String> roles) {
 		this.roles = roles;
-	}*/
-//	public void addRole(Role r) {
-//		this.roles.add(r);
-//		r.getUsuarios().add(this);
-//	}
+	}	
+	
 	
 	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 	Collection<GrantedAuthority> authorities = new ArrayList<>();
-	for (String rr : roles) {
-		authorities.add(new SimpleGrantedAuthority(rr));
+	for (String role : roles) {
+		authorities.add(new SimpleGrantedAuthority(role));
 	}
 		return authorities;
 	}
@@ -127,17 +117,17 @@ public class UsuarioEntity implements UserDetails{
 	}
 
 	@Override
+	@JsonProperty(access = Access.WRITE_ONLY)
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return password;
 	}
 
 	@Override
+	
 	public String getUsername() {
 		// TODO Auto-generated method stub
 		return username;
 	}
-	
-	
-		
+			
 }

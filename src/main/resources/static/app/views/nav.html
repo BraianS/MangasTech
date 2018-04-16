@@ -1,0 +1,52 @@
+
+<nav class="navbar navbar-inverse">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				
+			</button>
+			<a class="navbar-brand" ui-sref="home">Home</a>
+			<a class="navbar-brand" ui-sref="manga">Mangas</a>			
+			<a class="navbar-brand" ui-sref="generos">Generos</a>
+			<a class="navbar-brand" ui-sref="grupos">grupos</a>			
+			<a class="navbar-brand" ui-sref="autor">Autor</a>
+			<div class="col-sm-3 col-md-3" >
+				<form class="navbar-form" role="search">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Search" name="q" ng-model="vm.nome" >
+					<div class="input-group-btn">
+						<button class="btn btn-default" type="submit" ng-click="vm.service(vm.nome)" ui-sref="pesquisa" ui-sref-opts="{reload:true, notify:true}"><i class="glyphicon glyphicon-search"></i></button>
+						
+					</div>
+				</div>
+				
+				</form>
+			</div>
+		
+			<a ng-show="user.username" class="navbar-brand" ui-sref="admin">admin</a>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-show="!user.username" ><a ui-sref="registrar"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+				<li ng-show="!user.username"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"> Login</span></a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-show="user.username"><a> <span class="user">Hello,{{user.username}}
+				
+				</span>
+									
+				</li>			
+			</ul>
+			<a  ng-show="user.username" ng-click="vm.logout" class="navbar-brand" ui-sref="login" ui-sref-opts="{reload:true, notify:true}">Logout</a>		
+			
+		</div>
+		
+	</div>
+</nav>
+	Path {{$location.path()}}
+	Template URL {{$route.current.templateUrl}}
+	Parametros: {{$routeParams}}

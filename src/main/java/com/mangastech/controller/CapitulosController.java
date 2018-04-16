@@ -11,14 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.mangastech.model.CapitulosEntity;
-import com.mangastech.model.GruposEntity;
 import com.mangastech.model.MangasEntity;
-import com.mangastech.model.PaginasEntity;
 import com.mangastech.repository.CapitulosRepository;
 
 @RestController
@@ -47,9 +43,9 @@ public class CapitulosController {
 	
 	@RequestMapping(value = "/capitulodetalhe/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<CapitulosEntity> procurarManga(@PathVariable(value="id") MangasEntity id) {
-		List<CapitulosEntity> capitulo = capitulosRepository.findByManga(id);
+		 capitulosRepository.findByManga(id);
 		
-		return  capitulo;
+		return   capitulosRepository.findByManga(id);
 	}
 	
 	@GetMapping("/home2")

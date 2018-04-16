@@ -22,17 +22,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class GenerosEntity implements Serializable {
 	
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nome;
 	
-	@JsonIgnoreProperties("genero")
-	
-	/*@JsonIgnore*/
-	
+	@JsonIgnoreProperties("genero")	
 	private List<MangasEntity> manga = new ArrayList<>(); ;
 	
 	@Id
@@ -45,7 +39,7 @@ public class GenerosEntity implements Serializable {
 		this.id = id;
 	}
 	
-	@Column(name="nome")
+	@Column(name="nome", columnDefinition="varchar(50)")
 	public String getNome() {
 		return nome;
 	}
@@ -55,7 +49,7 @@ public class GenerosEntity implements Serializable {
 	}
 	
 	@ManyToMany(mappedBy="genero", targetEntity = MangasEntity.class, fetch = FetchType.LAZY)
-	@Cascade({CascadeType.ALL})
+	@Cascade({CascadeType.PERSIST, CascadeType.MERGE})
 	public List<MangasEntity> getManga() {
 		return manga;
 	}

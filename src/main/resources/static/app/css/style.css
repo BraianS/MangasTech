@@ -1,0 +1,44 @@
+.carousel-indicators li { 
+    background-size : 42px 22px;
+    background-color: black;
+    width : 42px;
+    height: 22px;
+    background-repeat : no-repeat;
+    background-position : center;
+    cursor : pointer;
+  }
+  
+.intro {
+	background-color: black
+}
+
+.active {
+  color: Red
+}
+.filter li {
+  display: inline;
+  padding: 5px;
+}
+ul {
+  list-style-type: none;
+}
+
+.panel-body {
+	font-size: 15px;
+	padding: 10px 15px;
+}
+
+.panel-info {
+	font-size : 15px;
+}
+
+.table td.text {
+    max-width: 177px;
+}
+.table td.text span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+}

@@ -21,8 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Mangas")
-
-//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
 public class MangasEntity  {
 			
 	private Long id;
@@ -59,7 +57,7 @@ public class MangasEntity  {
 		this.id = id;
 	}
 	
-	@Column(name="nome")
+	@Column(name="nome",columnDefinition = "varchar(100)")
 	public String getNome() {
 		return nome;
 	}
@@ -68,8 +66,9 @@ public class MangasEntity  {
 		this.nome = nome;
 	}
 	
+	
 	@Enumerated(EnumType.STRING)
-	@Column(name="status")
+	@Column(name="status", columnDefinition = "varchar(50)")
 	public Status getStatus() {
 		return status;
 	}

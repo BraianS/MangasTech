@@ -1,6 +1,5 @@
 package com.mangastech.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,9 +15,7 @@ public class Role {
 	
 	private Integer id;
 	
-	private AuthorityName role;
-	
-	/*private List<UsuarioEntity> usuarios;*/
+	private AuthorityName role;	
 	
 	public Role() {
 		super();
@@ -44,18 +41,5 @@ public class Role {
 	public void setRole(AuthorityName role) {
 		this.role = role;
 	}
-	
-/*	@ManyToMany(mappedBy = "roles" , fetch = FetchType.LAZY)
-	public List<UsuarioEntity> getUsuarios() {
-		return usuarios;
-	}
-	@JsonIgnore
-	public void setUsuarios(List<UsuarioEntity> usuarios) {
-		this.usuarios = usuarios;
-	}*/
-	
-	
-	
-	
-		
+			
 }

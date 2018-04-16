@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mangastech.model.GruposEntity;
 import com.mangastech.repository.GruposRepository;
+import com.mangastech.service.GrupoService;
 
 @RestController
 @Transactional
@@ -25,9 +27,12 @@ public class GruposController {
 	@Autowired
 	private GruposRepository gruposRepository;
 	
+	@Autowired
+	private GrupoService grupoService;
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/grupo", method = RequestMethod.GET)
-	public Page<GruposEntity> listarAll (Integer page) {
+	@RequestMapping(value="/user/grupo", method = RequestMethod.GET)
+	public ResponseEntity<Page<GruposEntity>> listarAll (Integer page) {
 		
 		if(page == null) {
 			page = 0;
@@ -38,28 +43,33 @@ public class GruposController {
 		
 		Pageable pageable = new PageRequest(page, 20);
 		
-		return gruposRepository.buscarTodos(pageable);
+		Page<GruposEntity> grupo = grupoService.buscarTodos(pageable);		
+		
+		return new ResponseEntity<>(grupo, HttpStatus.OK);
+	}
+		
+	@RequestMapping(value="/admin/grupo", method = RequestMethod.POST)
+	public ResponseEntity<GruposEntity> salvarGrupos(@RequestBody GruposEntity grupos) {		
+		
+		grupos = grupoService.cadastrar(grupos);
+		return new ResponseEntity<>(grupos, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value="/grupo", method = RequestMethod.POST)
-	public GruposEntity salvarGrupos(@RequestBody GruposEntity grupos) {
-		
-		
-		return gruposRepository.save(grupos);
-	}
-	
-	@RequestMapping(value="/grupo/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/admin/grupo/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<GruposEntity> deletar(@PathVariable(value="id") Long id) {
-		gruposRepository.delete(id);
-		return ResponseEntity.ok().build();
-	}
+		
+		GruposEntity grupo = gruposRepository.findOne(id);
+		if(grupo.getId() == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		 grupoService.excluir(id);
+	 return ResponseEntity.ok().build();
+	}	
 	
-	
-	
-	@RequestMapping(value = "/grupo", method = RequestMethod.PUT)
+	@RequestMapping(value = "/admin/grupo", method = RequestMethod.PUT)
 	public ResponseEntity<GruposEntity> alterarGrupos (@RequestBody GruposEntity grupos) {
-		grupos = gruposRepository.save(grupos);
+			grupos = grupoService.alterar(grupos);
 		return ResponseEntity.ok().body(grupos);
 	}
 	

@@ -75,9 +75,18 @@ public class UsuarioEntity implements UserDetails{
 	
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
-	}	
+	}
+		
 	
-	
+	public UsuarioEntity(String nome, String username, String password,List<String> roles) {
+		super();
+		this.nome = nome;
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+	}
+
+
 	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

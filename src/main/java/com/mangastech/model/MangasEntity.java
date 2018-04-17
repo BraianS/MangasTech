@@ -1,8 +1,10 @@
 package com.mangastech.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,8 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -29,16 +33,9 @@ public class MangasEntity  {
 	private Integer dataLancado;
 	private String descricao;
 	
+	private List<CapitulosEntity> CapitulosEntity;
 	
-	@Column(columnDefinition = "TEXT")
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
+	
 	@JsonIgnoreProperties(value = {"manga"})	
 	private AutorEntity autor;
 	
@@ -87,8 +84,27 @@ public class MangasEntity  {
 	public void setDataLancado(Integer dataLancado) {
 		this.dataLancado = dataLancado;
 	}
+	
+	@Column(columnDefinition = "TEXT")
+	public String getDescricao() {
+		return descricao;
+	}
 
-	@ManyToOne(targetEntity = AutorEntity.class, fetch = FetchType.LAZY)
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "manga",cascade = {CascadeType.REMOVE})
+	public List<CapitulosEntity> getCapitulosEntity() {
+		return CapitulosEntity;
+	}
+
+	public void setCapitulosEntity(List<CapitulosEntity> capitulosEntity) {
+		CapitulosEntity = capitulosEntity;
+	}
+
+	@ManyToOne(targetEntity = AutorEntity.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "autor_id")
 	public AutorEntity getAutor() {
 		return autor;

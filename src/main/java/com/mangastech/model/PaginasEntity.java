@@ -11,6 +11,9 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table(name="paginas")
 public class PaginasEntity {
@@ -50,8 +53,9 @@ public class PaginasEntity {
 	public void setNumeroPagina(int string) {
 		this.numeroPagina = string;
 	}
-		
-	@ManyToOne(targetEntity = CapitulosEntity.class, fetch = FetchType.LAZY)	
+	
+	@Cascade({CascadeType.MERGE, CascadeType.REMOVE})
+	@ManyToOne(targetEntity = CapitulosEntity.class, fetch = FetchType.EAGER)	
 	@JoinColumn(name="capitulo_id")
 	public CapitulosEntity getCapitulo() {
 		return capitulo;

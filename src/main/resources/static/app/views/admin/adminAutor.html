@@ -26,8 +26,8 @@
 						<!-- Descricao -->
 						<div class="form-group" ng-class="{ 'has-error' : vm.formAutor.descricao.$invalid && vm.formAutor.descricao.$dirty}">
 							<label for="descricao">Descricao</label>
-							<textarea name="descricao" type="text" class="form-control" ng-model="vm.autores.info" id="descricao" required>	</textarea>
-							<span ng-show="vm.formAutor.descricao.$error.required && vm.formAutor.descricao.$dirty" >Campo Obrigatorio</span>
+							<textarea name="descricao" type="text" class="form-control" ng-model="vm.autores.info" id="descricao" >	</textarea>
+							<span ng-show="	vm.formAutor.nome.$error.required && vm.formAutor.descricao.$dirty" >Campo Obrigatorio</span>
 						</div>
 						
 						<!-- Salvar -->

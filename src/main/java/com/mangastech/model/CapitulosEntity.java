@@ -1,7 +1,9 @@
 package com.mangastech.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,11 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToOne;
-
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -32,7 +35,18 @@ public class CapitulosEntity {
 	
 	@JsonIgnoreProperties(value={"capitulo"})
 	private MangasEntity manga;
-		
+	
+	private List<PaginasEntity> pagina;
+	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "capitulo", cascade = {CascadeType.REMOVE})
+	public List<PaginasEntity> getPagina() {
+		return pagina;
+	}
+	public void setPagina(List<PaginasEntity> pagina) {
+		this.pagina = pagina;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -50,6 +64,7 @@ public class CapitulosEntity {
 	public void setLancamento(Date lancamento) {
 		this.lancamento = lancamento;
 	}
+	
 	@Column(name="capitulo")
 	public int getCapitulo() {
 		return capitulo;
@@ -59,7 +74,7 @@ public class CapitulosEntity {
 	}
 		
 	
-	@ManyToOne(targetEntity = MangasEntity.class)
+	@ManyToOne(targetEntity = MangasEntity.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
 	@JoinColumn(name="manga_id")
 	public MangasEntity getManga() {
 		return manga;
@@ -83,8 +98,9 @@ public class CapitulosEntity {
 		super();
 	}
 	
-	@ManyToOne(targetEntity = GruposEntity.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = GruposEntity.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
 	@JoinColumn(name="grupo_id")
+/*	@Cascade({CascadeType.PERSIST, CascadeType.REMOVE})*/
 	public GruposEntity getGrupo() {
 		return grupo;
 	}

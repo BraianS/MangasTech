@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,7 +49,8 @@ public class GruposEntity {
 		super();
 	}	
 	
-	@OneToMany(mappedBy = "grupo",targetEntity = CapitulosEntity.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "grupo",targetEntity = CapitulosEntity.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+	
 	public Set<CapitulosEntity> getCapitulo() {
 		return capitulo;
 	}

@@ -18,13 +18,13 @@ angular
 		vm.Model.Mangas.forEach(function(item){
 			if(item.id == vm.selectI){
 				vm.selecionarItem = item
-				alert('capitulo: '+vm.selecionarItem.id);
+				console.log('capitulo: '+vm.selecionarItem.id);
 			}
 		});
 	}
 	
 	$scope.$watch('assistir', function() {
-		alert('valor :'+vm.valor)
+		console.log('Numero do capitulo :'+vm.valor)
 	})
 	
 	vm.xele = null;
@@ -73,7 +73,7 @@ angular
 	
 	vm.valor = 1;
 	vm.meuMetodo = function(){
-		alert('valor: '+vm.valor);
+		console.log('valor: '+vm.valor);
 	}
 	
 	
@@ -84,7 +84,7 @@ angular
 			.then(function () {
 				vm.Model.Capitulo = {};
 				vm.formCapitulo.$setPristine(true);
-				vm.mensagem = "Cadastrado com Sucesso";
+				vm.mensagem = "Salvo com sucesso";
 			}, function (response) {
 				console.log(response.data);
 				console.log(response.status);

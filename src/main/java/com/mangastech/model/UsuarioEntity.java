@@ -85,6 +85,11 @@ public class UsuarioEntity implements UserDetails{
 		this.password = password;
 		this.roles = roles;
 	}
+	
+
+	public UsuarioEntity() {
+		super();
+	}
 
 
 	@JsonIgnore

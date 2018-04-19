@@ -14,7 +14,7 @@ angular
 			
 	vm.carregarMangas = function() {
 		$http({
-			method: 'GET', url: 'http://localhost:8080/manga/'+$stateParams.mangasId
+			method: 'GET', url: '/manga/'+$stateParams.mangasId
 		}).then(function(response) {
 			console.log(response);
 			console.log(response.data);
@@ -28,7 +28,7 @@ angular
 	
 	vm.carregarCapitulos = function () {
 		$http({
-			method :'GET', url : "capitulo/"+$stateParams.mangasId
+			method :'GET', url : "/capitulo/"+$stateParams.mangasId
 		}).then(function (response){
 			vm.Model.ListCapitulos = response.data;
 			console.log(response);
@@ -53,7 +53,7 @@ angular
 	        $scope.errFiles = errFiles;
 	        angular.forEach(files, function(files) {
 	        	files.upload = Upload.upload({
-	                url: 'http://localhost:8080/pagina',
+	                url: '/pagina',
 	                method: 'POST',
 	                
 	                data: {

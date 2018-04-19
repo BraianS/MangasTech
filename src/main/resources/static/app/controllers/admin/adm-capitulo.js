@@ -60,7 +60,7 @@ angular
 	
 	vm.capManga = function () {
 	$http({
-		method :'GET', url : 'http://localhost:8080/capitulo/'+vm.selecionarItem.id
+		method :'GET', url : '/capitulo/'+vm.selecionarItem.id
 	}).then(function (response){
 		vm.Model.capituloManga = response.data;
 		console.log(response);
@@ -80,7 +80,7 @@ angular
 	vm.salvarCapitulos = function () {
 		if(vm.formCapitulo.$valid) {
 		$http({
-			method: 'POST' , url: 'http://localhost:8080/capitulo',data:vm.Model.Capitulo})
+			method: 'POST' , url: '/capitulo',data:vm.Model.Capitulo})
 			.then(function () {
 				vm.Model.Capitulo = {};
 				vm.formCapitulo.$setPristine(true);
@@ -131,7 +131,7 @@ angular
 		if(vm.formPagina) {
 		if (fotos && fotos.length) {
 			Upload.upload({
-				url : 'http://localhost:8080/pagina',
+				url : '/pagina',
 					method: 'POST',	
 					params: {nome:$scope.nome, capitulo: vm.valor},
 				      arrayKey: '',

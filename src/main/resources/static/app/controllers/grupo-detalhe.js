@@ -10,7 +10,7 @@ angular
 	vm.carregarGrupos = function() {
 		$http({
 			method : 'GET',
-			url: 'grupo/'+vm.id
+			url: '/user/grupo/'+vm.id
 		}).then(function(res){
 			console.log(res);
 			console.log(res.data);

@@ -11,7 +11,7 @@ angular
 	vm.carregarGeneros = function(Genero) {
 		$http({
 			method: 'GET',
-			url: 'genero/'+vm.generoId
+			url: '/user/genero/'+vm.generoId
 		}).then(function(response){
 			console.log(response);
 			console.log(response.data);

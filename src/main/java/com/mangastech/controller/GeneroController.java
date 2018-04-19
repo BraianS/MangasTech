@@ -42,7 +42,7 @@ public class GeneroController {
 		
 	}
 	
-	@RequestMapping(value="/admin/genero/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/user/genero/{id}", method = RequestMethod.GET)
 	public ResponseEntity<GenerosEntity> buscarPorId(@PathVariable(value="id") Long id) {
 		GenerosEntity genero = generoService.buscarPorId(id);
 		return new ResponseEntity<>(genero,HttpStatus.OK);		

@@ -1,3 +1,4 @@
+
 INSERT INTO usuario(id,nome,password,username)
 VALUES(1,'Braian','admin','admin');
 

@@ -2,15 +2,14 @@ angular
 .module('appCliente')
 .controller('autorDetalhe', function($http,$stateParams) {
 	var vm = this;
-	vm.ola = "bem vindo";
-	
+		
 	vm.id = $stateParams.autorId;
 	vm.autor = [];
 	
 	vm.carregarAutor = function() {
 		$http({
 			method: 'GET',
-			url: 'autor/'+vm.id
+			url: '/user/autor/'+vm.id
 		}).then(function(res) {
 			console.log(res);
 			console.log(res.data);

@@ -10,7 +10,7 @@ angular
 	
 	vm.nome = "CAPITULO";
 		
-	$http.get("capitulo/"+$stateParams.capituloId).then(function (response) {
+	$http.get("/capitulo/"+$stateParams.capituloId).then(function (response) {
 		vm.foto = response.data;
 	console.log(response.data);
 	console.log(response.status);
@@ -21,7 +21,7 @@ angular
 	vm.carregarcapitulo = function() {
 		$http({
 			method : 'GET',
-			url: 'http://localhost:8080/pagina/'+$stateParams.capituloId
+			url: '/pagina/'+$stateParams.capituloId
 		})
 		.then(function (response){
 			

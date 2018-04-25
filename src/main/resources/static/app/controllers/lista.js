@@ -21,7 +21,7 @@ angular
 	vm.carregarMangas = function() {
 		$http({
 		
-			method: 'GET', url: 'http://localhost:8080/user/manga?page='+vm.pagina})
+			method: 'GET', url: '/user/manga?page='+vm.pagina})
 			.then(function (response) {
 				vm.Mangas = response.data.content;
 				vm.number = response.data.number;
@@ -39,7 +39,7 @@ angular
 						
 	vm.Model.carregarGeneros= function() {
 			$http({
-				  method: 'GET', url: 'http://localhost:8080/genero'})
+				  method: 'GET', url: '/genero'})
 				  .then(function (response) {
 					  vm.Model.generos = response.data;
 					console.log("genero buscado com sucesso");
@@ -53,7 +53,7 @@ angular
 				
 	vm.Model.carregarautor = function() {
 		$http({
-			  method: 'GET', url: 'http://localhost:8080/user/autor'})
+			  method: 'GET', url: '/user/autor'})
 			  .then(function (response) {
 				  vm.Model.autor =response.data;
 			   

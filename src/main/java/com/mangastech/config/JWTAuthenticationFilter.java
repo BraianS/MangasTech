@@ -21,9 +21,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 
-public class JWTAuthenticationFilter extends GenericFilterBean {
-	
-	
+public class JWTAuthenticationFilter extends GenericFilterBean {	
 	
 	private static final String AUTHORIZATION_HEADER = "Authorization";
 	private static final String AUTHORITIES_KEY = "roles";
@@ -64,31 +62,5 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 		return usernamePasswordAuthenticationToklen;
 	}
 	
-	public void dofilter2 () {
-		/*	Authentication authentication = TokenAuthenticationService.getAuthentication((HttpServletRequest) request);
-
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
-		HttpServletRequest  req = (HttpServletRequest) request;
-		
-		String header = req.getHeader("Authorization");
-		
-		if(header==null || !header.startsWith("Bearer")){
-			throw new ServletException("Token invalido meu chapa");
-		}
-		
-		String token = header.substring(7);
-		try {
-			Jwts.parser().setSigningKey("banana").parseClaimsJws(token).getBody();
-		} catch (SignatureException e) {
-			throw new ServletException("token invalido");
-		}
-
-		filterChain.doFilter(request, response);
-		*/
-	}
-	
-	
-		
 
 }

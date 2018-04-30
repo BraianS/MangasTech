@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mangastech.model.Role;
@@ -90,8 +88,7 @@ public class UsuarioController {
 			tokenMap.put("token", null);		
 		return new ResponseEntity<Map<String,Object>>(tokenMap, HttpStatus.UNAUTHORIZED);
 		}
-	}
-	
+	}	
 	
 	
 	@RequestMapping("/user")
@@ -101,39 +98,5 @@ public class UsuarioController {
 		return usuarioRepository.findOneByUsername(loggedUsername);
 	}
 	
-	private class LoginResponse {
-		public String token;
-		
-		public LoginResponse(String token) {
-			this.token = token;
-		}
-	}
 	
-	@RequestMapping("/admin/users")
-	@ResponseBody
-	public String getUsers() {
-		return "{\"users\":[{\"name\":\"Lucas\", \"country\":\"Brazil\"}," +
-		           "{\"name\":\"Jackie\",\"country\":\"China\"}]}";
-	}
-	
-	@RequestMapping(value = "/autenticar2", method = RequestMethod.POST)
-	public LoginResponse autenticar(@RequestBody UsuarioEntity usuario) throws ServletException {
-		System.out.println(usuario.getUsername() + " " + usuario.getPassword());
-		
-		UsuarioEntity usuatenticado = usuarioRepository.buscarporNome(usuario.getUsername());
-		
-		if(usuatenticado ==null) {
-			throw new ServletException("Usuario não encontrato");
-		}
-		//HS512
-		if(!usuatenticado.getPassword().equals(usuario.getPassword())){
-			throw new ServletException("Usuairo ou senha invalido");
-		}
-		String token = Jwts.builder()
-						.setSubject(usuatenticado.getUsername())
-						.signWith(SignatureAlgorithm.HS512, "secretkey")
-						.setExpiration(new Date(System.currentTimeMillis() * 1 * 60 * 1000))
-						.compact();
-		return new LoginResponse(token);
-	}
 }

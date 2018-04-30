@@ -15,7 +15,7 @@ public interface GeneroRepository extends JpaRepository<GenerosEntity, Long>{
 	@Query("SELECT g FROM GenerosEntity g" )
 	public Page<GenerosEntity> buscarTodos(Pageable pageable);
 	
-	@Query("SELECT g FROM GenerosEntity g  RIGHT OUTER JOIN g.manga manga WHERE g.id = ? ORDER BY manga.nome ASC ")
+	@Query("SELECT g FROM GenerosEntity g  RIGHT OUTER JOIN g.manga manga WHERE g.id = ?1 ORDER BY manga.nome ASC ")
 	public GenerosEntity findOneByOderByNomeAsc(@Param("id") Long id);
 	
 }

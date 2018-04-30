@@ -70,8 +70,8 @@ angular
 			
 			//função após mudar os checkboxes
 			vm.Selecionar = function  (argument) {
-				vm.Model.Manga.genero = $filter('filter')(vm.Model.generos,{Selecionado: false});
-				console.log($filter('filter')(vm.Model.generos, {Selecionado: false}));
+				vm.Model.Manga.genero = $filter('filter')(vm.Model.generos,{Selecionado: true});
+				console.log($filter('filter')(vm.Model.generos, {Selecionado: true}));
 			}
 			
 			vm.Model.carregarGeneros= function() {

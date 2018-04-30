@@ -43,7 +43,7 @@ angular
 	
 	vm.carregarCapitulos = function () {
 		$http({
-			method :'GET', url : "/capitulodetalhe/"+$stateParams.mangasId
+			method :'GET', url : "/user/capitulo/detalhe/"+$stateParams.mangasId
 		}).then(function (response){
 			vm.Model.ListCapitulos = response.data;
 			console.log(response);
@@ -60,7 +60,7 @@ angular
 	
 	vm.capManga = function () {
 	$http({
-		method :'GET', url : '/capitulo/'+vm.selecionarItem.id
+		method :'GET', url : '/user/capitulo/'+vm.selecionarItem.id
 	}).then(function (response){
 		vm.Model.capituloManga = response.data;
 		console.log(response);
@@ -80,7 +80,7 @@ angular
 	vm.salvarCapitulos = function () {
 		if(vm.formCapitulo.$valid) {
 		$http({
-			method: 'POST' , url: '/capitulo',data:vm.Model.Capitulo})
+			method: 'POST' , url: '/user/capitulo',data:vm.Model.Capitulo})
 			.then(function () {
 				vm.Model.Capitulo = {};
 				vm.formCapitulo.$setPristine(true);
@@ -131,7 +131,7 @@ angular
 		if(vm.formPagina) {
 		if (fotos && fotos.length) {
 			Upload.upload({
-				url : '/pagina',
+				url : '/user/pagina',
 					method: 'POST',	
 					params: {nome:$scope.nome, capitulo: vm.valor},
 				      arrayKey: '',

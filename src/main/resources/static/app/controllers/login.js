@@ -11,7 +11,7 @@ angular
 		if(vm.formLogin.$valid) {
 		$http({
 			method : 'POST',
-			url: 'autenticar',
+			url: '/autenticar',
 			params: {
 				username : $scope.username,
 				password : $scope.password

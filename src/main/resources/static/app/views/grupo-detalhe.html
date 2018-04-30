@@ -3,20 +3,23 @@
 
 <div class="jumbotron">
 	<div class="container">
-	  <div class="col-sm-4" ng-repeat="manga in vm.grupod">
+	  <div class="col-sm-4" ng-repeat="capitulo in vm.grupod">
 		<div class="panel panel">
 				<div class="panel-body">
 					
 						<p>
-							<a ui-sref="mangaDetalhe({mangasId:manga.id})">{{manga.nome}}</a>
+							<a ui-sref="mangaDetalhe({mangasId:manga.id})">{{capitulo.nome}}</a>
 						</p>
-						<p>{{manga.autor.nome}}</p>
-						<div ng-repeat="genero in manga.genero">
+						<p>{{capitulo.autor.nome}}</p>
+						<div ng-repeat="genero in capitulo.genero">
 							<ul>{{genero.nome}}</ul>
 						</div>
 					
 				</div>
+							
+				
 			</div>
 		</div>
 	</div>
 </div>
+

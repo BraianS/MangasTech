@@ -27,12 +27,12 @@ public interface CapitulosRepository extends JpaRepository<CapitulosEntity, Long
 	@Query("SELECT c FROM CapitulosEntity c JOIN c.manga manga WHERE manga.id = :id")
 	List<CapitulosEntity> buscarcapitulos(@Param("id") Long id);
 	
-	@Query(value="SELECT  g.capitulo FROM GruposEntity g where g.id =?")
+	@Query(value="SELECT  g.capitulo FROM GruposEntity g where g.id =?1")
 	List<GruposEntity> findGrupoById(@Param("id") Long id);
 
 	CapitulosEntity findByGrupo(GruposEntity id);
 	
-	@Query("SELECT DISTINCT c.manga FROM CapitulosEntity c JOIN c.grupo g WHERE g.id = ?" )
+	@Query("SELECT DISTINCT c.manga FROM CapitulosEntity c JOIN c.grupo g WHERE g.id = ?1" )
 	List<CapitulosEntity> buscarIdGrupo(@Param("id") Long id);
 	
 	

@@ -24,41 +24,34 @@ public class CapitulosController {
 	@Autowired
 	private CapitulosRepository capitulosRepository;
 	
-	@RequestMapping(value="/capitulo", method = RequestMethod.GET)
+	@RequestMapping(value="/user/capitulo", method = RequestMethod.GET)
 	public List<CapitulosEntity> getCapitulos() {
 		return capitulosRepository.findAll();
 	}
 	
-	@RequestMapping(value="/capitulo/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/user/capitulo/{id}", method = RequestMethod.GET)
 	public @ResponseBody List<CapitulosEntity> aaa(@PathVariable(value="id") Long id ) {
 		List<CapitulosEntity> cao = capitulosRepository.buscarcapitulos(id);
 		
 		return cao;
 	}
 	
-	@RequestMapping(value = "/capitulo", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/capitulo", method = RequestMethod.POST)
 	public CapitulosEntity cadastrarCapitulos(@RequestBody CapitulosEntity capitulos) {
 		return capitulosRepository.save(capitulos);
 	}
 	
-	@RequestMapping(value = "/capitulodetalhe/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/user/capitulo/detalhe/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<CapitulosEntity> procurarManga(@PathVariable(value="id") MangasEntity id) {
 		 capitulosRepository.findByManga(id);
 		
 		return   capitulosRepository.findByManga(id);
 	}
 	
-	@GetMapping("/home2")
+	@GetMapping("/user/capitulo/novidades")
 	public List<CapitulosEntity> procurarCapitulos(){
 		
 		return capitulosRepository.findByTop10();
 	}
-	
-	@RequestMapping(value="/grupo/{id}", method = RequestMethod.GET)
-	public List<CapitulosEntity> xxx(@PathVariable(value="id") Long id){
-		
-		return capitulosRepository.buscarIdGrupo(id);
-	}
-	
-		
+			
 }

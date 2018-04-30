@@ -42,3 +42,16 @@ ul {
     display: inline-block;
     max-width: 100%;
 }
+
+footer {
+	background: #333;
+	color: #fff;
+	text-align: center;
+	padding:20px 0;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	heigth:100px;
+	width:100%;
+	
+}

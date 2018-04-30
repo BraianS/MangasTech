@@ -14,7 +14,7 @@ angular
 			
 	vm.carregarMangas = function() {
 		$http({
-			method: 'GET', url: '/manga/'+$stateParams.mangasId
+			method: 'GET', url: '/user/manga/'+$stateParams.mangasId
 		}).then(function(response) {
 			console.log(response);
 			console.log(response.data);
@@ -28,7 +28,7 @@ angular
 	
 	vm.carregarCapitulos = function () {
 		$http({
-			method :'GET', url : "/capitulo/"+$stateParams.mangasId
+			method :'GET', url : "/user/capitulo/"+$stateParams.mangasId
 		}).then(function (response){
 			vm.Model.ListCapitulos = response.data;
 			console.log(response);

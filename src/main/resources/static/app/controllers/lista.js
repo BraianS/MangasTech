@@ -39,7 +39,7 @@ angular
 						
 	vm.Model.carregarGeneros= function() {
 			$http({
-				  method: 'GET', url: '/genero'})
+				  method: 'GET', url: '/user/genero'})
 				  .then(function (response) {
 					  vm.Model.generos = response.data;
 					console.log("genero buscado com sucesso");

@@ -107,7 +107,7 @@ public class MangasController {
 	
 	
 	
-	@RequestMapping(value = "/nome/{nome}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/nome/{nome}", method = RequestMethod.GET)
 	public ResponseEntity<List<MangasEntity>> procurarPeloNome(@PathVariable(value="nome") String nome) {
 		List<MangasEntity> manga = mangaRepository.procurarPorNome2(nome);
 		

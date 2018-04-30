@@ -8,9 +8,8 @@ angular
 	
 	vm.foto = {};
 	
-	vm.nome = "CAPITULO";
 		
-	$http.get("/capitulo/"+$stateParams.capituloId).then(function (response) {
+	$http.get("/user/capitulo/"+$stateParams.capituloId).then(function (response) {
 		vm.foto = response.data;
 	console.log(response.data);
 	console.log(response.status);
@@ -21,7 +20,7 @@ angular
 	vm.carregarcapitulo = function() {
 		$http({
 			method : 'GET',
-			url: '/pagina/'+$stateParams.capituloId
+			url: '/user/pagina/'+$stateParams.capituloId
 		})
 		.then(function (response){
 			
@@ -37,13 +36,3 @@ angular
 	vm.carregarcapitulo();
 	
 }]);
-
-angular
-.module("appCliente")
-.directive("helloWorld", function(){
-	return {
-		replace: true,
-		restrict: 'AECM',
-		template: '<h3>Hello World!! </h3>'
-	}
-});

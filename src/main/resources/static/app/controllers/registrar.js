@@ -6,7 +6,7 @@ angular
 	vm.registrar = function() {
 		if(vm.formRegistrar.$valid) {
 		$http({
-			method: 'POST', url: 'http://localhost:8080/registrar',data:vm.reg})
+			method: 'POST', url: '/registrar',data:vm.reg})
 			.then(function (response){
 				console.log('salvo com sucesso');
 				console.log(response.data);

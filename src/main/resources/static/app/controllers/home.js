@@ -22,7 +22,7 @@ angular
 	vm.carregarNovidades = function() {
 		$http({
 			method : 'GET',
-			url: 'http://localhost:8080/home2'
+			url: '/user/capitulo/novidades'
 		}).then(function (response){
 			console.log(response);
 			console.log(response.data);
@@ -38,7 +38,7 @@ angular
 	vm.pesquisarNome = function(nome){
 		$http({
 			method: 'GET',
-			url: 'manga/nome/'+nome
+			url: '/user/nome/'+nome
 		}).then(function(res) {
 			console.log(res);
 			console.log(res.data);

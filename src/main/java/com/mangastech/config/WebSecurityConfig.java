@@ -29,55 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-				//.permitAll();
-				//.httpBasic();
-	
-		
-		//---------------------BUSCA PADRÃO
-		/*http.userDetailsService(userDetailsService())
-		.authorizeRequests()
-		.antMatchers(HttpMethod.GET,patterns).hasAnyRole("ADMIN","USER")
-		.antMatchers(HttpMethod.POST, "/manga").hasAnyRole("ADMIN")
-		.anyRequest().authenticated()
-		.and()
-		.formLogin();*/
-		
-		/*http.userDetailsService(userDetailsService())
-		// starts authorizing configurations
-		.authorizeRequests()
-		// authenticate all remaining URLS
-		.anyRequest().fullyAuthenticated().and()
-		// adding JWT filter
-		//.addFilterBefore(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
-		// enabling the basic authentication
-		.formLogin();
-		// configuring the session as state less. Which means there is
-		// no session in the server
-		
-		// disabling the CSRF - Cross Site Request Forgery
-	*/
-		
-		
-		// filtra requisições de login
-		/*.addFilterBefore(new JWTLoginFilter("/XUXUTINHAAAA36", authenticationManager()),
-                UsernamePasswordAuthenticationFilter.class)
-		
-		// filtra outras requisições para verificar a presença do JWT no header
-		.addFilterBefore(new JWTAuthenticationFilter(),
-                UsernamePasswordAuthenticationFilter.class);*/
-		
-		
-		/*http.userDetailsService(userDetailsService())
-		 .formLogin()
-		 .defaultSuccessUrl("/home").and()
-		 .csrf()
-		 .disable()
-		 .authorizeRequests()
-		 .antMatchers("/home").access("hasRole('ROLE_USER')")
-		  
-		 .anyRequest().authenticated();
-		*/
-		
+				
 		http
 		// starts authorizing configurations
 		.authorizeRequests()
@@ -97,18 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 				
 	}
-		   	
-		
-	/*@Autowired	
-	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	    auth.inMemoryAuthentication().withUser("user").password("user").roles("USER")
-          .and()
-              .withUser("admin").password("admin").roles("USER","ADMIN");
-		
-		auth.jdbcAuthentication().dataSource(dataSource)
-			.usersByUsernameQuery("SELECT username,password,true FROM usuario WHERE username= ?")
-			.authoritiesByUsernameQuery("select username, role from usuario where username=?");
-	}*/
+			
 	
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/favicon.ico",
@@ -116,23 +57,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	       		 "/index.html",
 	       		 "/registrar",
 	       		 "/autenticar",
-	       		 "/pagina/**",
-	       		/*
-	       		       		      		 
-	       		 "/grupo",
-	       		 "/autor/*",
-	       		 "/autor",
-	       		 "/manga/**",
-	       		 "/capitulodetalhe/**",
-	       		 "/capitulo/**",
-	       		 "/home2",
-	       		 "/genero/**",
-	       		 "/grupo1",
-	       		 "/home3/**",
-	       		 "/home3",*/
+	       		 "/pagina/**",	       		
+	       		 "/user/pagina/**",
 	       		 "/user/genero/**",
-	       		 "/capituloDetalhe/**",
-	       		 "/capitulo/**",
+	       		  "/user/capitulo/**",
 	       		 "/user/grupo/**",
 	       		 "/user/manga/**",
 	       		 "/user/autor/**",

@@ -24,6 +24,7 @@ public class GruposEntity {
 	
 	private Set<CapitulosEntity> capitulo = new HashSet<CapitulosEntity>();
 	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {

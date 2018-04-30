@@ -35,7 +35,7 @@ angular
 		vm.pesquisarNome = function(nome){
 		$http({
 			method: 'GET',
-			url: 'manga/nome/'+nome
+			url: '/user/nome/'+nome
 		}).then(function(res) {
 			console.log(res);
 			console.log(res.data);

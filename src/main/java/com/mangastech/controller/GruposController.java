@@ -1,6 +1,8 @@
 package com.mangastech.controller;
 
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,13 @@ public class GruposController {
 		Pageable pageable = new PageRequest(page, 20);
 		
 		Page<GruposEntity> grupo = grupoService.buscarTodos(pageable);		
+		
+		return new ResponseEntity<>(grupo, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/user/grupo/{id}", method = RequestMethod.GET)
+	public ResponseEntity<List<GruposEntity>> buscarPorId(@PathVariable(value="id") Long id) {
+		List<GruposEntity> grupo = gruposRepository.buscarTodosOrdenados(id);
 		
 		return new ResponseEntity<>(grupo, HttpStatus.OK);
 	}

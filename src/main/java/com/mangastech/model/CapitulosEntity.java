@@ -34,7 +34,7 @@ public class CapitulosEntity {
 	private GruposEntity grupo;	
 	
 	@JsonIgnoreProperties(value={"capitulo"})
-	private MangasEntity manga;
+	public MangasEntity manga;
 	
 	private List<PaginasEntity> pagina;
 	

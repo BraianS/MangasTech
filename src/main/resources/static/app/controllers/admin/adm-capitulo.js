@@ -80,7 +80,7 @@ angular
 	vm.salvarCapitulos = function () {
 		if(vm.formCapitulo.$valid) {
 		$http({
-			method: 'POST' , url: '/user/capitulo',data:vm.Model.Capitulo})
+			method: 'POST' , url: '/admin/capitulo',data:vm.Model.Capitulo})
 			.then(function () {
 				vm.Model.Capitulo = {};
 				vm.formCapitulo.$setPristine(true);

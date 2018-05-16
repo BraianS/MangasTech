@@ -50,10 +50,16 @@ public class GeneroController {
 	
 	
 	@RequestMapping(value="/admin/genero", method = RequestMethod.POST)
-	public ResponseEntity<GenerosEntity> salvarGeneros(@RequestBody GenerosEntity genero){
-				
-		generoService.cadastrar(genero);
+	public ResponseEntity<GenerosEntity> salvarGeneros(@RequestBody GenerosEntity genero){					
 		
+		if(generoRepository.findOneByNome(genero.getNome()) != null) {
+			throw new RuntimeException("Nome repetido");
+		}
+		
+		 generoService.cadastrar(genero);
+				
+		System.out.println("Nome: "+genero.getNome());		 
+		 
 		return  ResponseEntity.ok().build();
 	}
 	

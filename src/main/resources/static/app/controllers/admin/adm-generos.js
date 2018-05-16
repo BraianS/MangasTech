@@ -24,6 +24,7 @@ angular
 			},function (response){
 				console.log(response.data);
 				console.log(response.status);
+				
 			});
 	};
 	
@@ -41,6 +42,7 @@ angular
 			}, function (response) {
 				console.log(response.data);
 				console.log(response.status);
+				vm.mensagem = response.data.message;
 			});
 		}
 		else {

@@ -25,9 +25,12 @@
 				<div class="panel-body">
 					<div class="panel-info">
 						<div   ng-repeat="c in vm.capnews">
-					<p> <a ui-sref="capituloDetalhes({capituloId:c.manga.id})">{{c.manga.nome}} <strong>{{c.capitulo}}</div></strong> </p> </a></p>
+					<p> <a ui-sref="mangaDetalhe({mangasId:c.manga.id})"> <strong>{{c.manga.nome}} </strong></a>  <a ui-sref="capituloDetalhes({capituloId:c.manga.id})">
+						<br/> 
+						Capitulo {{c.capitulo}}</div> </p> </a></p> </hr>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>

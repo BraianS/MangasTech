@@ -48,10 +48,17 @@ footer {
 	color: #fff;
 	text-align: center;
 	padding:20px 0;
-	position: absolute;
+	position: relative;
 	left: 0;
 	bottom: 0;
 	heigth:100px;
-	width:100%;
-	
+	width:100%;	
+}
+
+#page {
+	min-height: 80vh;
+}
+
+body {
+	width: 100%
 }

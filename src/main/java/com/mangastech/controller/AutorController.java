@@ -62,6 +62,10 @@ public class AutorController {
 	//Cadastra o Autor
 		@RequestMapping(value="/admin/autor", method= RequestMethod.POST)
 		public ResponseEntity<AutorEntity> cadastrarAutor (@RequestBody AutorEntity autor){
+			
+			if(autorRepository.findOneByNome(autor.getNome()) != null) {
+				throw new RuntimeException("Nome Repetido");
+			}
 			autor = autorService.cadastrar(autor);
 			
 			return new ResponseEntity<>(autor, HttpStatus.OK);

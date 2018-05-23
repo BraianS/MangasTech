@@ -1,28 +1,52 @@
-
-<div class="jumbotron" >
+<div class="jumbotron">
 	<div class="container">
-	<div class="col-sm-4"  ng-if="vm.items" data-ng-repeat="m in vm.Mangas | filter:searchValue  ">
-		
-		<div class="panel panel" >
-			<div class="panel-body">
-				<div class="panel-info">
-					 <p><strong><a ui-sref="mangaDetalhe({mangasId:m.id})">{{m.nome}}</a></strong>
-					  - <i> <a ui-sref="autorDetalhe({autorId:m.autor.id})">{{m.autor.nome}}</a></i></p>
-					<p>{{m.status}}</p>
-					
-					<label>Generos</label>
-					<ul>
-						<li ng-repeat="genero in m.genero">{{genero.nome}} </li>
-					</ul>
+		<div class="row">
+
+			<div class="text-center">
+				<h2>A-Z Ordem alfabética</h2>
+			</div>
+
+			<ul class="filter list-group text-center">
+
+				<li ng-click=" vm.resetar(); vm.carregarMangas(); vm.mudar = false " ng-class="{'active':vm.activeLetter==''}">All</li>
+				<li class="list-group-item" ng-repeat="letra in vm.alfabeto track by $index" ng-click="vm.carregarAlfabeto(letra); vm.mudar = true"
+				 ng-class="{'active':letra==vm.activeLetter}">{{letra}}</li>
+			</ul>
+			<div class="col-sm-4" ng-if="vm.items" ng-repeat="m in vm.Mangas ">
+
+
+				<div class="panel panel">
+					<div class="panel-body">
+						<div class="panel-info">
+							<p>
+								<strong>
+									<a ui-sref="mangaDetalhe({mangasId:m.id})">{{m.nome}}</a>
+								</strong> -
+								<i>
+									<a ui-sref="autorDetalhe({autorId:m.autor.id})">{{m.autor.nome}}</a>
+								</i>
+							</p>
+
+							<p>{{m.status}}</p>
+							<label>Generos</label>
+							<ul>
+								<li ng-repeat="genero in m.genero">{{genero.nome}} </li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		
 	</div>
+
+	<div class="text-center" ng-if="vm.mudar == false ">
+		<pagination max-size="vm.size" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarMangas()" items-per-page="vm.size"
+		 boundary-links="true"></pagination>
 	</div>
-	<pagination max-size = "vm.size" ng-change="vm.mudarPagina()" ng-if="vm.items" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarMangas2()"items-per-page="vm.size" boundary-links="true"></pagination>
-   
-     
-   
-</div>		
-	<input ng-model="searchValue" id="search" class="form-control" placeholder="Filter text"/>
+
+	<div class="text-center" ng-if="vm.mudar == true && vm.items">
+		<pagination max-size="vm.size" total-items="vm.items" ng-model="vm.alfa" ng-click="vm.carregarAlfabeto() " items-per-page="vm.size"
+		 boundary-links="true"></pagination>
+	</div>
+
+</div>

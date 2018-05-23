@@ -20,5 +20,7 @@ public interface GruposRepository extends JpaRepository<GruposEntity, Long>{
 	
 	@Query("SELECT DISTINCT(capitulo.manga) FROM GruposEntity g INNER JOIN g.capitulo capitulo WHERE g.id = ?1 ORDER BY  capitulo.manga.nome ASC")
 	public List<GruposEntity> buscarTodosOrdenados(@Param("id") Long id);
+	
+	public GruposEntity findOneByNome(String nome);
 
 }

@@ -11,6 +11,8 @@ angular
 	vm.totalItems = [];
 	vm.size = [];
 	
+	vm.mensagem = "";
+	
 	vm.carregarAutores = function() {
 		$http.get('/user/autor?page='+vm.pagina).then(function (response) {
 			vm.autor = response.data.content;
@@ -38,7 +40,7 @@ angular
 				vm.mensagem = "Salvo com Sucesso";
 				vm.carregarAutores();
 			}, function (response) {
-				
+				vm.mensagem = response.data.message;
 				console.log(response.data);
 				console.log(response.status);
 			})

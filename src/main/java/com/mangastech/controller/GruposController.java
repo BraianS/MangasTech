@@ -58,7 +58,11 @@ public class GruposController {
 	}
 		
 	@RequestMapping(value="/admin/grupo", method = RequestMethod.POST)
-	public ResponseEntity<GruposEntity> salvarGrupos(@RequestBody GruposEntity grupos) {		
+	public ResponseEntity<GruposEntity> salvarGrupos(@RequestBody GruposEntity grupos) {	
+		
+		if (gruposRepository.findOneByNome(grupos.getNome()) != null) {
+			throw new RuntimeException("Nome repetido");
+		}
 		
 		grupos = grupoService.cadastrar(grupos);
 		return new ResponseEntity<>(grupos, HttpStatus.OK);

@@ -34,4 +34,6 @@ public interface AutorRepository extends JpaRepository<AutorEntity, Long> {
 	
 	@Query("SELECT a FROM AutorEntity a")
 	Page<AutorEntity> buscarAutor(Pageable page);
+	
+	public AutorEntity findOneByNome(String nome);
 }

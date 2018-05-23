@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-	<div class="panel-heading"><h1>Autores</h1></div>
+	<div class="panel-heading text-center"><h3>Autores</h3></div>
 	<div>
 	
 		<div ng-repeat="autor in vm.autor" class="panel-body">
@@ -8,7 +8,8 @@
 		</div>
 	</div>
 	
-	<pagination max-size = "vm.size"   ng-change="vm.pageChange()" total-items="vm.totalItems" ng-model="vm.pagina" ng-click="vm.carregarAutores()"items-per-page="vm.size" boundary-links="true"></pagination></div>
-	
+	<div class="panel-footer text-center" ng-if="vm.totalItems">
+		<pagination max-size = "vm.size"   ng-change="vm.pageChange()" total-items="vm.totalItems" ng-model="vm.pagina" ng-click="vm.carregarAutores()"items-per-page="vm.size" boundary-links="true"></pagination></div>
+	</div>
 
 </div>

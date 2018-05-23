@@ -28,7 +28,7 @@
 						
 						<!-- Alerta -->
 						<div class="alert alert-warning margin-top-5" ng-show="vm.mensagem">
-							{{vm.mensagem}}}
+							{{vm.mensagem}}
 						</div>					
 				</form>				
 			</div>		
@@ -40,17 +40,20 @@
 	<div class="panel-footer">
 		
 		<!-- Pagination -->
-		<pagination max-size = "vm.size"  ng-change="vm.pageChange()" ng-if="vm.items" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarGrupos()" items-per-page="vm.size" boundary-links="true"></pagination>
-    
+		<div class="text-center">
+			<pagination max-size = "vm.size"  ng-change="vm.pageChange()" ng-if="vm.items" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarGrupos()" items-per-page="vm.size" boundary-links="true"></pagination>
+		</div>
 	</div>
 </div>
 
 <!-- Table -->
 <table class="table">
+	<thead>
 	<tr>
 		<th>Nome</th>
 		<th>Editar</th>
 	</tr>
+	</thead>
 	<!-- Conteudo da Tabela -->
 	<tr ng-repeat="g in vm.Grupos">
 		<td><a ui-sref="grupodetalhe({gruposId:g.id})">{{g.nome}}</a></td>

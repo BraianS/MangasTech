@@ -5,12 +5,9 @@ angular
 	var vm = this;
 	vm.d = [];
 		
-	pesquisaService.getValue();
+	pesquisaService.getValue();	
 	
-	
-	vm.a = pesquisaService.getValue();
-	
-	
+	vm.a = pesquisaService.getValue();	
 	
 	vm.pesquisarNome = function(){
 		$http({

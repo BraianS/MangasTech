@@ -131,7 +131,7 @@ angular
 		if(vm.formPagina) {
 		if (fotos && fotos.length) {
 			Upload.upload({
-				url : '/user/pagina',
+				url : '/admin/pagina',
 					method: 'POST',	
 					params: {nome:$scope.nome, capitulo: vm.valor},
 				      arrayKey: '',

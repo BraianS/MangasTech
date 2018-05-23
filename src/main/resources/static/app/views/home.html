@@ -1,39 +1,41 @@
 
-<pre>{{user | json}}</pre>
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-6">
         	<div class="panel panel-default">
         		<div class="panel-heading">
-        			ultimos mangas
+        			Ultimos Capitulos
         		</div>
         		<div class="panel-body">
-					ola        		
-        		</div>
+					<div class="panel-info">
+						<div   ng-repeat="c in vm.capnews">
+					<p> <a ui-sref="mangaDetalhe({mangasId:c.manga.id})"> <strong>{{c.manga.nome}} </strong></a>  
+							
+					<br/> 
+					<a ui-sref="capituloDetalhes({capituloId:c.capitulo})">Capitulo: {{c.capitulo}}</a><hr>
+					</div>
+					
+				</div>
+				
+			</div>
         	</div>
         </div>
+        
         <div class="col-md-6">
-        	
-        </div>
-        <div class="col-md-3">
           <div class="panel panel-default">
 			<div class="panel-heading">
 				<h5>Lancamentos</h5>
 			</div>
-	
-				<div class="panel-body">
-					<div class="panel-info">
-						<div   ng-repeat="c in vm.capnews">
-					<p> <a ui-sref="mangaDetalhe({mangasId:c.manga.id})"> <strong>{{c.manga.nome}} </strong></a>  <a ui-sref="capituloDetalhes({capituloId:c.manga.id})">
-						<br/> 
-						Capitulo {{c.capitulo}}</div> </p> </a></p> </hr>
-					</div>
+
+			<div class="panel-body">
+				<div ng-repeat="mangas in vm.mangas ">
+				<a ui-sref="mangaDetalhe({mangasId:mangas.id})">
+					<p>{{mangas.nome}}</p>
+				</a>	
 				</div>
-				
-			</div>
+			</div>				
 		</div>
 	</div>
 </div>
     
-    
+</div>

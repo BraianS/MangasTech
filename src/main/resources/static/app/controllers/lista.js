@@ -5,19 +5,47 @@ angular
 	
 	vm.Model = {};	
 		
-	vm.Mangas = [];
+	vm.Mangas = []; 
 	vm.number = [];
 	vm.totalDePaginas = [];
 	vm.size = [];
 	vm.items = [];
-	vm.pagina = 1;		
+	vm.pagina = 1;
+	vm.alfa = 1;
 	vm.Model.generos = {};
 	vm.Model.autor = [];
 	
-	vm.pageChange = function() {
-	   alert("pagina mudou para 3"+vm.pagina)
-	  };
-	  	  	 	
+	var letra = "abcfghijklmnopqrstuvwxyz";
+		
+	vm.mudar = false;
+	
+	vm.alfabeto = letra.toUpperCase().split("");
+		
+	vm.activeLetter = "";
+		
+	vm.carregarAlfabeto = function(letras) {		
+					
+		if(letras != null) {
+			vm.activeLetter = letras;			
+		}	
+						
+		$http({
+			method:'GET', url: '/user/manga/az/'+vm.activeLetter+'?page='+vm.alfa})
+			.then(function(response) {
+				vm.Mangas = response.data.content;
+				vm.number = response.data.number;
+				vm.totalDePaginas = response.data.totalPages;
+				vm.items = response.data.totalElements;
+				vm.size = response.data.size;
+				
+				console.log(response);
+				console.log(response.data);
+			}, function(response) {
+				console.log(response);
+				console.log(response.data);
+			})
+	}
+		  	  	 	
 	vm.carregarMangas = function() {
 		$http({
 		

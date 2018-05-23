@@ -289,7 +289,7 @@ $urlRouterProvider.otherwise('/pagina-nao-encontrada');
 			}
 		}
 	})
-	.state('admgenerorr',{
+	.state('admgenero',{
 		parent :'admin',
 		url: '/admgenero',
 		data : {
@@ -305,32 +305,21 @@ $urlRouterProvider.otherwise('/pagina-nao-encontrada');
 			}
 		}
 	})
-	/*.state('listaOrdenada',{
-		parent: 'nav',
-		url: 'manga?az:ordenado',
-		views : {
-			'content@' : {
-				templateUrl: '/app/views/lista.html',
-				controller: 'listaController',
-				controllerAs: 'vm'
+	.state('admusuario',{
+		parent: 'admin', 
+			url:'/admuser',
+			data: { 
+				role: 'ADMIN'
+			},
+			needToLogin: true,
+			views: {
+				'admin@' : {
+					url: '/admin/usuario',
+					controller: 'admUsuarioController',
+					templateUrl: '/app/views/admin/user.html',
+					controllerAs: 'vm'
+				}
 			}
-		}
-	})*/
-	/*.state('listaOrdenada', {
-		url : '/manga?az:ordenado',
-		controller: 'listaController',
-		controllerAs : 'vm',
-		templateUrl: '/app/views/lista.html',
-		params: {
-			ordenado: {
-				value : 'a',
-				squash: true
-			}
-		}
-		resolve: {
-			getModel: function (someService) {
-				return someService.get();
-			}
-		}
-	})*/
+		
+	})	
 });

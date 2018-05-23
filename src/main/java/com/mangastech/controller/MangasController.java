@@ -70,6 +70,10 @@ public class MangasController {
 	@RequestMapping(value="/admin/manga", method=RequestMethod.POST)
 	public ResponseEntity<MangasEntity> cadastrarManga(@Valid @RequestBody MangasEntity manga){
 		
+		if(mangaRepository.findOneByNome(manga.getNome()) != null) {
+			throw new RuntimeException("Manga Repetido");
+		}
+		
 		manga = mangasService.cadastrar(manga);
 		return new ResponseEntity<>(manga, HttpStatus.OK);
 		
@@ -93,12 +97,23 @@ public class MangasController {
 		return new ResponseEntity<>(mangas, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/az/{nome}",method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Page<MangasEntity>> procurarPorLetra (@PathVariable(value="nome")String nome,Pageable pageable) {
+	@RequestMapping(value="/user/manga/az/{nome}",method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<Page<MangasEntity>> procurarPorLetra (@PathVariable(value="nome")String nome, Integer page) {
+		
+		
 		
 		if(nome == null || nome.isEmpty()) {
 			return new ResponseEntity<>( HttpStatus.NOT_FOUND);		
 		}
+		
+		if(page == null) {
+			page = 0;
+		}
+		 if (page >= 1) {
+			 page --;
+		 }
+		
+		Pageable pageable = new PageRequest(page, 20);
 		
 		Page<MangasEntity> manga = mangasService.buscarPorNome(nome,pageable)
 		;
@@ -107,10 +122,15 @@ public class MangasController {
 	
 	
 	
-	@RequestMapping(value = "/user/nome/{nome}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/manga/nome/{nome}", method = RequestMethod.GET)
 	public ResponseEntity<List<MangasEntity>> procurarPeloNome(@PathVariable(value="nome") String nome) {
 		List<MangasEntity> manga = mangaRepository.procurarPorNome2(nome);
 		
 		return new ResponseEntity<>(manga, HttpStatus.OK);		
-	}	
+	}
+	
+	@RequestMapping(value = "/user/manga/top10", method = RequestMethod.GET)
+	public List<MangasEntity> BuscarTop10Lista() {
+		return mangaRepository.findTop10ByOrderByIdDesc();
+	}
 }

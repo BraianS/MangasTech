@@ -39,13 +39,13 @@ public class MangasTechApplicationTests {
 	public void setUp() throws Exception {
 		
 		AutorEntity autor = new AutorEntity();
-		autor.setId(1L);
+		autor.setId(3L);
 		
 		Integer x = 2010;		
 		
 		//mangaRepository.deleteAll();
 		for(int i = 0; i < 20; i++) {
-			mangaRepository.save(new MangasEntity("one piece", Status.COMPLETO, x, autor));
+			mangaRepository.save(new MangasEntity("one piece "+i, Status.COMPLETO, x, autor));
 			
 		}
 		

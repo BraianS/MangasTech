@@ -1,24 +1,18 @@
 angular
 .module('appCliente')
-.controller('homeController', function($http, $scope, AuthService,$location,$route,$routeParams,$rootScope) {
-	$scope.user = AuthService.user;
-	
+.controller('homeController', function($http, $scope, $location,$route,$routeParams,$rootScope) {
+		
 	var vm = this;
 	
 	$scope.$location = $location;
 	$scope.$route=$route;
 	$scope.$routeParams = $routeParams;
-	
-	$scope.ola = "ola mundo";
-	
+			
 	vm.capnews = [];
 	vm.nome = [];
 	vm.d = [];
-	
-	
-	$scope.xuxa = $rootScope.xuxa;
-	$rootScope.xuxa;
-	
+	vm.mangas = [];	
+		
 	vm.carregarNovidades = function() {
 		$http({
 			method : 'GET',
@@ -31,10 +25,24 @@ angular
 			console.log(response);
 			console.log(response.data);
 		})
-	}
+	};
 	
 	vm.carregarNovidades();
+
+	vm.carregarMangas = function() {
+		$http({
+			method: 'GET',
+			url: '/user/manga/top10'
+		}).then(function(response) {
+			vm.mangas = response.data;
+		}, function(response) {
+			console.log(response);
+			console.log(response.data);
+		})
+	};
 	
+	vm.carregarMangas();
+
 	vm.pesquisarNome = function(nome){
 		$http({
 			method: 'GET',

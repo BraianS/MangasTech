@@ -48,7 +48,9 @@
 	<div class="panel-footer">	
 		
 		<!-- Pagination -->	
-		<pagination max-size = "vm.size"   ng-change="vm.pageChange()" total-items="vm.totalItems" ng-model="vm.pagina" ng-click="vm.carregarAutores()"items-per-page="vm.size" boundary-links="true"></pagination>
+		<div class="text-center">
+			<pagination max-size = "vm.size"   ng-change="vm.pageChange()" total-items="vm.totalItems" ng-model="vm.pagina" ng-click="vm.carregarAutores()"items-per-page="vm.size" boundary-links="true"></pagination>
+		</div>
 	</div>
 	
 </div>
@@ -58,6 +60,7 @@
 	<tr>
 		<th>Nome</th>
 		<th>Descricao</th>
+		<th>Editar</th>
 	</tr>
 	<!-- Conteudo da tabela -->
 	<tr ng-repeat="autor in vm.autor">

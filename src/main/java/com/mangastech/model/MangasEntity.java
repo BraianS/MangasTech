@@ -1,5 +1,7 @@
 package com.mangastech.model;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -28,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class MangasEntity  {
 			
 	private Long id;
+	private byte[] capa;
 	private String nome;
 	private Status status;
 	private Integer dataLancado;
@@ -40,7 +44,7 @@ public class MangasEntity  {
 	private AutorEntity autor;
 	
 	@JsonIgnoreProperties("manga")
-	private Set<GenerosEntity> genero = new HashSet<>();
+	private Collection<GenerosEntity> genero = new HashSet<>();
 		
 
 	@Id
@@ -121,13 +125,13 @@ public class MangasEntity  {
 	inverseJoinColumns=@JoinColumn(name="genero_id", referencedColumnName="id")
 	)
 	
-	public Set<GenerosEntity> getGenero() {
+	public Collection<GenerosEntity> getGenero() {
 		return genero;
 	}
 	
 	
-	public void setGenero(Set<GenerosEntity> g_genero) {
-		this.genero = g_genero;
+	public void setGenero(Collection<GenerosEntity> genero2) {
+		this.genero = genero2;
 	}
 
 	public MangasEntity() {
@@ -138,22 +142,27 @@ public class MangasEntity  {
 	public MangasEntity(Long id){
 		this.id = id;
 	}
-	
+		
 	
 
-	/*public MangasEntity(Long id, String nome, Status status, Integer dataLancado, AutorEntity autor,
-			List<GenerosEntity> genero, List<CapitulosEntity> capitulo) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.status = status;
-		this.dataLancado = dataLancado;
-		this.autor = autor;
-		this.genero = genero;
-		this.capitulo = capitulo;
-	}*/
+	public void imprimir() {
+		System.out.println("Nome: "+this.nome);
+		System.out.println("Status: "+this.status);
+		System.out.println("Genero"+ this.genero);
+		System.out.println("Data Lancamento: "+this.dataLancado);
+		System.out.println("Descricao: "+this.descricao);
+	}
 	
 	
+	@Column(name="capa")
+	@Lob
+	public byte[] getCapa() {
+		return capa;
+	}
+
+	public void setCapa(byte[] capa) {
+		this.capa = capa;
+	}
 
 	public MangasEntity(String nome) {
 		super();
@@ -168,5 +177,15 @@ public class MangasEntity  {
 		this.autor = autor;
 		
 	}
+
+	@Override
+	public String toString() {
+		return "MangasEntity [id=" + id + ", nome=" + nome + ", status=" + status
+				+ ", dataLancado=" + dataLancado + ", descricao=" + descricao + ", CapitulosEntity=" + CapitulosEntity
+				+ ", autor=" + autor + ", genero=" + genero + "]";
+	}
+
+	
+	
 	
 }

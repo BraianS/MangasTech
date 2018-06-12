@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -24,9 +25,8 @@ public class GenerosEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private String nome;
+	private String nome;	
 	
-	@JsonIgnoreProperties("genero")	
 	private List<MangasEntity> manga = new ArrayList<>(); ;
 	
 	@Id
@@ -89,6 +89,11 @@ public class GenerosEntity implements Serializable {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "GenerosEntity [id=" + id + ", nome=" + nome + "]";
 	}
 	
 	

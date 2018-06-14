@@ -14,7 +14,7 @@
 				<div class="input-group">
 					<input type="text" class="form-control" placeholder="Search" name="q" ng-model="vm.nome" >
 					<div class="input-group-btn">
-						<button class="btn btn-default" type="submit" ng-click="vm.service(vm.nome)" ui-sref="pesquisa" ui-sref-opts="{reload:true, notify:true}"><i class="glyphicon glyphicon-search"></i></button>
+						<button class="btn btn-default" type="submit" ng-click="vm.service(vm.nome)" ui-sref="pesquisa({txtPesquisado:vm.nome})"  ><i class="glyphicon glyphicon-search"></i></button>
 						
 					</div>
 				</div>

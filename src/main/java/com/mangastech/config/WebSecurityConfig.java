@@ -64,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	       		 "/user/grupo/**",
 	       		 "/user/manga/**",
 	       		 "/user/autor/**",
-	       		 "/app/**");
+	       		 "/app/**",
+	       		 "/user/nome/**");
 	}
 }

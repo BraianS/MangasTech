@@ -125,9 +125,10 @@ angular
 				method: 'DELETE', url: '/admin/manga/' + Manga.id
 			})
 				.then(function (response) {
-					pos = vm.Model.Mangas.indexOf(vm.Model.Manga);
-					vm.Model.Mangas.splice(pos, 1);
+					pos = vm.Mangas.indexOf(vm.Model.Manga);
+					vm.Mangas.splice(pos, 1);
 					vm.carregarMangas();
+					console.log(response.data);
 
 				}, function (response) {
 					console.log(response.data);

@@ -12,16 +12,20 @@
 				<li class="list-group-item" ng-repeat="letra in vm.alfabeto track by $index" ng-click="vm.carregarAlfabeto(letra); vm.mudar = true"
 				 ng-class="{'active':letra==vm.activeLetter}">{{letra}}</li>
 			</ul>
-			<div class="col-sm-4" ng-if="vm.items" ng-repeat="m in vm.Mangas ">
+			<div class="col-sm-3" ng-if="vm.items" ng-repeat="m in vm.Mangas ">
 
-
-				<div class="panel panel">
+				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="panel-info">
 							<p>
-								<strong>
+								<div class-"col-sm-4 col-md-4">
+									<p>
+										<img  class="img-rounded img-responsive" data-ng-src="data:image/jpeg;base64,{{m.capa}}">
+									</p>	
+								</div>
+								<b>
 									<a ui-sref="mangaDetalhe({mangasId:m.id})">{{m.nome}}</a>
-								</strong> -
+								</b> -
 								<i>
 									<a ui-sref="autorDetalhe({autorId:m.autor.id})">{{m.autor.nome}}</a>
 								</i>
@@ -29,9 +33,9 @@
 
 							<p>{{m.status}}</p>
 							<label>Generos</label>
-							<ul>
-								<li ng-repeat="genero in m.genero">{{genero.nome}} </li>
-							</ul>
+							
+								<i ng-repeat="genero in m.genero"> <a ui-sref="generosDetalhe({generoId:genero.id})">{{genero.nome}} </a> </i>
+							
 						</div>
 					</div>
 				</div>

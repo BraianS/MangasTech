@@ -178,7 +178,9 @@ $urlRouterProvider.otherwise('/pagina-nao-encontrada');
 	})
 	.state('pesquisa',{
 	parent: 'nav',
-	url: '/pesquisa',
+	url: '/pesquisa/:txtPesquisado',
+	reload: true,
+	needToLogin: false,
 		views: {
 			'content@' : {
 				templateUrl: '/app/views/pesquisa.html',

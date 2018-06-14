@@ -4,7 +4,8 @@ angular
 	
 	var vm = this;
 	vm.d = [];
-		
+	vm.ola = "Texto pesquisado";
+	
 	pesquisaService.getValue();	
 	
 	vm.a = pesquisaService.getValue();	
@@ -12,7 +13,7 @@ angular
 	vm.pesquisarNome = function(){
 		$http({
 			method: 'GET',
-			url: '/user/nome/'+vm.a
+			url: '/user/manga/nome/'+vm.a
 		}).then(function(res) {
 			console.log(res);
 			console.log(res.data);

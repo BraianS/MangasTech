@@ -25,12 +25,12 @@ public interface MangasRepository extends JpaRepository<MangasEntity, Long>{
 	public Page<MangasEntity> procurarPorNome( @Param("nome") String nome,Pageable pageable);
 	
 	@Query("SELECT m FROM MangasEntity m where m.nome LIKE %:nome%")
-	public List<MangasEntity> procurarPorNome2( @Param("nome") String nome);
+	public Page<MangasEntity> procurarPorNome2( @Param("nome") String nome, Pageable page);
 	
 	@Query(value ="SELECT c.*,m.autor_id,m.descricao,m.nome,m.status FROM Mangas m LEFT JOIN Capitulos c ON c.manga_id = m.id", nativeQuery = true)
 	public List<MangasEntity> mangaECapitulos();
 	
 	public MangasEntity findOneByNome(String nome);
 	
-	public List<MangasEntity> findTop10ByOrderByIdDesc();
+	public List<MangasEntity> findTop5ByOrderByIdDesc();
 }

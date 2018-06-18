@@ -22,5 +22,7 @@ public interface GruposRepository extends JpaRepository<GruposEntity, Long>{
 	public List<GruposEntity> buscarTodosOrdenados(@Param("id") Long id);
 	
 	public GruposEntity findOneByNome(String nome);
+	
+	public Page<GruposEntity> findOneById(Long id, Pageable page);
 
 }

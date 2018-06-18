@@ -14,7 +14,7 @@
 						<!-- Nome -->
 						<div class="form-group" ng-class="{ 'has-error': vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty}">
 							<label for="nome">Nome</label>
-							<input type="text" maxlength="50" ng-maxlength="49" class="form-control" ng-model="vm.Genero.nome" id="nome" name="nome" required/>
+							<input type="text" maxlength="50" ng-maxlength="49" class="form-control text-uppercase" ng-model="vm.Genero.nome" id="nome" name="nome" required/>
 							<span ng-show="vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty">Campo Obrigatorio</span>
 							<span ng-show="vm.formGenero.nome.$error.maxlength">Tamanho Maximo</span>
 						</div>

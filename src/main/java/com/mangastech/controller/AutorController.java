@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.mangastech.model.AutorEntity;
 import com.mangastech.repository.AutorRepository;
@@ -49,13 +50,25 @@ public class AutorController {
 		
 		//Procura o Autor pelo ID
 		@RequestMapping(value="/user/autor/{id}",method = RequestMethod.GET)
-		public ResponseEntity<AutorEntity> buscarAutorById(@PathVariable("id") Long id){
-			AutorEntity autor  = autorService.buscarAutor(id);								
+		public @ResponseBody ResponseEntity<Page<AutorEntity>> buscarAutorById(@PathVariable(value="id") Long id, Integer page){
+								
+			if(page == null) {
+				page =0;
+			}
+			
+			if(page >=1) {
+				page --;
+			}
+			
+			Pageable pageable = new PageRequest(page, 20);
+			
+			Page<AutorEntity> autor = autorRepository.findMangaById(id, pageable);
 			
 			if(autor == null) {
 				return ResponseEntity.notFound().build();
 			}
-					
+			
+			
 			return new ResponseEntity<>(autor,HttpStatus.OK);
 		}
 	

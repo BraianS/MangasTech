@@ -43,9 +43,19 @@ public class GeneroController {
 	}
 	
 	@RequestMapping(value="/user/genero/{id}", method = RequestMethod.GET)
-	public ResponseEntity<GenerosEntity> buscarPorId(@PathVariable(value="id") Long id) {
-		GenerosEntity genero = generoService.buscarPorId(id);
-		return new ResponseEntity<>(genero,HttpStatus.OK);		
+	public ResponseEntity<Page<GenerosEntity>> buscarPorId(@PathVariable(value="id") Long id, Integer page) {
+		if(page == null) {
+			page = 0;
+		}
+		if(page >= 1) {
+			page --;
+		}
+		
+		Pageable pageable = new PageRequest(page, 20);
+		
+		Page<GenerosEntity> genero2 = generoRepository.findMangaById(id, pageable);		
+		
+		return new ResponseEntity<>(genero2,HttpStatus.OK);		
 	}
 	
 	

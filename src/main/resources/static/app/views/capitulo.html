@@ -1,21 +1,14 @@
-
-
-<h1 class="text-center">UI-Bootstrap Carousel</h1>
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-
 			<div ng-controller="capituloController as CarouselDemoCtrl">
 				<div style="height: auto">
 					<carousel> <slide ng-repeat="slide in vm.fotos">
 					<img data-ng-src="data:image/jpeg;base64,{{slide.fotos}}"
-						style="margin: auto;"> </slide>
-						
+						style="margin: auto;"> </slide>						
 					 </carousel>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>

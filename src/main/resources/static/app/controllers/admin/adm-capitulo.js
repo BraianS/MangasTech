@@ -97,9 +97,9 @@ angular
 	
 	vm.carregarMangas = function () {
 		$http({
-			method: 'GET' , url: '/user/manga'})
+			method: 'GET' , url: '/user/manga/lista'})
 			.then(function (response) {
-				vm.Model.Mangas = response.data.content;
+				vm.Model.Mangas = response.data;
 			}, function (response) {
 				console.log(response.data);
 				console.log(response.status);

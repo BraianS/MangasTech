@@ -29,7 +29,9 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-show="user.username">
-					 <span class="user">Hello,{{user.username}}	</span> 									
+					<a>
+						<span class="user">Hello,{{user.username}}	</span> 		
+					</a>							
 				</li>			
 			</ul>
 			<a  ng-show="user.username" ng-click="vm.logout" class="navbar-brand" ui-sref="login" ui-sref-opts="{reload:true, notify:true}">Logout</a>		

@@ -21,4 +21,7 @@ public interface GeneroRepository extends JpaRepository<GenerosEntity, Long>{
 	
 	public GenerosEntity findOneByNome(String nome);
 	
+	@Query("Select m FROM GenerosEntity g JOIN g.manga m where g.id=:id")
+	public Page<GenerosEntity> findMangaById(@Param("id") Long id, Pageable page);
+	
 }

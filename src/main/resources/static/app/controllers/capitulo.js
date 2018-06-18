@@ -36,3 +36,17 @@ angular
 	vm.carregarcapitulo();
 	
 }]);
+
+/* Detecta o evento das setas do teclado */
+$(document).keydown(function(e) {
+    if (e.keyCode === 37) {
+		/* Volta uma pagina */      
+       $(".carousel-control.left").click();
+       return false;
+    }
+    if (e.keyCode === 39) {
+     /*  Avança uma pagina */
+       $(".carousel-control.right").click();
+       return false;
+    }
+});

@@ -8,7 +8,7 @@
 					
 					<div class="col-sm-3">					
 						<div>
-								<img ng-show="vm.picFile" ngf-src="vm.picFile"   id="img" >
+								<img ng-show="vm.picFile" ngf-src="vm.picFile"   style="width: 220px; height: 180px;" >
 						</div><!-- IMG Show -->						
 					</div> <!-- col-sm-3 -->
 
@@ -17,7 +17,7 @@
 					<!-- Nome -->
 					<div class="form-group" ng-class="{ 'has-error': vm.formNovoManga.nome.$error.required && vm.formNovoManga.nome.$dirty}">
 						<label for="nome-manga">Nome</label>
-						<input name="nome" maxlength="100" ng-maxlength="99" type="text" class="form-control" ng-model="vm.Model.Manga.nome" placeholder="Nome do Manga"
+						<input name="nome" maxlength="100" ng-maxlength="99" type="text" class="form-control " ng-model="vm.Model.Manga.nome" placeholder="Nome do Manga"
 						 id="nome" required/>
 						<span ng-show="vm.formNovoManga.nome.$error.required && vm.formNovoManga.nome.$dirty">Campo Nome Obrigatorio</span>
 						<span ng-show="vm.formNovoManga.nome.$error.maxlength">Tamanho maximo</span>

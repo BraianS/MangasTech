@@ -31,9 +31,9 @@ public class MangasController {
 	@Autowired
 	private MangaService mangasService;
 
-	@RequestMapping(value = "/user/lista", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/manga/lista", method = RequestMethod.GET)
 	public ResponseEntity<List<MangasEntity>> mangaECapitulos() {
-		List<MangasEntity> mangas = mangaRepository.mangaECapitulos();
+		List<MangasEntity> mangas = mangaRepository.findAll();
 		return new ResponseEntity<>(mangas, HttpStatus.OK);
 	}
 
@@ -68,13 +68,15 @@ public class MangasController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/admin/manga", method = RequestMethod.POST,  consumes = {"multipart/form-data"})
-	public  ResponseEntity<MangasEntity>  cadastrarManga (@RequestPart(value = "mangas") MangasEntity mangas, @RequestPart("file") MultipartFile file) throws IOException {
+	public  ResponseEntity<MangasEntity>  cadastrarManga (@RequestPart(value = "mangas") MangasEntity mangas, @RequestPart(value= "file", required=false) MultipartFile file) throws IOException {
 
 	 	if (mangaRepository.findOneByNome(mangas.getNome()) != null) {
 			throw new RuntimeException("Manga Repetido");
 		} 
-
-		mangas.setCapa(file.getBytes());
+	 	if(file != null ) {
+	 		mangas.setCapa(file.getBytes());
+	 	}
+		
 		mangas.imprimir();		
 		
 		System.out.println("\n TO STRING: \n ");
@@ -125,14 +127,23 @@ public class MangasController {
 	}
 
 	@RequestMapping(value = "/user/manga/nome/{nome}", method = RequestMethod.GET)
-	public ResponseEntity<List<MangasEntity>> procurarPeloNome(@PathVariable(value = "nome") String nome) {
-		List<MangasEntity> manga = mangaRepository.procurarPorNome2(nome);
+	public ResponseEntity<Page<MangasEntity>> procurarPeloNome(@PathVariable(value = "nome") String nome, Integer page) {
+		
+		if(page == null) {
+			page = 0;
+		}
+		if(page >=1 ) {
+			page --;
+		}
+		
+		Pageable pageable = new PageRequest(page, 20);
+		Page<MangasEntity> manga = mangaRepository.procurarPorNome2(nome, pageable);
 
 		return new ResponseEntity<>(manga, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/user/manga/top10", method = RequestMethod.GET)
 	public List<MangasEntity> BuscarTop10Lista() {
-		return mangaRepository.findTop10ByOrderByIdDesc();
+		return mangaRepository.findTop5ByOrderByIdDesc();
 	}
 }

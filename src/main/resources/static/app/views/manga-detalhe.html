@@ -10,9 +10,10 @@
 				</div>
 
 				<div class="panel-body">
-					<div class="col-sm-3 ">
-						<img ng-show="mmm.capa" id="img" data-ng-src="data:image/jpeg;base64,{{mmm.capa}}">
-
+					<div class="col-md-3" ng-if="mmm.capa">
+						<p >							
+								<img class="img-rounded img-responsive" style="width: 320px; height: 390px;" data-ng-src="data:image/jpeg;base64,{{mmm.capa}}">
+						</p>
 					</div>
 					<div clas="col-sm-9">
 						<div class=" panel-info">

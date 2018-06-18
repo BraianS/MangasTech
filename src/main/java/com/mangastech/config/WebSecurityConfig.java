@@ -30,24 +30,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 				
-		http
-		// starts authorizing configurations
+		http		
 		.authorizeRequests()
-		.antMatchers(HttpMethod.GET,"/manga","/grupo", "/home2").permitAll().and()
-		// authenticate all remaining URLS
+		.anyRequest().fullyAuthenticated().and()	
 		.authorizeRequests().anyRequest().authenticated().and()
-		// adding JWT filter
-		.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-		
-		// enabling the basic authentication
+		.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)		
 		.httpBasic().and()
-		// configuring the session as state less. Which means there is
-		// no session in the server
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		// disabling the CSRF - Cross Site Request Forgery
-		.csrf().disable();
-		
-				
+		.csrf().disable();				
 	}
 			
 	
@@ -57,14 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	       		 "/index.html",
 	       		 "/registrar",
 	       		 "/autenticar",
-	       		 "/pagina/**",	       		
-	       		 "/user/pagina/**",
-	       		 "/user/genero/**",
-	       		  "/user/capitulo/**",
-	       		 "/user/grupo/**",
-	       		 "/user/manga/**",
-	       		 "/user/autor/**",
+	       		 "/pagina/**",       		 
 	       		 "/app/**",
-	       		 "/user/nome/**");
+	       		 "/user/**");
 	}
 }

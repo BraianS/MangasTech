@@ -21,7 +21,7 @@ public interface CapitulosRepository extends JpaRepository<CapitulosEntity, Long
 	List<CapitulosEntity> findByMangaAndCapitulo(@Param("id") MangasEntity id, @Param("id") Long idc);
 	
 	@Query(value="SELECT * FROM Capitulos ORDER BY lancamento DESC LIMIT 10", nativeQuery = true)
-	List<CapitulosEntity> findByTop10();
+	List<CapitulosEntity> findByTop10OrderByLancamentoDesc();
 	
 	//@Query(value="SELECT c.* FROM capitulos c JOIN mangas m ON c.manga_id = m.id WHERE m.id = :id",nativeQuery = true)
 	@Query("SELECT c FROM CapitulosEntity c JOIN c.manga manga WHERE manga.id = :id")

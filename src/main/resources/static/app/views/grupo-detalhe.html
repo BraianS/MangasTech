@@ -1,25 +1,42 @@
 
-<h1>Grupos Detalhes</h1>
-
 <div class="jumbotron">
 	<div class="container">
-	  <div class="col-sm-4" ng-repeat="capitulo in vm.grupod">
-		<div class="panel panel">
-				<div class="panel-body">
-					
-						<p>
-							<a ui-sref="mangaDetalhe({mangasId:manga.id})">{{capitulo.nome}}</a>
-						</p>
-						<p>{{capitulo.autor.nome}}</p>
-						<div ng-repeat="genero in capitulo.genero">
-							<ul>{{genero.nome}}</ul>
+		<div class="row" >
+			<div class="col-sm-3" ng-repeat="m in vm.grupod ">
+
+				<div class="panel panel-default">
+					<div class="panel-body"  >
+						<div class="panel-info">
+							<p>
+								<div class- "col-sm-4 col-md-4" ng-if="m.capa">
+									<p>
+										<a ui-sref="mangaDetalhe({mangasId:m.id})">
+											<img class="img-rounded img-responsive" data-ng-src="data:image/jpeg;base64,{{m.capa}}">
+										</a>
+									</p>
+								</div>
+								<b>
+									<a ui-sref="mangaDetalhe({mangasId:m.id})"> nome{{m.nome}}</a>
+								</b> -
+								<i>
+									<a ui-sref="autorDetalhe({autorId:m.autor.id})">{{m.autor.nome}}</a>
+								</i>
+							</p>
+							<p>{{m.status}}</p>
+							<label>Generos</label>
+
+							<i ng-repeat="genero in m.genero">
+								<a ui-sref="generosDetalhe({generoId:genero.id})">{{genero.nome}} </a>
+							</i>
 						</div>
-					
+					</div>
 				</div>
-							
-				
 			</div>
+		</div>
+		<div class="text-center">
+		<pagination max-size="vm.size" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarGrupos()" items-per-page="vm.size"
+		 boundary-links="true"></pagination>
 		</div>
 	</div>
 </div>
-
+</div>

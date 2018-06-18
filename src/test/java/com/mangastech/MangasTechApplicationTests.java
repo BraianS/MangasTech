@@ -39,7 +39,7 @@ public class MangasTechApplicationTests {
 	public void setUp() throws Exception {
 		
 		AutorEntity autor = new AutorEntity();
-		autor.setId(3L);
+		autor.setId(1L);
 		
 		Integer x = 2010;		
 		

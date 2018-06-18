@@ -1,21 +1,31 @@
 <h1> Palavra Pesquisada  <strong>"{{vm.a}}"</strong></h1>
 
-{{vm.xxx}}
+
 <div class="jumbotron">
 	<div class="container">
-	<div class="col-sm-4" ng-repeat=" d in vm.d">
-			<div class="panel panel">
-				<div class="panel-body">
-				<div class="panel-info">
-				
-				<p><a ui-sref="mangaDetalhe({mangasId:d.id})">{{d.nome}}</a>  - {{d.autor.nome}}</p>
-				<p>{{d.dataLancado}} </p>
-				
-				<label><strong>Genero:</strong></label>
-				<div ng-repeat="genero in d.genero">{{genero.nome}}</div>
-			</div>
-			</div>
-			</div>
+	<div>
+		<table class="table table-hover" >
+			<thread>
+				<tr>
+					<th>Nome</th>
+					<th>autor</th>
+					<th>Status</th>
+				</tr>
+			</thread>
+			<tbody  ng-repeat=" m in vm.d">
+				<tr>
+					<td> <a ui-sref="mangaDetalhe({mangasId:m.id})">
+						{{m.nome}}
+					</a></td>
+					<td> <a ui-sref="autorDetalhe({autorId:m.autor.id})">{{m.autor.nome}}</a></td>
+					<td>{{m.status}}</td>
+				</tr>
+			</tbody>
+		</table>	
 	</div>
+	<div class="text-center">
+			<pagination max-size="vm.size" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.pesquisarNome()" items-per-page="vm.size"
+			 boundary-links="true"></pagination>
+		</div>
 	</div>
 </div>

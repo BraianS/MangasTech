@@ -51,7 +51,7 @@ public class CapitulosController {
 	@GetMapping("/user/capitulo/novidades")
 	public List<CapitulosEntity> procurarCapitulos(){
 		
-		return capitulosRepository.findByTop10();
+		return capitulosRepository.findByTop10OrderByLancamentoDesc();
 	}
 			
 }

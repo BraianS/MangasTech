@@ -44,8 +44,8 @@ public class MangasTechApplicationTests {
 		Integer x = 2010;		
 		
 		//mangaRepository.deleteAll();
-		for(int i = 0; i < 20; i++) {
-			mangaRepository.save(new MangasEntity("one piece "+i, Status.COMPLETO, x, autor));
+		for(int i = 0; i < 1000; i++) {
+			mangaRepository.save(new MangasEntity("HUNTER X HUNTER "+i, Status.COMPLETO, x, autor));
 			
 		}
 		

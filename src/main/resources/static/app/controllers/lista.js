@@ -15,7 +15,7 @@ angular
 	vm.Model.generos = {};
 	vm.Model.autor = [];
 	
-	var letra = "abcfghijklmnopqrstuvwxyz";
+	var letra = "abcdfghijklmnopqrstuvwxyz";
 		
 	vm.mudar = false;
 	

@@ -112,6 +112,7 @@ $urlRouterProvider.otherwise('/pagina-nao-encontrada');
 		parent: 'nav',
 		url : '/manga/capitulo/:capituloId',
 		neetToLogin: false,
+		reload: true,
 		views : {
 			'content@' : {
 				templateUrl : '/app/views/capitulo.html',

@@ -46,12 +46,12 @@
 	</div>
 
 	<div class="text-center" ng-if="vm.mudar == false ">
-		<pagination max-size="vm.size" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarMangas()" items-per-page="vm.size"
+		<pagination max-size="10" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarMangas()" items-per-page="vm.size"
 		 boundary-links="true"></pagination>
 	</div>
 
 	<div class="text-center" ng-if="vm.mudar == true && vm.items">
-		<pagination max-size="vm.size" total-items="vm.items" ng-model="vm.alfa" ng-click="vm.carregarAlfabeto() " items-per-page="vm.size"
+		<pagination max-size="10" total-items="vm.items" ng-model="vm.alfa" ng-click="vm.carregarAlfabeto() " items-per-page="vm.size"
 		 boundary-links="true"></pagination>
 	</div>
 

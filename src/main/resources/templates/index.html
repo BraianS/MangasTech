@@ -5,15 +5,16 @@
 
 <head>
 <meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>MangasTech</title>
 
 	<!-- JS ========  -->
-	<!-- Carrega Angular  -->
+	<!-- Jquery -->
 	<script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
-    crossorigin="anonymous" type="text/javascript"></script>
-
+	crossorigin="anonymous" type="text/javascript"></script>
+	<!-- Carrega Angular  -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
 <script src="/app/app.js"></script>
 		<!-- Angular Animate  -->
@@ -25,7 +26,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
 
 	<!-- Controllers  =============--> 
-
 <script src="/app/route.js"></script>
 <script src="/app/controllers/genero.js"></script>
 <script src="/app/controllers/manga-detalhe.js"></script>
@@ -52,9 +52,6 @@
 <script src="/app/controllers/admin/adm-capitulo.js"></script>
 <script src="/app/controllers/admin/user.js"></script>
 
-
-
-	
 	<!--  Carrega bootstrap -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
 	<!-- CSS -->
@@ -62,8 +59,8 @@
 	<!-- Css Customizado -->
 <link href="/app/css/style.css" rel="stylesheet" type="text/css"/>
 </head>
-<body>
-	
+
+<body>	
 	<!-- Nav -->
 	<div ui-view="nav"></div>
 	<div id="page">

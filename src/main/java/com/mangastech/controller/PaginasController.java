@@ -9,6 +9,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,11 +66,23 @@ public class PaginasController {
 		
 	}	
 	
+	
 	@RequestMapping(value="/user/pagina/{id}", method = RequestMethod.GET)
-	public List<PaginasEntity> procurarPorCapitulo(@PathVariable(value="id") CapitulosEntity id) {
-		List<PaginasEntity> pagina = pagRepository.FindByCapitulos(id);
+	public @ResponseBody ResponseEntity<Page<PaginasEntity>> procurarPorCapitulo(@PathVariable(value="id") CapitulosEntity id,  Integer page) {
 		
-		return pagina;
+		if(page == null) {
+			page = 0;
+		}
+		if(page >= 1) {
+			page --;
+		}
+		
+		System.out.println("Numero da pagina: "+page);		
+		
+		Pageable pageable = new PageRequest(page, 1);
+		Page<PaginasEntity> pagina = pagRepository.FindByCapitulos(id, pageable);
+		
+		return new ResponseEntity<>(pagina, HttpStatus.OK);
 	}
 	
 }

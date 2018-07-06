@@ -14,7 +14,7 @@ angular
 				vm.confirmarSenha = null;
 				vm.reg = {};
 				vm.formRegistrar.$setPristine(true);
-				$state.go('login');
+				$state.go('nav.login');
 			}, function (response){				
 				console.log(response.data.message);
 				console.log(response.data);

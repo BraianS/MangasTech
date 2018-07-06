@@ -3,18 +3,18 @@
 <nav class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" ui-sref="home">Home</a>
-			<a class="navbar-brand" ui-sref="manga">Mangas</a>			
-			<a class="navbar-brand" ui-sref="generos">Generos</a>
-			<a class="navbar-brand" ui-sref="grupos">grupos</a>			
-			<a class="navbar-brand" ui-sref="autor">Autor</a>
+			<a class="navbar-brand" ui-sref="nav">Home</a>
+			<a class="navbar-brand" ui-sref="nav.manga">Mangas</a>			
+			<a class="navbar-brand" ui-sref="nav.genero">Generos</a>
+			<a class="navbar-brand" ui-sref="nav.grupo">Grupos</a>			
+			<a class="navbar-brand" ui-sref="nav.autor">Autor</a>
 			
 			<div class="col-sm-3 col-md-3" >
 				<form class="navbar-form" role="search">
 				<div class="input-group">
 					<input type="text" class="form-control" placeholder="Search" name="q" ng-model="vm.nome" >
 					<div class="input-group-btn">
-						<button class="btn btn-default" type="submit" ng-click="vm.service(vm.nome)" ui-sref="pesquisa({txtPesquisado:vm.nome})"  ><i class="glyphicon glyphicon-search"></i></button>
+						<button class="btn btn-default" type="submit" ng-click="vm.service(vm.nome)" ui-sref="nav.pesquisa({txtPesquisado:vm.nome})"  ><i class="glyphicon glyphicon-search"></i></button>
 						
 					</div>
 				</div>
@@ -22,19 +22,19 @@
 				</form>
 			</div>
 		
-			<a ng-show="user.username" class="navbar-brand" ui-sref="admin">admin</a>
+			<a ng-show="vm.user.username" class="navbar-brand" ui-sref="nav.admin">admin</a>
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-show="!user.username" ><a ui-sref="registrar"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-				<li ng-show="!user.username"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"> Login</span></a></li>
+				<li ng-show="!vm.user.username" ><a ui-sref="nav.registrar"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+				<li ng-show="!vm.user.username"><a ui-sref="nav.login"><span class="glyphicon glyphicon-log-in"> Login</span></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-show="user.username">
+				<li ng-show="vm.user.username">
 					<a>
-						<span class="user">Hello,{{user.username}}	</span> 		
+						<span class="user">Hello,{{vm.user.username}}	</span> 		
 					</a>							
 				</li>			
 			</ul>
-			<a  ng-show="user.username" ng-click="vm.logout" class="navbar-brand" ui-sref="login" ui-sref-opts="{reload:true, notify:true}">Logout</a>		
+			<a  ng-show="vm.user.username" ng-click="vm.logout()" class="navbar-brand" ui-sref="nav.login" ui-sref-opts="{reload:true, notify:true}">Logout</a>		
 		</div>		
 	</div>
 </nav>
@@ -42,3 +42,4 @@
 	Path {{$location.path()}}
 	Template URL {{$route.current.templateUrl}}
 	Parametros: {{$routeParams}}
+	

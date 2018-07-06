@@ -25,7 +25,7 @@
 								<p><b>Autor: </b> {{mmm.autor.nome}}</p>
 							<p>
 								<b>Genero:</b>
-								<i ng-repeat="genero in mmm.genero"> <a ui-sref="generosDetalhe({generoId:genero.id})">{{genero.nome}}</a> </i>
+								<i ng-repeat="genero in mmm.genero"> <a ui-sref="nav.autor.detalhe({generoId:genero.id})">{{genero.nome}}</a> </i>
 							</p>
 							<p>
 								<b>Descricao: </b>{{mmm.descricao}}</p>
@@ -54,7 +54,7 @@
 						<td>{{c.lancamento}}</td>
 						<td>{{c.grupo.nome}}</td>
 						<td>
-							<a ui-sref="capituloDetalhes({capituloId:c.id})">Ler o capitulo</a>
+							<a ui-sref="nav.capitulo({capituloId:c.id})">Ler o capitulo</a>
 						</td>
 				</table>
 			</div>

@@ -14,10 +14,10 @@
 			</thread>
 			<tbody  ng-repeat=" m in vm.d">
 				<tr>
-					<td> <a ui-sref="mangaDetalhe({mangasId:m.id})">
+					<td> <a ui-sref="nav.manga.detalhe({mangasId:m.id})">
 						{{m.nome}}
 					</a></td>
-					<td> <a ui-sref="autorDetalhe({autorId:m.autor.id})">{{m.autor.nome}}</a></td>
+					<td> <a ui-sref="nav.autor.detalhe({autorId:m.autor.id})">{{m.autor.nome}}</a></td>
 					<td>{{m.status}}</td>
 				</tr>
 			</tbody>

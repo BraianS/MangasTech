@@ -1,27 +1,30 @@
 <!-- Panel Default -->
 <div class="panel panel-default">
 	<!-- Panel Heading -->
-	<div class="panel-heading text-center"><h1>Salvar Generos</h1></div>
-	
-	<div class="jumbotron"> 
+	<div class="panel-heading text-center">
+		<h1>Salvar Generos</h1>
+	</div>
+
+	<div class="jumbotron">
 		<div class="container">
 			<div class="row">
 				<div class="form-group">
-					
+
 					<!-- Form Genero -->
 					<form name="vm.formGenero" ng-submit="vm.salvarGeneros()">
-						
+
 						<!-- Nome -->
 						<div class="form-group" ng-class="{ 'has-error': vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty}">
 							<label for="nome">Nome</label>
-							<input type="text" maxlength="50" ng-maxlength="49" class="form-control text-uppercase" ng-model="vm.Genero.nome" id="nome" name="nome" required/>
+							<input type="text" maxlength="50" ng-maxlength="49" class="form-control text-uppercase" ng-model="vm.Genero.nome" id="nome"
+							 name="nome" required/>
 							<span ng-show="vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty">Campo Obrigatorio</span>
 							<span ng-show="vm.formGenero.nome.$error.maxlength">Tamanho Maximo</span>
 						</div>
-						
-						
+
+
 						<input class="btn btn-primary" type="submit" value="salvar" ng-disabled="vm.formGenero.$invalid">
-						
+
 						<!-- Alerta -->
 						<div class="alert alert-warning" ng-show="vm.mensagem">
 							{{vm.mensagem}}
@@ -40,26 +43,28 @@
 		<th>Edit</th>
 	</tr>
 	<tr ng-repeat="genero in vm.Generos">
-		<td><a ui-sref="generosDetalhe({generoId:genero.id})">{{genero.nome}}</a></td>
+		<td>
+			<a ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+		</td>
 		<!-- Editar -->
 		<td>
 			<div class="btn-group btn-group-xs">
-			<!-- Excluir -->
+				<!-- Excluir -->
 				<button type="button" class="btn btn-default">
 					<span class="glyphicon glyphicon-remove" ng-click="vm.deletarGeneros(genero)"></span>
 				</button>
 				<!-- Alterar -->
-				<button type="button" class="btn btn-default"> 
-						<span class="glyphicon glyphicon-pencil" ng-click="vm.alterarGeneros(genero)"></span>
+				<button type="button" class="btn btn-default">
+					<span class="glyphicon glyphicon-pencil" ng-click="vm.alterarGeneros(genero)"></span>
 				</button>
 				<!-- Cancelar -->
 				<button type="button" class="btn btn-default">
 					<span class="glyphicon glyphicon-asterisk" ng-click="vm.cancelar()"></span>
 				</button>
-			
+
 			</div>
 		</td>
 	</tr>
-	
-	
+
+
 </table>

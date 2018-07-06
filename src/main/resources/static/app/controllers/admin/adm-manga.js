@@ -1,6 +1,6 @@
 angular
 	.module("appCliente")
-	.controller("admMangaController", function ($http, $scope, $filter, $stateParams, $state, Upload) {
+	.controller("admMangaController", function ($http,  $filter) {
 		var vm = this; /* view Model */
 
 		vm.Model = {};

@@ -1,6 +1,6 @@
 angular
 .module("appCliente")
-.controller("mangaDetalheController",['$scope', '$routeParams','$http','$stateParams',function ($scope, $routeParams, $http, $stateParams){
+.controller("mangaDetalheController",['$scope', '$http','$stateParams',function ($scope, $http, $stateParams){
 
 	$scope.mangasId = $stateParams.mangasId;
 	

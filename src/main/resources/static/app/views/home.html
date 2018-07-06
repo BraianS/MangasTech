@@ -9,19 +9,19 @@
 					<div class="panel-info">
 						<div >
 							<div class="col-md-3">
-								<a ui-sref="mangaDetalhe({mangasId:c.manga.id})">
+								<a ui-sref="nav.manga.detalhe({mangasId:c.manga.id})" ng-if="c.manga.capa">
 									<img class="img-rounded img-responsive" style="width: 80px; height: 120px;" data-ng-src="data:image/jpg;base64,{{c.manga.capa}}">
 								</a>
 							</div>
 							<div class="col-md-9">
 								<div>
-									<a ui-sref="mangaDetalhe({mangasId:c.manga.id})">
+									<a ui-sref="nav.manga.detalhe({mangasId:c.manga.id})">
 										<b>{{c.manga.nome}} </b>
 									</a>
 								</div>
-								<a ui-sref="capituloDetalhes({capituloId:c.id})">Capitulo <span class="badge">{{c.capitulo}}</span> </a>
+								<a ui-sref="nav.capitulo({capituloId:c.id})">Capitulo <span class="badge">{{c.capitulo}}</span> </a>
 								<div>
-									<a ui-sref="grupodetalhe({gruposId:c.grupo.id})">
+									<a ui-sref="nav.grupo.detalhe({gruposId:c.grupo.id})">
 											{{c.grupo.nome}}
 									</a>									
 								</div>
@@ -31,7 +31,6 @@
 				</div>				
 			</div>
 		</div>
-		
 
 		<div class="col-md-5">
 			<div class="panel panel-default">
@@ -42,17 +41,17 @@
 				<div class="panel-body"  ng-repeat="mangas in vm.mangas ">
 					<div>
 						<div class="col-md-3" ng-if="mangas.capa">
-							<a ui-sref="mangaDetalhe({mangasId:mangas.id})">
+							<a ui-sref="nav.manga.detalhe({mangasId:mangas.id})">
 									<img class="img-rounded img-responsive" style="widows: 80px; height: 120px;" data-ng-src="data:image/jpg;base64,{{mangas.capa}}">
 							</a>
 							
 						</div>
 						<div>
-							<a ui-sref="mangaDetalhe({mangasId:mangas.id})">
+							<a ui-sref="nav.manga.detalhe({mangasId:mangas.id})">
 								<p>{{mangas.nome}}</p>
 							</a>
 							<div>
-								<a ui-sref="autorDetalhe({autorId:mangas.autor.id})">
+								<a ui-sref="nav.autor.detalhe({autorId:mangas.autor.id})">
 										{{mangas.autor.nome}}
 								</a>								
 							</div>

@@ -1,14 +1,20 @@
-<div class="panel panel-default">
-	<div class="panel-heading text-center"><h3> Gupos</h3> </div>
-	
-	<div ng-repeat ="grupos in vm.Grupos" class="panel-body">
-	<p><a ui-sref="grupodetalhe({gruposId:grupos.id})">{{grupos.nome}}</a></p>
-		
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-default">
+				<div class="panel-heading text-center"><h3> Gupos</h3> </div>
+				
+				<div ng-repeat ="grupos in vm.Grupos" class="panel-body">
+				<p><a ui-sref="nav.grupo.detalhe({gruposId:grupos.id})">{{grupos.nome}}</a></p>
+					
+				</div>
+			
+			<div class="panel-footer text-center" ng-if="vm.totalElementos">
+				<pagination max-size = "vm.size"   ng-change="vm.pageChange()" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarGrupos(vm.pagina)" items-per-page="vm.size" boundary-links="true"></pagination>
+			</div>
+						
+			</div>	
+			
+		</div>
 	</div>
-
-<div class="panel-footer text-center" ng-if="vm.totalElementos">
-	<pagination max-size = "vm.size"   ng-change="vm.pageChange()" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarGrupos(vm.pagina)" items-per-page="vm.size" boundary-links="true"></pagination>
 </div>
-    		
-</div>	
-

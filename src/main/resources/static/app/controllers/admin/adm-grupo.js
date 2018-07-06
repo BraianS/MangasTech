@@ -19,18 +19,7 @@ angular
 		alert("pagina atual e:"+vm.pagina)
 	}
 	
-	vm.init = function () {
-		$http.get('/user').then(function(res) {
-			$scope.users = res;
-			$scope.message = '';
-			$scope.appUser = null;
-			$scope.buttonText = 'Create';
-		}, function(res) {
-			console.log(res);
-			console.log(res.data);
-		})
-	}
-	
+		
 	vm.carregarGrupos = function () {
 		$http({
 			method: 'GET', url: '/user/grupo?page='+vm.pagina})
@@ -93,5 +82,5 @@ angular
 			vm.Grupo = grupo;
 		}
 		
-		vm.init();
+		
 })

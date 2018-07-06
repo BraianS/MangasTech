@@ -16,17 +16,17 @@
 									</p>
 								</div>
 								<b>
-									<a ui-sref="mangaDetalhe({mangasId:m.id})"> nome{{m.nome}}</a>
+									<a ui-sref="nav.manga.detalhe({mangasId:m.id})"> nome{{m.nome}}</a>
 								</b> -
 								<i>
-									<a ui-sref="autorDetalhe({autorId:m.autor.id})">{{m.autor.nome}}</a>
+									<a ui-sref="nav.autor.detalhe({autorId:m.autor.id})">{{m.autor.nome}}</a>
 								</i>
 							</p>
 							<p>{{m.status}}</p>
 							<label>Generos</label>
 
 							<i ng-repeat="genero in m.genero">
-								<a ui-sref="generosDetalhe({generoId:genero.id})">{{genero.nome}} </a>
+								<a ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}} </a>
 							</i>
 						</div>
 					</div>
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		<div class="text-center">
-			<pagination max-size="vm.size" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarAutor()" items-per-page="vm.size"
+			<pagination max-size="10" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarAutor()" items-per-page="vm.size"
 			 boundary-links="true"></pagination>
 		</div>
 	</div>

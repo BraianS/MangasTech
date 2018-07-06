@@ -1,12 +1,21 @@
-angular
-.module('appCliente')
-.controller('homeController', function($http, $scope, $location,$route,$routeParams,$rootScope) {
+(function () {
+
+	angular
+		.module('appCliente');
+
+	angular
+		.module('appCliente')
+		.controller('homeController', homeController);
+
+	homeController.$inject = ['$http', '$scope'];
+
+	function homeController($http, $scope) {
+
+		var vm = this;
+		$scope.funciona = "funciona";
+
 		
-	var vm = this;
-	
-	$scope.$location = $location;
-	$scope.$route=$route;
-	$scope.$routeParams = $routeParams;
+
 			
 	vm.capnews = [];
 	vm.nome = [];
@@ -56,4 +65,8 @@ angular
 			console.log(res.data);
 		})
 	}
-})
+
+		
+	
+	}
+})();

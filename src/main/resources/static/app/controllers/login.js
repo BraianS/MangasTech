@@ -25,7 +25,7 @@ angular
 				
 				AuthService.user = res.data.user;
 				$rootScope.$broadcast('LoginSuccessful');
-				$state.go('home');
+				$state.go('nav');
 			} else {
 				vm.mensagem = 'Autenticacao Falhau';				
 			}

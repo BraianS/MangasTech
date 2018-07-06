@@ -64,7 +64,10 @@
 	</tr>
 	<!-- Conteudo da tabela -->
 	<tr ng-repeat="autor in vm.autor">
-		<td>{{autor.nome}}</td>
+		<td>
+			<a ui-sref="nav.autor.detalhe({autorId:autor.id})">
+					{{autor.nome}}
+			</a></td>
 		<td class="longText">{{autor.info}}</td>
 		<td>
 			<!-- Descricao -->

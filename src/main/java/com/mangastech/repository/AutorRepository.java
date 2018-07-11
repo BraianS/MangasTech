@@ -17,26 +17,25 @@ import com.mangastech.model.AutorEntity;
 @Transactional
 public interface AutorRepository extends JpaRepository<AutorEntity, Long> {
 	
-	//Busca o Id e Nome do Autor
-	@Query("SELECT  a.nome FROM AutorEntity a") 
-	List<AutorEntity> buscarAutores();
-	
 	@Query ("SELECT a FROM AutorEntity a JOIN a.manga m GROUP BY a")
-	List<AutorEntity> buscarTodos();
-	
-	//Busca o autor pelo ID
-	@Query("Select a FROM AutorEntity a WHERE a.id=:id")
-	public AutorEntity buscarAutorpeloNome(@Param("id") Long id);
-	
+	public List<AutorEntity> buscarTodos();
+		
 	//Busca o Autor 
 	@Query("SELECT manga FROM AutorEntity a INNER JOIN a.manga manga GROUP BY a.nome ")
 	public List<AutorEntity> buscarAutorEMangas();
 	
-	@Query("SELECT a FROM AutorEntity a")
+	@Query(value="select new AutorEntity(id,nome) FROM AutorEntity a")
 	Page<AutorEntity> buscarAutor(Pageable page);
 	
 	public AutorEntity findOneByNome(String nome);
 	
+	@Query("SELECT NEW AutorEntity(id,nome) FROM AutorEntity a where a.nome like :letra%")
+	public Page<AutorEntity> findByLetra(@Param("letra") String nome, Pageable pageable);
+	
+	//Busca os mangas pelo do AutorEntity
 	@Query("Select m FROM AutorEntity a JOIN a.manga m where a.id=:id")
 	public Page<AutorEntity> findMangaById(@Param("id") Long id, Pageable page);
+	
 }
+	
+	

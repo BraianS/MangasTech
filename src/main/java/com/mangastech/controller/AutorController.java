@@ -1,5 +1,8 @@
 package com.mangastech.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,9 +46,19 @@ public class AutorController {
 			
 			Pageable pageable = new PageRequest(page, 20);
 			
-			Page<AutorEntity> autor = autorService.buscarTodos(pageable);			
+			Page<AutorEntity> autor = autorService.buscarTodos(pageable);
+			
 			
 			return new ResponseEntity<>(autor, HttpStatus.OK);
+		}
+		
+		@RequestMapping(value = "/user/autor/lista", method = RequestMethod.GET)
+		public List<AutorEntity> listaAutorNomes() {
+			
+			List<AutorEntity> autor = new ArrayList<>();			
+			autor.addAll(autorRepository.buscarTodos());
+			
+			return autor;
 		}
 		
 		//Procura o Autor pelo ID
@@ -103,5 +116,23 @@ public class AutorController {
 		  			
 		  
 		  return new ResponseEntity<>(autor, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/user/autor/letra/{letra}", method = RequestMethod.GET)
+	public ResponseEntity<Page<AutorEntity>> buscarPorNome(@PathVariable("letra") String letra, Integer page) {
+		
+		if(page == null) {
+			page = 0;
+		}
+		
+		if(page >=1) {
+			page --;
+		}
+		
+		Pageable pageable = new PageRequest(page, 20);
+				
+		Page<AutorEntity> autor = autorRepository.findByLetra(letra, pageable);		
+		
+		return new ResponseEntity<>(autor, HttpStatus.OK);
 	}
 }

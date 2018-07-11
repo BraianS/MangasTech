@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mangastech.model.AutorEntity;
 import com.mangastech.model.MangasEntity;
 import com.mangastech.model.Status;
+import com.mangastech.repository.AutorRepository;
 import com.mangastech.repository.MangasRepository;
 
 
@@ -31,6 +32,9 @@ public class MangasTechApplicationTests {
 	@Autowired
 	private MangasRepository mangaRepository;
 	
+	@Autowired
+	private AutorRepository autorRepository;
+	
 	private RestTemplate restTemplate;
 	
 	private ObjectMapper MAPPER = new ObjectMapper();
@@ -45,7 +49,8 @@ public class MangasTechApplicationTests {
 		
 		//mangaRepository.deleteAll();
 		for(int i = 0; i < 1000; i++) {
-			mangaRepository.save(new MangasEntity("HUNTER X HUNTER "+i, Status.COMPLETO, x, autor));
+			//mangaRepository.save(new MangasEntity("HUNTER X HUNTER "+i, Status.COMPLETO, x, autor));
+			//autorRepository.save(new AutorEntity("Togashi "+i));
 			
 		}
 		

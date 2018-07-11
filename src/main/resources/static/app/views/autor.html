@@ -1,13 +1,44 @@
-<div class="panel panel-default">
-	<div class="panel-heading text-center"><h3>Autores</h3></div>
-	<div>
-	
-		<div ng-repeat="autor in vm.autor" class="panel-body">
-		<p> <a ui-sref="nav.autor.detalhe({autorId:autor.id})">{{autor.nome}} </a> </p>
-			
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-default">
+				<div class="panel-heading text-center">
+					<h3>Autores</h3>
+
+					<ul class="filter list-group text-center">
+						<li class="list-group-item" ng-click="vm.resetar();vm.mudar = false;vm.carregarAutores()" ng-class="{'active':vm.ativado==''}">ALL</li>
+
+						<li class="list-group-item" ng-repeat="letra in vm.letra track by $index" ng-class="{'active':letra==vm.ativado}"
+						 ng-click="vm.paginaPorLetra = 1;vm.buscarPorLetra(letra); vm.mudar=true">{{letra}}</li>
+					</ul><!-- Filter List-Group -->
+				</div><!-- Panel Heading -->
+
+				<div ng-repeat="autor in vm.autor" class="panel-body">
+						<p>
+							<a ui-sref="nav.autor.detalhe({autorId:autor.id})">{{autor.nome}} </a>
+						</p>
+				</div><!-- Panel Body -->				
+
+				<div class="panel-footer text-center">
+					<div ng-if="vm.mudar == false">
+						<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaAutor" ng-click="vm.carregarAutores(pagina)"
+						 items-per-page="vm.size" boundary-links="true">
+						</pagination><!-- Pagination carregarAutores -->
+					</div><!-- Se falso -->
+
+					<div class="text-center" ng-if="vm.t  && vm.mudar == true">
+						<pagination max-size="10" total-items="vm.t" ng-model="vm.paginaPorLetra" ng-click="vm.buscarPorLetra()" items-per-page="vm.s"
+						 boundary-links="true">
+						</pagination><!-- Pagination buscarPorLetra-->
+					</div>
+
+					<div ng-if="!vm.autor.length">
+						<div class="alert alert-warning">
+							<strong> Nenhum Autor Cadastrado</strong>
+						</div><!-- Alerta -->
+					</div><!-- Se array vazio -->
+				</div><!-- Panel Footer -->
+			</div>
 		</div>
 	</div>
-	
-	
-
 </div>

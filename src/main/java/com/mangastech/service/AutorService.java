@@ -18,7 +18,7 @@ public class AutorService {
 	}
 
 	public Page<AutorEntity> buscarTodos(Pageable pageable) {
-		return autorRepository.findAll(pageable);
+		return autorRepository.buscarAutor(pageable);
 		
 	}
 

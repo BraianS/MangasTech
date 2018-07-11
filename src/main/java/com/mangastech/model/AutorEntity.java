@@ -73,6 +73,11 @@ public class AutorEntity implements Serializable {
 	public String toString() {
 		return "AutorEntity [id=" + id + ", nome=" + nome + ", info=" + info + ", manga=" + manga + "]";
 	}
-	
+
+	public AutorEntity(Long id, String nome) {
+		super();
+		this.id = id;
+		this.nome = nome;
+	}
 	
 }

@@ -33,7 +33,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="text-center">
+		<div class="text-center" ng-if="!vm.autor">
 			<pagination max-size="10" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarAutor()" items-per-page="vm.size"
 			 boundary-links="true"></pagination>
 		</div>

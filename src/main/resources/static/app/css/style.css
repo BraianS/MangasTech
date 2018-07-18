@@ -1,39 +1,44 @@
-.carousel-indicators li { 
-    background-color: gray;
-    background-repeat : no-repeat;
-    background-position : center;
-    border-radius: 12px;
-    width: 12px;
-    height: 12px;
-    background-color: #404040;
-  }
   
 .intro {
 	background-color: black
 }
 
-
-
-.active {
-  color: Red
+.active-button{
+  background-color:cornflowerblue;
 }
+
+
+.list-group-item {
+  color: #4505db;
+}
+.active {
+  background-color: cornflowerblue
+}
+
 .filter li {
   display: inline;
   padding: 5px;
 }
+
 ul {
   list-style-type: none;
 }
 
 .panel-body {
-	font-size: 15px;
-	padding: 10px 15px;
+	font-size: 15px;	
 }
 
 .panel-info {
 	font-size : 15px;
 }
 
+.panel-front .panel-heading .panel-title img {
+	border-radius:3px 3px 0px 0px;
+	width:100%;
+}
+.panel-front .panel-heading {
+	padding: 0px;	
+}
 .table td.text {
     max-width: 177px;
 }
@@ -53,7 +58,7 @@ footer {
 	position: relative;
 	left: 0;
 	bottom: 0;
-	heigth:100px;
+	height:100px;
 	width:100%;	
 }
 
@@ -65,6 +70,20 @@ body {
 	width: 100%
 }
 
-.jumbotron {
-  background-color:transparent !important;
+.col-sm-3 {
+  padding: 0;
 }
+
+.panel-front .panel-body p {
+	margin-top: -30px
+}
+
+.panel-front .panel-body i {
+  font-size: 14px;
+  font-style: oblique;
+}
+
+.panel-primary .panel-body .col-sm-3 .list-group {
+  padding-left: 10%
+}
+

@@ -1,18 +1,22 @@
 <div class="container">
-	<div class="col-sm-10">
-		<div class="panel panel">
-			<div class="panel-heading text-center">
-				<h3>Lista de Generos</h3>
-			</div>
+	<div class="row">
+		<div class="panel panel-primary">
 
-			<div class="panel-body" ng-repeat="genero in vm.Generos">
-				<div class="panel-info">
-					<a class="list-group-item" ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}
-						<span class="badge">{{genero.manga.length}}</span> <!-- Badge -->
-					</a> <!-- Link Genero.Detalhe -->
-					
-				</div> <!-- Panel-Info -->
-			</div> <!-- Panel-Body -->
-		</div> <!-- Panel -->
-	</div> <!-- Col-Sm-10 -->
-</div> <!-- Container -->
+			<div class="panel-heading text-center">
+				<div class="panel-title">
+						<h3>Generos</h3>
+				</div>
+			</div><!-- Panel-Heading -->
+
+			<div class="panel-body ">
+				<div class="col-sm-3" ng-repeat="genero in vm.Generos">
+					<div class="list-group list-group-horizontal" >
+						<a class="list-group-item" ui-sref="nav.genero.detalhe({generoId:genero.id})"><strong>{{genero.nome}}</strong>
+							<span class="badge">{{genero.manga.length}} Mangas</span><!-- Badge -->
+						</a>
+					</div>
+				</div> <!-- Lista de Generos -->
+			</div><!-- Panel-Body -->
+		</div><!-- Panel -->
+	</div><!-- Row -->
+</div><!-- Container -->

@@ -1,116 +1,67 @@
 angular
-.module('appCliente')
-.controller('mangaController', ['$http','$stateParams','$state','$scope','$filter','$log', function ($http,$stateParams,$state,$scope,$filter,$log) {
-	var vm = this;
-	
-	vm.Model = {};	
-		
-	vm.Mangas = []; 
-	vm.number = [];
-	vm.totalDePaginas = [];
-	vm.size = [];
-	vm.items = [];
-	vm.pagina = 1;
-	vm.alfa = 1;
-	vm.Model.generos = {};
-	vm.Model.autor = [];
-	
-	var letra = "abcdfghijklmnopqrstuvwxyz";
-		
-	vm.mudar = false;
-	
-	vm.alfabeto = letra.toUpperCase().split("");
-		
-	vm.activeLetter = "";
-		
-	vm.carregarAlfabeto = function(letras) {		
-					
-		if(letras != null) {
-			vm.activeLetter = letras;			
-		}	
-						
-		$http({
-			method:'GET', url: '/user/manga/az/'+vm.activeLetter+'?page='+vm.alfa})
-			.then(function(response) {
-				vm.Mangas = response.data.content;
-				vm.number = response.data.number;
-				vm.totalDePaginas = response.data.totalPages;
-				vm.items = response.data.totalElements;
-				vm.size = response.data.size;
-				
-				console.log(response);
-				console.log(response.data);
-			}, function(response) {
-				console.log(response);
-				console.log(response.data);
-			})
-	}
-		  	  	 	
-	vm.carregarMangas = function() {
-		$http({
-		
-			method: 'GET', url: '/user/manga?page='+vm.pagina})
-			.then(function (response) {
-				vm.Mangas = response.data.content;
-				vm.number = response.data.number;
-				vm.totalDePaginas = response.data.totalPages;
-				vm.items = response.data.totalElements;
-				vm.size = response.data.size;
-				
-				console.log(response);
-				console.log(response.data);
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			});
-	};
-						
-	vm.Model.carregarGeneros= function() {
-			$http({
-				  method: 'GET', url: '/user/genero'})
-				  .then(function (response) {
-					  vm.Model.generos = response.data;
-					console.log("genero buscado com sucesso");
-				   console.log(response.data);
-				   console.log(response.status);
-				  }, function (response) {
-				    console.log(response.data);
-				    console.log(response.status);
-				  });
-			};
-				
-	vm.Model.carregarautor = function() {
-		$http({
-			  method: 'GET', url: '/user/autor'})
-			  .then(function (response) {
-				  vm.Model.autor =response.data;
-			   
-			  }, function (response) {
-			    console.log(response.data);
-			    console.log(response.status);
-			  });
-	};
-	
-	//Aqui vem a chamada da API dos generos
-	
-	//no then do manga ele executa e atualiza a lista de generos
-	vm.Load= function (){
-		if (vm.Model.generos && vm.Model.Generos) {
-			angular.forEach(vm.Model.generos, function(_genero, i){
+	.module('appCliente')
+	.controller('mangaController', ['$http', function ($http) {
 
-				_genero.Selecionado = $filter('filter')(vm.Model.generos,{id:_genero.id}).length > 0 ;
-				//console.log(i, vm.Model.Manga.genero, $filter('filter')(vm.Model.Manga.genero,{id:_genero.id})[0]);
-			});
+		var vm = this;
+
+		vm.Mangas = [];
+		vm.paginaPorMangas = 1;
+		vm.paginaPorLetra = 1;
+		vm.status = false;
+		vm.letraAtivada = "";
+
+		var letra = "abcdefghijklmnopqrstuvwxyz";
+
+		vm.alfabeto = letra.toUpperCase().split("");
+
+		vm.resetar = function () {
+			vm.paginaPorMangas = 1;
+			vm.status = false;
+			vm.letraAtivada = "";
 		};
-	};
 
-	
-	vm.Model.carregarGeneros();
-	vm.carregarMangas();	
-	vm.Model.carregarautor();
-	vm.Load();
-		
-		
-}]);
+		vm.false = function () {
+			vm.paginaPorMangas = 1;
+			vm.letraAtivada = "";
+			vm.status = false;
+		};
 
+		vm.true = function () {
+			vm.status = true;
+			vm.paginaPorLetra = 1;
+		};
 
+		vm.carregarAlfabeto = function (letras) {
+			if (letras != null) {
+				vm.letraAtivada = letras;
+			}
+			$http({
+				method: 'GET', url: '/user/manga/az/' + vm.letraAtivada + '?page=' + vm.paginaPorLetra
+			}).then(function (response) {
+					vm.Mangas = response.data.content;
+					vm.totalElementos = response.data.totalElements;
+					console.log(response);
+					console.log(response.data);
+				}, function (response) {
+					console.log(response);
+					console.log(response.data);
+				})
+		};
+
+		vm.carregarMangas = function () {
+			$http({
+				method: 'GET', url: '/user/manga?page=' + vm.paginaPorMangas
+			})
+				.then(function (response) {
+					vm.Mangas = response.data.content;
+					vm.totalElementos1 = response.data.totalElements;
+					console.log(response);
+					console.log(response.data);
+				}, function (response) {
+					console.log(response);
+					console.log(response.data);
+				});
+		};
+
+		vm.carregarMangas();
+	}]);

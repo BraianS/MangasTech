@@ -1,37 +1,59 @@
 angular
-.module("appCliente")
-.controller("grupoController", function($http,$scope) {
-	var vm = this;
-	
-	vm.Model = {};
-	vm.Grupos = [];
-	vm.Grupo = {};
-	
-	vm.totalPaginas = [];
-	vm.size = [];
-	vm.pagina = 1;
-	vm.totalElementos = [];
-	vm.number = [];		
-	
-	vm.carregarGrupos = function () {
-		$http({
-			method: 'GET', url: '/user/grupo?page='+vm.pagina})
-			.then(function (response){
-				vm.Grupos = response.data.content;
-				vm.number = response.data.number;
-				vm.totalPaginas = response.data.totalPages;
-				vm.size = response.data.size;
-				vm.totalElementos = response.data.totalElements;
-				
-				}, function (response) {
-					console.log(response.data);
-					console.log(response.status);
-				})
+	.module("appCliente")
+	.controller("grupoController", function ($http) {
+		var vm = this;
+
+		vm.Grupos = [];
+		vm.paginaPorGrupos = 1;
+		vm.paginaPorLetra = 1;
+		vm.status = false;
+		vm.ativado = "";
+
+		var alfabeto = "abcdefghijklmnopqrstuvwxyz";
+
+		vm.letra = alfabeto.toUpperCase().split("");
+
+		vm.false = function () {
+			vm.status = false;
+			vm.paginaPorGrupos = 1;
+			vm.ativado = "";
 		};
+
+		vm.true = function () {
+			vm.status = true;
+			vm.paginaPorLetra = 1;
+		};
+
+		vm.carregarGrupos = function () {
+			$http({
+				method: 'GET',
+				url: '/user/grupo?page=' + vm.paginaPorGrupos
+			}).then(function (response) {
+				vm.Grupos = response.data.content;
+				vm.totalElementos = response.data.totalElements;
+				console.log(response.data.content);
+			}, function (response) {
+				console.log(response.data.content);
+				console.log(response.status);
+			})
+		};
+
+		vm.buscarPorLetra = function (letra) {
+			if (letra != null) {
+				vm.ativado = letra;
+			}
+			$http({
+				method: 'GET',
+				url: '/user/grupo/letra/' + vm.ativado + "?page=" + vm.paginaPorLetra
+			}).then(function (response) {
+				vm.Grupos = response.data.content;
+				vm.totalElementos2 = response.data.totalElements;
+				console.log(response.data.content);
+			}, function (response) {
+				console.log(response.data);
+				console.log(response.data.content);
+			})
+		};
+
 		vm.carregarGrupos();
-		
-		vm.pageChange = function () {
-			alert("pagina atual e : "+vm.pagina);
-		}
-	
-});
+	});

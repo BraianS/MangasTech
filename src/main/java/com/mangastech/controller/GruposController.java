@@ -4,6 +4,7 @@ package com.mangastech.controller;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.xml.ws.soap.AddressingFeature.Responses;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -85,5 +86,39 @@ public class GruposController {
 			grupos = grupoService.alterar(grupos);
 		return ResponseEntity.ok().body(grupos);
 	}
+	
+	@RequestMapping(value="/user/grupo/lista")
+	public ResponseEntity<Page<GruposEntity>>  buscarLista(Integer page){
+		
+		if(page == null) {
+			page = 0;
+		}
+		
+		if(page >= 1) {
+			page --;
+		}
+		
+		Pageable pageable = new PageRequest(page,20);
+		
+		Page<GruposEntity> grupo = gruposRepository.listarNomes(pageable);
+		
+		return new ResponseEntity<>(grupo, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/user/grupo/letra/{letra}", method = RequestMethod.GET)
+	public ResponseEntity<Page<GruposEntity>> buscarPorLetra(@PathVariable("letra") String letra, Integer page) {
+		
+		if(page == null) {
+			page = 0;
+		}
+		if(page >= 1) {
+			page--;
+		}
+		Pageable pageable = new PageRequest(page, 20);
+		
+		Page<GruposEntity> grupo = gruposRepository.buscarPorLetra(letra, pageable);
+		
+		return new ResponseEntity<>(grupo, HttpStatus.OK);
+	}	
 	
 }

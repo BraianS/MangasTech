@@ -1,58 +1,76 @@
-<div class="jumbotron">
-	<div class="container">
-		<div class="row">
+<div class="container">
+	<div class="row">
+		<div class="panel panel-primary">
 
-			<div class="text-center">
-				<h2>A-Z Ordem alfabética</h2>
-			</div>
+			<div class="panel-heading">
+				<div class="panel-title text-center">
+					<h3>A-Z Mangas</h3>
 
-			<ul class="filter list-group text-center">
+					<ul class="filter list-group text-center">
+						<li ng-click="vm.false(); vm.carregarMangas()" ng-class="{'active':vm.letraAtivada==''}">
+							All
+						</li>
+						
+						<li class="list-group-item" ng-repeat="letra in vm.alfabeto track by $index" ng-click="vm.true();vm.carregarAlfabeto(letra)"
+						 ng-class="{'active':letra==vm.letraAtivada}">{{letra}}</li>
+					</ul><!-- Filter -->
+				</div>
+			</div><!-- Panel-Heading -->
 
-				<li ng-click=" vm.resetar(); vm.carregarMangas(); vm.mudar = false " ng-class="{'active':vm.activeLetter==''}">All</li>
-				<li class="list-group-item" ng-repeat="letra in vm.alfabeto track by $index" ng-click="vm.carregarAlfabeto(letra); vm.mudar = true"
-				 ng-class="{'active':letra==vm.activeLetter}">{{letra}}</li>
-			</ul>
-			<div class="col-sm-3" ng-if="vm.items" ng-repeat="m in vm.Mangas ">
+			<div class="panel-body">
+				<div class="col-sm-3 " ng-repeat="manga in vm.Mangas">
+					<div class="panel panel-default panel-front">
 
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div class="panel-info">
+						<div class="panel panel-heading ">
+							<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
+								<h4 class="panel-title" ng-if="manga.capa">
+									<img class="image-responsive" data-ng-src="data:image/jpeg;base64,{{manga.capa}}">
+								</h4>
+
+								<h4 class="panel-title" ng-if="!manga.capa">
+									<img src="/app/img/image.JPG" alt="" class="image-repsonsive">
+								</h4><!-- Sem foto -->
+							</a>
+						</div>
+
+						<div class="panel-body">
 							<p>
-								<div class-"col-sm-4 col-md-4" ng-if="m.capa">
-									<p>
-										<a ui-sref="nav.manga.detalhe({mangasId:m.id})">
-											<img  class="img-rounded img-responsive" data-ng-src="data:image/jpeg;base64,{{m.capa}}">
-										</a>
-									</p>	
-								</div>
-								<b>
-									<a ui-sref="nav.manga.detalhe({mangasId:m.id})">{{m.nome}}</a>
-								</b> -
+								<strong>
+									<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">{{manga.nome}}</a>
+								</strong>
 								<i>
-									<a ui-sref="nav.autor.detalhe({autorId:m.autor.id})">{{m.autor.nome}}</a>
+									<a ui-sref="nav.autor.detalhe({autorId:manga.autor.id})">{{manga.autor.nome}}</a>
 								</i>
 							</p>
 
-							<p>{{m.status}}</p>
-							<label>Generos</label>
-							
-								<i ng-repeat="genero in m.genero"> <a ui-sref="generosDetalhe({generoId:genero.id})">{{genero.nome}} </a> </i>
-							
+							<i ng-repeat="genero in manga.genero">
+								<a href="" ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+							</i>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+				</div><!-- Lista de Mangas -->
+			</div><!-- Panel-Body -->
 
-	<div class="text-center" ng-if="vm.mudar == false ">
-		<pagination max-size="10" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarMangas()" items-per-page="vm.size"
-		 boundary-links="true"></pagination>
-	</div>
+			<div class="panel-footer">
+				<div class="text-center" ng-if="vm.status == false" >
+					<pagination max-size="10" total-items="vm.totalElementos1" ng-model="vm.paginaPorMangas" ng-click="vm.carregarMangas()" items-per-page="20"
+					 boundary-links="true"></pagination>
+				</div><!-- Pagination todos os Mangas -->
 
-	<div class="text-center" ng-if="vm.mudar == true && vm.items">
-		<pagination max-size="10" total-items="vm.items" ng-model="vm.alfa" ng-click="vm.carregarAlfabeto() " items-per-page="vm.size"
-		 boundary-links="true"></pagination>
-	</div>
+				<div class="text-center" ng-if="vm.totalElementos && vm.status == true">
+					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaPorLetra" ng-click="vm.carregarAlfabeto(letras) " items-per-page="20"
+					 boundary-links="true"></pagination>
+				</div><!-- Pagination por Letras -->
 
-</div>
+				<div ng-if="!vm.Mangas.length">
+					<div class="row">
+						<div class="alert text-center">
+							<h3>Sem Mangas</h3>
+						</div>
+					</div>
+				</div><!-- Sem Mangas -->
+
+			</div><!-- Footer -->
+		</div><!-- Panel -->
+	</div><!-- Row -->
+</div><!-- Container -->

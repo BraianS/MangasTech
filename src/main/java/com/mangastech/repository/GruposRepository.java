@@ -24,5 +24,11 @@ public interface GruposRepository extends JpaRepository<GruposEntity, Long>{
 	public GruposEntity findOneByNome(String nome);
 	
 	public Page<GruposEntity> findOneById(Long id, Pageable page);
+	
+	@Query(value="SELECT NEW GruposEntity(id,nome) FROM GruposEntity")
+	public Page<GruposEntity> listarNomes(Pageable pageable);
+	
+	@Query(value="SELECT g FROM GruposEntity g where g.nome LIKE :nome%")	
+	public Page<GruposEntity> buscarPorLetra(@Param("nome") String nome, Pageable pageable);
 
 }

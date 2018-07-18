@@ -47,8 +47,11 @@ public class GruposEntity {
 		this.nome = nome;
 	}
 	public GruposEntity() {
-		super();
-	}	
+		
+	}
+	
+	
+	
 	
 	@OneToMany(mappedBy = "grupo",targetEntity = CapitulosEntity.class, fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
 	

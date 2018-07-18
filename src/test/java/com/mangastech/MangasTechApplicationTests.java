@@ -11,9 +11,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mangastech.model.AutorEntity;
+import com.mangastech.model.GruposEntity;
 import com.mangastech.model.MangasEntity;
 import com.mangastech.model.Status;
 import com.mangastech.repository.AutorRepository;
+import com.mangastech.repository.GruposRepository;
 import com.mangastech.repository.MangasRepository;
 
 
@@ -35,6 +37,9 @@ public class MangasTechApplicationTests {
 	@Autowired
 	private AutorRepository autorRepository;
 	
+	@Autowired
+	private GruposRepository grupoRepository;
+	
 	private RestTemplate restTemplate;
 	
 	private ObjectMapper MAPPER = new ObjectMapper();
@@ -51,6 +56,7 @@ public class MangasTechApplicationTests {
 		for(int i = 0; i < 1000; i++) {
 			//mangaRepository.save(new MangasEntity("HUNTER X HUNTER "+i, Status.COMPLETO, x, autor));
 			//autorRepository.save(new AutorEntity("Togashi "+i));
+			//grupoRepository.save(new GruposEntity("MAITE"+i));
 			
 		}
 		

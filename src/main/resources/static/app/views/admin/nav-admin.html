@@ -1,14 +1,16 @@
-<ul class="nav nav-tabs">
-  <li><a ui-sref="nav.admin.capitulo">Capitulo</a></li>
-  <li><a ui-sref="nav.admin.manga">Mangas</a></li>
-  <li><a ui-sref="nav.admin.genero">Genero</a></li>
-  <li><a ui-sref="nav.admin.autor">Autor</a></li>
-  <li><a ui-sref="nav.admin.grupo">Grupos</a></li>
-  <li><a ui-sref="nav.admin.usuario">Usuarios</a></li>
-</ul>
-  
-  <div class="container" style="margin-top: 10px;">
-    <div ui-view="adminView">
-    </div>
+<div class="container">
+  <div class="row">
+      <ul class="nav nav-tabs">
+        <li><a ui-sref="nav.admin.capitulo">Capitulo</a></li>
+        <li><a ui-sref="nav.admin.manga">Mangas</a></li>
+        <li><a ui-sref="nav.admin.genero">Genero</a></li>
+        <li><a ui-sref="nav.admin.autor">Autor</a></li>
+        <li><a ui-sref="nav.admin.grupo">Grupos</a></li>
+        <li><a ui-sref="nav.admin.usuario">Usuarios</a></li>
+      </ul>
+      <div class="container" style="margin-top: 10px; ">    
+        <div ui-view="adminView">          
+        </div>
+      </div>
   </div>
-  
+</div>

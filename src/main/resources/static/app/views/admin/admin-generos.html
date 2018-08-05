@@ -1,0 +1,81 @@
+<div class="panel panel-default">
+	<div class="panel-heading text-center">
+		<h3 class="panel-title">Salvar Generos</h3>
+	</div>
+
+	<div class="panel-body">
+		<div class="panel-info">
+			<!-- Form Genero -->
+			<div class="form-group">
+				<form name="vm.formGenero" ng-submit="vm.salvarGeneros()">
+
+					<!-- Nome -->
+					<div class="form-group" ng-class="{ 'has-error': vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty}">
+						<label for="nome">Nome</label>
+						<input type="text" maxlength="50" ng-maxlength="49" class="form-control text-uppercase" ng-model="vm.genero.nome" id="nome"
+						 name="nome" required/>
+						<span ng-show="vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty">Campo Obrigatorio</span>
+						<span ng-show="vm.formGenero.nome.$error.maxlength">Tamanho Maximo</span>
+					</div>
+
+					<div class="text-center">
+						<!-- Salvar Genero-->
+						<input class="btn btn-primary" type="submit" value="salvar" ng-disabled="vm.formGenero.$invalid">
+
+						<!-- Cancelar -->
+						<input class="btn btn-primary" type="button" value="cancelar" ng-click="vm.cancelarGeneros()">
+					</div>
+
+					<!-- Alerta -->
+					<div class="alert alert-warning" ng-show="vm.mensagem">
+						{{vm.mensagem}}
+					</div>
+				</form>
+			</div>
+			<!-- ./Form Genero -->
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading text-center">
+		<h3 class="panel-title">Editar Generos</h3>
+	</div>
+
+	<div class="panel-body">
+		<div class="panel-info">
+			<!-- Tabela de Generos -->
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Edit</th>
+					</tr>
+				</thead>
+
+				<tr ng-repeat="genero in vm.generos">
+					<td>
+						<a ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+					</td>
+					<td>
+						<div class="btn-group btn-group-xs">
+							<!-- Excluir -->
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-remove" ng-click="vm.deletarGeneros(genero)"></span>
+							</button>
+							<!-- Alterar -->
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-pencil" ng-click="vm.alterarGeneros(genero)"></span>
+							</button>
+							<!-- Cancelar -->
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-asterisk" ng-click="vm.cancelarGeneros()"></span>
+							</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<!-- ./Lista de generos -->
+		</div>
+	</div>
+</div>

@@ -1,64 +1,82 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<!-- Ultimos capitulos adicionados -->
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h4>Ultimos Capitulos</h4>
 				</div>
-				<div class="panel-body" ng-repeat="c in vm.capnews">
+				<div class="panel-body" ng-repeat="capitulo in vm.novosCapitulos">
 					<div class="panel-info">
-						<div >
-							<div class="col-md-3">
-								<a ui-sref="nav.manga.detalhe({mangasId:c.manga.id})" ng-if="c.manga.capa">
-									<img class="img-rounded img-responsive" style="width: 80px; height: 120px;" data-ng-src="data:image/jpg;base64,{{c.manga.capa}}">
-								</a>
-							</div>
-							<div class="col-md-9">
-								<div>
-									<a ui-sref="nav.manga.detalhe({mangasId:c.manga.id})">
-										<b>{{c.manga.nome}} </b>
-									</a>
-								</div>
-								<a ui-sref="nav.capitulo({capituloId:c.id})">Capitulo <span class="badge">{{c.capitulo}}</span> </a>
-								<div>
-									<a ui-sref="nav.grupo.detalhe({gruposId:c.grupo.id})">
-											{{c.grupo.nome}}
-									</a>									
-								</div>
-							</div>
+						<div class="col-md-3">
+							<a ui-sref="nav.manga.detalhe({mangasId:c.manga.id})" ng-if="capitulo.manga.capa">
+								<img class="img-rounded img-responsive" id="newManga" data-ng-src="data:image/jpg;base64,{{capitulo.manga.capa}}">
+							</a>
+
+							<a href="" ui-sref="nav.manga.detalhe({mangasId:c.manga.id})" ng-if="!capitulo.manga.capa">
+								<img class="img-rounded img-responsive" id="newManga" src="/app/img/image.JPG">
+							</a>
 						</div>
-					</div> 
-				</div>				
+						<div class="col-md-9">
+
+							<a ui-sref="nav.manga.detalhe({mangasId:capitulo.manga.id})">
+								<p>{{capitulo.manga.nome}} </p>
+							</a>
+							<a ui-sref="nav.capitulo({capituloId:capitulo.id})">
+								Capitulo
+								<span class="badge">{{capitulo.capitulo}}</span>
+							</a>
+
+							<a ui-sref="nav.grupo.detalhe({gruposId:capitulo.grupo.id})">
+								<p>
+									{{capitulo.grupo.nome}}
+								</p>
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
+			<!-- ./Ultimos capitulos adicionados -->
 		</div>
 
-		<div class="col-md-5">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<!-- Ultimos Mangas adicionados -->
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h4>Ultimos Mangas</h4>
 				</div>
 
-				<div class="panel-body"  ng-repeat="mangas in vm.mangas ">
-					<div>
-						<div class="col-md-3" ng-if="mangas.capa">
-							<a ui-sref="nav.manga.detalhe({mangasId:mangas.id})">
-									<img class="img-rounded img-responsive" style="widows: 80px; height: 120px;" data-ng-src="data:image/jpg;base64,{{mangas.capa}}">
+				<div class="panel-body" ng-repeat="mangas in vm.novosMangas">
+					<div class="panel-info">
+						<div class="col-md-3">
+							<!-- Com foto -->
+							<a ui-sref="nav.manga.detalhe({mangasId:mangas.id})" ng-if="mangas.capa">
+								<img class="img-rounded img-responsive" id="newManga" data-ng-src="data:image/jpg;base64,{{mangas.capa}}">
 							</a>
-							
+							<!-- ./Com foto -->
+
+							<!-- Sem foto -->
+							<h4 class="panel-title" ng-if="!mangas.capa">
+								<img src="/app/img/image.JPG" alt="" class="img-rounded img-responsive">
+							</h4>
+							<!-- ./Sem foto -->
 						</div>
-						<div>
+
+						<div class="col-md-9">
 							<a ui-sref="nav.manga.detalhe({mangasId:mangas.id})">
 								<p>{{mangas.nome}}</p>
 							</a>
-							<div>
-								<a ui-sref="nav.autor.detalhe({autorId:mangas.autor.id})">
-										{{mangas.autor.nome}}
-								</a>								
-							</div>
+
+							<a ui-sref="nav.autor.detalhe({autorId:mangas.autor.id})">
+								{{mangas.autor.nome}}
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- ./Ultimos mangas adicionados -->
 		</div>
+
+
 	</div>
 </div>

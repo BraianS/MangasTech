@@ -1,11 +1,11 @@
-(function() {
-	
+(function () {
+	'use strict'
 	//Cria o modulo AppCliente
 	//Seta as Dependências
 	angular
 		.module('appCliente', ["ui.bootstrap", "appCliente.admin", "appCliente.run"]);
 
-	//Injeta as dependencias
+	//Injeta as dependências
 	MainModuleConfig.$inject = ["$locationProvider", "$stateProvider", "$urlRouterProvider"];
 
 	//Configuração do Modulo Principal
@@ -13,7 +13,7 @@
 
 		//Redireciona se tiver uma rota invalida		
 		$urlRouterProvider.otherwise('/');
-		
+
 		//Remove a <base> do index e #!/ da url
 		$locationProvider.html5Mode({
 			enabled: true,
@@ -82,8 +82,8 @@
 			needToLogin: false,
 			views: {
 				'home@': {
-					templateUrl: '/app/views/generoDetalhe.html',
-					controller: 'generodetalhe',
+					templateUrl: '/app/views/genero-detalhe.html',
+					controller: 'generoDetalheController',
 					controllerAs: 'vm'
 				}
 			}
@@ -109,8 +109,8 @@
 			needToLogin: false,
 			views: {
 				'home@': {
-					templateUrl: '/app/views/autordetalhe.html',
-					controller: 'autorDetalhe',
+					templateUrl: '/app/views/autor-detalhe.html',
+					controller: 'autorDetalheController',
 					controllerAs: 'vm'
 				}
 			}
@@ -144,7 +144,7 @@
 
 		var pesquisa = {
 			name: 'nav.pesquisa',
-			url: '/:txtPesquisado',
+			url: ':txtPesquisado',
 			reload: true,
 			needToLogin: false,
 			views: {
@@ -200,7 +200,7 @@
 			needToLogin: false,
 			views: {
 				'home@': {
-					templateUrl: '/app/views/acessoNegado.html'
+					templateUrl: '/app/views/acesso-negado.html'
 				}
 			}
 		};

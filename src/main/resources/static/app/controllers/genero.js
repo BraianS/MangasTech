@@ -1,28 +1,33 @@
-angular
-.module("appCliente")
-.controller("generosController",['$http', function($http){
-	
-	var vm = this;
-	vm.Genero = {};
-	
-	vm.Generos = [];
-	vm.Manga = [];
-		
-	vm.carregarGeneros = function() {
-		$http({
-			method: 'GET', url: '/user/genero'})
-			.then(function (response) {
-			vm.Generos = response.data.content;
-			vm.Manga = response.data.manga;
-			console.log(response.data);
-			console.log(response.status);
-			
-			},function (response){
+
+(function () {
+	'use strict';
+	//Adiciona o controller ao modulo
+	angular
+		.module('appCliente')
+		.controller('generosController', generosController);
+
+	//Injeta as dependências
+	generosController.$inject = ['$http'];
+
+	function generosController($http) {
+
+		var vm = this;
+
+		vm.genero = [];
+		vm.carregarGeneros = carregarGeneros;
+
+		carregarGeneros();
+
+		function carregarGeneros() {
+			$http({
+				method: 'GET',
+				url: '/user/genero'
+			}).then(function (response) {
+				vm.genero = response.data.content;
+			}, function (response) {
 				console.log(response.data);
 				console.log(response.status);
 			});
-	};
-	
-	vm.carregarGeneros();
-	
-}]);
+		}
+	}
+})();

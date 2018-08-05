@@ -1,70 +1,71 @@
+<div class="container">
+	<div class="row">
+		<div class="page-header text-center">
+			<h1>Registrar</h1>
+		</div>
 
+		<!-- Form Registrar -->
+		<form name="vm.formRegistrar" class="form-horizontal" ng-submit="vm.cadastrar()">
 
-<div class="container" style="padding-top:10px">
-	<div class="page-header text-center"><h1>Registrar</h1></div>
-	
-	<!-- Form Registrar -->
-	<form name="vm.formRegistrar" class="form-horizontal" ng-submit="vm.registrar()">
-		
-		<!-- Nome -->
-		<div class="form-group" ng-class="{ 'has-error' :vm.formRegistrar.nome.$invalid && vm.formRegistrar.nome.$dirty}">
-			<label for="nome" class="control-label col-xs-2" type="text" ng-model="vn.reg.nome">Nome:</label>
-			<div class="col-xs-6">
-				<input name="nome" class="form-control" type="text" ng-model="vm.reg.nome" id="nome" maxlength="50" ng-maxlength="49" required>
-				<span ng-show="vm.formRegistrar.nome.$error.required && vm.formRegistrar.nome.$dirty">Campo Nome Obrigatorio</span>
-				<span ng-show="vm.formRegistrar.nome.$error.maxlength">Tamanho maximo</span>
+			<!-- Nome -->
+			<div class="form-group" ng-class="{ 'has-error' :vm.formRegistrar.nome.$invalid && vm.formRegistrar.nome.$dirty}">
+				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+					<input name="nome" placeholder="nome" class="form-control" type="text" ng-model="vm.registrar.nome" id="nome" maxlength="50"
+					 ng-maxlength="49" required>
+					<span ng-show="vm.formRegistrar.nome.$error.required && vm.formRegistrar.nome.$dirty">Campo Nome Obrigatorio</span>
+					<span ng-show="vm.formRegistrar.nome.$error.maxlength">Tamanho maximo</span>
+				</div>
 			</div>
-		</div>
-		
-		<!-- Username -->
-		<div class="form-group" ng-class=" {'has-error' :vm.formRegistrar.username.$invalid && vm.formRegistrar.username.$dirty}">
-			<label for="nome" class="control-label col-xs-2">Username: </label>
-			<div class="col-xs-6">
-				<input name="username" class="form-control" type="text" ng-model="vm.reg.username" id="nome" maxlength="50" ng-maxlength="49" required>
-				<span ng-show="vm.formRegistrar.username.$error.required && vm.formRegistrar.username.$dirty ">Campo Nome Obrigatorio</span>
-				<span ng-show="vm.formRegistrar.username.$error.maxlength">Tamanho maximo</span>
+
+			<!-- Username -->
+			<div class="form-group" ng-class=" {'has-error' :vm.formRegistrar.username.$invalid && vm.formRegistrar.username.$dirty}">
+				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+					<input name="username" placeholder="username" class="form-control" type="text" ng-model="vm.registrar.username" id="nome"
+					 maxlength="50" ng-maxlength="49" required>
+					<span ng-show="vm.formRegistrar.username.$error.required && vm.formRegistrar.username.$dirty ">Campo Nome Obrigatorio</span>
+					<span ng-show="vm.formRegistrar.username.$error.maxlength">Tamanho maximo</span>
+				</div>
 			</div>
-		</div>
-		
-		<!-- Password -->
-		<div class="form-group" ng-class="{'has-error': vm.formRegistrar.senha.$invalid && vm.formRegistrar.senha.$dirty}">
-			<label for="senha" class="control-label col-xs-2" >Senha:</label>
-			<div class="col-xs-6">
-				<input name="senha" class="form-control col-xs-6" type="password" ng-model="vm.reg.password"  id="senha" maxlength="50"  ng-maxlength="49" required>
-				<span ng-show="vm.formRegistrar.senha.$dirty && vm.formRegistrar.senha.$error.required">Campo Senha Obrigatorio</span>
-				<span ng-show="vm.formRegistrar.senha.$error.maxlength">Tamanho maximo</span>
+
+			<!-- Password -->
+			<div class="form-group" ng-class="{'has-error': vm.formRegistrar.senha.$invalid && vm.formRegistrar.senha.$dirty}">
+				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+					<input name="senha" placeholder="password" class="form-control col-xs-6" type="password" ng-model="vm.registrar.password"
+					 id="senha" maxlength="50" ng-maxlength="49" required>
+					<span ng-show="vm.formRegistrar.senha.$dirty && vm.formRegistrar.senha.$error.required">Campo Senha Obrigatorio</span>
+					<span ng-show="vm.formRegistrar.senha.$error.maxlength">Tamanho maximo</span>
+				</div>
 			</div>
-		</div>
-		
-		<!-- Confirmar Senha -->
-		<div class=form-group ng-class="{ 'has-error': vm.formRegistrar.confirmarSenha.$invalid && vm.formRegistrar.confirmarSenha.$dirty}">
-			<label for="confirmar" class="control-label col-xs-2">Confirmar Senha:</label>
-			<div class="col-xs-6">
-				<input type="password" name="confirmarSenha"class="form-control col-xs-6"  id="confirmar" maxlength="50" ng-maxlength="49" ng-model="vm.confirmarSenha" required>
-				<span ng-show="vm.formRegistrar.confirmarSenha.$dirty && vm.formRegistrar.confirmarSenha.$error.required">Campo Obrigatorio</span>
-				<span ng-show="vm.formRegistrar.confirmarSenha.$error.maxlength">Tamanho maximo</span>
+
+			<!-- Confirmar Senha -->
+			<div class=form-group ng-class="{ 'has-error': vm.formRegistrar.confirmarSenha.$invalid && vm.formRegistrar.confirmarSenha.$dirty}">
+				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+					<input type="password" placeholder="Repeter Senha" name="confirmarSenha" class="form-control col-xs-6" id="confirmar" maxlength="50"
+					 ng-maxlength="49" ng-model="vm.confirmarSenha" required>
+					<span ng-show="vm.formRegistrar.confirmarSenha.$dirty && vm.formRegistrar.confirmarSenha.$error.required">Campo Obrigatorio</span>
+					<span ng-show="vm.formRegistrar.confirmarSenha.$error.maxlength">Tamanho maximo</span>
+				</div>
 			</div>
-		</div>
-		
-		<!-- Alerta Nao e igual -->
-		<div class="col-xs-10">
-			<div class="alert alert-warning warning-top-5" ng-show="vm.confirmarSenha != vm.reg.password">
-			Senha nao e igual
+
+			<!-- Alerta -->
+			<div class="col-xs-10">
+				<div class="alert alert-warning warning-top-5" ng-show="vm.confirmarSenha != vm.registrar.password">
+					Senha nao e igual
+				</div>
 			</div>
-		</div>		
-		
-			<!-- Alerta Erro -->
-		<div class="col-xs-10">
-				<div class="alert alert-info warning-top-5" ng-show="vm.mensagem">{{vm.mensagem}}</div>	
-		</div>
-		
-		<!-- Salvar -->
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-xs-10" >
-				<button class="btn btn-primary" type="submit" ng-disabled="vm.formRegistrar.$invalid">Salvar</button>
-				
-			</div>				
-		</div>	
-		
-	</form>		
+
+			<!-- Alerta -->
+			<div class="col-xs-10">
+				<div class="alert alert-info warning-top-5" ng-show="vm.mensagem">{{vm.mensagem}}</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 text-center">
+					<!-- Salvar -->
+					<button class="btn btn-primary" type="submit" ng-disabled="vm.formRegistrar.$invalid">Salvar</button>
+				</div>
+			</div>
+		</form>
+		<!-- ./Form Registrar -->
+	</div>
 </div>

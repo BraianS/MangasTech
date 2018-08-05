@@ -1,47 +1,49 @@
-<div>
+<div class="container">
+	<div class="row">
 
-	<div class="container" style="padding-top:10px">
-	
-	<div class="page-header text-center">
-		<h1>Login</h1>
-	</div>
-	 	
-	 	<!-- Formulario -->
-		<form name="vm.formLogin" class="form-horizontal" ng-submit="vm.autenticar()" >	
-		
-			<!-- Nome -->		
-			<div class="form-group" ng-class="{ 'has-error': vm.formLogin.nome.$invalid && vm.formLogin.nome.$dirty}">
-				<label class="control-label col-xs-2">Nome: </label>
-				<div class="col-xs-6">
-					<input class="form-control" type="text" ng-model="username" id="username" name="nome"  ng-maxlength="49" maxlength="50" required/>
-					<span ng-show="vm.formLogin.nome.$dirty && vm.formLogin.nome.$error.required">Campo Nome Obrigatorio</span> 
+		<div class="page-header text-center">
+			<h1>Login</h1>
+		</div>
+
+		<!-- Form Autenticar -->
+		<form name="vm.formLogin" class="form-horizontal" ng-submit="vm.autenticar()">
+
+			<!-- Nome -->
+			<div class="form-group text-center" ng-class="{ 'has-error': vm.formLogin.nome.$invalid && vm.formLogin.nome.$dirty}">
+				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+					<input class="form-control" placeholder="username" type="text" ng-model="vm.username" id="vm.username" name="nome" ng-maxlength="49"
+					 maxlength="50" required/>
+					<span ng-show="vm.formLogin.nome.$dirty && vm.formLogin.nome.$error.required">Campo Nome Obrigatorio</span>
 					<span ng-show="vm.formLogin.nome.$error.maxlength">Tamanho maximo de 11!</span>
 				</div>
-				
 			</div>
-			
+
 			<!-- Senha -->
 			<div class="form-group" ng-class="{ 'has-error':vm.formLogin.senha.$invalid && vm.formLogin.senha.$dirty}">
-				<label for="password" class="control-label col-xs-2">Senha: </label>
-				<div class="col-xs-6">
-					<input class="form-control col-xs-6" type="password" ng-model="password" id="password" name="password"  ng-maxlength="49" maxlength="50" required>
+				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+					<input class="form-control " placeholder="password" type="password" ng-model="vm.password" id="vm.password" name="vm.password"
+					 ng-maxlength="49" maxlength="50" required>
 					<span ng-show="vm.formLogin.senha.$dirty && vm.formLogin.senha.$error.required">Campo Senha Obrigatorio</span>
 					<span ng-show="vm.formLogin.senha.$error.maxlength">Tamanho maximo</span>
 				</div>
 			</div>
-			
-				<!-- Autenticar e Salvar -->
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-xs-10">
-						<button class="btn btn-primary" type="submit" ng-disabled="vm.formLogin.$invalid">Autenticar</button>				
-						<button class="btn btn-primary" ui-sref="nav.registrar">Registrar</button>				 
-					</div>
+
+
+			<div class="form-group">
+				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 text-center">
+					<!-- Autenticar -->
+					<button class="btn btn-primary" type="submit" ng-disabled="vm.formLogin.$invalid">Autenticar</button>
+
+					<!-- Registrar -->
+					<button class="btn btn-primary" ui-sref="nav.registrar">Registrar</button>
 				</div>
-				
-				<div class="alert alert-warning warning-top-5" ng-show="vm.mensagem"> {{vm.mensagem}}
-					
-				</div>		
-		</form>		
-		
+			</div>
+
+			<!-- Alert  -->
+			<div class="alert alert-warning warning-top-5" ng-show="vm.mensagem">
+				{{vm.mensagem}}
+			</div>
+		</form>
+		<!-- ./Form Autenticar -->
 	</div>
 </div>

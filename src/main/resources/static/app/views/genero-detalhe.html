@@ -1,0 +1,66 @@
+<div class="container">
+	<div class="row">
+		<div class="panel panel-primary">
+			<div class="panel-heading text-center">
+				<h3 class="panel-title">Generos Detalhes</h3>
+			</div>
+
+			<!-- Lista Detalhes do grupo -->
+			<div class="panel-body">
+				<div class="col-sm-3" ng-repeat="manga in vm.generosDetalhe">
+					<div class="panel panel-default panel-front">
+						<div class="panel panel-heading ">
+							<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
+								<!-- Com foto -->
+								<h4 class="panel-title" ng-if="manga.capa">
+									<img class="img-thumbnail imgCustom" id="display" data-ng-src="data:image/jpeg;base64,{{manga.capa}}">
+								</h4>
+								<!-- ./Com foto -->
+
+								<!-- Sem foto -->
+								<h4 class="panel-title" ng-if="!manga.capa">
+									<img src="/app/img/image.JPG" class="img-thumbnail imgCustom">
+								</h4>
+								<!-- ./Sem foto -->
+							</a>
+						</div>
+
+						<div class="panel-body">
+							<div class="panel-info">
+								<p>
+									<strong>
+										<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">{{manga.nome}}</a>
+									</strong>
+									<i>
+										<a ui-sref="nav.autor.detalhe({autorId:manga.autor.id})">{{manga.autor.nome}}</a>
+									</i>
+								</p>
+								<!-- Lista de Generos -->
+								<i ng-repeat="genero in manga.genero">
+									<a href="" ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+								</i>
+								<!-- ./Lista de Generos -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ./Lista Detalhes do grupo -->
+
+			<div class="panel-footer text-center">
+				<div ng-if="vm.generosDetalhe.length">
+					<!-- Pagination de grupos -->
+					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.vm.carregarGrupos()" items-per-page="20"
+					 boundary-links="true"></pagination>
+					<!-- ./Pagination de grupos -->
+				</div>
+
+				<!-- Sem Mangas -->
+				<div ng-if="!vm.generosDetalhe.length">
+					<h3 class="alert">Sem Mangas</h3>
+				</div>
+				<!-- ./Sem Mangas -->
+			</div>
+		</div>
+	</div>
+</div>

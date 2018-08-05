@@ -1,44 +1,57 @@
-angular
-	.module("appCliente")
-	.controller("grupoController", function ($http) {
+(function () {
+	'use strict';
+	//Adiciona o controller ao modulo
+	angular
+		.module('appCliente')
+		.controller('grupoController', grupoController);
+
+	//Injeta as dependências
+	grupoController.$inject = ['$http'];
+
+	function grupoController($http) {
+
 		var vm = this;
 
-		vm.Grupos = [];
+		var alfabeto = "abcdefghijklmnopqrstuvwxyz";
+		vm.letra = alfabeto.toUpperCase().split("");
+
+		vm.grupos = [];
 		vm.paginaPorGrupos = 1;
 		vm.paginaPorLetra = 1;
 		vm.status = false;
 		vm.ativado = "";
+		vm.false = falso;
+		vm.true = verdadeiro;
+		vm.carregarGrupos = carregarGrupos;
+		vm.buscarPorLetra = buscarPorLetra;
 
-		var alfabeto = "abcdefghijklmnopqrstuvwxyz";
+		carregarGrupos();
 
-		vm.letra = alfabeto.toUpperCase().split("");
-
-		vm.false = function () {
+		function falso() {
 			vm.status = false;
 			vm.paginaPorGrupos = 1;
 			vm.ativado = "";
-		};
+		}
 
-		vm.true = function () {
+		function verdadeiro() {
 			vm.status = true;
 			vm.paginaPorLetra = 1;
-		};
+		}
 
-		vm.carregarGrupos = function () {
+		function carregarGrupos() {
 			$http({
 				method: 'GET',
 				url: '/user/grupo?page=' + vm.paginaPorGrupos
 			}).then(function (response) {
-				vm.Grupos = response.data.content;
+				vm.grupos = response.data.content;
 				vm.totalElementos = response.data.totalElements;
-				console.log(response.data.content);
 			}, function (response) {
 				console.log(response.data.content);
 				console.log(response.status);
 			})
-		};
+		}
 
-		vm.buscarPorLetra = function (letra) {
+		function buscarPorLetra(letra) {
 			if (letra != null) {
 				vm.ativado = letra;
 			}
@@ -46,14 +59,12 @@ angular
 				method: 'GET',
 				url: '/user/grupo/letra/' + vm.ativado + "?page=" + vm.paginaPorLetra
 			}).then(function (response) {
-				vm.Grupos = response.data.content;
+				vm.grupos = response.data.content;
 				vm.totalElementos2 = response.data.totalElements;
-				console.log(response.data.content);
 			}, function (response) {
 				console.log(response.data);
 				console.log(response.data.content);
 			})
-		};
-
-		vm.carregarGrupos();
-	});
+		}
+	}
+})();

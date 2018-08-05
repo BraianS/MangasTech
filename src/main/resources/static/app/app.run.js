@@ -1,9 +1,9 @@
 (function () {
-		
+
 	//Cria o modulo Run
 	angular
 		.module("appCliente.run", ['ngRoute']);
-		
+
 	//injetar as dependencias 
 	AuthService.$inject = ['AuthService', '$state', '$transitions'];
 

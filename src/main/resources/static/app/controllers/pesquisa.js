@@ -1,33 +1,36 @@
-angular
-.module('appCliente')
-.controller('pesquisaController', function($http, $rootScope, pesquisaService,$scope) {
-	
-	var vm = this;
-	vm.d = [];
-	vm.ola = "Texto pesquisado";
-	
-	pesquisaService.getValue();	
-	
-	vm.a = pesquisaService.getValue();	
-	vm.pagina = 1;
-	vm.pesquisarNome = function(){
-		$http({
-			method: 'GET',
-			url: '/user/manga/nome/'+vm.a+"?page="+vm.pagina
-		}).then(function(res) {
-			console.log(res);
-			console.log(res.data);
-			vm.d = res.data.content;
-			vm.number = res.data.number;
-			vm.totalDePaginas = res.data.totalPages;
-			vm.items = res.data.totalElements;
-			vm.size = res.data.size;
-			
-		}, function(res) {
-			console.log(res);
-			console.log(res.data);
-		})
+(function () {
+	'use strict';
+	//Adiciona o controller ao modulo
+	angular
+		.module('appCliente')
+		.controller('pesquisaController', pesquisaController);
+
+	//Injeta as dependências
+	pesquisaController.$inject = ['$http', 'pesquisaService'];
+
+	function pesquisaController($http, pesquisaService) {
+
+		var vm = this;
+
+		vm.totalEmentos = [];
+		vm.manga = [];
+		vm.pagina = 1;
+		vm.pesquisarNome = pesquisarNome;
+		vm.palavraPesquisada = pesquisaService.getValue();
+
+		pesquisarNome();
+
+		function pesquisarNome() {
+			$http({
+				method: 'GET',
+				url: '/user/manga/nome/' + vm.palavraPesquisada + "?page=" + vm.pagina
+			}).then(function (res) {
+				vm.manga = res.data.content;
+				vm.totalEmentos = res.data.totalElements;
+			}, function (res) {
+				console.log(res);
+				console.log(res.data);
+			})
+		}
 	}
-	vm.pesquisarNome();
-	
-});
+})();

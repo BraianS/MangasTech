@@ -1,44 +1,50 @@
-angular
-.module('appCliente')
-.controller('loginController', function ($http,$scope,$state,AuthService,$rootScope,$transitions) {
-	var vm = this;
-		
-	vm.usuario = {};
-	vm.token = [];
+(function () {
+	'use strict';
+	//Adiciona o controller ao modulo
+	angular
+		.module('appCliente')
+		.controller('loginController', loginController);
 
-		
-	vm.autenticar = function() {
-		if(vm.formLogin.$valid) {
-		$http({
-			method : 'POST',
-			url: '/autenticar',
-			params: {
-				username : $scope.username,
-				password : $scope.password
+	//Injeta as dependências
+	loginController.$inject = ['$http', '$state', 'AuthService', '$rootScope'];
+
+	function loginController($http, $state, AuthService, $rootScope) {
+
+		var vm = this;
+
+		vm.token = [];
+		vm.username = [];
+		vm.password = [];
+		vm.autenticar = autenticar;
+
+		/* Autenticar um Usuario */
+		function autenticar() {
+			if (vm.formLogin.$valid) {
+				$http({
+					method: 'POST',
+					url: '/autenticar',
+					params: {
+						username: vm.username,
+						password: vm.password
+					}
+				}).then(function (res) {
+					vm.password = null;					
+					if (res.data.token) {
+						vm.mensagem = '';						
+						$http.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token;
+						AuthService.user = res.data.user;
+						$rootScope.$broadcast('LoginSuccessful');
+						$state.go('nav');
+					} else {
+						vm.mensagem = 'Autenticação Falhau';
+					}
+				}, function (res) {
+					vm.mensagem = 'Autenticação Falhou';
+				});
 			}
-		}).then(function(res){
-			$scope.password = null;
-			if(res.data.token) {
-				vm.mensagem = '';
-				
-				$http.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token;
-				
-				AuthService.user = res.data.user;
-				$rootScope.$broadcast('LoginSuccessful');
-				$state.go('nav');
-			} else {
-				vm.mensagem = 'Autenticacao Falhau';				
+			else {
+				alert("Formulario invalido")
 			}
-				
-			
-		}, function (res) {
-			vm.mensagem = 'Autenticacao Falhou';
-		});
-		
-		}
-		else {
-			alert("Formulario e invalido")
-		}
-	};
-});
-		
+		};
+	}
+})();

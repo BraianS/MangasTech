@@ -1,63 +1,69 @@
 <div class="container">
 	<div class="row">
-		<div class="col-sm-12">
-			<div class="panel panel-primary">
+		<div class="panel panel-primary">
+			<div class="panel-heading text-center">
+				<h3 class="panel-title">{{vm.manga.nome}}</h3>
+			</div>
 
-				<div class="panel-heading text-center">
-					<div>
-						<h3>{{mmm.nome}}</h3>
-					</div>
-				</div>
+			<!-- Manga Detalhe -->
+			<div class="panel-body">
+				<div class="panel-info">
+					<div class="col-md-3">
+						<div ng-if="vm.manga.capa">
+							<img class="img-thumbnail imgCustom" data-ng-src="data:image/jpeg;base64,{{vm.manga.capa}}">
+						</div>
+						<h4 class="panel-title" ng-if="!vm.manga.capa">
+							<img src="/app/img/image.JPG" class="img-thumbnail imgCustom">
+						</h4>
 
-				<div class="panel-body">
-					<div class="col-md-3" ng-if="mmm.capa">
-						<p >							
-								<img class="img-rounded img-responsive" style="width: 320px; height: 390px;" data-ng-src="data:image/jpeg;base64,{{mmm.capa}}">
-						</p>
 					</div>
 					<div clas="col-sm-9">
-						<div class=" panel-info">
-							
+						<div class="panel-info">
 							<p>
-								<b>status: </b> {{mmm.status}} </p>
+								<b>status: </b> {{vm.manga.status}} </p>
 							<p>
-								<b>DataLancamento: </b>{{mmm.dataLancado}}</p>
-								<p><b>Autor: </b> {{mmm.autor.nome}}</p>
+								<b>Lancamento: </b>{{vm.manga.dataLancado}}</p>
+							<p>
+								<b>Autor: </b> {{vm.manga.autor.nome}}</p>
 							<p>
 								<b>Genero:</b>
-								<i ng-repeat="genero in mmm.genero"> <a ui-sref="nav.autor.detalhe({generoId:genero.id})">{{genero.nome}}</a> </i>
+								<i ng-repeat="genero in vm.manga.genero">
+									<a ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+								</i>
 							</p>
 							<p>
-								<b>Descricao: </b>{{mmm.descricao}}</p>
+								<b>Descricao: </b>{{vm.manga.descricao}}
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- ./Manga Detalhe -->
 		</div>
-	</div>
-</div>
 
-<div>
-	<div class="panel panel-primary">
-		<div class="panel-heading">Tabela</div>
-		<div class="panel-body">
-			<div>
-				<table class="table-striped" style="width:100%">
-					<tr>
-						<th>Capitulos </th>
-						<th>Data Lancamento</th>
-						<th>Grupo</th>
-						<th>Ler</th>
-					</tr>
-					<tr ng-repeat="c in vm.Model.ListCapitulos">
-						<td>{{c.capitulo}}</td>
-						<td>{{c.lancamento}}</td>
-						<td>{{c.grupo.nome}}</td>
-						<td>
-							<a ui-sref="nav.capitulo({capituloId:c.id})">Ler o capitulo</a>
-						</td>
-				</table>
+		<!-- Tabela de capitulos do manga -->
+		<div class="panel panel-primary">
+			<div class="panel-heading">Tabela</div>
+			<div class="panel-body">
+				<div class="panel-info">
+					<table class="table table-hover">
+						<tr>
+							<th>Capitulos </th>
+							<th>Data Lancamento</th>
+							<th>Grupo</th>
+							<th>Ler</th>
+						</tr>
+						<tr ng-repeat="capitulo in vm.ListCapitulos">
+							<td>{{capitulo.capitulo}}</td>
+							<td>{{capitulo.lancamento}}</td>
+							<td>{{capitulo.grupo.nome}}</td>
+							<td>
+								<a ui-sref="nav.capitulo({capituloId:capitulo.id})">Ler o capitulo</a>
+							</td>
+					</table>
+				</div>
 			</div>
 		</div>
+		<!-- ./Tabela de capitulos de manga -->
 	</div>
 </div>

@@ -1,0 +1,115 @@
+<div class="panel panel-default">
+	<div class="panel-heading text-center">
+		<h3 class="panel-title">Salvar Capitulos</h3>
+	</div>
+
+	<div class="panel-body">
+		<div class="panel-info">
+			<!-- Form Capitulo -->
+			<div class="form-group">
+				<form name="vm.formCapitulo" class="form-horizontal" ng-submit="vm.salvarCapitulos()" novalidate>
+
+					<!-- Numero do Capitulo -->
+					<div class="form-group" ng-class=" {'has-error': vm.formCapitulo.capitulo.$invalid && vm.formCapitulo.capitulo.$dirty}">
+						<label for="Capitulo" class="control-label col-xs-2">Capitulo</label>
+						<div class="col-xs-6">
+							<input name="capitulo" class="form-control" type="number" ng-model="vm.capitulo.capitulo" id="Capitulo" required />
+							<span ng-show="vm.formCapitulo.capitulo.$error.required && vm.formCapitulo.capitulo.$dirty ">Campo Obrigatorio</span>
+						</div>
+					</div>
+
+					<!-- Seleciona o Manga -->
+					<div class="form-group">
+						<label form="Manga" class="control-label col-xs-2">Manga</label>
+						<select id="Manga" name="manga" ng-model="vm.capitulo.manga" ng-options="manga.id as manga.nome for manga in vm.Mangas" required>
+						</select>
+						<span ng-show="vm.formCapitulo.manga.$dirty && vm.formCapitulo.manga.$error.required">Campo Obrigatorio</span>
+					</div>
+
+					<!-- Seleciona o Grupo do Manga -->
+					<div class="form-group" ng-class=" {'has-error' : vm.formCapitulo.grupo.$invalid && vm.formCapitulo.grupo.$dirty}">
+						<label form="Grupo" class="control-label col-xs-2">Grupos</label>
+						<select name="grupo" ng-model="vm.capitulo.grupo" ng-options="grupo as grupo.nome for grupo in vm.Grupos" id="Grupo" required>
+						</select>
+						<span ng-show="vm.formCapitulo.grupo.$dirty && vm.formCapitulo.grupo.$error.required">Campo Obrigatorio</span>
+					</div>
+
+					<div class="text-center">
+						<!-- Salvar Capitulo-->
+						<input type="submit" class="btn btn-primary text-center" ng-disabled="vm.formCapitulo.$invalid" value="Salvar">
+						</button>
+
+						<!-- Cancelar -->
+						<input type="button" class="btn btn-primary" value="cancelar" ng-click="vm.cancelarCapitulo()">
+					</div>
+
+					<!-- Alerta -->
+					<div class="alert alert-warning" ng-show="vm.mensagem">
+						{{vm.mensagem}}
+					</div>
+				</form>
+			</div>
+			<!-- ./Form Capitulo -->
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading text-center">
+		<h1 class="panel-title">Salvar Paginas</h1>
+	</div>
+
+	<div class="panel-body">
+		<div class="panel-info">
+			<!-- Form Salvar Paginas -->
+			<div class="form">
+				<form name="vm.formPagina" class="form-horizontal">
+
+					<!-- Retorna o Mangas -->
+					<div class="form-group">
+						<label class="control-label col-xs-2">Selecionar o Manga </label>
+						<div class="col-xs-6">
+							<select name="manga" ng-model="vm.mangaIdSelecionado" ng-change="vm.capituloPorManga()" required>
+								<option value="{{manga.id}}" ng-repeat="manga in vm.Mangas">
+									{{manga.nome}}
+								</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- Seleciona o capitulo do manga Retornado -->
+					<div class="form-group">
+						<label class="control-panel col-xs-2">Selecionar Capitulo</label>
+						<div class="col-xs-6">
+							<select name="capitulo" id="mySelect" ng-model="vm.capituloIdSelecionado" ng-show="vm.mangaIdSelecionado" required>
+								<option ng-repeat="capitulo in vm.capituloManga" value="{{capitulo.id}}" material-select watch>{{capitulo.capitulo}}</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- Descrição -->
+					<div class="form-group" ng-class="vm.vm.formPagina.descricao.$invalid && vm.vm.formPagina.descricao.$dirty">
+						<label for="Descricao" class="control-label col-xs-2"> Descricao</label>
+						<div class="col-xs-6">
+							<input id="Descricao" name="descricao" type="text" class="form-control" ng-model="vm.nomeCapitulo" required>
+							<span ng-show="vm.formPagina.descricao.$error.required && vm.formPagina.dirty">Campo Obrigatorio</span>
+						</div>
+					</div>
+
+					<div class="text-center">
+						<!-- Salva as fotos -->
+						<input class="btn btn-primary" ng-disabled="vm.formPagina.$invalid" ngf-select="vm.uploadPaginas($files)" multiple accept="image/*"
+						 value="Selecinar Fotos">
+						</button>
+
+						<!-- Cancelar -->
+						<input class="btn btn-primary" value="Cancelar" type="button" ng-click="vm.cancelarPagina()">
+					</div>
+				</form>
+				<!-- Alerta -->
+				<div class="alert alert-warning" ng-show="vm.mensagemPagina">{{vm.mensagemPagina}}</div>
+			</div>
+			<!-- ./Form Salvar Paginas -->
+		</div>
+	</div>
+</div>

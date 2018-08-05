@@ -1,27 +1,9 @@
-  
-.intro {
-	background-color: black
-}
-
 .active-button{
   background-color:cornflowerblue;
 }
 
-
-.list-group-item {
-  color: #4505db;
-}
 .active {
   background-color: cornflowerblue
-}
-
-.filter li {
-  display: inline;
-  padding: 5px;
-}
-
-ul {
-  list-style-type: none;
 }
 
 .panel-body {
@@ -30,6 +12,15 @@ ul {
 
 .panel-info {
 	font-size : 15px;
+}
+
+ul.list-inline li{	
+	font-size: 20px;
+	padding:10px	
+}
+
+ul {
+	list-style-type: none;
 }
 
 .panel-front .panel-heading .panel-title img {
@@ -50,24 +41,13 @@ ul {
     max-width: 100%;
 }
 
-footer {
-	background: #333;
-	color: #fff;
-	text-align: center;
-	padding:20px 0;
-	position: relative;
-	left: 0;
-	bottom: 0;
-	height:100px;
-	width:100%;	
+.panel-info p {
+	word-wrap: break-word;
 }
 
 #page {
-	min-height: 80vh;
-}
-
-body {
-	width: 100%
+	min-height: 90vh;	
+	margin-top: 10px;
 }
 
 .col-sm-3 {
@@ -87,3 +67,46 @@ body {
   padding-left: 10%
 }
 
+#imagem {
+	margin: auto
+}
+
+.lista {
+	display: inline-block;
+}
+
+#img {
+	width: 270px;
+	height: 330px;
+}
+
+#display {
+	width: 280px;
+	height: 380px
+}
+
+#newManga {
+	max-height: 150px; 
+}
+
+.imgCustom {
+	width: 270px;
+	height: 380px;
+}
+
+#footer {
+    bottom: 0;
+    width: 100%;
+    position: relative;   
+	background-color: #f5f5f5;    
+	align-content: center;
+	}
+	
+	.nav-tabs > li {
+    float:none;
+    display:inline-block;
+}
+
+.nav-tabs {
+    text-align:center;
+}

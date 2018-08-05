@@ -1,29 +1,36 @@
-angular
-.module('appCliente')
-.controller('grupoDetalheController', function($http,$stateParams) {
-	var vm = this;
-	
-	vm.id = $stateParams.gruposId;
-	
-	vm.grupod = [];
-	vm.pagina = 1;
-	vm.carregarGrupos = function() {
-		$http({
-			method : 'GET',
-			url: '/user/grupo/'+vm.id
-		}).then(function(res){
-			console.log(res);
-			console.log(res.data);
-			vm.grupod = res.data;
-			vm.number = res.data.number;
-			vm.totalDePaginas = res.data.totalPages;
-			vm.items = res.data.totalElements;
-			vm.size = res.data.size;			
-		}, function(res) {
-			console.log(res);
-			console.log(res.data);
-		})
+(function () {
+	'use strict';
+	//Adiciona o controller ao modulo
+	angular
+		.module('appCliente')
+		.controller('grupoDetalheController', grupoDetalheController);
+
+	//Injeta as dependências
+	grupoDetalheController.$inject = ['$http', '$stateParams'];
+
+	function grupoDetalheController($http, $stateParams) {
+
+		var vm = this;
+
+		vm.grupo = [];
+		vm.pagina = 1;
+		vm.grupoId = $stateParams.gruposId;
+		vm.totalElementos = [];
+		vm.carregarGrupos = carregarGrupos;
+
+		carregarGrupos();
+
+		function carregarGrupos() {
+			$http({
+				method: 'GET',
+				url: '/user/grupo/' + vm.grupoId + "?page=" + vm.pagina
+			}).then(function (response) {
+				vm.grupo = response.data.content;
+				vm.totalElementos = response.data.totalElements;
+			}, function (response) {
+				console.log(response);
+				console.log(response.data);
+			})
+		}
 	}
-	
-	vm.carregarGrupos();
-})
+})();

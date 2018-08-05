@@ -1,31 +1,62 @@
-<h1> Palavra Pesquisada  <strong>"{{vm.a}}"</strong></h1>
+<div class="container">
+	<div class="row">
 
+		<!-- Palavra pesquisada -->
+		<div class="alert alert-info">
+			<strong>Busca: </strong> {{vm.palavraPesquisada}}
+		</div>
 
-<div class="jumbotron">
-	<div class="container">
-	<div>
-		<table class="table table-hover" >
-			<thread>
-				<tr>
-					<th>Nome</th>
-					<th>autor</th>
-					<th>Status</th>
-				</tr>
-			</thread>
-			<tbody  ng-repeat=" m in vm.d">
-				<tr>
-					<td> <a ui-sref="nav.manga.detalhe({mangasId:m.id})">
-						{{m.nome}}
-					</a></td>
-					<td> <a ui-sref="nav.autor.detalhe({autorId:m.autor.id})">{{m.autor.nome}}</a></td>
-					<td>{{m.status}}</td>
-				</tr>
-			</tbody>
-		</table>	
-	</div>
-	<div class="text-center">
-			<pagination max-size="vm.size" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.pesquisarNome()" items-per-page="vm.size"
-			 boundary-links="true"></pagination>
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="panel-title text-center">
+					<h3>Pesquisa</h3>
+				</div>
+			</div>
+
+			<div class="panel-body">
+				<!-- Tabela de Mangas -->
+				<div ng-if="vm.manga.length">
+					<table class="table ">
+						<thread>
+							<tr>
+								<th>Nome</th>
+								<th>autor</th>
+								<th>Status</th>
+							</tr>
+						</thread>
+						<tbody ng-repeat="manga in vm.manga">
+							<tr>
+								<td>
+									<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
+										{{manga.nome}}
+									</a>
+								</td>
+								<td>
+									<a ui-sref="nav.autor.detalhe({autorId:manga.autor.id})">{{manga.autor.nome}}</a>
+								</td>
+								<td>{{manga.status}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- ./Tabela de Mangas -->
+			</div>
+
+			<div class="panel-footer">
+				<!-- Pagination de Mangas-->
+				<div class="text-center" ng-if="vm.manga.length">
+					<pagination max-size="10" total-items="vm.totalEmentos" ng-model="vm.pagina" ng-click="vm.pesquisarNome()" items-per-page="20"
+					 boundary-links="true"></pagination>
+				</div>
+				<!-- ./Pagination de Mangas -->
+
+				<!-- Alert -->
+				<div class="text-center" ng-if="!vm.manga.length">
+					<div class="alert alert-danger">
+						<strong>Nada Encontrado</strong>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

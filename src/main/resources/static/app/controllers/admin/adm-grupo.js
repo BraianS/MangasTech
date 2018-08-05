@@ -1,48 +1,49 @@
-angular
-.module("appCliente")
-.controller("adminGruposController", function($http,$scope,AuthService) {
-	var vm = this;
-	vm.hello = "ola porra";
-	//AuthService.user = 'default';
-	$scope.user = AuthService.user;
+(function () {
+	'use strict';
+	//Adiciona o controller ao modulo
+	angular
+		.module('appCliente')
+		.controller('adminGruposController', adminGruposController);
 
-	vm.Model = {};
-	vm.Grupos = [];
-	vm.Grupo = {};
-	vm.pagina = 0;
-	vm.number = [];
-	vm.totalDePaginas = [];
-	vm.items = [];
-	vm.size = [];
-	
-	vm.pageChange = function(){
-		alert("pagina atual e:"+vm.pagina)
-	}
-	
-		
-	vm.carregarGrupos = function () {
-		$http({
-			method: 'GET', url: '/user/grupo?page='+vm.pagina})
-			.then(function (response){
-				vm.Grupos = response.data.content;
-				vm.number = response.data.number;
-				vm.totalDePaginas = response.data.totalPages;
-				vm.items = response.data.totalElements;
-				vm.size = response.data.size;
-				
-				}, function (response) {
-					console.log(response.data);
-					console.log(response.status);
-				})
-		};
-		vm.carregarGrupos();
-		
-		vm.salvarGrupos = function () {
-			if(vm.formGrupo.$valid) {
+	//Injeta as dependências
+	adminGruposController.$inject = ['$http'];
+
+	function adminGruposController($http) {
+
+		var vm = this;
+
+		vm.grupos = [];
+		vm.grupo = {};
+		vm.totalElementos = [];
+		vm.pagina = 1;
+		vm.carregarGrupos = carregarGrupos;
+		vm.salvarGrupos = salvarGrupos;
+		vm.deletarGrupos = deletarGrupos;
+		vm.alterarGrupos = alterarGrupos;
+		vm.cancelarGrupo = cancelarGrupo;
+
+		carregarGrupos();
+
+		function carregarGrupos() {
 			$http({
-				method: 'POST', url: '/admin/grupo',data: vm.Grupo})
-				.then(function (response) {
-					vm.Grupo = {};
+				method: 'GET',
+				url: '/user/grupo?page=' + vm.pagina
+			}).then(function (response) {
+				vm.grupos = response.data.content;
+				vm.totalElementos = response.data.totalElements;
+			}, function (response) {
+				console.log(response.data);
+				console.log(response.status);
+			})
+		}
+
+		function salvarGrupos() {
+			if (vm.formGrupo.$valid) {
+				$http({
+					method: 'POST',
+					url: '/admin/grupo', data: vm.grupo
+				}).then(function (response) {
+					vm.grupo = {};
 					vm.carregarGrupos();
 					vm.formGrupo.$setPristine(true);
 					vm.mensagem = "Salvo com Sucesso"
@@ -53,34 +54,29 @@ angular
 				})
 			}
 			else {
-				vm.mensagem= "Error no Formulario";
+				vm.mensagem = "Error no Formulario";
 			}
-			
-		};
-		
-		vm.deletarGrupos = function (grupos) {
+		}
+
+		function deletarGrupos(grupos) {
 			$http({
-				method : 'DELETE', url : '/admin/grupo/'+grupos.id})
-				.then( function (response) {
-					pos = vm.Grupos.indexOf(vm.Grupo);
-					vm.Grupos.splice(pos,1);
-					vm.carregarGrupos();
-					console.log("deletado com sucesso");
-				}, function (response) {
-					console.log(response.data);
-					console.log(response.status);
-				})
+				method: 'DELETE',
+				url: '/admin/grupo/' + grupos.id
+			}).then(function (response) {
+				vm.carregarGrupos();
+			}, function (response) {
+				console.log(response.data);
+				console.log(response.status);
+			})
 		}
-		
-		vm.carregarGrupos();
-		
-		vm.cancelar = function (){
-			vm.Grupo = {};
+
+		function cancelarGrupo() {
+			vm.grupo = {};
+			vm.formGrupo.$setPristine(true);
 		}
-		
-		vm.alterarGrupos = function (grupo){
-			vm.Grupo = grupo;
+
+		function alterarGrupos(grupo) {
+			vm.grupo = grupo;
 		}
-		
-		
-})
+	}
+})();

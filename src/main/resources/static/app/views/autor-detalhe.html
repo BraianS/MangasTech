@@ -2,29 +2,26 @@
 	<div class="row">
 		<div class="panel panel-primary">
 			<div class="panel-heading text-center">
-				<h3 class="panel-title">Grupo Detalhe</h3>
+				<h3 class="panel-title">Autor Detalhe</h3>
 			</div>
 
-			<!-- Lista de mangas por autor -->
+			<!-- Lista de mangas do autor -->
 			<div class="panel-body">
 				<div class="panel-info">
-					<div class="col-sm-3" ng-repeat="manga in vm.grupo">
+					<div class="col-sm-3" ng-repeat="manga in vm.autor">
 						<div class="panel panel-default panel-front">
 
 							<div class="panel panel-heading ">
 								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
-									<!-- Com foto -->
 									<h4 class="panel-title" ng-if="manga.capa">
 										<img class="img-thumbnail imgCustom" data-ng-src="data:image/jpeg;base64,{{manga.capa}}">
 									</h4>
-									<!-- ./Com foto -->
-
-									<!-- Sem foto -->
-									<h4 class="panel-title" ng-if="!manga.capa">
-										<img src="/app/img/image.JPG" alt="" class="img-thumbnail imgCustom">
-									</h4>
-									<!-- ./Sem foto -->
 								</a>
+								<!-- Sem foto -->
+								<h4 class="panel-title" ng-if="!manga.capa">
+									<img src="/app/img/image.JPG" class="img-thumbnail imgCustom">
+								</h4>
+								<!-- ./Sem foto -->
 							</div>
 
 							<div class="panel-body">
@@ -39,7 +36,7 @@
 									</p>
 									<!-- Lista de Generos -->
 									<i ng-repeat="genero in manga.genero">
-										<a href="" ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+										<a ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
 									</i>
 									<!-- ./Lista de Generos -->
 								</div>
@@ -48,18 +45,18 @@
 					</div>
 				</div>
 			</div>
-			<!-- ./Lista de mangas por autor -->
 
+			<!-- Lista de mangas do autor -->
 			<div class="panel-footer text-center">
-				<!-- Pagination detalhe por grupo -->
-				<div ng-if="vm.grupo.length">
-					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarGrupos()" items-per-page="20">
-					</pagination>
+				<div ng-if="vm.autor.length">
+					<!-- Pagination carregar autor -->
+					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarAutor()" items-per-page="20"
+					 boundary-links="true"></pagination>
+					<!-- ./Pagination carregar autor -->
 				</div>
-				<!-- ./Pagination detalhe por grupo -->
 
 				<!-- Sem Mangas -->
-				<div ng-if="!vm.grupo.length">
+				<div ng-if="!vm.autor.length">
 					<h3 class="alert">Sem Mangas</h3>
 				</div>
 				<!-- ./Sem Mangas -->

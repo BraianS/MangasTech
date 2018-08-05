@@ -1,25 +1,21 @@
 (function () {
-
-	//Carrega o modulo
+	'use strict';
 	//Adiciona o controller ao modulo
 	angular
 		.module('appCliente')
 		.controller('navController', navController);
 
-	navController.$inject = ['$scope', '$location', 'AuthService', '$http', 'pesquisaService', '$route', '$routeParams'];
+	//Injeta as dependênciass
+	navController.$inject = ['$scope', 'AuthService', 'pesquisaService'];
 
-	function navController($scope, $location, AuthService, $http, pesquisaService, $route, $routeParams) {
+	function navController($scope, AuthService, pesquisaService) {
 
 		var vm = this;
 
-		vm.d = [];
 		vm.nome = [];
-
-		$scope.$location = $location;
-		$scope.$route = $route;
-		$scope.$routeParams = $routeParams;
-
 		vm.user = [];
+		vm.logout = logout;
+		vm.service = service;
 
 		$scope.$on('LoginSuccessful', function () {
 			vm.user = AuthService.user;
@@ -29,28 +25,13 @@
 			vm.user.user = null;
 		});
 
-		vm.logout = function () {
+		function logout() {
 			AuthService.user = null;
 		}
 
-		vm.service = function (nome) {
+		function service(nome) {
 			pesquisaService.setValue(nome);
 			vm.nome = [];
 		}
-		vm.pesquisarNome = function (nome) {
-			$http({
-				method: 'GET',
-				url: '/user/manga/nome/' + nome
-			}).then(function (res) {
-				console.log(res);
-				console.log(res.data);
-				vm.d = res.data;
-			}, function (res) {
-				console.log(res);
-				console.log(res.data);
-			})
-		}
-	};
-	
+	}
 })();
-

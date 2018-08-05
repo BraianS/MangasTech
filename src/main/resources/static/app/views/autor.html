@@ -1,53 +1,58 @@
 <div class="container">
 	<div class="row">
-
 		<div class="panel panel-primary">
+			<!-- Lista De A-Z -->
 			<div class="panel-heading text-center">
 				<div class="panel-title">
 					<h3>Autores</h3>
-					<ul class="filter list-group text-center">
+					<ul class="list-inline">
 						<li ng-click="vm.false();vm.carregarAutores()" ng-class="{'active':vm.ativado==''}">
 							ALL
 						</li>
 
-						<li class="list-group-item" ng-repeat="letra in vm.letra track by $index" ng-class="{'active':letra==vm.ativado}" ng-click="vm.true();vm.buscarPorLetra(letra)">{{letra}}</li>
-					</ul><!-- Filter -->
+						<li class="" ng-repeat="letra in vm.letra track by $index" ng-class="{'active':letra==vm.ativado}" ng-click="vm.true();vm.buscarPorLetra(letra)">{{letra}}</li>
+					</ul>
 				</div>
-			</div><!-- Panel Heading -->
+			</div>
+			<!-- ./Lista De A-Z -->
 
+			<!-- Lista de Autores -->
 			<div class="panel-body">
-				<div class="col-sm-3" ng-repeat="autor in vm.autor">
-					<div class="list-group list-group-horizontal">
-						<a class="list-group-item" ui-sref="nav.autor.detalhe({autorId:autor.id})">
-							<strong>{{autor.nome}}</strong>
-						</a>
-					</div>
-				</div><!-- Lista de Autores -->
-			</div><!-- Panel Body -->
-
-			<div class="panel-footer text-center">
-
-				<div ng-if="vm.status == false">
-					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaAutor" ng-click="vm.carregarAutores(pagina)"
-					 items-per-page="20" boundary-links="true">
-					</pagination><!-- Pagination todos os Autores -->
-				</div>
-
-				<div class="text-center" ng-if="vm.totalElementos1  && vm.status == true">
-					<pagination max-size="10" total-items="vm.totalElementos1" ng-model="vm.paginaPorLetra" ng-click="vm.buscarPorLetra()" items-per-page="20"
-					 boundary-links="true">
-					</pagination><!-- Pagination por Letra-->
-				</div>
-
-				<div ng-if="!vm.autor.length">
-					<div class="row">
-						<div class="alert ">
-							<h3>Sem Grupos</h3>
+				<div class="panel-info">
+					<div class="col-sm-3" ng-repeat="autor in vm.autor">
+						<div class="list-group list-group-horizontal">
+							<a class="list-group-item" ui-sref="nav.autor.detalhe({autorId:autor.id})">
+								<strong>{{autor.nome}}</strong>
+							</a>
 						</div>
 					</div>
-				</div><!-- Sem Grupos -->
+				</div>
+			</div>
+			<!-- ./Lista de Autores -->
 
-			</div><!-- Panel Footer -->
-		</div><!-- Panel -->
-	</div><!-- Row -->	
-</div><!-- Container -->
+			<div class="panel-footer text-center">
+				<!-- Pagination de autores -->
+				<div ng-if="vm.status == false && vm.autor.length">
+					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaAutor" ng-click="vm.carregarAutores(pagina)"
+					 items-per-page="20" boundary-links="true">
+					</pagination>
+				</div>
+				<!-- ./Pagination de autores -->
+
+				<!-- Pagination por Letras -->
+				<div ng-if="vm.totalElementos1  && vm.status == true">
+					<pagination max-size="10" total-items="vm.totalElementos1" ng-model="vm.paginaPorLetra" ng-click="vm.buscarPorLetra()" items-per-page="20"
+					 boundary-links="true">
+					</pagination>
+				</div>
+				<!-- ./Pagination por Letras -->
+
+				<!-- Sem grupos -->
+				<div ng-if="!vm.autor.length">
+					<h3 class="alert">Sem Grupos</h3>
+				</div>
+				<!-- ./Sem Grupos -->
+			</div>
+		</div>
+	</div>
+</div>

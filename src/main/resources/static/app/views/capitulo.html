@@ -1,17 +1,25 @@
-<div class="container"  id="mydiv" style="outline:none" tabindex="1" >
+<div class="container" id="capituloDiv">
 	<div class="row">
-		<div class="col-md-12">	
-					
-		<div  class="text-center" ng-repeat="foto in vm.fotos"  style="height: auto">
-			<img  ng-model="vm.pagina" id="img1" class="img-rounded img-responsive "data-ng-src="data:image/jpeg;base64,{{foto.fotos}}"
-			style="margin: auto;">		
-		
-		<div >
-			<pagination max-size="5" total-items="vm.items" ng-model="vm.pagina" ng-click="vm.carregarcapitulo()" items-per-page="vm.size"
-		 boundary-links="true"></pagination>
-		</div>
-		</div>
-		 	
+		<div class="col-md-12">
+
+			<!-- Carrega imagems do capitulo -->
+			<div class="text-center" ng-repeat="foto in vm.fotos">
+				<img ng-model="vm.pagina" id="imagem" class="img-responsive " data-ng-src="data:image/jpeg;base64,{{foto.fotos}}">
+
+				<div>
+					<pagination max-size="7" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarCapitulo()" items-per-page="20"
+					 boundary-links="true"></pagination>
+				</div>
+			</div>
+			<!-- ./Carrega imagems do capitulo -->
+
+			<!-- Sem imagem -->
+			<div ng-if="!vm.fotos.length" class="text-center">
+				<h2 class="alert alert-warning">
+					Sem imagem
+				</h2>
+			</div>
+			<!-- ./Sem imagem -->
 		</div>
 	</div>
 </div>

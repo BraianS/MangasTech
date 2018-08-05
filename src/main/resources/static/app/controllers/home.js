@@ -1,72 +1,45 @@
 (function () {
-
-	angular
-		.module('appCliente');
-
+	'use strict';
+	//Adiciona o controller ao modulo
 	angular
 		.module('appCliente')
 		.controller('homeController', homeController);
 
-	homeController.$inject = ['$http', '$scope'];
+	//Injeta as dependências
+	homeController.$inject = ['$http'];
 
-	function homeController($http, $scope) {
+	function homeController($http) {
 
 		var vm = this;
-		$scope.funciona = "funciona";
 
-		
+		vm.novosCapitulos = [];
+		vm.novosMangas = [];
 
-			
-	vm.capnews = [];
-	vm.nome = [];
-	vm.d = [];
-	vm.mangas = [];	
-		
-	vm.carregarNovidades = function() {
-		$http({
-			method : 'GET',
-			url: '/user/capitulo/novidades'
-		}).then(function (response){
-			console.log(response);
-			console.log(response.data);
-			vm.capnews = response.data;
-		}, function (response) {
-			console.log(response);
-			console.log(response.data);
-		})
-	};
-	
-	vm.carregarNovidades();
+		carregarNovosCapitulos();
+		carregarNovosMangas();
 
-	vm.carregarMangas = function() {
-		$http({
-			method: 'GET',
-			url: '/user/manga/top10'
-		}).then(function(response) {
-			vm.mangas = response.data;
-		}, function(response) {
-			console.log(response);
-			console.log(response.data);
-		})
-	};
-	
-	vm.carregarMangas();
+		function carregarNovosCapitulos() {
+			$http({
+				method: 'GET',
+				url: '/user/capitulo/novidades'
+			}).then(function (response) {
+				vm.novosCapitulos = response.data;
+			}, function (response) {
+				console.log(response);
+				console.log(response.data);
+			})
+		}
 
-	vm.pesquisarNome = function(nome){
-		$http({
-			method: 'GET',
-			url: '/user/nome/'+nome
-		}).then(function(res) {
-			console.log(res);
-			console.log(res.data);
-			vm.d = res.data;
-		}, function(res) {
-			console.log(res);
-			console.log(res.data);
-		})
-	}
-
-		
-	
+		function carregarNovosMangas() {
+			$http({
+				method: 'GET',
+				url: '/user/manga/top10'
+			}).then(function (response) {
+				vm.novosMangas = response.data;
+			}, function (response) {
+				console.log(response);
+				console.log(response.data);
+			})
+		}
 	}
 })();

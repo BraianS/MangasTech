@@ -1,67 +1,69 @@
-angular
-	.module('appCliente')
-	.controller('mangaController', ['$http', function ($http) {
+(function () {
+	'use strict';
+	//Adiciona o controller ao modulo
+	angular
+		.module('appCliente')
+		.controller('mangaController', mangaController);
+
+	//Injeta as dependências
+	mangaController.$inject = ['$http'];
+
+	function mangaController($http) {
 
 		var vm = this;
 
-		vm.Mangas = [];
+		var alfabeto = "abcdefghijklmnopqrstuvwxyz";
+		vm.letra = alfabeto.toUpperCase().split("");
+
+		vm.mangas = [];
 		vm.paginaPorMangas = 1;
 		vm.paginaPorLetra = 1;
 		vm.status = false;
 		vm.letraAtivada = "";
+		vm.false = falso;
+		vm.true = verdadeiro;
+		vm.carregarMangas = carregarMangas;
+		vm.carregarAlfabeto = carregarAlfabeto;
 
-		var letra = "abcdefghijklmnopqrstuvwxyz";
+		carregarMangas();
 
-		vm.alfabeto = letra.toUpperCase().split("");
-
-		vm.resetar = function () {
-			vm.paginaPorMangas = 1;
-			vm.status = false;
-			vm.letraAtivada = "";
-		};
-
-		vm.false = function () {
+		function falso() {
 			vm.paginaPorMangas = 1;
 			vm.letraAtivada = "";
 			vm.status = false;
-		};
+		}
 
-		vm.true = function () {
+		function verdadeiro() {
 			vm.status = true;
 			vm.paginaPorLetra = 1;
-		};
+		}
 
-		vm.carregarAlfabeto = function (letras) {
+		function carregarAlfabeto(letras) {
 			if (letras != null) {
 				vm.letraAtivada = letras;
-			}
-			$http({
-				method: 'GET', url: '/user/manga/az/' + vm.letraAtivada + '?page=' + vm.paginaPorLetra
+			} $http({
+				method: 'GET',
+				url: '/user/manga/az/' + vm.letraAtivada + '?page=' + vm.paginaPorLetra
 			}).then(function (response) {
-					vm.Mangas = response.data.content;
-					vm.totalElementos = response.data.totalElements;
-					console.log(response);
-					console.log(response.data);
-				}, function (response) {
-					console.log(response);
-					console.log(response.data);
-				})
-		};
-
-		vm.carregarMangas = function () {
-			$http({
-				method: 'GET', url: '/user/manga?page=' + vm.paginaPorMangas
+				vm.mangas = response.data.content;
+				vm.totalElementos = response.data.totalElements;
+			}, function (response) {
+				console.log(response);
+				console.log(response.data);
 			})
-				.then(function (response) {
-					vm.Mangas = response.data.content;
-					vm.totalElementos1 = response.data.totalElements;
-					console.log(response);
-					console.log(response.data);
-				}, function (response) {
-					console.log(response);
-					console.log(response.data);
-				});
-		};
+		}
 
-		vm.carregarMangas();
-	}]);
+		function carregarMangas() {
+			$http({
+				method: 'GET',
+				url: '/user/manga?page=' + vm.paginaPorMangas
+			}).then(function (response) {
+				vm.mangas = response.data.content;
+				vm.totalElementos1 = response.data.totalElements;
+			}, function (response) {
+				console.log(response);
+				console.log(response.data);
+			});
+		}
+	}
+})();

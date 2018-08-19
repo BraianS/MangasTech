@@ -1,5 +1,6 @@
 package com.mangastech.model;
 
+import java.util.Arrays;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,21 +11,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+/**
+ * @author Braian
+ *
+ */
 @Entity
-@Table(name="paginas")
+@Table(name = "paginas")
 public class PaginasEntity {
-	
-	private Long id;	
+
+	private Long id;
 	private int numeroPagina;
 	private byte[] fotos;
 	private String nome;
-	
+
 	@Column
-	@Lob	
+	@Lob
 	public byte[] getFotos() {
 		return fotos;
 	}
@@ -33,8 +37,8 @@ public class PaginasEntity {
 		this.fotos = fotos;
 	}
 
-	private  CapitulosEntity capitulo;
-	
+	private CapitulosEntity capitulo;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -44,8 +48,8 @@ public class PaginasEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	@Column(name="numero_pagina")
+
+	@Column(name = "numero_pagina")
 	public int getNumeroPagina() {
 		return numeroPagina;
 	}
@@ -53,24 +57,19 @@ public class PaginasEntity {
 	public void setNumeroPagina(int string) {
 		this.numeroPagina = string;
 	}
-	
-	@Cascade({CascadeType.MERGE, CascadeType.REMOVE})
-	@ManyToOne(targetEntity = CapitulosEntity.class, fetch = FetchType.EAGER)	
-	@JoinColumn(name="capitulo_id")
+
+	@Cascade({ CascadeType.MERGE, CascadeType.REMOVE })
+	@ManyToOne(targetEntity = CapitulosEntity.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "capitulo_id")
 	public CapitulosEntity getCapitulo() {
 		return capitulo;
 	}
 
 	public void setCapitulo(CapitulosEntity capitulo) {
-		
 		this.capitulo = capitulo;
 	}
-		
-	public PaginasEntity() {
-		
-	}
-	
-	@Column(name="nome", columnDefinition = "varchar(50)")
+
+	@Column(name = "nome", columnDefinition = "varchar(50)")
 	public String getNome() {
 		return nome;
 	}
@@ -78,7 +77,13 @@ public class PaginasEntity {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
-	
+
+	public PaginasEntity() {
+	}
+
+	@Override
+	public String toString() {
+		return "PaginasEntity [id=" + id + ", numeroPagina=" + numeroPagina + ", fotos=" + Arrays.toString(fotos)
+				+ ", nome=" + nome + ", capitulo=" + capitulo + "]";
+	}
 }

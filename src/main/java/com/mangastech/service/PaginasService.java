@@ -1,18 +1,28 @@
 package com.mangastech.service;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import com.mangastech.model.CapitulosEntity;
 import com.mangastech.model.PaginasEntity;
+import com.mangastech.repository.PaginasRepository;
 
-public interface PaginasService {
-		
-	PaginasEntity save(MultipartFile multipartFile) throws IOException;
+/**
+ * @author Braian
+ *
+ */
+@Service
+public class PaginasService {
 	
-	byte[] getPaginasFile(Long id);
+	@Autowired
+	private PaginasRepository paginaRepository;
 	
-	List<PaginasEntity> findAll();
+	public PaginasEntity cadastrar(PaginasEntity pagina) {
+		return paginaRepository.save(pagina);
+	}
 	
+	public Page<PaginasEntity> buscarPaginaPorCapituloId(CapitulosEntity id, Pageable pageable) {
+		return paginaRepository.buscarPaginaPorCapituloId(id, pageable);
+	}
 }

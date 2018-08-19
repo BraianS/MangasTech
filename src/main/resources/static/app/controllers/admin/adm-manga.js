@@ -29,6 +29,7 @@
 		vm.cancelarMangas = cancelarMangas;
 		vm.editarUsuario = false;
 		vm.submit = submit;
+		vm.carregarMangas = carregarMangas;
 		
 		vm.years = [{ value: '2021', disabled: true }];
 		for (var i = 2020; i >= 1990; i--) {
@@ -173,11 +174,11 @@
 
 		function submit(){
 			if(vm.editarUsuario){
-				updateManga()
+				updateManga();
+				vm.editarUsuario = false;
 			}
 			else {
-				salvarMangas();
-				vm.editarUsuario = false;
+				salvarMangas();				
 			}
 		}
 	}

@@ -53,11 +53,17 @@ public class MangasTechApplicationTests {
 		Integer x = 2010;		
 		
 		//mangaRepository.deleteAll();
-		for(int i = 0; i < 1000; i++) {
-			//mangaRepository.save(new MangasEntity("HUNTER X HUNTER "+i, Status.COMPLETO, x, autor));
-			//autorRepository.save(new AutorEntity("Togashi "+i));
-			//grupoRepository.save(new GruposEntity("MAITE"+i));
+		for(int i = 0; i < 20; i++) {
+			mangaRepository.save(new MangasEntity("HUNTER X HUNTER "+i, Status.COMPLETO, x, autor));
 			
+			grupoRepository.save(new GruposEntity("MAITE "+i));			
+		}
+		for(int i = 0; i < 3; i++) {
+			grupoRepository.save(new GruposEntity("ISHIDA "+i));
+		}
+		
+		for(int i = 0; i < 3; i++) {
+			autorRepository.save(new AutorEntity("Togashi "+i));
 		}
 		
 		restTemplate = new RestTemplate();

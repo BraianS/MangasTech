@@ -112,4 +112,56 @@
 			<!-- ./Form Salvar Paginas -->
 		</div>
 	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title text-center">
+				Editar Capitulos
+			</h3>
+		</div>
+
+		<div class="panel-body">
+			<div class="panel-info">
+				<div class="col-md-3">
+					<select name="manga" ng-model="vm.mangaId" ng-change="vm.muda()">
+						<option value="{{manga.id}}" ng-repeat="manga in vm.Mangas">
+							{{manga.nome}}
+						</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-9">
+				<!-- Tabela de Capitulos -->
+				<table class="table table-flex">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Capitulo</th>
+							<th>Data</th>
+							<th>Editar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="capitulo in vm.listaCapitulos.capitulo">
+							<td>{{capitulo.id}}</td>
+							<td>{{capitulo.capitulo}}</td>
+							<td>{{capitulo.lancamento | date:'dd MM,yyyy'}}</td>
+							<td>
+								<div class="btn-group btn-group-xs">
+									<button class="btn btn-default" value="excluir" ng-click="vm.excluir(capitulo.id)">
+										<span class="glyphicon glyphicon-remove"></span>
+									</button>
+									<button class="btn btn-default" value="alterar" ng-click="vm.editarCapitulo(capitulo)">
+										<span class="glyphicon glyphicon-pencil"></span>
+									</button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- ./Tabela de CApitulos -->
+			</div>
+		</div>
+	</div>
 </div>

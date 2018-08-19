@@ -9,26 +9,34 @@
 			<div class="panel-body">
 				<div class="panel-info">
 					<div class="col-md-3">
+
+						<!-- Com capa -->
 						<div ng-if="vm.manga.capa">
 							<img class="img-thumbnail imgCustom" data-ng-src="data:image/jpeg;base64,{{vm.manga.capa}}">
 						</div>
+						<!-- ./Com capa -->
+
+						<!-- Sem capa -->
 						<h4 class="panel-title" ng-if="!vm.manga.capa">
 							<img src="/app/img/image.JPG" class="img-thumbnail imgCustom">
 						</h4>
-
+						<!-- ./Sem capa -->
 					</div>
 					<div clas="col-sm-9">
 						<div class="panel-info">
 							<p>
-								<b>status: </b> {{vm.manga.status}} </p>
+								<b>Autor: </b>
+								<a ui-sref="nav.autor.detalhe({autorId:vm.manga.autor.id})">
+									{{vm.manga.autor.nome}}</p>
+								</a>
 							<p>
 								<b>Lancamento: </b>{{vm.manga.dataLancado}}</p>
 							<p>
-								<b>Autor: </b> {{vm.manga.autor.nome}}</p>
+								<b>status: </b> {{vm.manga.status}} </p>
 							<p>
 								<b>Genero:</b>
 								<i ng-repeat="genero in vm.manga.genero">
-									<a ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+									<a ui-sref="nav.genero.detalhe({generoId:genero.id})" class="badge">{{genero.nome}}</a>
 								</i>
 							</p>
 							<p>
@@ -53,10 +61,12 @@
 							<th>Grupo</th>
 							<th>Ler</th>
 						</tr>
-						<tr ng-repeat="capitulo in vm.ListCapitulos">
+						<tr ng-repeat="capitulo in vm.manga.capitulo">
 							<td>{{capitulo.capitulo}}</td>
-							<td>{{capitulo.lancamento}}</td>
-							<td>{{capitulo.grupo.nome}}</td>
+							<td class="joinedDate">{{capitulo.lancamento | date:'MMMM dd, yyyy'}}</td>
+							<td>
+								<a ui-sref="nav.autor.detalhe({autorId:capitulo.grupo.id})">{{capitulo.grupo.nome}}</a>
+							</td>
 							<td>
 								<a ui-sref="nav.capitulo({capituloId:capitulo.id})">Ler o capitulo</a>
 							</td>

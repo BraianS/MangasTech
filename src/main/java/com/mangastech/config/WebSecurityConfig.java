@@ -1,11 +1,8 @@
 package com.mangastech.config;
 
-
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,12 +16,10 @@ import com.mangastech.repository.UsuarioRepository;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
-	DataSource dataSource;
-	
+	DataSource dataSource;	
 	
 	@Autowired
-	UsuarioRepository usuarioRepository;
-	 
+	UsuarioRepository usuarioRepository;	 
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -38,8 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.httpBasic().and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.csrf().disable();				
-	}
-			
+	}			
 	
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/favicon.ico",

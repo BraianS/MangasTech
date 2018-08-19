@@ -1,12 +1,11 @@
 package com.mangastech.controller;
 
+import java.util.Date;
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,43 +14,53 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.mangastech.model.CapitulosEntity;
 import com.mangastech.model.MangasEntity;
-import com.mangastech.repository.CapitulosRepository;
+import com.mangastech.service.CapituloService;
 
+/**
+ * @author Braian
+ *
+ */
 @RestController
 @Transactional
 public class CapitulosController {
-	
+
 	@Autowired
-	private CapitulosRepository capitulosRepository;
-	
-	@RequestMapping(value="/user/capitulo", method = RequestMethod.GET)
-	public List<CapitulosEntity> getCapitulos() {
-		return capitulosRepository.findAll();
+	private CapituloService capituloService;
+
+	/**
+	 * Método recebe todos os capitulos
+	 * 
+	 * @return lista de capitulos
+	 */
+	@RequestMapping(value = "/user/capitulo", method = RequestMethod.GET)
+	public ResponseEntity<List<CapitulosEntity>> listarCapitulos() {
+
+		return new ResponseEntity<>(capituloService.listarCapitulos(), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/user/capitulo/{id}", method = RequestMethod.GET)
-	public @ResponseBody List<CapitulosEntity> aaa(@PathVariable(value="id") Long id ) {
-		List<CapitulosEntity> cao = capitulosRepository.buscarcapitulos(id);
-		
-		return cao;
+
+	/**
+	 * Método busca capitulos por manga ID
+	 * 
+	 * @param id
+	 * @return lista de capitulos
+	 */
+	@RequestMapping(value = "/user/capitulo/{id}", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<List<CapitulosEntity>> buscarCapitulosPorManga(
+			@PathVariable(value = "id") MangasEntity id) {
+
+		return new ResponseEntity<>(capituloService.buscarCapitulosPorManga(id), HttpStatus.OK);
 	}
-	
+
+	/**
+	 * Método cadastrar capitulos
+	 * 
+	 * @param capitulos
+	 * @return
+	 */
 	@RequestMapping(value = "/admin/capitulo", method = RequestMethod.POST)
-	public CapitulosEntity cadastrarCapitulos(@RequestBody CapitulosEntity capitulos) {
-		return capitulosRepository.save(capitulos);
+	public ResponseEntity<CapitulosEntity> cadastrarCapitulos(@RequestBody CapitulosEntity capitulos) {
+
+		capitulos.setLancamento(new Date());
+		return new ResponseEntity<>(capituloService.cadastrar(capitulos), HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/user/capitulo/detalhe/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<CapitulosEntity> procurarManga(@PathVariable(value="id") MangasEntity id) {
-		 capitulosRepository.findByManga(id);
-		
-		return   capitulosRepository.findByManga(id);
-	}
-	
-	@GetMapping("/user/capitulo/novidades")
-	public List<CapitulosEntity> procurarCapitulos(){
-		
-		return capitulosRepository.findByTop10OrderByLancamentoDesc();
-	}
-			
 }

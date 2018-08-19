@@ -27,9 +27,5 @@ public class CapituloService {
 
 	public List<CapitulosEntity> buscarCapitulosPorManga(MangasEntity id) {
 		return capituloRepository.buscarCapitulosPorMangaId(id);
-	}
-
-	public List<CapitulosEntity> buscar10NovosCapitulos() {
-		return capituloRepository.buscar10NovosCapitulos();
-	}
+	}	
 }

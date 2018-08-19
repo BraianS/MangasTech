@@ -19,16 +19,18 @@
 		vm.deletarGeneros = deletarGeneros;
 		vm.cancelarGeneros = cancelarGeneros;
 		vm.alterarGeneros = alterarGeneros;
+		vm.atualizarGeneros = atualizarGeneros;
 		vm.usuarioEditado = false;
+		vm.submit = submit;
 
 		carregarGeneros();
 
 		function carregarGeneros() {
 			$http({
 				method: 'GET',
-				url: '/user/genero'
+				url: '/user/genero/lista'
 			}).then(function (response) {
-				vm.generos = response.data.content;
+				vm.generos = response.data;
 			}, function (response) {
 				console.log(response.data);
 				console.log(response.status);
@@ -42,7 +44,7 @@
 					url: '/admin/genero', data: vm.genero
 				}).then(function (response) {
 					vm.genero = {};
-					vm.carregarGeneros();
+					carregarGeneros();
 					vm.formGenero.$setPristine(true);
 					vm.mensagem = "Salvo com Sucesso";
 				}, function (response) {
@@ -54,6 +56,20 @@
 			else {
 				vm.mensagem = "Erro No formulario";
 			}
+		}
+
+		function atualizarGeneros(){
+			$http({
+				method: 'PUT',
+				url:'/admin/genero',data:vm.genero
+			}).then(function(response) {
+				vm.genero = {};
+				vm.formGenero.$setPristine(true);
+				vm.mensagem = "Alterado com Sucesso";
+			}, function(response) {
+				console.log(response);
+				console.log(response.data);
+			});
 		}
 
 		function deletarGeneros(genero) {
@@ -84,7 +100,7 @@
 				salvarGeneros();
 			}
 			else {
-
+				atualizarGeneros();
 			}
 		}
 

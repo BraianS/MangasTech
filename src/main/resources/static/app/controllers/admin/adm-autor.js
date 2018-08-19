@@ -72,7 +72,7 @@
 				method: 'PUT',
 				url: '/admin/autor', data: vm.autores
 			}).then(function (response) {
-				vm.autore = {};
+				vm.autores = {};
 				vm.formAutor.$setPristine(true);
 				vm.mensagem = "Atualizado";
 			}, function (response) {
@@ -95,10 +95,11 @@
 		function submit() {
 			if (vm.autorEditado) {
 				updateAutor();
+				vm.autorEditado = false;
 			}
 			else {
 				salvarAutores();
-				vm.autorEditado = false;
+				
 			}
 		}
 	}

@@ -121,8 +121,8 @@
 				</thead>
 
 				<!-- Lista de mangas -->
-				<tbody ng-repeat="manga in vm.Mangas ">
-					<tr>
+				<tbody >
+					<tr ng-repeat="manga in vm.Mangas ">
 						<td>
 							<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">{{manga.nome}}
 							</a>

@@ -1,8 +1,7 @@
 package com.mangastech.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,119 +19,154 @@ import com.mangastech.model.AutorEntity;
 import com.mangastech.repository.AutorRepository;
 import com.mangastech.service.AutorService;
 
-
+/**
+ * @author Braian
+ *
+ */
 @RestController
 @Transactional
-
 public class AutorController {
-	
+
 	@Autowired
 	private AutorRepository autorRepository;
-	
+
 	@Autowired
-	private AutorService autorService;		
-		
-	//Busca Todos os Autores
-		@RequestMapping(value = "/user/autor",method = RequestMethod.GET)
-		public ResponseEntity<Page<AutorEntity>> ProcurarAutorEManga(Integer page) {
-			
-			if(page == null) {
-				page = 0;
-			}
-			
-			if(page >= 1) {
-				page --;
-			}
-			
-			Pageable pageable = new PageRequest(page, 20);
-			
-			Page<AutorEntity> autor = autorService.buscarTodos(pageable);
-			
-			
-			return new ResponseEntity<>(autor, HttpStatus.OK);
-		}
-		
-		@RequestMapping(value = "/user/autor/lista", method = RequestMethod.GET)
-		public List<AutorEntity> listaAutorNomes() {
-			
-			List<AutorEntity> autor = new ArrayList<>();			
-			autor.addAll(autorRepository.buscarTodos());
-			
-			return autor;
-		}
-		
-		//Procura o Autor pelo ID
-		@RequestMapping(value="/user/autor/{id}",method = RequestMethod.GET)
-		public @ResponseBody ResponseEntity<Page<AutorEntity>> buscarAutorById(@PathVariable(value="id") Long id, Integer page){
-								
-			if(page == null) {
-				page =0;
-			}
-			
-			if(page >=1) {
-				page --;
-			}
-			
-			Pageable pageable = new PageRequest(page, 20);
-			
-			Page<AutorEntity> autor = autorRepository.findMangaById(id, pageable);
-			
-			if(autor == null) {
-				return ResponseEntity.notFound().build();
-			}
-			
-			
-			return new ResponseEntity<>(autor,HttpStatus.OK);
-		}
-	
-	//Cadastra o Autor
-		@RequestMapping(value="/admin/autor", method= RequestMethod.POST)
-		public ResponseEntity<AutorEntity> cadastrarAutor (@RequestBody AutorEntity autor){
-			
-			if(autorRepository.findOneByNome(autor.getNome()) != null) {
-				throw new RuntimeException("Nome Repetido");
-			}
-			autor = autorService.cadastrar(autor);
-			
-			return new ResponseEntity<>(autor, HttpStatus.OK);
-		}
-		
-	//Deletar Autor
-	@RequestMapping(value="/admin/autor/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<AutorEntity> deletarAutor(@PathVariable("id") Long id){
-		AutorEntity autor = autorRepository.findOne(id);
-		
-		if(autor == null){
-			return ResponseEntity.notFound().build();
-		}
-		
-		autorService.deletar(autor);
-		return  ResponseEntity.ok().build();
-	}
-	//Passa o parametro ID e nome para alturar o autor
-	@RequestMapping(value="/admin/autor", method = RequestMethod.PUT)
-	public ResponseEntity<AutorEntity> AlterarAutor(@RequestBody AutorEntity autor) {
-		  autor = autorService.alterar(autor);
-		  			
-		  
-		  return new ResponseEntity<>(autor, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/user/autor/letra/{letra}", method = RequestMethod.GET)
-	public ResponseEntity<Page<AutorEntity>> buscarPorNome(@PathVariable("letra") String letra, Integer page) {
-		
-		if(page == null) {
+	private AutorService autorService;
+
+	/**
+	 * Método Paginação de Autor
+	 * 
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value = "/user/autor", method = RequestMethod.GET)
+	public ResponseEntity<Page<AutorEntity>> ProcurarAutorEManga(Integer page) {
+
+		if (page == null) {
 			page = 0;
 		}
-		
-		if(page >=1) {
-			page --;
+
+		if (page >= 1) {
+			page--;
 		}
-		
+
 		Pageable pageable = new PageRequest(page, 20);
-				
-		Page<AutorEntity> autor = autorRepository.findByLetra(letra, pageable);		
-		
-		return new ResponseEntity<>(autor, HttpStatus.OK);
+
+		return new ResponseEntity<>(autorService.paginationAutor(pageable), HttpStatus.OK);
+	}
+
+	/**
+	 * Método busca todos os mangas por um autor ID
+	 * 
+	 * @param id
+	 * @param page
+	 * @return autor
+	 */
+	@RequestMapping(value = "/user/autor/{id}", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<Page<AutorEntity>> buscarMangaPorId(@PathVariable(value = "id") Long id,
+			Integer page) {
+
+		AutorEntity autor = autorRepository.findOne(id);
+
+		if (autor == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		if (page == null) {
+			page = 0;
+		}
+
+		if (page >= 1) {
+			page--;
+		}
+
+		Pageable pageable = new PageRequest(page, 20);
+
+		return new ResponseEntity<>(autorService.buscarMangaPorId(id, pageable), HttpStatus.OK);
+	}
+
+	/**
+	 * Método para registrar autor
+	 * 
+	 * @param autor
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/autor", method = RequestMethod.POST)
+	public ResponseEntity<AutorEntity> cadastrarAutor(@RequestBody AutorEntity autor) {
+
+		if (autorRepository.findOneByNome(autor.getNome()) != null) {
+			throw new RuntimeException("Nome Repetido");
+		}
+
+		return new ResponseEntity<>(autorService.cadastrar(autor), HttpStatus.OK);
+	}
+
+	/**
+	 * Método deletar autor por ID
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/autor/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<AutorEntity> deletarAutor(@PathVariable("id") Long id) {
+		AutorEntity autor = autorRepository.findOne(id);
+
+		if (autor == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		autorService.deletar(autor);
+		return ResponseEntity.ok().build();
+	}
+
+	/**
+	 * Método editar um autor
+	 * 
+	 * @param autor
+	 * @return usuario alterado
+	 */
+	@RequestMapping(value = "/admin/autor", method = RequestMethod.PUT)
+	public ResponseEntity<AutorEntity> AlterarAutor(@RequestBody AutorEntity autor) throws IOException {
+
+		if (autorRepository.findOneByNome(autor.getNome()) != null
+				&& autorRepository.findOneByNome(autor.getNome()).getId() != autor.getId()) {
+			throw new RuntimeException("Nome Repetido");
+		}		
+
+		return new ResponseEntity<>(autorService.alterar(autor), HttpStatus.OK);
+	}
+
+	/**
+	 * Método buscar autor por LETRA
+	 * 
+	 * @param letra
+	 * @param page
+	 * @return paginação de autor
+	 */
+	@RequestMapping(value = "/user/autor/letra/{letra}", method = RequestMethod.GET)
+	public ResponseEntity<Page<AutorEntity>> buscarPorNome(@PathVariable("letra") String letra, Integer page) {
+
+		if (page == null) {
+			page = 0;
+		}
+
+		if (page >= 1) {
+			page--;
+		}
+
+		Pageable pageable = new PageRequest(page, 20);		
+
+		return new ResponseEntity<>(autorService.buscarPorLetra(letra, pageable), HttpStatus.OK);
+	}
+
+	/**
+	 * Método receber todos os autores
+	 * 
+	 * @return lista de autor
+	 */
+	@RequestMapping(value = "/user/autor/lista", method = RequestMethod.GET)
+	public List<AutorEntity> listarAutores() {
+
+		return autorService.listarTodos();
 	}
 }

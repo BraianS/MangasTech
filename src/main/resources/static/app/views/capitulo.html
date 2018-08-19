@@ -1,4 +1,4 @@
-<div class="container" id="capituloDiv">
+<div class="container" >
 	<div class="row">
 		<div class="col-md-12">
 
@@ -7,7 +7,7 @@
 				<img ng-model="vm.pagina" id="imagem" class="img-responsive " data-ng-src="data:image/jpeg;base64,{{foto.fotos}}">
 
 				<div>
-					<pagination max-size="7" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarCapitulo()" items-per-page="20"
+					<pagination max-size="7" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarCapitulo()" items-per-page="1"
 					 boundary-links="true"></pagination>
 				</div>
 			</div>

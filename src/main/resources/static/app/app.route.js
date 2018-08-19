@@ -3,7 +3,7 @@
 	//Cria o modulo AppCliente
 	//Seta as Dependências
 	angular
-		.module('appCliente', ["ui.bootstrap", "appCliente.admin", "appCliente.run"]);
+		.module('appCliente', ["ui.bootstrap","appCliente.admin", "appCliente.run"]);
 
 	//Injeta as dependências
 	MainModuleConfig.$inject = ["$locationProvider", "$stateProvider", "$urlRouterProvider"];

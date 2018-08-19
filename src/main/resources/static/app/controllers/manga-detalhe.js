@@ -16,30 +16,18 @@
 		vm.manga = [];
 		vm.mangasId = $stateParams.mangasId;
 
-		carregarMangas();
-		carregarCapitulos();
+		/* carregarMangas();
+		carregarCapitulos(); */
 
-		/* Atualiza os Mangas */
-		function carregarMangas() {
+		carregarMangaECapitulos();		
+
+		function carregarMangaECapitulos() {
 			$http({
 				method: 'GET',
-				url: '/user/manga/' + vm.mangasId
-			}).then(function (response) {
+				url: '/user/capitulo/lista/' + vm.mangasId
+			}).then(function(response){
 				vm.manga = response.data;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
-		};
-
-		/* Atualiza os Capitulos */
-		function carregarCapitulos() {
-			$http({
-				method: 'GET',
-				url: "/user/capitulo/" + vm.mangasId
-			}).then(function (response) {
-				vm.ListCapitulos = response.data;
-			}, function (response) {
+			}, function(response) {
 				console.log(response);
 				console.log(response.data);
 			})

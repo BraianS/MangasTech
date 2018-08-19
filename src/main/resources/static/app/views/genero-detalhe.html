@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="panel panel-primary">
 			<div class="panel-heading text-center">
-				<h3 class="panel-title">Generos Detalhes</h3>
+				<h3 class="panel-title">Genero Detalhe</h3>
 			</div>
 
 			<!-- Lista Detalhes do grupo -->
@@ -37,7 +37,7 @@
 								</p>
 								<!-- Lista de Generos -->
 								<i ng-repeat="genero in manga.genero">
-									<a href="" ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+									<a href="" ui-sref="nav.genero.detalhe({generoId:genero.id})" class="badge">{{genero.nome}}</a>
 								</i>
 								<!-- ./Lista de Generos -->
 							</div>

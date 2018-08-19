@@ -110,3 +110,33 @@ ul {
 .nav-tabs {
     text-align:center;
 }
+
+.table-flex tbody {
+	display: block;
+	height: 200px;
+	overflow-y: auto;
+}
+
+.table-flex thead, table-flex tbody, .table-flex tr {
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+}
+
+#mangatop {
+	margin: -6px;
+	font-size: 15px;
+}
+
+.custom {
+	width: 100%;
+}
+
+.badge {
+	background-color: #3a87ad;
+	border-radius: 5px;
+}
+
+.alinhar {
+	display: inline-block;
+}

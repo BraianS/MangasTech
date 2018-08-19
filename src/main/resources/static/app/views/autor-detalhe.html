@@ -12,14 +12,19 @@
 						<div class="panel panel-default panel-front">
 
 							<div class="panel panel-heading ">
-								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
-									<h4 class="panel-title" ng-if="manga.capa">
+								<!-- Com foto -->
+								<h4 class="panel-title" ng-if="manga.capa">
+									<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
 										<img class="img-thumbnail imgCustom" data-ng-src="data:image/jpeg;base64,{{manga.capa}}">
-									</h4>
-								</a>
+									</a>
+								</h4>
+								<!-- ./Com foto -->
+
 								<!-- Sem foto -->
 								<h4 class="panel-title" ng-if="!manga.capa">
-									<img src="/app/img/image.JPG" class="img-thumbnail imgCustom">
+									<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
+										<img src="/app/img/image.JPG" class="img-thumbnail imgCustom">
+									</a>
 								</h4>
 								<!-- ./Sem foto -->
 							</div>
@@ -36,7 +41,7 @@
 									</p>
 									<!-- Lista de Generos -->
 									<i ng-repeat="genero in manga.genero">
-										<a ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+										<a ui-sref="nav.genero.detalhe({generoId:genero.id})" class="badge">{{genero.nome}}</a>
 									</i>
 									<!-- ./Lista de Generos -->
 								</div>

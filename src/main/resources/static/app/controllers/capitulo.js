@@ -31,7 +31,7 @@
 				console.log(response);
 				console.log(response.data.content);
 			})
-		};
+		}
 
 		/* bind para pegar o evento das setas do teclado */
 		$('#capituloDiv').bind('keydown', function (e) {
@@ -40,10 +40,10 @@
 				if (vm.pagina > 1) {
 					vm.pagina--;
 					carregarCapitulo();
-
 				}
-				if (vm.pagina === 0) {
-					vm.pagina = 0;
+				else {
+					vm.pagina = vm.pagina;
+					console.log('Limite de paginas');
 				}
 				console.log("Esquerda");
 				return false;
@@ -53,12 +53,11 @@
 			if (e.keyCode === 39) {
 				if (vm.pagina < vm.totalElementos) {
 					vm.pagina++;
-				}
-				else {
+					carregarCapitulo();
+				} else {
 					vm.pagina = vm.pagina;
 					console.log('Limite de paginas');
 				}
-				carregarCapitulo();
 				console.log("Direita");
 				return false;
 			}

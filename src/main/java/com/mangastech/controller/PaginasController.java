@@ -1,7 +1,6 @@
 package com.mangastech.controller;
 
 import java.io.IOException;
-import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,37 +30,38 @@ public class PaginasController {
 	@Autowired
 	private PaginasService paginaService;
 
+	
 	/**
 	 * Método cadastrar pagina
 	 * 
-	 * @param files
+	 * @param paginas
 	 * @param nome
 	 * @param Capitulo
+	 * @param numCapitulo
 	 * @return
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/admin/pagina", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public @ResponseBody ResponseEntity<PaginasEntity> cadastrarPaginas(
-			@RequestParam(value = "fotos") List<MultipartFile> files, @RequestParam(value = "nome") String nome,
-			@RequestParam(value = "capitulo") Long Capitulo) throws IOException {
-		int count = 1;
-		if (!files.isEmpty()) {
-			for (MultipartFile file : files) {
-
-				CapitulosEntity capitulo = new CapitulosEntity();
-				capitulo.setId(Capitulo);
-
-				PaginasEntity pagina = new PaginasEntity();
-				pagina.setFotos(file.getBytes());
-				pagina.setNome(nome);
-				pagina.setNumeroPagina(count);
-				pagina.setCapitulo(capitulo);
-				paginaService.cadastrar(pagina);
-				count++;
-			}
+			@RequestParam(value = "paginas") MultipartFile paginas, @RequestParam(value = "nome") String nome,
+			@RequestParam(value = "capitulo") Long Capitulo, @RequestParam(value="numCapitulo", required = false) int numCapitulo) throws IOException {		
+		
+		if(!paginas.isEmpty()) {
+			numCapitulo++;
+			
+			CapitulosEntity capitulo = new CapitulosEntity();
+			capitulo.setId(Capitulo);
+			
+			PaginasEntity pagina = new PaginasEntity();
+			pagina.setFotos(paginas.getBytes());
+			pagina.setNome(nome);
+			pagina.setCapitulo(capitulo);
+			pagina.setNumeroPagina(numCapitulo);
+			paginaService.cadastrar(pagina);
 		} else {
 			throw new RuntimeException("Erro ao salvar Pagina");
 		}
+		
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 

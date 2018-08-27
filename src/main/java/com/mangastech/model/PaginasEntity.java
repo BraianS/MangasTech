@@ -78,8 +78,8 @@ public class PaginasEntity {
 		this.nome = nome;
 	}
 
-	public PaginasEntity() {
-	}
+	public PaginasEntity() {		
+	}	
 
 	@Override
 	public String toString() {

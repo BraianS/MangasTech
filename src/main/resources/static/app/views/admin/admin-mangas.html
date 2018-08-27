@@ -43,7 +43,7 @@
 						<!-- Autor -->
 						<div class="form-group">
 							<label for="autor-manga">Autor</label>
-							<select name="grupo" ng-model="vm.manga.autor" ng-options="autor.nome for autor in vm.autor" placeholder="Escolha o autor"></select>
+							<select name="autor" ng-model="vm.manga.autor" ng-options="autor.nome for autor in vm.autor" placeholder="Escolha o autor"></select>
 							<span ng-show="vm.formNovoManga.grupo.$error.required && vm.formNovoManga.grupo.$dirty">Campo Autor e Obrigatorio</span>
 						</div>
 

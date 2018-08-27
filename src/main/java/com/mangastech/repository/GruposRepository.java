@@ -16,7 +16,7 @@ import com.mangastech.model.GruposEntity;
 @Repository
 public interface GruposRepository extends JpaRepository<GruposEntity, Long>{
 
-	@Query(value="SELECT NEW GruposEntity(id,nome) FROM GruposEntity")
+	@Query(value="SELECT NEW GruposEntity(id,nome) FROM GruposEntity g ORDER BY g.nome")
 	public List<GruposEntity> listaTodos();
 	
 	@Query(value="select NEW GruposEntity(id,nome) FROM GruposEntity a ORDER BY a.nome ASC")

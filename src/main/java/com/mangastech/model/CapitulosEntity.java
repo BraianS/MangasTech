@@ -30,10 +30,9 @@ public class CapitulosEntity {
 	private Long id;
 	private Date lancamento;
 	private int capitulo;
-	
+
 	@JsonIgnoreProperties(value={"capitulo"})
 	private GruposEntity grupo;
-
 	
 	public MangasEntity manga;
 
@@ -77,14 +76,14 @@ public class CapitulosEntity {
 	public void setCapitulo(int capitulo) {
 		this.capitulo = capitulo;
 	}
-	
+
 	@JsonIgnore
 	@ManyToOne(targetEntity = MangasEntity.class, fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "manga_id")
 	public MangasEntity getManga() {
 		return manga;
 	}
-	
+
 	@JsonProperty(access = Access.WRITE_ONLY)
 	public void setManga(MangasEntity manga) {
 		this.manga = manga;
@@ -117,5 +116,5 @@ public class CapitulosEntity {
 	public String toString() {
 		return "CapitulosEntity [id=" + id + ", lancamento=" + lancamento + ", capitulo=" + capitulo + ", grupo="
 				+ grupo + ", manga=" + manga + ", pagina=" + pagina + "]";
-	}	
+	}
 }

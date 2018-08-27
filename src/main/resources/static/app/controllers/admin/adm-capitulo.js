@@ -13,49 +13,51 @@
 		var vm = this;
 
 		vm.capitulo = {};
+		vm.pagina = {};
+		vm.paginas = [];
+		vm.paginaErro = [];
 		vm.Mangas = [];
 		vm.Grupos = [];
 		vm.capituloManga = [];
-		vm.capituloIdSelecionado = [];
-		vm.mangaIdSelecionado = [];
-		vm.mangaIdCapitulo = [];
+		vm.listaCapitulos = [];
+		vm.mangaId = [];
 		vm.mensagem = "";
 		vm.capituloPorManga = capituloPorManga;
 		vm.salvarCapitulos = salvarCapitulos;
 		vm.uploadPaginas = uploadPaginas;
 		vm.cancelarCapitulo = cancelarCapitulo;
 		vm.cancelarPagina = cancelarPagina;
-		vm.muda = mudar;
-		vm.mangaId = [];
-		vm.excluir = excluir;
-		vm.atual = [];
-		vm.editarCapitulo = editarCapitulo;	
+		vm.listaCapitulosPorManga = listaCapitulosPorManga;
+		vm.excluirCapitulo = excluirCapitulo;
+		vm.editarCapitulo = editarCapitulo;
+
 		carregarMangas();
 		carregarGrupos();
 
+
 		function editarCapitulo(capitulo){
-			vm.capitulo = capitulo
+			vm.capitulo = capitulo;			
 		}
 
-		function mudar(){
+		function listaCapitulosPorManga() {
 			$http({
 				method: 'GET',
-				url:'/user/capitulo/lista/'+vm.mangaId
-			}).then(function(response) {				
+				url: '/user/capitulo/lista/' + vm.mangaId
+			}).then(function (response) {
 				vm.listaCapitulos = response.data;
-			}, function(response) {
+			}, function (response) {
 				console.log(response);
 				console.log(response.data);
 			})
 		}
 
-		function excluir(id){
+		function excluirCapitulo(id) {
 			$http({
 				method: 'DELETE',
-				url:'/user/capitulo/lista/'+id
-			}).then(function(response){
-				mudar();			
-			}, function(response) {
+				url: '/user/capitulo/lista/' + id
+			}).then(function (response) {
+				listaCapitulosPorManga();
+			}, function (response) {
 				console.log(response);
 				console.log(response.data);
 			});
@@ -88,7 +90,7 @@
 		function capituloPorManga() {
 			$http({
 				method: 'GET',
-				url: '/user/capitulo/' + vm.mangaIdSelecionado
+				url: '/user/capitulo/' + vm.pagina.manga
 			}).then(function (response) {
 				vm.capituloManga = response.data;
 			}, function (response) {
@@ -103,56 +105,60 @@
 					method: 'POST',
 					url: '/admin/capitulo', data: vm.capitulo
 				}).then(function (response) {
-					vm.capitulo = {};
-					vm.formCapitulo.$setPristine(true);
+					cancelarCapitulo();
+					cancelarPagina();
 					vm.mensagem = "Salvo com sucesso";
 				}, function (response) {
 					vm.mensagem = response.data.message;
 					console.log(response.data);
 					console.log(response.status);
 				});
-			}
-			else {
+			} else {
 				vm.mensagem = "Cadastro Nao realizado";
 			}
 		}
-		
-		function uploadPaginas(fotos) {
-			if (vm.formPagina) {
-				if (fotos && fotos.length) {
+
+		function uploadPaginas(paginas, paginaErro) {
+			vm.paginas = paginas;
+			vm.paginaErro = paginaErro;
+			if (paginas.length && vm.formPagina.$valid) {
+				angular.forEach(paginas, function (pagina, count) {
 					Upload.upload({
 						url: '/admin/pagina',
 						method: 'POST',
-						params: { nome: vm.nomeCapitulo, capitulo: vm.capituloIdSelecionado },
 						arrayKey: '',
-						data: { fotos: fotos },
-						headers: { 'Content-Type': undefined }
-					}).then(function (response) {						
-						console.log("sucesso");
-						vm.mensagemPagina = "Salvo com sucesso";
-						vm.formPagina.$setPristine(true);
-					}), function (response) {
+						data: { paginas: pagina, nome: vm.pagina.descricao, capitulo: vm.pagina.capitulo, numCapitulo: count }
+					}).then(function (response) {
+						var ultimoIndex = vm.paginas[vm.paginas.length - 1];
+						if (ultimoIndex == pagina) {
+							cancelarPagina();
+							vm.mensagemPagina = "Salvo com sucesso";
+						};
+					}, function (response) {
 						vm.mensagem = response.data.message;
 						console.log(response);
-						console.log(response.data);
-					}
-				}
-			}
-			else {
+						console.log(response.status);
+					}, function (evt) {
+						vm.progresso = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+					});
+				})
+			} else {
 				vm.mensagemPagina = "Não foi salvo";
 			}
 		}
 
 		function cancelarCapitulo() {
 			vm.capitulo = {};
-			vm.formCapitulo.$setPristine(true);
+			vm.formCapitulo.$setPristine();
+			vm.formCapitulo.$setUntouched();
 		}
 
 		function cancelarPagina() {
-			vm.mangaIdCapitulo = "";
-			vm.mangaIdSelecionado = {};
-			vm.capituloIdSelecionado = {};
-			vm.formPagina.$setPristine(true);
+			vm.pagina = {};
+			vm.mangaId = "";
+			vm.listaCapitulos = "";			
+			vm.formPagina.$setUntouched();
+			vm.formPagina.$setPristine();
 		}
 	}
 })();

@@ -30,7 +30,7 @@
 		vm.editarUsuario = false;
 		vm.submit = submit;
 		vm.carregarMangas = carregarMangas;
-		
+
 		vm.years = [{ value: '2021', disabled: true }];
 		for (var i = 2020; i >= 1990; i--) {
 			vm.years.push({ value: i });
@@ -40,8 +40,8 @@
 		carregarAutor();
 		carregarGeneros();
 
-		
-		function selecionaImagem(imagem) {			
+
+		function selecionaImagem(imagem) {
 			vm.recebeImagem = imagem;
 		}
 
@@ -107,13 +107,12 @@
 		function excluirMangas(Manga) {
 			$http({
 				method: 'DELETE', url: '/admin/manga/' + Manga.id
-			})
-				.then(function (response) {
-					carregarMangas();
-				}, function (response) {
-					console.log(response.data);
-					console.log(response.status)
-				});
+			}).then(function (response) {
+				carregarMangas();
+			}, function (response) {
+				console.log(response.data);
+				console.log(response.status)
+			});
 		}
 
 		function carregarMangas() {
@@ -135,7 +134,7 @@
 					method: 'PUT',
 					url: '/admin/manga',
 					headers: { 'Content-Type': undefined },
-						transformRequest: function (data) {
+					transformRequest: function (data) {
 						var formData = new FormData();
 						formData.append('mangas', new Blob([angular.toJson(data.mangas)], {
 							type: "application/json"
@@ -152,7 +151,7 @@
 					vm.formNovoManga.$setPristine(true);
 					vm.mensagem = "Alterado com sucesso";
 				}, function(response) {
-					console.log(response);	
+					console.log(response);
 					console.log(response.data);
 				})
 			}
@@ -162,7 +161,7 @@
 		}
 
 		function alterarMangas(manga) {
-			vm.manga = manga;			
+			vm.manga = manga;
 			vm.editarUsuario = true;
 		}
 
@@ -178,7 +177,7 @@
 				vm.editarUsuario = false;
 			}
 			else {
-				salvarMangas();				
+				salvarMangas();
 			}
 		}
 	}

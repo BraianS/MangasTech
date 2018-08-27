@@ -30,7 +30,7 @@
 		vm.mangaUmDiaAtras = mangaUmDiaAtrass;
 		vm.mangasDoisDiasAtras = mangasDoisDiasAtras;
 		vm.ontemStatus = false;
-		vm.anteOntemStatus = false;		
+		vm.anteOntemStatus = false;
 
 		carregarNovosCapitulos();
 		carregarNovosMangas();

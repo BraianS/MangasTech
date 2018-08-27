@@ -18,7 +18,7 @@ import com.mangastech.model.MangasEntity;
 @Repository
 public interface MangasRepository extends JpaRepository<MangasEntity, Long> {
 
-	@Query("SELECT NEW MangasEntity(id,nome) FROM MangasEntity")
+	@Query("SELECT NEW MangasEntity(id,nome) FROM MangasEntity m ORDER BY m.nome")
 	public List<MangasEntity> listaMangas();
 
 	@Query("SELECT m FROM MangasEntity m ORDER BY m.nome ASC ")

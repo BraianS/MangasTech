@@ -16,5 +16,5 @@ import com.mangastech.model.MangasEntity;
 public interface CapitulosRepository extends JpaRepository<CapitulosEntity, Long> {
 
 	@Query("SELECT c FROM CapitulosEntity as c where c.manga =:id ORDER BY c.id ASC")
-	public List<CapitulosEntity> buscarCapitulosPorMangaId(@Param("id") MangasEntity id);	
+	public List<CapitulosEntity> buscarCapitulosPorMangaId(@Param("id") MangasEntity id);
 }

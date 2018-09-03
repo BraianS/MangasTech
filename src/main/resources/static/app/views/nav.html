@@ -2,57 +2,69 @@
 	<div class="container">
 		<div class="navbar-header">
 
-			<div class="col-md-12 col-sm-12 col-xs-12">
+			<!-- Collapse Button -->
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#col" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<!-- ./Collapse Button -->
+			
+			<a class="navbar-brand" ng-class="{rota: vm.isActive('/')}" ui-sref="nav">Home</a>
+		</div>
 
-				<a class="navbar-brand" ui-sref="nav">Home</a>
-				<a class="navbar-brand" ui-sref="nav.manga">Mangas</a>
-				<a class="navbar-brand" ui-sref="nav.genero">Generos</a>
-				<a class="navbar-brand" ui-sref="nav.grupo">Grupos</a>
-				<a class="navbar-brand" ui-sref="nav.autor">Autor</a>
+		<div class="navbar-collapse collapse" id="col">
 
-				<!-- Pesquisa -->
-				<div class="col-sm-3 col-md-3">
-					<form class="navbar-form" role="search">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Search" name="nome" ng-model="vm.nome">
-							<div class="input-group-btn">
-								<button class="btn btn-default" type="submit" ng-click="vm.service(vm.nome)" ui-sref="nav.pesquisa({txtPesquisado:vm.nome})">
-									<i class="glyphicon glyphicon-search"></i>
-								</button>
-							</div>
+			<!-- Navbar Left -->
+			<ul class="nav navbar-nav navbar-left">
+				<li><a ng-class="{ rota: vm.isActive('/manga')}" ui-sref="nav.manga">Mangas</a></li>
+				<li><a ng-class="{ rota: vm.isActive('/genero')}" ui-sref="nav.genero">Generos</a></li>
+				<li><a ng-class="{ rota: vm.isActive('/grupo')}" ui-sref="nav.grupo">Grupos</a></li>
+				<li><a ng-class="{ rota: vm.isActive('/autor')}" ui-sref="nav.autor">Autor</a></li>
+			</ul>
+			<!-- ./Navbar Left -->
+
+			<!-- Pesquisar -->
+			<div class="col-sm-3 col-md-3 pull-left">
+				<form class="navbar-form" role="search" name="vm.formPesquisa">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search" name="search" ng-model="vm.nome" required>
+						<div class="input-group-btn">
+							<button class="btn btn-default" type="button" ng-click="vm.service(vm.nome)" ng-disabled="vm.formPesquisa.$invalid"><i
+								 class="glyphicon glyphicon-search"></i></button>
 						</div>
-					</form>
-				</div>
-
-				<!-- Admin rota -->
-				<a ng-show="vm.user.username" class="navbar-brand" ui-sref="nav.admin">admin</a>
-
-				<ul class="nav navbar-nav navbar-right">
-					<!-- Registrar -->
-					<li ng-show="!vm.user.username">
-						<a ui-sref="nav.registrar">
-							<span class="glyphicon glyphicon-user"></span> Sign Up</a>
-					</li>
-					<!-- Login -->
-					<li ng-show="!vm.user.username">
-						<a ui-sref="nav.login">
-							<span class="glyphicon glyphicon-log-in"> Login</span>
-						</a>
-					</li>
-				</ul>
-
-				<!-- Hello User -->
-				<ul class="nav navbar-nav navbar-right">
-					<li ng-show="vm.user.username">
-						<a>
-							<span class="user">Hello,{{vm.user.username}} </span>
-						</a>
-					</li>
-				</ul>
-
-				<!-- Logout -->
-				<a ng-show="vm.user.username" ng-click="vm.logout()" class="navbar-brand" ui-sref="nav.login" ui-sref-opts="{reload:true, notify:true}">Logout</a>
+					</div>
+				</form>
 			</div>
+			<!-- ./Pesquisar -->
+
+			<!-- Navbar Right -->
+			<ul class="nav navbar-nav navbar-right">
+				<!-- Registrar -->
+				<li ng-show="!vm.user.username">
+					<a ng-class="{ rota: vm.isActive('/registrar')} " ui-sref="nav.registrar ">
+						<span class="glyphicon glyphicon-user "></span> Sign Up</a>
+				</li>
+				<!-- Login -->
+				<li ng-show="!vm.user.username">
+					<a ng-class="{ rota: vm.isActive('/login')} " ui-sref="nav.login "><span class="glyphicon glyphicon-log-in "></span>
+						Login</a>
+				</li>
+				<!-- Admin -->
+				<li ng-show="vm.user.username">
+					<a ng-class="{ rota: vm.isActive('/admin')} " ng-show="vm.user.username " ui-sref="nav.admin ">Admin</a>
+				</li>
+				<!-- Logout -->
+				<li ng-show="vm.user.username">
+					<a ng-click="vm.logout() " ui-sref="nav.login " ui-sref-opts="{reload:true, notify:true} ">Logout</a>
+				</li>
+				<!-- Hello User -->
+				<li ng-show="vm.user.username">
+					<a><span class="user ">Hello,{{vm.user.username}}</span></a>
+				</li>
+			</ul>
+			<!-- ./Navbar Right -->
 		</div>
 	</div>
 </nav>

@@ -6,9 +6,9 @@
 		.controller('navController', navController);
 
 	//Injeta as dependênciass
-	navController.$inject = ['$scope', 'AuthService', 'pesquisaService'];
+	navController.$inject = ['$scope', 'AuthService', 'pesquisaService','$location','$state'];
 
-	function navController($scope, AuthService, pesquisaService) {
+	function navController($scope, AuthService, pesquisaService,$location,$state) {
 
 		var vm = this;
 
@@ -16,6 +16,7 @@
 		vm.user = [];
 		vm.logout = logout;
 		vm.service = service;
+		vm.isActive = isActive;
 
 		$scope.$on('LoginSuccessful', function () {
 			vm.user = AuthService.user;
@@ -29,9 +30,15 @@
 			AuthService.user = null;
 		}
 
-		function service(nome) {
-			pesquisaService.setValue(nome);
-			vm.nome = [];
+		function service(nome) {		
+			vm.formPesquisa.$setPristine();			
+			pesquisaService.setNome(nome);
+			$state.go('nav.pesquisa', {txtPesquisado:vm.nome});
+			vm.nome = [];				
 		}
+
+		function isActive(active){
+			return active === $location.path();
+		}	
 	}
 })();

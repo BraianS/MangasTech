@@ -16,7 +16,8 @@
 		vm.manga = [];
 		vm.pagina = 1;
 		vm.pesquisarNome = pesquisarNome;
-		vm.palavraPesquisada = pesquisaService.getValue();
+		vm.palavraPesquisada = pesquisaService.getNome();
+		vm.mensagem = "";
 
 		pesquisarNome();
 
@@ -27,6 +28,9 @@
 			}).then(function (res) {
 				vm.manga = res.data.content;
 				vm.totalEmentos = res.data.totalElements;
+				if (!vm.totalEmentos) {
+					vm.mensagem = "Nada Encontrado";
+				}
 			}, function (res) {
 				console.log(res);
 				console.log(res.data);

@@ -16,14 +16,14 @@
 			<div class="panel-body">
 				<!-- Tabela de Mangas -->
 				<div ng-if="vm.manga.length">
-					<table class="table ">
-						<thread>
+					<table class="table">
+						<thead>
 							<tr>
 								<th>Nome</th>
 								<th>autor</th>
 								<th>Status</th>
 							</tr>
-						</thread>
+						</thead>
 						<tbody ng-repeat="manga in vm.manga">
 							<tr>
 								<td>
@@ -51,9 +51,9 @@
 				<!-- ./Pagination de Mangas -->
 
 				<!-- Alert -->
-				<div class="text-center" ng-if="!vm.manga.length">
-					<div class="alert alert-danger">
-						<strong>Nada Encontrado</strong>
+				<div class="text-center">
+					<div class="alert alert-danger" ng-show="vm.mensagem ">
+						<strong>{{vm.mensagem}}</strong>
 					</div>
 				</div>
 			</div>

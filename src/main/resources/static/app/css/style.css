@@ -16,7 +16,8 @@
 
 ul.list-inline li{	
 	font-size: 20px;
-	padding:10px	
+	padding:10px;
+		
 }
 
 ul {
@@ -152,4 +153,28 @@ ul {
     text-overflow: ellipsis;
     display: inline-block;
 	max-width: 100%;	
+}
+
+.li-inline {
+    display: inline-block !important;   
+}
+
+.rota {
+	color: royalblue !important;
+}
+
+.navbar-collapse {
+	margin-bottom: 0px !important;
+}
+
+.navbar-form .form-group input {
+	width: calc(100% - 50px);
+	display: inline-block;
+	vertical-align: top;
+}
+ 
+.nav li {
+    display: inline-block;
+	padding: 0px 0px;
+	
 }

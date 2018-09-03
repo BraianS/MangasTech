@@ -11,8 +11,8 @@
 
 					<!-- Numero do Capitulo -->
 					<div class="form-group" ng-class=" {'has-error': vm.formCapitulo.capitulo.$invalid && vm.formCapitulo.capitulo.$dirty}">
-						<label for="Capitulo" class="control-label col-xs-2">Capitulo</label>
-						<div class="col-xs-6">
+						<label for="Capitulo" class="control-label col-xs-3">Capitulo</label>
+						<div class=" col-xs-7">
 							<input name="capitulo" id="Capitulo" class="form-control" type="number" ng-model="vm.capitulo.capitulo" onKeyPress="if(this.value.length==4) return false;"
 							 min="0" max="9999" ng-maxlength="9998" required />
 							<span ng-show="vm.formCapitulo.capitulo.$error.required && vm.formCapitulo.capitulo.$dirty">Campo Obrigatorio</span>
@@ -21,7 +21,7 @@
 
 					<!-- Seleciona o Manga -->
 					<div class="form-group" ng-class=" {'has-error': vm.formCapitulo.manga.$invalid && vm.formCapitulo.manga.$touched}">
-						<label form="Manga" class="control-label col-xs-2">Manga</label>
+						<label form="Manga" class="control-label col-xs-3">Manga</label>
 						<select id="Manga" name="manga" ng-model="vm.capitulo.manga" ng-options="manga.nome for manga in vm.Mangas track by manga.id" required>
 						</select>
 						<span ng-show="vm.formCapitulo.manga.$touched && vm.formCapitulo.manga.$error.required">Campo Obrigatorio</span>
@@ -29,7 +29,7 @@
 
 					<!-- Seleciona o Grupo do Manga -->
 					<div class="form-group" ng-class=" {'has-error': vm.formCapitulo.grupo.$invalid && vm.formCapitulo.grupo.$touched}">
-						<label form="Grupo" class="control-label col-xs-2">Grupos</label>
+						<label form="Grupo" class="control-label col-xs-3">Grupos</label>
 						<select id="Grupo" name="grupo" ng-model="vm.capitulo.grupo" ng-options="grupo.nome for grupo in vm.Grupos track by grupo.id" required>
 						</select>
 						<span ng-show="vm.formCapitulo.grupo.$touched && vm.formCapitulo.grupo.$error.required">Campo Obrigatorio</span>
@@ -68,8 +68,8 @@
 
 					<!-- Retorna o Mangas -->
 					<div class="form-group" ng-class=" {'has-error': vm.formPagina.manga.$invalid && vm.formPagina.manga.$touched}">
-						<label class="control-label col-xs-2">Selecionar o Manga </label>
-						<div class="col-xs-6">
+						<label class="control-label col-xs-3">Manga</label>
+						<div class="col-xs-7">
 							<select id="Manga" name="manga" ng-model="vm.pagina.manga" ng-change="vm.capituloPorManga()" ng-options="manga.id as manga.nome for manga in vm.Mangas"
 							 required>
 							</select>
@@ -79,8 +79,8 @@
 
 					<!-- Seleciona o capitulo do manga Retornado -->
 					<div class="form-group" ng-class=" {'has-error': vm.formPagina.capitulo.$invalid && vm.formPagina.capitulo.$touched}">
-						<label class="control-label col-xs-2">Selecionar Capitulo</label>
-						<div class="col-xs-6">
+						<label class="control-label col-xs-3">Capitulo</label>
+						<div class="col-xs-7">
 							<select id="Capitulo" name="capitulo" ng-model="vm.pagina.capitulo" ng-options="capitulo.id as capitulo.capitulo for capitulo in vm.capituloManga"
 							 required>
 							</select>
@@ -90,8 +90,8 @@
 
 					<!-- Descrição -->
 					<div class="form-group" ng-class="{'has-error':vm.formPagina.descricao.$invalid && vm.formPagina.descricao.$dirty}">
-						<label for="Descricao" class="control-label col-xs-2">Descricao</label>
-						<div class="col-xs-6">
+						<label for="Descricao" class="control-label col-xs-3">Descricao</label>
+						<div class="col-xs-7">
 							<input id="Descricao" name="descricao" type="text" class="form-control" ng-model="vm.pagina.descricao" maxlength="80" ng-maxlength="79"
 							 required>
 							<span ng-show="vm.formPagina.descricao.$error.required && vm.formPagina.descricao.$dirty">Campo Obrigatorio</span>
@@ -115,7 +115,7 @@
 
 				<!-- Progress Bar de Paginas -->
 				<ul class="list-group bar">
-					<li class="list-group-item list-group-item-success col-md-3 col-sm-3 col-xs-6 " ng-repeat="pagina in vm.paginas">
+					<li class="list-group-item list-group-item-success col-md-3 col-sm-3 col-xs-7 " ng-repeat="pagina in vm.paginas">
 						<span class="glyphicon glyphicon-file"> </span>
 						{{pagina.name}}
 						<div class="progress">
@@ -157,12 +157,11 @@
 				</div>
 			</div>
 
-			<div class="col-md-9">
+			<div class="col-md-9 table-responsive">
 				<!-- Tabela de Capitulos -->
 				<table class="table table-flex">
 					<thead>
 						<tr>
-							<th>id</th>
 							<th>Capitulo</th>
 							<th>Grupo</th>
 							<th>Data</th>
@@ -171,7 +170,6 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="capitulo in vm.listaCapitulos.capitulo">
-							<td>{{capitulo.id}}</td>
 							<td>{{capitulo.capitulo}}</td>
 							<td>{{capitulo.grupo.nome}}</td>
 							<td>{{capitulo.lancamento | date:'dd MM,yyyy'}}</td>

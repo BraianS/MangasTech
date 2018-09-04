@@ -20,10 +20,17 @@
 		vm.excluirAutor = excluirAutor;
 		vm.salvarAutores = salvarAutores;
 		vm.alterarAutores = alterarAutores;
+		vm.carregarAutores = carregarAutores;
 		vm.autorEditado = false;
 		vm.submit = submit;
 
 		carregarAutores();
+
+		vm.closeMsg = closeMsg;
+
+		function closeMsg(){
+			vm.mensagem="";
+		}
 
 		function carregarAutores() {
 			$http.get('/user/autor?page=' + vm.pagina).then(function (response) {
@@ -60,6 +67,8 @@
 				method: 'DELETE',
 				url: '/admin/autor/' + autor.id
 			}).then(function (response) {
+				vm.mensagem= "Autor: "+autor.nome+" Deletado";
+				cancelar();
 				carregarAutores();
 			}, function (response) {
 				console.log(response.data);
@@ -98,8 +107,7 @@
 				vm.autorEditado = false;
 			}
 			else {
-				salvarAutores();
-				
+				salvarAutores();				
 			}
 		}
 	}

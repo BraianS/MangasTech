@@ -33,17 +33,17 @@
 			<div class="panel-footer text-center">
 				<!-- Pagination todos os grupos -->
 				<div ng-if="vm.status == false && vm.grupos.length">
-					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaPorGrupos" ng-click="vm.carregarGrupos(paginaPorGrupos)"
+					<ul uib-pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaPorGrupos" ng-click="vm.carregarGrupos(paginaPorGrupos)"
 					 items-per-page="20" boundary-links="true">
-					</pagination>
+					</ul>
 				</div>
 				<!-- ./Pagination todos os grupos -->
 
 				<!-- Pagination por Letras -->
 				<div ng-if="vm.totalElementos2 && vm.status == true">
-					<pagination max-size="10" total-items="vm.totalElementos2" ng-model="vm.paginaPorLetra" ng-click="vm.buscarPorLetra()" items-per-page="20"
-					 boundary-links="true">
-					</pagination>
+					<ul uib-pagination max-size="10" total-items="vm.totalElementos2" ng-model="vm.paginaPorLetra" ng-click="vm.buscarPorLetra()"
+					 items-per-page="20" boundary-links="true">
+					</ul>
 				</div>
 				<!-- ./Pagination por Letras -->
 

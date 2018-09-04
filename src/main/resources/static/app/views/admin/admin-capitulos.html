@@ -22,7 +22,8 @@
 					<!-- Seleciona o Manga -->
 					<div class="form-group" ng-class=" {'has-error': vm.formCapitulo.manga.$invalid && vm.formCapitulo.manga.$touched}">
 						<label form="Manga" class="control-label col-xs-3">Manga</label>
-						<select id="Manga" name="manga" ng-model="vm.capitulo.manga" ng-options="manga.nome for manga in vm.Mangas track by manga.id" required>
+						<select id="Manga" name="manga" ng-model="vm.capitulo.manga" ng-options="manga.nome for manga in vm.Mangas track by manga.id"
+						 required>
 						</select>
 						<span ng-show="vm.formCapitulo.manga.$touched && vm.formCapitulo.manga.$error.required">Campo Obrigatorio</span>
 					</div>
@@ -30,7 +31,8 @@
 					<!-- Seleciona o Grupo do Manga -->
 					<div class="form-group" ng-class=" {'has-error': vm.formCapitulo.grupo.$invalid && vm.formCapitulo.grupo.$touched}">
 						<label form="Grupo" class="control-label col-xs-3">Grupos</label>
-						<select id="Grupo" name="grupo" ng-model="vm.capitulo.grupo" ng-options="grupo.nome for grupo in vm.Grupos track by grupo.id" required>
+						<select id="Grupo" name="grupo" ng-model="vm.capitulo.grupo" ng-options="grupo.nome for grupo in vm.Grupos track by grupo.id"
+						 required>
 						</select>
 						<span ng-show="vm.formCapitulo.grupo.$touched && vm.formCapitulo.grupo.$error.required">Campo Obrigatorio</span>
 					</div>
@@ -38,16 +40,13 @@
 					<div class="text-center">
 						<!-- Salvar Capitulo-->
 						<input type="submit" class="btn btn-primary text-center" ng-disabled="vm.formCapitulo.$invalid" value="Salvar">
-						</button>
 
 						<!-- Cancelar -->
 						<input type="button" class="btn btn-primary" value="cancelar" ng-click="vm.cancelarCapitulo()">
 					</div>
 
 					<!-- Alerta -->
-					<div class="alert alert-success" ng-show="vm.mensagem">
-						{{vm.mensagem}}
-					</div>
+					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2500" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
 				</form>
 			</div>
 			<!-- ./Form Capitulo -->
@@ -84,7 +83,7 @@
 							<select id="Capitulo" name="capitulo" ng-model="vm.pagina.capitulo" ng-options="capitulo.id as capitulo.capitulo for capitulo in vm.capituloManga"
 							 required>
 							</select>
-							<span ng-show="vm.formPagina.capitulo.$touched && vm.formPagina.capitulo.$error.required">Campo Obrigatorio</span>							
+							<span ng-show="vm.formPagina.capitulo.$touched && vm.formPagina.capitulo.$error.required">Campo Obrigatorio</span>
 						</div>
 					</div>
 
@@ -102,8 +101,7 @@
 					<div class="text-center">
 						<!-- Salva as fotos -->
 						<input class="btn btn-primary" multiple type="button" ng-disabled="vm.formPagina.$invalid" ngf-select="vm.uploadPaginas($files,$invalidFiles)"
-						 id="file" accept="image/*" ngf-max-size="2MB" value="Selecionar fotos">
-						</button>
+						 id="file" accept="image/*" ngf-max-size="2MB" value="Selecionar fotos" />
 
 						<!-- Cancelar -->
 						<input class="btn btn-primary" value="Cancelar" type="button" ng-click="vm.cancelarPagina()">
@@ -111,7 +109,7 @@
 				</form>
 
 				<!-- Alerta -->
-				<div class="alert alert-success" ng-if="vm.paginas.length" ng-show="vm.mensagemPagina">{{vm.mensagemPagina}}</div>
+				<div class="alert alert-success text-center" ng-if="vm.paginas.length" ng-show="vm.mensagemPagina">{{vm.mensagemPagina}}</div>
 
 				<!-- Progress Bar de Paginas -->
 				<ul class="list-group bar">
@@ -141,55 +139,53 @@
 			<!-- ./Form Salvar Paginas -->
 		</div>
 	</div>
+</div>
 
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title text-center">
-				Editar Capitulos
-			</h3>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title text-center">Editar Capitulos</h3>
+	</div>
+
+	<div class="panel-body">
+		<div class="panel-info">
+			<div class="col-md-3">
+				<select name="manga" ng-model="vm.mangaId" ng-change="vm.listaCapitulosPorManga();vm.limparPaginas()" ng-options="manga.id as manga.nome for manga in vm.Mangas">
+				</select>
+			</div>
 		</div>
 
-		<div class="panel-body">
-			<div class="panel-info">
-				<div class="col-md-3">
-					<select name="manga" ng-model="vm.mangaId" ng-change="vm.listaCapitulosPorManga()" ng-options="manga.id as manga.nome for manga in vm.Mangas">
-					</select>
-				</div>
-			</div>
-
-			<div class="col-md-9 table-responsive">
-				<!-- Tabela de Capitulos -->
-				<table class="table table-flex">
-					<thead>
-						<tr>
-							<th>Capitulo</th>
-							<th>Grupo</th>
-							<th>Data</th>
-							<th>Editar</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="capitulo in vm.listaCapitulos.capitulo">
-							<td>{{capitulo.capitulo}}</td>
-							<td>{{capitulo.grupo.nome}}</td>
-							<td>{{capitulo.lancamento | date:'dd MM,yyyy'}}</td>
-							<td>
-								<div class="btn-group btn-group-xs">
-									<button class="btn btn-default" value="excluir" ng-click="vm.excluirCapitulo(capitulo.id)">
-										<span class="glyphicon glyphicon-remove"></span>
-									</button>
-								</div>
-								<div class="btn-group btn-group-xs">
-									<button class="btn btn-default" value="editar" ng-click="vm.editarCapitulo(capitulo)">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</button>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<!-- ./Tabela de CApitulos -->
-			</div>
+		<div class="col-md-9 table-responsive">
+			<!-- Tabela de Capitulos -->
+			<table class="table table-flex">
+				<thead>
+					<tr>
+						<th>Capitulo</th>
+						<th>Grupo</th>
+						<th>Data</th>
+						<th>Editar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="capitulo in vm.listaCapitulos.capitulo">
+						<td>{{capitulo.capitulo}}</td>
+						<td>{{capitulo.grupo.nome}}</td>
+						<td>{{capitulo.lancamento | date:'dd MM,yyyy'}}</td>
+						<td>
+							<div class="btn-group btn-group-xs">
+								<button class="btn btn-default" value="excluir" ng-click="vm.excluirCapitulo(capitulo)">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</div>
+							<div class="btn-group btn-group-xs">
+								<button class="btn btn-default" value="editar" ng-click="vm.editarCapitulo(capitulo)">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- ./Tabela de Capitulos -->
 		</div>
 	</div>
 </div>

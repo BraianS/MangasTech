@@ -11,7 +11,7 @@
 					<div class="col-sm-3" ng-repeat="manga in vm.grupo">
 						<div class="panel panel-default panel-front">
 
-							<div class="panel panel-heading ">
+							<div class="panel panel-heading">
 								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
 									<!-- Com foto -->
 									<h4 class="panel-title" ng-if="manga.capa">
@@ -53,8 +53,7 @@
 			<div class="panel-footer text-center">
 				<!-- Pagination detalhe por grupo -->
 				<div ng-if="vm.grupo.length">
-					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarGrupos()" items-per-page="20">
-					</pagination>
+					<ul uib-pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarGrupos()" items-per-page="20"></ul>
 				</div>
 				<!-- ./Pagination detalhe por grupo -->
 

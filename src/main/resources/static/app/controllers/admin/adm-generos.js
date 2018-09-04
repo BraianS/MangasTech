@@ -25,6 +25,12 @@
 
 		carregarGeneros();
 
+		vm.closeMsg = closeMsg;
+
+		function closeMsg(){
+			vm.mensagem = "";
+		}
+
 		function carregarGeneros() {
 			$http({
 				method: 'GET',
@@ -65,7 +71,7 @@
 			}).then(function(response) {
 				vm.genero = {};
 				vm.formGenero.$setPristine(true);
-				vm.mensagem = "Alterado com Sucesso";
+				vm.mensagem = "Atualizado";
 			}, function(response) {
 				console.log(response);
 				console.log(response.data);
@@ -77,6 +83,8 @@
 				method: 'DELETE',
 				url: "/admin/genero/" + genero.id
 			}).then(function (response) {
+				vm.mensagem = "Genero: "+genero.nome+" Deletado";
+				cancelarGeneros();
 				carregarGeneros();
 			}, function (response) {
 				console.log(response);

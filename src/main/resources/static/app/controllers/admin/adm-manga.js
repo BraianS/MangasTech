@@ -40,6 +40,13 @@
 		carregarAutor();
 		carregarGeneros();
 
+		vm.closeMsg = closeMsg;
+		vm.show = false;
+
+		function closeMsg(){
+			vm.show = false;
+			vm.mensagem = "";
+		}
 
 		function selecionaImagem(imagem) {
 			vm.recebeImagem = imagem;
@@ -108,6 +115,8 @@
 			$http({
 				method: 'DELETE', url: '/admin/manga/' + Manga.id
 			}).then(function (response) {
+				vm.mensagem = "Manga: "+Manga.nome+ " Deletado";
+				cancelarMangas();
 				carregarMangas();
 			}, function (response) {
 				console.log(response.data);

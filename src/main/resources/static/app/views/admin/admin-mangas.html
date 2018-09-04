@@ -86,13 +86,11 @@
 						<input type="button" value="cancelar" class="btn btn-primary" ng-click="vm.cancelarMangas()">
 					</div>
 
-					<!-- Alerta -->
-					<div class="alert alert-warning" ng-show="vm.mensagem">
-						{{vm.mensagem}}
-					</div>
+					<!-- Alerta -->						
+						<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>			
 				</form>
 			</div>
-			<!-- ./Form Mangas -->
+			<!-- ./Form Mangas -->			
 		</div>
 	</div>
 </div>
@@ -147,7 +145,7 @@
 									</button>
 
 									<!-- Cancelar -->
-									<button type="button" class="btn btn-default" ng-click="vm.Cancelar()">
+									<button type="button" class="btn btn-default" ng-click="vm.cancelarMangas()">
 										<span class="glyphicon glyphicon-asterisk"></span>
 									</button>
 								</div>
@@ -163,14 +161,16 @@
 	<div class="panel-footer text-center">
 		<!-- Pagination de mangas -->
 		<div ng-if="vm.Mangas.length">
-			<pagination max-size="10" ng-change="vm.pageChange()" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarMangas()"
-			 items-per-page="20" boundary-links="true"></pagination>
+			<ul uib-pagination max-size="10" ng-change="vm.pageChange()" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarMangas()"
+			 items-per-page="20" boundary-links="true"></ul>
 		</div>
 		<!-- ./Pagination de mangas  -->
 
 		<!-- Sem Mangas -->
 		<div ng-if="!vm.Mangas.length">
-			<h3 class="alert">Sem Mangas</h3>
+			<uib-alert type="success" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.show">
+				Sem Mangas
+			</uib-alert>
 		</div>
 		<!-- ./Sem Mangas -->
 	</div>

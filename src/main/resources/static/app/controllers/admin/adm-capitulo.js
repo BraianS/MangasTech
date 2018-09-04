@@ -30,10 +30,16 @@
 		vm.listaCapitulosPorManga = listaCapitulosPorManga;
 		vm.excluirCapitulo = excluirCapitulo;
 		vm.editarCapitulo = editarCapitulo;
+		vm.limparPaginas = limparPaginas;
 
 		carregarMangas();
 		carregarGrupos();
 
+		vm.closeMsg = closeMsg;
+
+		function closeMsg(){
+			vm.mensagem = "";
+		}
 
 		function editarCapitulo(capitulo){
 			vm.capitulo = capitulo;			
@@ -51,11 +57,12 @@
 			})
 		}
 
-		function excluirCapitulo(id) {
+		function excluirCapitulo(capitulo) {
 			$http({
 				method: 'DELETE',
-				url: '/user/capitulo/lista/' + id
+				url: '/user/capitulo/lista/' + capitulo.id
 			}).then(function (response) {
+				vm.mensagem = "Capitulo: "+capitulo.capitulo+ " Deletado";
 				listaCapitulosPorManga();
 			}, function (response) {
 				console.log(response);
@@ -159,6 +166,11 @@
 			vm.listaCapitulos = "";			
 			vm.formPagina.$setUntouched();
 			vm.formPagina.$setPristine();
+		}
+
+		function limparPaginas(){
+			vm.paginas = {};
+			vm.paginaErro = [];
 		}
 	}
 })();

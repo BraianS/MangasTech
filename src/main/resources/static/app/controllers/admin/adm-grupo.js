@@ -24,6 +24,12 @@
 
 		carregarGrupos();
 
+		vm.closeMsg = closeMsg;
+
+		function closeMsg(){
+			vm.mensagem = "";
+		}
+
 		function carregarGrupos() {
 			$http({
 				method: 'GET',
@@ -63,6 +69,8 @@
 				method: 'DELETE',
 				url: '/admin/grupo/' + grupos.id
 			}).then(function (response) {
+				vm.mensagem = "Grupo: "+grupos.nome+" Deletado";
+				cancelarGrupo();
 				vm.carregarGrupos();
 			}, function (response) {
 				console.log(response.data);

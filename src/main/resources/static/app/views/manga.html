@@ -5,7 +5,7 @@
 			<div class="panel-heading text-center">
 				<div class="panel-title">
 					<h3>A-Z Mangas</h3>
-					<ul class="list-inline ">
+					<ul class="list-inline">
 						<li class="" ng-click="vm.false(); vm.carregarMangas()" ng-class="{'active':vm.letraAtivada==''}">
 							ALL
 						</li>
@@ -19,7 +19,7 @@
 			<!-- Lista de Mangas -->
 			<div class="panel-body">
 				<div class="panel-info">
-					<div class="col-sm-3 " ng-repeat="manga in vm.mangas">
+					<div class="col-sm-3" ng-repeat="manga in vm.mangas">
 						<div class="panel panel-default panel-front">
 							<div class="panel panel-heading ">
 								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
@@ -56,20 +56,20 @@
 					</div>
 				</div>
 			</div>
-			<!-- ./Lista de Mangas -->
-
+			<!-- ./Lista de Mangas -->			
+			
 			<div class="panel-footer text-center">
 				<!-- Pagination Todos os Mangas -->
 				<div ng-if="vm.status == false && vm.mangas.length">
-					<pagination max-size="10" total-items="vm.totalElementos1" ng-model="vm.paginaPorMangas" ng-click="vm.carregarMangas()" items-per-page="20"
-					 boundary-links="true"></pagination>
+					<ul uib-pagination max-size="10" total-items="vm.totalElementos1" ng-model="vm.paginaPorMangas" ng-click="vm.carregarMangas()" items-per-page="20"
+			boundary-links="true"></ul>
 				</div>
 				<!-- ./Pagination todos os Mangas -->
 
 				<!-- Pagination por Letras -->
 				<div ng-if="vm.totalElementos && vm.status == true">
-					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaPorLetra" ng-click="vm.carregarAlfabeto(letras) "
-					 items-per-page="20" boundary-links="true"></pagination>
+					<ul uib-pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaPorLetra" ng-click="vm.carregarAlfabeto(letras) "
+					 items-per-page="20" boundary-links="true"></ul>
 				</div>
 				<!-- ./Pagination por Letras -->
 

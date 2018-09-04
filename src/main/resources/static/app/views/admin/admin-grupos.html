@@ -26,9 +26,7 @@
 					</div>
 
 					<!-- Alerta -->
-					<div class="alert alert-warning margin-top-5" ng-show="vm.mensagem">
-						{{vm.mensagem}}
-					</div>
+					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2500" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
 				</form>
 			</div>
 			<!-- ./Salvar Grupo -->
@@ -51,29 +49,29 @@
 						<th>Editar</th>
 					</tr>
 				</thead>
-
-				<tr ng-repeat="grupo in vm.grupos">
-					<td>
-						<a ui-sref="nav.grupo.detalhe({gruposId:grupo.id})">{{grupo.nome}}</a>
-					</td>
-					<td>
-
-						<div class="btn-group btn-group-xs">
-							<!-- Excluir -->
-							<button type="button" class="btn btn-default" ng-click="vm.deletarGrupos(grupo)">
-								<span class="glyphicon glyphicon-remove"></span>
-							</button>
-							<!-- Alterar -->
-							<button type="button" class="btn btn-default" ng-click="vm.alterarGrupos(grupo)">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</button>
-							<!-- Cancelar -->
-							<button type="button" class="btn btn-default" ng-click="vm.cancelarGrupo()">
-								<span class="glyphicon glyphicon-asterisk"></span>
-							</button>
-						</div>
-					</td>
-				</tr>
+				<tbody>
+					<tr ng-repeat="grupo in vm.grupos">
+						<td>
+							<a ui-sref="nav.grupo.detalhe({gruposId:grupo.id})">{{grupo.nome}}</a>
+						</td>
+						<td>	
+							<div class="btn-group btn-group-xs">
+								<!-- Excluir -->
+								<button type="button" class="btn btn-default" ng-click="vm.deletarGrupos(grupo)">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+								<!-- Alterar -->
+								<button type="button" class="btn btn-default" ng-click="vm.alterarGrupos(grupo)">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+								<!-- Cancelar -->
+								<button type="button" class="btn btn-default" ng-click="vm.cancelarGrupo()">
+									<span class="glyphicon glyphicon-asterisk"></span>
+								</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 		<!-- ./Lista de grupos -->
@@ -82,8 +80,8 @@
 	<div class="panel-footer text-center">
 		<div ng-if="vm.grupos.length">
 			<!-- Pagination de grupos -->
-			<pagination max-size="10" ng-if="vm.totalElementos" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarGrupos()"
-			 items-per-page="20" boundary-links="true"></pagination>
+			<ul uib-pagination max-size="10" ng-if="vm.totalElementos" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarGrupos()"
+			 items-per-page="20" boundary-links="true"></ul>
 			<!-- ./Pagination de grupos -->
 		</div>
 

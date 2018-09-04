@@ -33,17 +33,17 @@
 			<div class="panel-footer text-center">
 				<!-- Pagination de autores -->
 				<div ng-if="vm.status == false && vm.autor.length">
-					<pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaAutor" ng-click="vm.carregarAutores(pagina)"
+					<ul uib-pagination max-size="10" total-items="vm.totalElementos" ng-model="vm.paginaAutor" ng-click="vm.carregarAutores(pagina)"
 					 items-per-page="20" boundary-links="true">
-					</pagination>
+				</ul>
 				</div>
 				<!-- ./Pagination de autores -->
 
 				<!-- Pagination por Letras -->
 				<div ng-if="vm.totalElementos1  && vm.status == true">
-					<pagination max-size="10" total-items="vm.totalElementos1" ng-model="vm.paginaPorLetra" ng-click="vm.buscarPorLetra()" items-per-page="20"
+					<ul uib-pagination max-size="10" total-items="vm.totalElementos1" ng-model="vm.paginaPorLetra" ng-click="vm.buscarPorLetra()" items-per-page="20"
 					 boundary-links="true">
-					</pagination>
+				</ul>
 				</div>
 				<!-- ./Pagination por Letras -->
 

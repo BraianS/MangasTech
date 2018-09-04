@@ -27,9 +27,8 @@
 					</div>
 
 					<!-- Alerta -->
-					<div class="alert alert-warning" ng-show="vm.mensagem">
-						{{vm.mensagem}}
-					</div>
+					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
+
 				</form>
 			</div>
 			<!-- ./Form Genero -->

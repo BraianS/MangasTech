@@ -33,9 +33,7 @@
 					</div>
 
 					<!-- Alerta -->
-					<div class="alert alert-warning" ng-show="vm.mensagem">
-						{{vm.mensagem}}
-					</div>
+					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
 				</form>
 			</div>
 			<!-- ./Form Autor -->
@@ -94,8 +92,8 @@
 	<div class="panel-footer text-center">
 		<div ng-if="vm.autor.length">
 			<!-- Pagination de autores-->
-			<pagination max-size="10" total-items="vm.totalItems" ng-model="vm.pagina" ng-click="vm.carregarAutores()" items-per-page="20"
-			 boundary-links="true"></pagination>
+			<ul uib-pagination max-size="10" total-items="vm.totalItems" ng-model="vm.pagina" ng-click="vm.carregarAutores()" items-per-page="20"
+			 boundary-links="true"></ul>
 			<!-- ./Pagination de autores -->
 		</div>
 

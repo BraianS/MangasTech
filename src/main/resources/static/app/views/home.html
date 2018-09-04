@@ -1,13 +1,11 @@
 <div class="container">
-	<div class="row">		
-		
+	<div class="row">
+
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<!-- Ultimos capitulos adicionados -->
 			<div class="panel panel-primary ">
 				<div class="panel-heading">
-					<div class="panel-title alinhar">
-						Ultimos Capitulos
-					</div>
+					<div class="panel-title alinhar">Ultimos Capitulos</div>
 					<div class="panel-title pull-right">Hoje</div>
 				</div>
 				<div class="panel-body">
@@ -51,13 +49,17 @@
 					<ul class="list-group">
 						<li class="list-group-item row" ng-repeat="manga in vm.MangasOntem">
 							<div class="col-md-3 ">
+								<!-- Com foto -->
 								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})" ng-if="manga.capa">
 									<img class="img-rounded img-responsive" data-ng-src="data:image/jpg;base64,{{manga.capa}}">
 								</a>
+								<!-- ./Com foto -->
+
+								<!-- Sem foto -->
 								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})" ng-if="!manga.capa">
 									<img src="/app/img/image.JPG" alt="" class="img-rounded img-responsive">
 								</a>
-
+								<!-- ./Sem foto -->
 							</div>
 							<div class="col-md-9">
 								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
@@ -84,20 +86,23 @@
 
 			<div class="panel panel-primary " ng-if="vm.anteOntemStatus">
 				<div class="panel-heading text-center">
-					<h4 class="panel-title"> {{vm.anteontem | date :'dd, MM'}}
-					</h4>
+					<h4 class="panel-title"> {{vm.anteontem | date :'dd, MM'}}</h4>
 				</div>
 				<div class="panel-body">
 					<ul class="list-group">
 						<li class="list-group-item row" ng-repeat="manga in vm.MangasAnteOntem">
 							<div class="col-md-3 ">
+								<!-- Com foto -->
 								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})" ng-if="manga.capa">
 									<img class="img-rounded img-responsive" data-ng-src="data:image/jpg;base64,{{manga.capa}}">
 								</a>
+								<!-- ./Com foto -->
+
+								<!-- Sem foto -->
 								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})" ng-if="!manga.capa">
 									<img src="/app/img/image.JPG" alt="" class="img-rounded img-responsive">
 								</a>
-
+								<!-- ./Sem foto -->
 							</div>
 							<div class="col-md-9">
 								<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
@@ -126,8 +131,7 @@
 					<h4 class="panel-title">Ultimos Mangas</h4>
 				</div>
 
-				<div class="panel-body ">
-
+				<div class="panel-body">
 					<ul class="list-group">
 						<li class="list-group-item row" ng-repeat="mangas in vm.novosMangas">
 							<div class="col-md-3">

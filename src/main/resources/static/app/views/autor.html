@@ -6,11 +6,11 @@
 				<div class="panel-title">
 					<h3>Autores</h3>
 					<ul class="list-inline">
-						<li ng-click="vm.false();vm.carregarAutores()" ng-class="{'active':vm.ativado==''}">
+						<li ng-click="vm.false();vm.carregarAutores()" ng-class="{'activex':vm.ativado==''}">
 							ALL
 						</li>
 
-						<li class="" ng-repeat="letra in vm.letra track by $index" ng-class="{'active':letra==vm.ativado}" ng-click="vm.true();vm.buscarPorLetra(letra)">{{letra}}</li>
+						<li class="" ng-repeat="letra in vm.letra track by $index" ng-class="{'activex':letra==vm.ativado}" ng-click="vm.true();vm.buscarPorLetra(letra)">{{letra}}</li>
 					</ul>
 				</div>
 			</div>

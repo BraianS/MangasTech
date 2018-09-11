@@ -34,8 +34,8 @@ public class MangasEntity {
 	private String descricao;
 
 	private List<CapitulosEntity> capitulo;
-
-	@JsonIgnoreProperties(value = { "manga" })
+	
+	@JsonIgnoreProperties(value = "manga")
 	private AutorEntity autor;
 
 	@JsonIgnoreProperties(value = "manga")
@@ -88,7 +88,6 @@ public class MangasEntity {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
 	
 	@OneToMany(mappedBy = "manga", cascade = { CascadeType.REMOVE })
 	public List<CapitulosEntity> getCapitulo() {

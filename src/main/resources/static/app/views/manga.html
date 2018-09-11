@@ -6,11 +6,11 @@
 				<div class="panel-title">
 					<h3>A-Z Mangas</h3>
 					<ul class="list-inline">
-						<li class="" ng-click="vm.false(); vm.carregarMangas()" ng-class="{'active':vm.letraAtivada==''}">
+						<li class="" ng-click="vm.false(); vm.carregarMangas()" ng-class="{'activex':vm.letraAtivada==''}">
 							ALL
 						</li>
 
-						<li class="" ng-repeat="letra in vm.letra track by $index" ng-click="vm.true();vm.carregarAlfabeto(letra)" ng-class="{'active':letra==vm.letraAtivada}">{{letra}}</li>
+						<li class="" ng-repeat="letra in vm.letra track by $index" ng-click="vm.true();vm.carregarAlfabeto(letra)" ng-class="{'activex':letra==vm.letraAtivada}">{{letra}}</li>
 					</ul>
 				</div>
 			</div>

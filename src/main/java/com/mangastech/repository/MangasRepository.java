@@ -32,7 +32,7 @@ public interface MangasRepository extends JpaRepository<MangasEntity, Long> {
 
 	public MangasEntity findOneByNome(String nome);
 
-	public List<MangasEntity> findTop5ByOrderByIdDesc();	
+	public List<MangasEntity> findTop10ByOrderByIdDesc();	
 	
 	@Query("SELECT m FROM MangasEntity m LEFT JOIN FETCH m.capitulo AS capitulo WHERE m.id=:id ORDER BY capitulo.id DESC")
 	public MangasEntity listarCapitulosPorManga(@Param("id")Long id);

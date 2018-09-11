@@ -8,6 +8,7 @@
 	<title>MangasTech</title>
 	<!-- JS ========  -->
 	<!-- Jquery -->
+
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
 	 crossorigin="anonymous" type="text/javascript"></script>
 	<!-- Carrega Angular  -->
@@ -19,7 +20,14 @@
 	<!-- Angular Ui Router  -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.20/angular-ui-router.min.js"></script>
 
+	<!-- OWL Carousel -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" rel="stylesheet" />
+
 	<!-- Controllers  =============-->
+	<script src="/app/directives/app.owl.js"></script>
+	<script src="/app/directives/owlCarousel-directive.js"></script>
 	<script src="/app/app.route.js"></script>
 	<script src="/app/admin.route.js"></script>
 	<script src="/app/app.run.js"></script>
@@ -50,7 +58,7 @@
 	<!--  Carrega bootstrap -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 	<!-- CSS -->
-	<link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- Css Customizado -->
 	<link href="/app/css/style.css" rel="stylesheet" type="text/css" />
@@ -58,8 +66,8 @@
 <body>
 	<!-- Nav -->
 	<div ui-view="navView"></div>
-			
-	<div id="page" ui-view="home"></div>	
+
+	<div id="page" ui-view="home"></div>
 
 	<!-- Footer  -->
 	<div id="footer" class="text-center">

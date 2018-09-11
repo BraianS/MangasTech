@@ -2,10 +2,12 @@
   background-color:cornflowerblue;
 }
 
-.active {
-  background-color: cornflowerblue
+.activex {
+  background-color: cornflowerblue;
 }
-
+.color {
+	background-color: red;
+}
 .panel-body {
 	font-size: 15px;	
 }
@@ -16,8 +18,7 @@
 
 ul.list-inline li{	
 	font-size: 20px;
-	padding:10px;
-		
+	padding:10px;		
 }
 
 ul {
@@ -176,4 +177,54 @@ ul {
 .nav li {
     display: inline-block;
 	padding: 0px 0px;	
+}
+
+  #owl-example .owl-prev {
+    width: 15px;
+    height: 50px;
+    position: absolute;
+    top: 40%;
+    margin-left: -15px;
+    display: block!IMPORTANT;
+    border:0px solid black;
+	}
+	
+#owl-example .owl-next {
+	width: 15px;
+	height: 50px;
+	position: absolute;
+	top: 40%;
+	right: -20px;
+	display: block!IMPORTANT;
+	border:0px solid black;
+}
+  
+  #owl-example .owl-item{
+	box-sizing: border-box;
+	padding: 0px 10px;
+	text-align: center;
+  } 
+
+.thumb {
+	position: relative;
+	display: inline-block;	
+}
+
+.centered {
+	left: 0;
+	color: white;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.75);	
+}
+
+.img2 {
+	height:250px;
+}
+
+.novo {
+	background-color:rgb(51, 122, 183);
+	margin:0;
+	color: #fff;  
 }

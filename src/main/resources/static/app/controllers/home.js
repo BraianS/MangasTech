@@ -6,9 +6,9 @@
 		.controller('homeController', homeController);
 
 	//Injeta as dependências
-	homeController.$inject = ['$http'];
+	homeController.$inject = ['$http', '$scope'];
 
-	function homeController($http) {
+	function homeController($http, $scope) {
 
 		var vm = this;
 
@@ -20,9 +20,9 @@
 		var mes = data.getMonth() + 1;
 		var ano = data.getFullYear();
 
-		vm.hoje = DiaHoje+'-'+mes+'-'+ano;
-		vm.ontem = DiaOntem+'-'+mes+'-'+ano;
-		vm.anteontem = DiaAnteOntem+'-'+mes+'-'+ano;
+		vm.hoje = DiaHoje + '-' + mes + '-' + ano;
+		vm.ontem = DiaOntem + '-' + mes + '-' + ano;
+		vm.anteontem = DiaAnteOntem + '-' + mes + '-' + ano;
 
 		vm.novosCapitulos = [];
 		vm.novosMangas = [];
@@ -84,5 +84,37 @@
 				console.log(response.data);
 			})
 		}
+
+		vm.default = {
+			animateIn: 'fadeIn',
+			lazyLoad: true,
+			autoplay: true,
+			autoPlayTimeout: 2000,
+			loop: false,
+			dots: false,
+			margin: 0,
+			nav: true,
+			rewind: true,
+			autoplayHoverPause: true,
+			navText: ["<i class='glyphicon glyphicon-chevron-left'></i>",
+				"<i class='glyphicon glyphicon-chevron-right'></i>"],
+			responsive: {
+				0: {
+					items: 2
+				},
+				500: {
+					items: 2
+				},
+				600: {
+					items: 3
+				},
+				768: {
+					items: 4
+				},
+				1000: {
+					items: 6
+				}
+			}
+		};
 	}
 })();

@@ -1,6 +1,22 @@
 <div class="container">
 	<div class="row">
 
+		<div class="container">
+			<h3 class="text-center alert novo">Novos Mangas</h3>
+			<data-owl-carousel class="owl-carousel owl-theme" id="owl-example" data-options="vm.default" >
+				<div owl-carousel-item="" class="thumb" ng-repeat="manga in vm.novosMangas">
+					<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
+					<img class="img2" data-ng-src="data:image/jpeg;base64,{{manga.capa}}" ng-if="manga.capa">
+					<img class="img2" src="/app/img/image.JPG" ng-if="!manga.capa">
+				</a>
+					<div class="centered">
+						{{manga.nome}}
+					</div>
+					
+				</div>
+			</data-owl-carousel>
+		</div>
+
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<!-- Ultimos capitulos adicionados -->
 			<div class="panel panel-primary ">
@@ -80,9 +96,8 @@
 			</div>
 			<!-- ./Ultimos capitulos adicionados -->
 
-			<button type="button" class="btn btn-primary custom" ng-click="vm.mangasDoisDiasAtras()" ng-if="vm.ontemStatus" ng-hide="vm.anteOntemStatus">Ante
-				Ontem
-			</button>
+			<button type="button" class="btn btn-primary custom" ng-click="vm.mangasDoisDiasAtras()" ng-if="vm.ontemStatus"
+			 ng-hide="vm.anteOntemStatus">Ante Ontem</button>
 
 			<div class="panel panel-primary " ng-if="vm.anteOntemStatus">
 				<div class="panel-heading text-center">
@@ -122,53 +137,6 @@
 				</div>
 			</div>
 			<!-- ./Ultimos capitulos adicionados -->
-		</div>
-
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<!-- Ultimos Mangas adicionados -->
-			<div class="panel panel-primary">
-				<div class="panel-heading text-center">
-					<h4 class="panel-title">Ultimos Mangas</h4>
-				</div>
-
-				<div class="panel-body">
-					<ul class="list-group">
-						<li class="list-group-item row" ng-repeat="mangas in vm.novosMangas">
-							<div class="col-md-3">
-								<!-- Com foto -->
-								<a ui-sref="nav.manga.detalhe({mangasId:mangas.id})" ng-if="mangas.capa.length">
-									<img class="img-rounded img-responsive" id="newManga" data-ng-src="data:image/jpg;base64,{{mangas.capa}}">
-								</a>
-								<!-- ./Com foto -->
-
-								<!-- Sem foto -->
-								<a ui-sref="nav.manga.detalhe({mangasId:mangas.id})" ng-if="!mangas.capa.length">
-									<img src="/app/img/image.JPG" class="img-rounded img-responsive">
-								</a>
-								<!-- ./Sem foto -->
-							</div>
-							<div class="col-md-9">
-								<a ui-sref="nav.manga.detalhe({mangasId:mangas.id})">
-									<p>
-										<strong>
-											{{mangas.nome}}
-										</strong>
-									</p>
-								</a>
-								<a ui-sref="nav.autor.detalhe({autorId:mangas.autor.id})">
-									{{mangas.autor.nome}}
-								</a>
-								<ul class="list-inline">
-									<li ng-repeat="genero in mangas.genero" id="mangatop">
-										<a ui-sref="nav.genero.detalhe({generoId:genero.id})" class="badge" style="background-color:#3a87ad;">{{genero.nome}}</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<!-- ./Ultimos mangas adicionados -->
-		</div>
+		</div>		
 	</div>
 </div>

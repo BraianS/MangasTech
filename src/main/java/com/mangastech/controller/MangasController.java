@@ -196,13 +196,13 @@ public class MangasController {
 	}
 
 	/**
-	 * Método recebe cinco novosm mangas
+	 * Método recebe dez novos mangas
 	 * 
-	 * @return lista com cinco mangas
+	 * @return lista com dez mangas
 	 */
 	@RequestMapping(value = "/user/manga/top10", method = RequestMethod.GET)
 	public ResponseEntity<List<MangasEntity>> buscaTop5Mangas() {
-		return new ResponseEntity<>(mangasService.buscaTop5Mangas(), HttpStatus.OK);
+		return new ResponseEntity<>(mangasService.buscaTop10Mangas(), HttpStatus.OK);
 	}
 
 	/**

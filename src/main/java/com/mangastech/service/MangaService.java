@@ -46,7 +46,7 @@ public class MangaService {
 		return mangaRepository.buscarNomeQualquerPosicao(nome, pageable);
 	}
 	
-	public List<MangasEntity> buscaTop5Mangas(){
-		return mangaRepository.findTop5ByOrderByIdDesc();
+	public List<MangasEntity> buscaTop10Mangas(){
+		return mangaRepository.findTop10ByOrderByIdDesc();
 	}
 }

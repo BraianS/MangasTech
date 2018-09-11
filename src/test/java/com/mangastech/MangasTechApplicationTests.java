@@ -8,8 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mangastech.model.AutorEntity;
 import com.mangastech.model.GruposEntity;
 import com.mangastech.model.MangasEntity;
@@ -38,11 +36,7 @@ public class MangasTechApplicationTests {
 	private AutorRepository autorRepository;
 	
 	@Autowired
-	private GruposRepository grupoRepository;
-	
-	private RestTemplate restTemplate;
-	
-	private ObjectMapper MAPPER = new ObjectMapper();
+	private GruposRepository grupoRepository;	
 	
 	@Test
 	public void setUp() throws Exception {
@@ -65,19 +59,5 @@ public class MangasTechApplicationTests {
 		for(int i = 0; i < 3; i++) {
 			autorRepository.save(new AutorEntity("Togashi "+i));
 		}
-		
-		restTemplate = new RestTemplate();
 	}
-	
-//	@Test
-//	public void testCreatePerson () throws JsonProcessingException {
-//		MangasEntity manga = new MangasEntity("XUXINHA");
-//		
-//		MangasEntity response = restTemplate.postForObject(BASE_PATH, manga, MangasEntity.class);
-//		
-//		Assert.assertEquals("XUXINH", response.getNome() + " " + response.getId());
-//	}
-	
-	
-
 }

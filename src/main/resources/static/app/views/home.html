@@ -3,16 +3,15 @@
 
 		<div class="container">
 			<h3 class="text-center alert novo">Novos Mangas</h3>
-			<data-owl-carousel class="owl-carousel owl-theme" id="owl-example" data-options="vm.default" >
+			<data-owl-carousel class="owl-carousel owl-theme" id="owl-example" data-options="vm.default">
 				<div owl-carousel-item="" class="thumb" ng-repeat="manga in vm.novosMangas">
 					<a ui-sref="nav.manga.detalhe({mangasId:manga.id})">
-					<img class="img2" data-ng-src="data:image/jpeg;base64,{{manga.capa}}" ng-if="manga.capa">
-					<img class="img2" src="/app/img/image.JPG" ng-if="!manga.capa">
-				</a>
+						<img class="img2" data-ng-src="data:image/jpeg;base64,{{manga.capa}}" ng-if="manga.capa">
+						<img class="img2" src="/app/img/image.JPG" ng-if="!manga.capa">
+					</a>
 					<div class="centered">
 						{{manga.nome}}
 					</div>
-					
 				</div>
 			</data-owl-carousel>
 		</div>
@@ -137,6 +136,6 @@
 				</div>
 			</div>
 			<!-- ./Ultimos capitulos adicionados -->
-		</div>		
+		</div>
 	</div>
 </div>

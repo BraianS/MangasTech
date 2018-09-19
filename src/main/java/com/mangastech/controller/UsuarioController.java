@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,8 @@ import com.mangastech.model.Role;
 import com.mangastech.model.UsuarioEntity;
 import com.mangastech.repository.RoleRepository;
 import com.mangastech.repository.UsuarioRepository;
+import com.mangastech.service.UsuarioService;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -38,8 +41,11 @@ public class UsuarioController {
 	@Autowired
 	public RoleRepository roleRepository;
 
+	@Autowired
+	public UsuarioService usuarioService;
+
 	/**
-	 * Método registrar um Usuário
+	 * Método registrar um usuario
 	 * 
 	 * @param usuario
 	 * @return
@@ -53,16 +59,13 @@ public class UsuarioController {
 		List<String> roles = new ArrayList<>();
 
 		roles.add("USER");
-
 		usuario.setRoles(roles);
 
-		usuarioRepository.save(usuario);
-
-		return new ResponseEntity<UsuarioEntity>(usuario, HttpStatus.CREATED);
+		return new ResponseEntity<UsuarioEntity>(usuarioService.cadastrar(usuario), HttpStatus.CREATED);
 	}
 
 	/**
-	 * Método registrar um novo Cargo
+	 * Método registrar um novo cargo
 	 * 
 	 * @param role
 	 * @return
@@ -70,25 +73,11 @@ public class UsuarioController {
 	@RequestMapping(value = "/role", method = RequestMethod.POST)
 	public ResponseEntity<Role> salvarRole(@RequestBody Role role) {
 
-		roleRepository.save(role);
-
-		return new ResponseEntity<>(role, HttpStatus.OK);
+		return new ResponseEntity<>(roleRepository.save(role), HttpStatus.OK);
 	}
 
 	/**
-	 * Método busca lista de Usuários
-	 * 
-	 * @param usuario
-	 * @return lista Usuários
-	 */
-	@RequestMapping(value = "/registrar", method = RequestMethod.GET)
-	public List<UsuarioEntity> buscarUmUser(UsuarioEntity usuario) {
-		List<UsuarioEntity> usuarios = usuarioRepository.findAll();
-		return usuarios;
-	}
-
-	/**
-	 * Método Autenticar um Usuário
+	 * Método Autenticar um usuario
 	 * 
 	 * @param username
 	 * @param password
@@ -115,15 +104,83 @@ public class UsuarioController {
 	}
 
 	/**
-	 * Método retorna usuair logado
+	 * Método retorna usuario logado
 	 * 
 	 * @param principal
-	 * @return Uusuario
+	 * @return usuario
 	 */
 	@RequestMapping("/user")
 	public UsuarioEntity usuario(Principal principal) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String loggedUsername = auth.getName();
 		return usuarioRepository.findOneByUsername(loggedUsername);
+	}
+
+	/**
+	 * Método busca lista de usuarios
+	 * 
+	 * @param usuario
+	 * @return lista usuarios
+	 */
+	@RequestMapping(value = "/admin/usuario", method = RequestMethod.GET)
+	public List<UsuarioEntity> buscarUmUser(UsuarioEntity usuario) {
+		return usuarioService.buscarTodos();
+	}
+
+	/**
+	 * Método deletar um usuario por ID
+	 * 
+	 * @param id
+	 * @return
+	 * @throws usuario não encontrado / Não pode deletar sua conta
+	 */
+	@RequestMapping(value = "/admin/usuario/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<UsuarioEntity> deletarUsuario(@PathVariable(value = "id") Long id) throws IOException {
+
+		UsuarioEntity usuario = usuarioRepository.findOne(id);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String usuarioLogado = auth.getName();
+		if (usuario == null) {
+			throw new RuntimeException("Usuario não encontrado");
+		} else if (usuario.getUsername().equalsIgnoreCase(usuarioLogado)) {
+			throw new RuntimeException("Não pode deletar sua conta");
+		} else {
+			usuarioService.excluir(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	}
+
+	/**
+	 * Método atualizar usuario
+	 * 
+	 * @param usuario
+	 * @return usuario atualizado
+	 * @throws usuario repetido
+	 */
+	@RequestMapping(value = "/admin/usuario", method = RequestMethod.PUT)
+	public ResponseEntity<UsuarioEntity> alterarUsuario(@RequestBody UsuarioEntity usuario) throws IOException {
+		if (usuarioRepository.findOneByUsername(usuario.getNome()) != null
+				&& usuarioRepository.findOneByUsername(usuario.getNome()).getId() != usuario.getId()) {
+			throw new RuntimeException("Usuario já existe");
+		}
+
+		return new ResponseEntity<>(usuarioService.alterar(usuario), HttpStatus.OK);
+	}
+
+	/**
+	 * Método salvar usuario
+	 * 
+	 * @param usuario
+	 * @return
+	 * @throws usuario repetido
+	 */
+	@RequestMapping(value = "/admin/usuario", method = RequestMethod.POST)
+	public ResponseEntity<UsuarioEntity> cadastrarUsuario(@RequestBody UsuarioEntity usuario) throws IOException {
+
+		if (usuarioRepository.findOneByUsername(usuario.getNome()) != null) {
+			throw new RuntimeException("Nome já Existe");
+		}
+
+		return new ResponseEntity<>(usuarioService.cadastrar(usuario), HttpStatus.OK);
 	}
 }

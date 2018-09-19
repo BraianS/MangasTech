@@ -1,9 +1,118 @@
-<div class="panel panel-default">
-	<div class="panel-heading text-center">
-		<h3 class="page-title">Usuario</h3>
+<div class="col-md-8 div sm-8">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title text-center">Usuários</h3>
+		</div>
+		<div class="panel-body">
+			<!-- Tabela de Usuários -->
+			<div class="pre-scrollable">
+				<table class="table table2">
+					<thead>
+						<tr>
+							<td>#</td>
+							<th>Nome</th>
+							<th>Username</th>
+							<th>Role</th>
+							<th>Editar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="usuario in vm.usuarios">
+							<td>{{$index+1}}</td>
+							<td>{{usuario.nome}}</td>
+							<td>{{usuario.username}}</td>
+							<td><span ng-repeat="role in usuario.roles">
+									{{role}} <span ng-if="$index < (usuario.roles.length-1)">,</span>
+								</span></td>
+							<td>
+								<div class="btn-group btn-group-xs">
+									<button type="button" class="btn btn-default" ng-click="vm.deletarUsuario(usuario)">
+										<span class="glyphicon glyphicon-remove"></span>
+									</button>
+									<button type="button" class="btn btn-default" ng-click="vm.alterarUsuario(usuario)">
+										<span class="glyphicon glyphicon-pencil"></span>
+									</button>
+									<button type="button" class="btn btn-default" ng-click="vm.cancelarUsuario()">
+										<span class="glyphicon glyphicon-asterisk"></span>
+									</button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
-	<div class="panel-body">
-		<h4>Pagina de usuario</h4>
-		<pre>{{vm.user | json}}</pre>
+</div>
+
+<div class="col-md-4 col-sm-12 col-xs-12">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title text-center">Cadastrar Usuários</h3>
+		</div>
+		<div class="panel-body">
+			<div class="info">
+				<div class="form-group">
+					<!-- Form Cadastrar Usuário -->
+					<form novalidate name="vm.formUsuario" ng-submit="vm.submit()">
+
+						<!-- Nome -->
+						<div class="form-group" ng-class="{'has-error':vm.formUsuario.nome.$dirty && vm.formUsuario.nome.$invalid}">
+							<label for="nome">Nome</label>
+							<input type="text" maxlength="20" ng-maxlength="20" ng-model="vm.usuario.nome" id="nome" name="nome" class="form-control"
+							 required />
+							<span ng-show="vm.formUsuario.nome.$error.required && vm.formUsuario.nome.$dirty">Campo Obrigatorio</span>
+							<span ng-show="vm.formUsuario.nome.$error.maxlength">Tamanho Maximo</span>
+						</div>
+
+						<!-- Username -->
+						<div class="form-group" ng-class="{'has-error':vm.formUsuario.username.$dirty && vm.formUsuario.username.$invalid}">
+							<label for="username">Username</label>
+							<input type="text" maxlength="21" minlength="3" ng-maxlength="20" ng-minlength="3" ng-model="vm.usuario.username"
+							 id="username" name="username" class="form-control" required />
+							<span ng-show="vm.formUsuario.username.$error.required && vm.formUsuario.username.$dirty">Campo Obrigatorio</span>
+							<span ng-show="vm.formUsuario.username.$error.minlength || vm.formUsuario.username.$error.maxlength">O nome de
+								usuário deve ter entre 3 e 20 caracteres</span>
+						</div>
+
+						<!-- Role -->
+						<select name="role" id="role" ng-model="vm.usuario.roles" multiple class="form-control" required>
+							<option value="ADMIN">ADMIN</option>
+							<option value="USER">USER</option>
+						</select>
+
+						<!-- Password -->
+						<div class="form-group" ng-class="{'has-error':vm.formUsuario.password.$dirty && vm.formUsuario.password.$invalid}">
+							<label for="password">password</label>
+							<input type="password" class="form-control" minlength="6" maxlength="21" ng-maxlength="20" ng-minlength="6"
+							 no-special-character ng-model="vm.usuario.password" id="password" name="password" required />
+							<span ng-show="vm.formUsuario.password.$error.required && vm.formUsuario.password.$dirty">Campo Obrigatorio</span>
+							<span ng-show="vm.formUsuario.password.$error.maxlength || vm.formUsuario.password.$error.minlength">O nome de
+								usuário deve ter entre 6 e 20 caracteres</span>
+						</div>
+
+						<div class="text-center">
+							<!-- Salvar -->
+							<input class="btn btn-primary" type="submit" value="Salvar" ng-disabled="vm.formUsuario.$invalid" />
+
+							<!-- Cancelar -->
+							<input class="btn btn-primary" type="button" value="Cancelar" ng-click="vm.cancelarUsuario()" />
+						</div>
+						<!-- Alerta -->
+						<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="3000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Welcome -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Bem Vindo <Strong>{{vm.user.username}}</Strong></h3>
+		</div>
+		<div class="panel-body">
+			<pre>{{vm.user | json}}</pre>
+		</div>
 	</div>
 </div>

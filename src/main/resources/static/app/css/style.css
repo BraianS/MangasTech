@@ -228,3 +228,22 @@ ul {
 	margin:0;
 	color: #fff;  
 }
+
+.alert-success {
+	margin-top: 10px;
+}
+
+.pre-scrollable {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.table2 {
+	table-layout:fixed;
+}
+
+.table2 td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

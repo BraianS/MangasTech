@@ -6,9 +6,9 @@
 		.controller('grupoDetalheController', grupoDetalheController);
 
 	//Injeta as dependências
-	grupoDetalheController.$inject = ['$http', '$stateParams'];
+	grupoDetalheController.$inject = ['$stateParams', 'grupoService'];
 
-	function grupoDetalheController($http, $stateParams) {
+	function grupoDetalheController($stateParams, grupoService) {
 
 		var vm = this;
 
@@ -21,16 +21,11 @@
 		carregarGrupos();
 
 		function carregarGrupos() {
-			$http({
-				method: 'GET',
-				url: '/user/grupo/' + vm.grupoId + "?page=" + vm.pagina
-			}).then(function (response) {
-				vm.grupo = response.data.content;
-				vm.totalElementos = response.data.totalElements;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+			return grupoService.buscarAutorPorId(vm.grupoId, vm.pagina)
+				.then(function (data) {
+					vm.grupo = data.content;
+					vm.totalElementos = data.totalElements;
+				})
 		}
 	}
 })();

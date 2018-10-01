@@ -6,9 +6,9 @@
 		.controller('loginController', loginController);
 
 	//Injeta as dependências
-	loginController.$inject = ['$http', '$state', 'AuthService', '$rootScope'];
+	loginController.$inject = ['$http', '$state', 'AuthService', '$rootScope', 'loginService'];
 
-	function loginController($http, $state, AuthService, $rootScope) {
+	function loginController($http, $state, AuthService, $rootScope, loginService) {
 
 		var vm = this;
 
@@ -20,27 +20,17 @@
 		/* Autenticar um Usuario */
 		function autenticar() {
 			if (vm.formLogin.$valid) {
-				$http({
-					method: 'POST',
-					url: '/autenticar',
-					params: {
-						username: vm.username,
-						password: vm.password
-					}
-				}).then(function (res) {
-					vm.password = null;					
-					if (res.data.token) {
-						vm.mensagem = '';						
-						$http.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token;
-						AuthService.user = res.data.user;
-						$rootScope.$broadcast('LoginSuccessful');
-						$state.go('nav');
-					} else {
-						vm.mensagem = 'Autenticação Falhau';
-					}
-				}, function (res) {
-					vm.mensagem = 'Autenticação Falhou';
-				});
+				return loginService.login(vm.username, vm.password)
+					.then(function (data) {
+						vm.password = null;
+						if (data.token) {
+							vm.mensagem = '';
+							$http.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
+							AuthService.user = data.user;
+							$rootScope.$broadcast('LoginSuccessful');
+							$state.go('nav');
+						}
+					})
 			}
 			else {
 				alert("Formulario invalido")

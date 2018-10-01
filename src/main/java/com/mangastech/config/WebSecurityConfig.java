@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	       		 "/registrar",
 	       		 "/autenticar",
 	       		 "/pagina/**",       		 
-	       		 "/app/**");
+					"/app/**",
+					"/user/**");
 	}
 }

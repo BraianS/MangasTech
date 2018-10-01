@@ -6,9 +6,9 @@
 		.controller('generoDetalheController', generoDetalheController);
 
 	//Injeta as dependências
-	generoDetalheController.$inject = ['$http', '$stateParams'];
+	generoDetalheController.$inject = ['generoService', '$stateParams'];
 
-	function generoDetalheController($http, $stateParams) {
+	function generoDetalheController(generoService, $stateParams) {
 
 		var vm = this;
 
@@ -19,16 +19,11 @@
 		carregarGeneros();
 
 		function carregarGeneros(Genero) {
-			$http({
-				method: 'GET',
-				url: '/user/genero/' + vm.generoId + "?page=" + vm.pagina
-			}).then(function (response) {
-				vm.generosDetalhe = response.data.content;
-				vm.items = response.data.totalElements;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+			return generoService.buscarGeneroPorId(vm.generoId, vm.pagina)
+				.then(function (data) {
+					vm.generosDetalhe = data.content;
+					vm.itels = data.totalElements;
+				})
 		}
 	}
 })();

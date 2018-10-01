@@ -6,9 +6,9 @@
 		.controller('admAutorController', admAutorController);
 
 	//Injeta as dependências
-	admAutorController.$inject = ['$http'];
+	admAutorController.$inject = ['autorService'];
 
-	function admAutorController($http) {
+	function admAutorController(autorService) {
 
 		var vm = this;
 
@@ -28,34 +28,26 @@
 
 		vm.closeMsg = closeMsg;
 
-		function closeMsg(){
-			vm.mensagem="";
+		function closeMsg() {
+			vm.mensagem = "";
 		}
 
 		function carregarAutores() {
-			$http.get('/user/autor?page=' + vm.pagina).then(function (response) {
-				vm.autor = response.data.content;
-				vm.totalItems = response.data.totalElements;
-			}, function (response) {
-				console.log(response.content);
-			})
+			return autorService.carregarAutores(vm.pagina)
+				.then(function (data) {
+					vm.autor = data.content;
+					vm.totalItems = data.totalElements;
+				})
 		}
 
 		function salvarAutores() {
 			if (vm.formAutor.$valid) {
-				$http({
-					method: 'POST',
-					url: '/admin/autor', data: vm.autores
-				}).then(function (response) {
-					vm.autores = {}
-					vm.formAutor.$setPristine(true);
-					vm.mensagem = "Salvo com Sucesso";
-					carregarAutores();
-				}, function (response) {
-					vm.mensagem = response.data.message;
-					console.log(response.data);
-					console.log(response.status);
-				})
+				return autorService.salvarAutor(vm.autores)
+					.then(function (data) {
+						vm.mensagem = data;
+						cancelar();
+						carregarAutores();
+					})
 			}
 			else {
 				vm.mensagem = "Erro No Formulario";
@@ -63,32 +55,21 @@
 		}
 
 		function excluirAutor(autor) {
-			$http({
-				method: 'DELETE',
-				url: '/admin/autor/' + autor.id
-			}).then(function (response) {
-				vm.mensagem= "Autor: "+autor.nome+" Deletado";
-				cancelar();
-				carregarAutores();
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			})
+			return autorService.excluirAutor(autor)
+				.then(function (data) {
+					vm.mensagem = data;
+					cancelar();
+					carregarAutores();
+				});
 		}
 
 		function updateAutor() {
-			$http({
-				method: 'PUT',
-				url: '/admin/autor', data: vm.autores
-			}).then(function (response) {
-				vm.autores = {};
-				vm.formAutor.$setPristine(true);
-				vm.mensagem = "Atualizado";
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-				vm.mensagem = response.data.message;
-			});
+			return autorService.atualizarAutor(vm.autores)
+				.then(function (data) {
+					vm.mensagem = data;
+					cancelar();
+					carregarAutores();
+				})
 		}
 
 		function cancelar() {
@@ -107,7 +88,7 @@
 				vm.autorEditado = false;
 			}
 			else {
-				salvarAutores();				
+				salvarAutores();
 			}
 		}
 	}

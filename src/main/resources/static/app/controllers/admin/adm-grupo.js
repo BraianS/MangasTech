@@ -6,9 +6,9 @@
 		.controller('adminGruposController', adminGruposController);
 
 	//Injeta as dependências
-	adminGruposController.$inject = ['$http'];
+	adminGruposController.$inject = ['grupoService'];
 
-	function adminGruposController($http) {
+	function adminGruposController(grupoService) {
 
 		var vm = this;
 
@@ -26,56 +26,40 @@
 
 		vm.closeMsg = closeMsg;
 
-		function closeMsg(){
+		function closeMsg() {
 			vm.mensagem = "";
 		}
 
 		function carregarGrupos() {
-			$http({
-				method: 'GET',
-				url: '/user/grupo?page=' + vm.pagina
-			}).then(function (response) {
-				vm.grupos = response.data.content;
-				vm.totalElementos = response.data.totalElements;
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			})
+			return grupoService.carregarGrupos(vm.pagina)
+				.then(function (data) {
+					vm.grupos = data.content;
+					vm.totalElementos = data.totalElementos;
+				})
 		}
 
 		function salvarGrupos() {
 			if (vm.formGrupo.$valid) {
-				$http({
-					method: 'POST',
-					url: '/admin/grupo', data: vm.grupo
-				}).then(function (response) {
-					vm.grupo = {};
-					vm.carregarGrupos();
-					vm.formGrupo.$setPristine(true);
-					vm.mensagem = "Salvo com Sucesso"
-				}, function (response) {
-					console.log(response.data);
-					console.log(response.status);
-					vm.mensagem = response.data.message;
-				})
+				return grupoService.salvarGrupos(vm.grupo)
+					.then(function (data) {
+						vm.grupo = {};
+						carregarGrupos();
+						vm.formGrupo.$setPristine(true);
+						vm.mensagem = data;
+					})
 			}
 			else {
 				vm.mensagem = "Error no Formulario";
 			}
 		}
 
-		function deletarGrupos(grupos) {
-			$http({
-				method: 'DELETE',
-				url: '/admin/grupo/' + grupos.id
-			}).then(function (response) {
-				vm.mensagem = "Grupo: "+grupos.nome+" Deletado";
-				cancelarGrupo();
-				vm.carregarGrupos();
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			})
+		function deletarGrupos(grupo) {
+			return grupoService.excluirGrupos(grupo)
+				.then(function (data) {
+					vm.mensagem = data;
+					cancelarGrupo();
+					carregarGrupos();
+				})
 		}
 
 		function cancelarGrupo() {

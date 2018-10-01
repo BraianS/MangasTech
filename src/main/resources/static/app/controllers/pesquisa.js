@@ -6,35 +6,29 @@
 		.controller('pesquisaController', pesquisaController);
 
 	//Injeta as dependências
-	pesquisaController.$inject = ['$http', 'pesquisaService'];
+	pesquisaController.$inject = ['pesquisaService'];
 
-	function pesquisaController($http, pesquisaService) {
+	function pesquisaController(pesquisaService) {
 
 		var vm = this;
 
 		vm.totalEmentos = [];
 		vm.manga = [];
 		vm.pagina = 1;
-		vm.pesquisarNome = pesquisarNome;
 		vm.palavraPesquisada = pesquisaService.getNome();
 		vm.mensagem = "";
 
 		pesquisarNome();
 
 		function pesquisarNome() {
-			$http({
-				method: 'GET',
-				url: '/user/manga/nome/' + vm.palavraPesquisada + "?page=" + vm.pagina
-			}).then(function (res) {
-				vm.manga = res.data.content;
-				vm.totalEmentos = res.data.totalElements;
-				if (!vm.totalEmentos) {
-					vm.mensagem = "Nada Encontrado";
-				}
-			}, function (res) {
-				console.log(res);
-				console.log(res.data);
-			})
+			return pesquisaService.pesquisaNome(vm.palavraPesquisada, vm.pagina)
+				.then(function (data) {
+					vm.manga = data.content;
+					vm.totalEmentos = data.totalElements;
+					if (!vm.totalEmentos) {
+						vm.mensagem = "nada encontrado";
+					}
+				})
 		}
 	}
 })();

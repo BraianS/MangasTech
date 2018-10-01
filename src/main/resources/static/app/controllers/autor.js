@@ -6,9 +6,9 @@
 		.controller('autorController', autorController);
 
 	//Injeta as dependências
-	autorController.$inject = ['$http'];
+	autorController.$inject = ['autorService'];
 
-	function autorController($http) {
+	function autorController(autorService) {
 
 		var vm = this;
 
@@ -40,30 +40,22 @@
 		}
 
 		function carregarAutores() {
-			$http({
-				method: 'GET',
-				url: '/user/autor?page=' + vm.paginaAutor
-			}).then(function (response) {
-				vm.autor = response.data.content;
-				vm.totalElementos = response.data.totalElements;
-			}, function (response) {
-				console.log(response);
-			})
+			return autorService.carregarAutores(vm.paginaAutor)
+				.then(function (data) {
+					vm.autor = data.content;
+					vm.totalElementos = data.totalElements;
+				})
 		}
 
 		function buscarPorLetra(letra) {
 			if (letra != null) {
 				vm.ativado = letra;
-			} $http({
-				method: 'GET',
-				url: '/user/autor/letra/' + vm.ativado + "?page=" + vm.paginaPorLetra
-			}).then(function (response) {
-				vm.autor = response.data.content;
-				vm.totalElementos1 = response.data.totalElements;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+			}
+			return autorService.buscarAutorPorLetra(vm.ativado, vm.paginaPorLetra)
+				.then(function (data) {
+					vm.autor = data.content;
+					vm.totalElementos1 = data.totalElements;
+				})
 		}
 	}
 })();

@@ -1,4 +1,3 @@
-
 (function () {
 	'use strict';
 	//Adiciona o controller ao modulo
@@ -7,9 +6,9 @@
 		.controller('generosController', generosController);
 
 	//Injeta as dependências
-	generosController.$inject = ['$http'];
+	generosController.$inject = ['generoService'];
 
-	function generosController($http) {
+	function generosController(generoService) {
 
 		var vm = this;
 
@@ -19,15 +18,10 @@
 		carregarGeneros();
 
 		function carregarGeneros() {
-			$http({
-				method: 'GET',
-				url: '/user/genero'
-			}).then(function (response) {
-				vm.genero = response.data.content;
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			});
+			return generoService.carregarGeneros()
+				.then(function (data) {
+					vm.genero = data.content;
+				})
 		}
 	}
 })();

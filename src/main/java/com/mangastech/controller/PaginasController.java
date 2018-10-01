@@ -47,12 +47,12 @@ public class PaginasController {
 			@RequestParam(value = "capitulo") Long Capitulo, @RequestParam(value="numCapitulo", required = false) int numCapitulo) throws IOException {		
 		
 		if(!paginas.isEmpty()) {
-			numCapitulo++;
+			numCapitulo++;	
 			
 			CapitulosEntity capitulo = new CapitulosEntity();
 			capitulo.setId(Capitulo);
 			
-			PaginasEntity pagina = new PaginasEntity();
+			PaginasEntity pagina = new PaginasEntity();			
 			pagina.setFotos(paginas.getBytes());
 			pagina.setNome(nome);
 			pagina.setCapitulo(capitulo);

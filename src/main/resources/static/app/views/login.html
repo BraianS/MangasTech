@@ -11,23 +11,24 @@
 			<!-- Nome -->
 			<div class="form-group text-center" ng-class="{ 'has-error': vm.formLogin.nome.$invalid && vm.formLogin.nome.$dirty}">
 				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-					<input class="form-control" placeholder="username" type="text" ng-model="vm.username" id="vm.username" name="nome" ng-maxlength="49"
-					 maxlength="50" required/>
+					<input class="form-control" placeholder="username" maxlength="21" minlength="3" ng-maxlength="20" ng-minlength="3"
+					 type="text" ng-model="vm.username" id="vm.username" name="nome" ng-maxlength="49" maxlength="50" required />
 					<span ng-show="vm.formLogin.nome.$dirty && vm.formLogin.nome.$error.required">Campo Nome Obrigatorio</span>
-					<span ng-show="vm.formLogin.nome.$error.maxlength">Tamanho maximo de 11!</span>
+					<span ng-show="vm.formLogin.nome.$error.maxlength || vm.formLogin.nome.$error.minlength">Nome deve ter
+						entre 6 e 20 caracteres</span>
 				</div>
 			</div>
 
 			<!-- Senha -->
-			<div class="form-group" ng-class="{ 'has-error':vm.formLogin.senha.$invalid && vm.formLogin.senha.$dirty}">
+			<div class="form-group text-center" ng-class="{ 'has-error':vm.formLogin.senha.$invalid && vm.formLogin.senha.$dirty}">
 				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-					<input class="form-control " placeholder="password" type="password" ng-model="vm.password" id="vm.password" name="vm.password"
-					 ng-maxlength="49" maxlength="50" required>
+					<input class="form-control " placeholder="password" maxlength="21" minlength="3" ng-maxlength="20" ng-minlength="3"
+					 type="password" ng-model="vm.password" id="vm.password" name="senha" ng-maxlength="49" maxlength="50" required>
 					<span ng-show="vm.formLogin.senha.$dirty && vm.formLogin.senha.$error.required">Campo Senha Obrigatorio</span>
-					<span ng-show="vm.formLogin.senha.$error.maxlength">Tamanho maximo</span>
+					<span ng-show="vm.formLogin.senha.$error.maxlength || vm.formLogin.senha.$error.minlength">Senha deve ter
+						entre 6 e 20 caracteres</span>
 				</div>
 			</div>
-
 
 			<div class="form-group">
 				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 text-center">

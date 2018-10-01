@@ -6,9 +6,9 @@
 		.controller('capituloController', capituloController);
 
 	//Injeta as dependências
-	capituloController.$inject = ['$http', '$stateParams'];
+	capituloController.$inject = ['capituloService', '$stateParams'];
 
-	function capituloController($http, $stateParams) {
+	function capituloController(capituloService, $stateParams) {
 
 		var vm = this;
 
@@ -21,16 +21,12 @@
 		carregarCapitulo();
 
 		function carregarCapitulo() {
-			$http({
-				method: 'GET',
-				url: '/user/pagina/' + vm.capituloId + "?page=" + vm.pagina
-			}).then(function (response) {
-				vm.fotos = response.data.content;
-				vm.totalElementos = response.data.totalElements;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data.content);
-			})
+			return capituloService.carregarPaginas(vm.capituloId, vm.pagina)
+				.then(function (data) {
+
+					vm.totalElementos = data.totalElements;
+					vm.fotos = data.content;
+				})
 		}
 
 		/* bind para pegar o evento das setas do teclado */

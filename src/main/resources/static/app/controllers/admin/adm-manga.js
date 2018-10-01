@@ -6,9 +6,9 @@
 		.controller('admMangaController', admMangaController);
 
 	//Injeta as dependências
-	admMangaController.$inject = ['$http', '$filter'];
+	admMangaController.$inject = ['$filter', 'mangaService', 'autorService', 'generoService'];
 
-	function admMangaController($http, $filter) {
+	function admMangaController($filter, mangaService, autorService, generoService) {
 
 		var vm = this;
 
@@ -43,7 +43,7 @@
 		vm.closeMsg = closeMsg;
 		vm.show = false;
 
-		function closeMsg(){
+		function closeMsg() {
 			vm.show = false;
 			vm.mensagem = "";
 		}
@@ -54,33 +54,16 @@
 
 		function salvarMangas() {
 			if (vm.formNovoManga.$valid) {
-				$http({
-					method: 'POST', url: '/admin/manga',
-					headers: { 'Content-Type': undefined },
-					transformRequest: function (data) {
-						var formData = new FormData();
-						formData.append('mangas', new Blob([angular.toJson(data.mangas)], {
-							type: "application/json"
-						}));
-						formData.append("file", data.file);
-						return formData;
-					},
-					data: { mangas: vm.manga, file: vm.recebeImagem },
-				}).then(function (response) {
-					vm.manga = {};
-					vm.recebeImagem = "";
-					carregarMangas();
-					carregarGeneros();
-					vm.mensagem = "Salvo com Sucesso";
-					vm.formNovoManga.$setPristine(true);
-				}, function (response) {
-					console.log(response.data);
-					console.log(response.status);
-					vm.mensagem = response.data.message;
-				});
-			}
-			else {
-				alert('Não foi salvo');
+				return mangaService.salvarMangas(vm.manga, vm.recebeImagem)
+					.then(function (data) {
+						vm.recebeImagem = "";
+						carregarMangas();
+						carregarGeneros();
+						vm.mensagem = data;
+						cancelarMangas();
+					});
+			} else {
+				alert("Erro no Formulario");
 			}
 		}
 
@@ -90,79 +73,47 @@
 		}
 
 		function carregarGeneros() {
-			$http({
-				method: 'GET', url: '/user/genero/lista'
-			}).then(function (response) {
-				vm.generos = response.data;
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			});
+			return generoService.listaGeneros()
+				.then(function (data) {
+					vm.generos = data;
+				})
 		}
 
 		function carregarAutor() {
-			$http({
-				method: 'GET', url: '/user/autor/lista'
-			}).then(function (response) {
-				vm.autor = response.data;
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			});
+			return autorService.listaAutores()
+				.then(function (data) {
+					vm.autor = data;
+				})
 		}
 
 		function excluirMangas(Manga) {
-			$http({
-				method: 'DELETE', url: '/admin/manga/' + Manga.id
-			}).then(function (response) {
-				vm.mensagem = "Manga: "+Manga.nome+ " Deletado";
-				cancelarMangas();
-				carregarMangas();
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status)
-			});
+			return mangaService.excluirMangas(Manga)
+				.then(function (data) {
+					vm.mensagem = data;
+					cancelarMangas();
+					carregarMangas();
+				})
 		}
 
 		function carregarMangas() {
-			$http({
-				method: 'GET',
-				url: '/user/manga?page=' + vm.pagina
-			}).then(function (response) {
-				vm.Mangas = response.data.content;
-				vm.totalElementos = response.data.totalElements;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			});
+			return mangaService.carregarMangas(vm.pagina)
+				.then(function (data) {
+					vm.Mangas = data.content;
+					vm.totalElementos = data.totalElements;
+				});
 		}
 
-		function updateManga(){
-			if(vm.formNovoManga.$valid){
-				$http({
-					method: 'PUT',
-					url: '/admin/manga',
-					headers: { 'Content-Type': undefined },
-					transformRequest: function (data) {
-						var formData = new FormData();
-						formData.append('mangas', new Blob([angular.toJson(data.mangas)], {
-							type: "application/json"
-						}));
-						formData.append("file",data.file);
-						return formData;
-					},
-					data: { mangas: vm.manga,file: vm.recebeImagem}
-				}).then(function(response) {
-					vm.manga = {};
-					vm.recebeImagem = "";
-					carregarMangas();
-					carregarGeneros();
-					vm.formNovoManga.$setPristine(true);
-					vm.mensagem = "Alterado com sucesso";
-				}, function(response) {
-					console.log(response);
-					console.log(response.data);
-				})
+		function updateManga() {
+			if (vm.formNovoManga.$valid) {
+				return mangaService.atualizarManga(vm.manga, vm.recebeImagem)
+					.then(function (data) {
+						vm.manga = {};
+						vm.recebeImagem = "";
+						vm.mensagem = data;
+						carregarMangas();
+						carregarGeneros();
+						vm.formNovoManga.$setPristine(true);
+					});
 			}
 			else {
 				alert("Não foi salvo");
@@ -178,10 +129,11 @@
 			vm.manga = {};
 			vm.recebeImagem = "";
 			vm.formNovoManga.$setPristine(true);
+			angular.element("#capas").val(null);
 		}
 
-		function submit(){
-			if(vm.editarUsuario){
+		function submit() {
+			if (vm.editarUsuario) {
 				updateManga();
 				vm.editarUsuario = false;
 			}

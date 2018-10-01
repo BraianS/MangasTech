@@ -6,9 +6,9 @@
 		.controller('mangaController', mangaController);
 
 	//Injeta as dependências
-	mangaController.$inject = ['$http'];
+	mangaController.$inject = ['mangaService'];
 
-	function mangaController($http) {
+	function mangaController(mangaService) {
 
 		var vm = this;
 
@@ -41,29 +41,19 @@
 		function carregarAlfabeto(letras) {
 			if (letras != null) {
 				vm.letraAtivada = letras;
-			} $http({
-				method: 'GET',
-				url: '/user/manga/az/' + vm.letraAtivada + '?page=' + vm.paginaPorLetra
-			}).then(function (response) {
-				vm.mangas = response.data.content;
-				vm.totalElementos = response.data.totalElements;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+			}
+			return mangaService.buscarMangaPorLetra(vm.letraAtivada, vm.paginaPorLetra)
+				.then(function (data) {
+					vm.mangas = data.content;
+					vm.totalElementos = data.totalElements;
+				})
 		}
 
 		function carregarMangas() {
-			$http({
-				method: 'GET',
-				url: '/user/manga?page=' + vm.paginaPorMangas
-			}).then(function (response) {
-				vm.mangas = response.data.content;
-				vm.totalElementos1 = response.data.totalElements;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			});
+			return mangaService.carregarMangas(vm.paginaPorMangas)
+				.then(function (data) {
+					vm.mangas = data.content;
+				})
 		}
 	}
 })();

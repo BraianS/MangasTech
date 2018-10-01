@@ -6,9 +6,9 @@
 		.controller('autorDetalheController', autorDetalheController);
 
 	//Injeta as dependências
-	autorDetalheController.$inject = ['$http', '$stateParams'];
+	autorDetalheController.$inject = ['autorService', '$stateParams'];
 
-	function autorDetalheController($http, $stateParams) {
+	function autorDetalheController(autorService, $stateParams) {
 
 		var vm = this;
 
@@ -21,16 +21,11 @@
 		carregarAutor();
 
 		function carregarAutor() {
-			$http({
-				method: 'GET',
-				url: '/user/autor/' + vm.autorId + '?page=' + vm.pagina
-			}).then(function (response) {
-				vm.autor = response.data.content;
-				vm.totalElementos = response.data.totalElements;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+			return autorService.buscarAutorPorId(vm.autorId, vm.pagina)
+				.then(function (data) {
+					vm.autor = data.content;
+					vm.totalElementos = data.totalElements;
+				})
 		}
 	}
 })();

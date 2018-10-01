@@ -7,9 +7,9 @@
 		.controller('admUsuarioController', admUsuarioController);
 
 	//Injeta as dependências
-	admUsuarioController.$inject = ['AuthService', '$http'];
+	admUsuarioController.$inject = ['AuthService', 'userService'];
 
-	function admUsuarioController(AuthService, $http) {
+	function admUsuarioController(AuthService, userService) {
 
 		var vm = this;
 		vm.user = AuthService.user;
@@ -31,62 +31,40 @@
 		}
 
 		function carregarUsuarios() {
-			$http({
-				method: 'GET',
-				url: '/admin/usuario'
-			}).then(function (response) {
-				vm.usuarios = response.data;
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			});
+			return userService.carregarUsuarios()
+				.then(function (data) {
+					vm.usuarios = data;
+				})
 		}
 
 		function salvarUsuario() {
 			if (vm.formUsuario.$valid) {
-				$http({
-					method: 'POST',
-					url: '/admin/usuario', data: vm.usuario
-				}).then(function (response) {
-					vm.mensagem = "Salvo com Sucesso.";
-					carregarUsuarios();
-					cancelarUsuario();
-				}, function (response) {
-					vm.mensagem = response.data.message;
-					console.log(response.data);
-					console.log(response.status);
-				})
+				return userService.salvarUsuario(vm.usuario)
+					.then(function (data) {
+						vm.mensagem = data;
+						carregarUsuarios();
+						cancelarUsuario();
+					})
 			} else {
 				vm.mensagem = "Erro no Formulario";
 			}
 		}
 
 		function atualizarUsuario() {
-			$http({
-				method: 'PUT',
-				url: '/admin/usuario', data: vm.usuario
-			}).then(function (response) {
-				vm.mensagem = "Atualizado com sucesso";
-				carregarUsuarios();
-				cancelarUsuario();
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			});
+			return userService.atualizarUsuario(vm.usuario)
+				.then(function (data) {
+					vm.mensagem = data;
+					carregarUsuarios();
+					cancelarUsuario();
+				})
 		}
 
 		function deletarUsuario(usuario) {
-			$http({
-				method: 'DELETE',
-				url: '/admin/usuario/' + usuario.id
-			}).then(function (response) {
-				vm.mensagem = "Usuario:" + usuario.nome + " Deletado";
-				carregarUsuarios();
-			}, function (response) {
-				vm.mensagem = response.data.message;
-				console.log(response.data);
-				console.log(response.status);
-			});
+			return userService.deletarUsuario(usuario)
+				.then(function (data) {
+					vm.mensagem = data;
+					carregarUsuarios();
+				})
 		}
 
 		function cancelarUsuario() {

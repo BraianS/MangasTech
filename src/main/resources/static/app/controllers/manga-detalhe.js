@@ -6,9 +6,9 @@
 		.controller('mangaDetalheController', mangaDetalheController);
 
 	//Injeta as dependências
-	mangaDetalheController.$inject = ['$http', '$stateParams', '$scope'];
+	mangaDetalheController.$inject = ['$http', '$stateParams', 'capituloService'];
 
-	function mangaDetalheController($http, $stateParams, $scope) {
+	function mangaDetalheController($http, $stateParams, capituloService) {
 
 		var vm = this;
 
@@ -18,15 +18,10 @@
 
 		carregarMangaECapitulos();
 		function carregarMangaECapitulos() {
-			$http({
-				method: 'GET',
-				url: '/user/capitulo/lista/' + vm.mangasId
-			}).then(function (response) {
-				vm.manga = response.data;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+			return capituloService.listaCapitulosPorManga(vm.mangasId)
+				.then(function (data) {
+					vm.manga = data;
+				})
 		}
 	}
 })();

@@ -6,9 +6,9 @@
 		.controller('admGenerosController', admGenerosController);
 
 	//Injeta as dependências
-	admGenerosController.$inject = ['$http'];
+	admGenerosController.$inject = ['generoService'];
 
-	function admGenerosController($http) {
+	function admGenerosController(generoService) {
 
 		var vm = this;
 
@@ -27,71 +27,49 @@
 
 		vm.closeMsg = closeMsg;
 
-		function closeMsg(){
+		function closeMsg() {
 			vm.mensagem = "";
 		}
 
 		function carregarGeneros() {
-			$http({
-				method: 'GET',
-				url: '/user/genero/lista'
-			}).then(function (response) {
-				vm.generos = response.data;
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.status);
-			});
+			generoService.listaGeneros()
+				.then(function (data) {
+					vm.generos = data;
+				})
 		}
 
 		function salvarGeneros() {
 			if (vm.formGenero.$valid) {
-				$http({
-					method: 'POST',
-					url: '/admin/genero', data: vm.genero
-				}).then(function (response) {
-					vm.genero = {};
-					carregarGeneros();
-					vm.formGenero.$setPristine(true);
-					vm.mensagem = "Salvo com Sucesso";
-				}, function (response) {
-					console.log(response.data);
-					console.log(response.status);
-					vm.mensagem = response.data.message;
-				});
+				generoService.salvarGenero(vm.genero)
+					.then(function (data) {
+						vm.genero = {};
+						vm.mensagem = data;
+						carregarGeneros();
+						vm.formGenero.$setPristine(true);
+					})
 			}
 			else {
 				vm.mensagem = "Erro No formulario";
 			}
 		}
 
-		function atualizarGeneros(){
-			$http({
-				method: 'PUT',
-				url:'/admin/genero',data:vm.genero
-			}).then(function(response) {
-				vm.genero = {};
-				vm.formGenero.$setPristine(true);
-				vm.mensagem = "Atualizado";
-			}, function(response) {
-				console.log(response);
-				console.log(response.data);
-			});
+		function atualizarGeneros() {
+			generoService.atualizarGenero(vm.genero)
+				.then(function (data) {
+					vm.genero = {};
+					vm.formGenero.$setPristine(true);
+					vm.mensagem = data;
+				})
 		}
 
 		function deletarGeneros(genero) {
-			$http({
-				method: 'DELETE',
-				url: "/admin/genero/" + genero.id
-			}).then(function (response) {
-				vm.mensagem = "Genero: "+genero.nome+" Deletado";
-				cancelarGeneros();
-				carregarGeneros();
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			});
+			generoService.excluirGenero(genero)
+				.then(function (data) {
+					vm.mensagem = data;
+					cancelarGeneros();
+					carregarGeneros();
+				})
 		}
-		
 
 		function cancelarGeneros() {
 			vm.usuarioEditado = true;
@@ -101,16 +79,16 @@
 
 		function alterarGeneros(genero) {
 			vm.genero = genero;
+			vm.usuarioEditado = true;
 		}
 
 		function submit() {
-			if(vm.usuarioEditado){
-				salvarGeneros();
-			}
-			else {
+			if (vm.usuarioEditado) {
 				atualizarGeneros();
 			}
+			else {
+				salvarGeneros();
+			}
 		}
-
 	}
 })();

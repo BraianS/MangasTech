@@ -6,9 +6,9 @@
 		.controller('homeController', homeController);
 
 	//Injeta as dependências
-	homeController.$inject = ['$http', '$scope'];
+	homeController.$inject = ['homeService'];
 
-	function homeController($http, $scope) {
+	function homeController(homeService) {
 
 		var vm = this;
 
@@ -27,7 +27,7 @@
 		vm.novosCapitulos = [];
 		vm.novosMangas = [];
 		vm.mangaCapitulo = [];
-		vm.mangaUmDiaAtras = mangaUmDiaAtrass;
+		vm.mangaUmDiaAtras = mangaUmDiaAtras;
 		vm.mangasDoisDiasAtras = mangasDoisDiasAtras;
 		vm.ontemStatus = false;
 		vm.anteOntemStatus = false;
@@ -36,53 +36,33 @@
 		carregarNovosMangas();
 
 		function carregarNovosCapitulos() {
-			$http({
-				method: 'GET',
-				url: '/user/capitulo/lista/ordenado?date=' + vm.hoje
-			}).then(function (response) {
-				vm.mangaCapitulo = response.data;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+			return homeService.carregarNovosCapitulos(vm.hoje)
+				.then(function (data) {
+					vm.mangaCapitulo = data;
+				})
 		}
 
-		function mangaUmDiaAtrass() {
-			vm.ontemStatus = true;
-			$http({
-				method: 'GET',
-				url: '/user/capitulo/lista/ordenado?date=' + vm.ontem
-			}).then(function (response) {
-				vm.MangasOntem = response.data;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+		function mangaUmDiaAtras() {
+			return homeService.carregarMangasPorUmDia(vm.ontem)
+				.then(function (data) {
+					vm.MangasOntem = data;
+					vm.ontemStatus = true;
+				})
 		}
 
 		function mangasDoisDiasAtras() {
-			vm.anteOntemStatus = true;
-			$http({
-				method: 'GET',
-				url: '/user/capitulo/lista/ordenado?date=' + vm.anteontem
-			}).then(function (response) {
-				vm.MangasAnteOntem = response.data;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+			return homeService.carregarMangasDoisDiasAtras(vm.anteontem)
+				.then(function (data) {
+					vm.MangasAnteOntem = data;
+					vm.anteOntemStatus = true;
+				})
 		}
 
 		function carregarNovosMangas() {
-			$http({
-				method: 'GET',
-				url: '/user/manga/top10'
-			}).then(function (response) {
-				vm.novosMangas = response.data;
-			}, function (response) {
-				console.log(response);
-				console.log(response.data);
-			})
+			return homeService.carregarNovosMangas()
+				.then(function (data) {
+					vm.novosMangas = data;
+				})
 		}
 
 		vm.default = {

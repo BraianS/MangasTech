@@ -6,9 +6,9 @@
 		.controller('grupoController', grupoController);
 
 	//Injeta as dependências
-	grupoController.$inject = ['$http'];
+	grupoController.$inject = ['grupoService'];
 
-	function grupoController($http) {
+	function grupoController(grupoService) {
 
 		var vm = this;
 
@@ -39,32 +39,22 @@
 		}
 
 		function carregarGrupos() {
-			$http({
-				method: 'GET',
-				url: '/user/grupo?page=' + vm.paginaPorGrupos
-			}).then(function (response) {
-				vm.grupos = response.data.content;
-				vm.totalElementos = response.data.totalElements;
-			}, function (response) {
-				console.log(response.data.content);
-				console.log(response.status);
-			})
+			return grupoService.carregarGrupos(vm.paginaPorGrupos)
+				.then(function (data) {
+					vm.grupos = data.content;
+					vm.totalElements = data.totalElements;
+				})
 		}
 
 		function buscarPorLetra(letra) {
 			if (letra != null) {
 				vm.ativado = letra;
 			}
-			$http({
-				method: 'GET',
-				url: '/user/grupo/letra/' + vm.ativado + "?page=" + vm.paginaPorLetra
-			}).then(function (response) {
-				vm.grupos = response.data.content;
-				vm.totalElementos2 = response.data.totalElements;
-			}, function (response) {
-				console.log(response.data);
-				console.log(response.data.content);
-			})
+			return grupoService.buscarPorLetra(vm.ativado, vm.paginaPorLetra)
+				.then(function (data) {
+					vm.grupos = data.content;
+					vm.totalElementos2 = data.totalElements;
+				})
 		}
 	}
 })();

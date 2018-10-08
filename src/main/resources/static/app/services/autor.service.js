@@ -20,7 +20,7 @@
         }
 
         function buscarAutorPorId(autorId, numPagina) {
-            return $http.get('/user/autor/' + autorId + '?page=' + numPagina)
+            return $http.get('/api/autor/' + autorId + '?page=' + numPagina)
                 .then(getBuscarAutorPorId)
                 .catch(getBuscarAutorPorIdErro);
 
@@ -35,7 +35,7 @@
         }
 
         function buscarAutorPorLetra(letra, numPagina) {
-            return $http.get('/user/autor/letra/' + letra + "?page=" + numPagina)
+            return $http.get('/api/autor/letra/' + letra + "?page=" + numPagina)
                 .then(getBuscarAutorPorLetra)
                 .catch(getBuscarAutorPorLetraError);
 
@@ -50,7 +50,7 @@
         }
 
         function listaAutores() {
-            return $http.get('/user/autor/lista')
+            return $http.get('/api/autor/lista')
                 .then(getListaAutor)
                 .catch(getLisAutorError);
 
@@ -65,7 +65,7 @@
         }
 
         function carregarAutores(numeroPagina) {
-            return $http.get('/user/autor?page=' + numeroPagina)
+            return $http.get('/api/autor?page=' + numeroPagina)
                 .then(getCarregarAutores)
                 .catch(getCarregarAutoresError);
 
@@ -82,7 +82,7 @@
         function salvarAutor(autor) {
             return $http({
                 method: 'POST',
-                url: '/admin/autor', data: autor
+                url: '/api/autor', data: autor
             }).then(getSalvarAutor)
                 .catch(getSalvarAutorError);
 
@@ -99,7 +99,7 @@
         function atualizarAutor(autor) {
             return $http({
                 method: 'PUT',
-                url: '/admin/autor', data: autor
+                url: '/api/autor', data: autor
             }).then(getAtualizarAutor)
                 .catch(getAtualizarAutorError);
 
@@ -114,7 +114,7 @@
         }
 
         function excluirAutor(autor) {
-            return $http.delete('/admin/autor/' + autor.id)
+            return $http.delete('/api/autor/' + autor.id)
                 .then(getExcluirAutor)
                 .catch(getExcluirAutorError);
 

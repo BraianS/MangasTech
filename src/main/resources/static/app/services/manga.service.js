@@ -6,9 +6,9 @@
         .factory('mangaService', mangaService);
 
     //Injeta as dependências
-    mangaService.$inject = ['$http', '$log'];
+    mangaService.$inject = ['$http'];
 
-    function mangaService($http, console) {
+    function mangaService($http) {
         return {
             listaMangas: listaMangas,
             carregarMangas: carregarMangas,
@@ -19,7 +19,7 @@
         };
 
         function listaMangas() {
-            return $http.get('/user/manga/lista')
+            return $http.get('/api/manga/lista')
                 .then(getListaMangas)
                 .catch(getListaMangasError);
 
@@ -34,7 +34,7 @@
         }
 
         function carregarMangas(numPagina) {
-            return $http.get('/user/manga?page=' + numPagina)
+            return $http.get('/api/manga?page=' + numPagina)
                 .then(getCarregarMangas)
                 .catch(getCarregarMangasError);
 
@@ -50,7 +50,7 @@
         function salvarMangas(manga, imagem) {
             return $http({
                 method: 'POST',
-                url: '/admin/manga',
+                url: '/api/manga',
                 headers: { 'Content-Type': undefined },
                 transformRequest: function (data) {
                     var formData = new FormData();
@@ -76,7 +76,7 @@
         }
 
         function excluirMangas(manga) {
-            return $http.delete('/admin/manga/' + manga.id)
+            return $http.delete('/api/manga/' + manga.id)
                 .then(getExcluirManga)
                 .catch(getExcluirMangaError);
 
@@ -93,7 +93,7 @@
         function atualizarManga(manga, imagem) {
             return $http({
                 method: 'PUT',
-                url: '/admin/manga',
+                url: '/api/manga',
                 headers: { 'Content-Type': undefined },
                 transformRequest: function (data) {
                     var formData = new FormData();
@@ -118,7 +118,7 @@
         }
 
         function buscarMangaPorLetra(letra, pagina) {
-            return $http.get('/user/manga/az/' + letra + '?page=' + pagina)
+            return $http.get('/api/manga/az/' + letra + '?page=' + pagina)
                 .then(getBuscarMangaPorLetra)
                 .catch(getBuscarMangaPorLetraError);
 

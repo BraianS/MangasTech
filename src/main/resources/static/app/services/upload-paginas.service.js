@@ -16,7 +16,7 @@
         function salvarPaginas(pagina, descricao, capitulo, count) {
 
             return Upload.upload({
-                url: '/admin/pagina',
+                url: '/api/pagina',
                 method: 'POST',
                 arrayKey: '',
                 data: { paginas: pagina[count], nome: descricao, capitulo: capitulo, numCapitulo: count }

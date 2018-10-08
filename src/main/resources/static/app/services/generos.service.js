@@ -6,9 +6,9 @@
 		.factory('generoService', generoService);
 
 	//Injeta as dependências
-	generoService.$inject = ['$http', '$log'];
+	generoService.$inject = ['$http'];
 
-	function generoService($http, logger) {
+	function generoService($http) {
 		return {
 			buscarGeneroPorId: buscarGeneroPorId,
 			carregarGeneros: carregarGeneros,
@@ -19,7 +19,7 @@
 		}
 
 		function buscarGeneroPorId(generoId, numPagina) {
-			return $http.get('/user/genero/' + generoId + '?page=' + numPagina)
+			return $http.get('/api/genero/' + generoId + '?page=' + numPagina)
 				.then(getBuscarGeneroPorId)
 				.catch(getGeneroErro);
 
@@ -34,7 +34,7 @@
 		}
 
 		function carregarGeneros() {
-			return $http.get('/user/genero')
+			return $http.get('/api/genero')
 				.then(getCarregarGeneros)
 				.catch(getCarregarGenerosErro);
 
@@ -49,7 +49,7 @@
 		}
 
 		function listaGeneros() {
-			return $http.get('/user/genero/lista')
+			return $http.get('/api/genero/lista')
 				.then(getListaGeneros)
 				.catch(getListaGenerosError);
 
@@ -66,7 +66,7 @@
 		function salvarGenero(genero) {
 			return $http({
 				method: 'POST',
-				url: '/admin/genero', data: genero
+				url: '/api/genero', data: genero
 			}).then(getSalvarGenero)
 				.catch(getSalvarGeneroError);
 
@@ -83,7 +83,7 @@
 		function atualizarGenero(genero) {
 			return $http({
 				method: 'PUT',
-				url: '/admin/genero', data: genero
+				url: '/api/genero', data: genero
 			}).then(getAtualizarGenero)
 				.catch(getAtualizarGenerosError);
 
@@ -98,7 +98,7 @@
 		}
 
 		function excluirGenero(genero) {
-			return $http.delete('/admin/genero/' + genero.id)
+			return $http.delete('/api/genero/' + genero.id)
 				.then(getExcluirGenero)
 				.catch(getExcluirGenerosError);
 

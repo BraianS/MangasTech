@@ -19,7 +19,7 @@
 		}
 
 		function pesquisaNome(nome, numPagina) {
-			return $http.get('/user/manga/nome/' + nome + '?page=' + numPagina)
+			return $http.get('/api/manga/nome/' + nome + '?page=' + numPagina)
 				.then(getNomesucesso)
 				.catch(getErro);
 

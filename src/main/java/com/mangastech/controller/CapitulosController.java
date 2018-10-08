@@ -2,7 +2,6 @@ package com.mangastech.controller;
 
 import java.util.Date;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ import com.mangastech.service.CapituloService;
  *
  */
 @RestController
-@Transactional
+@RequestMapping(value = "/api")
 public class CapitulosController {
 
 	@Autowired
@@ -32,7 +31,7 @@ public class CapitulosController {
 	 * 
 	 * @return lista de capitulos
 	 */
-	@RequestMapping(value = "/user/capitulo", method = RequestMethod.GET)
+	@RequestMapping(value = "/capitulo", method = RequestMethod.GET)
 	public ResponseEntity<List<CapitulosEntity>> listarCapitulos() {
 
 		return new ResponseEntity<>(capituloService.listarCapitulos(), HttpStatus.OK);
@@ -44,7 +43,7 @@ public class CapitulosController {
 	 * @param id
 	 * @return lista de capitulos
 	 */
-	@RequestMapping(value = "/user/capitulo/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<CapitulosEntity>> buscarCapitulosPorManga(
 			@PathVariable(value = "id") MangasEntity id) {
 
@@ -57,7 +56,7 @@ public class CapitulosController {
 	 * @param capitulos
 	 * @return
 	 */
-	@RequestMapping(value = "/admin/capitulo", method = RequestMethod.POST)
+	@RequestMapping(value = "/capitulo", method = RequestMethod.POST)
 	public ResponseEntity<CapitulosEntity> cadastrarCapitulos(@RequestBody CapitulosEntity capitulos) {
 
 		capitulos.setLancamento(new Date());

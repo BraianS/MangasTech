@@ -17,7 +17,7 @@
         }
 
         function carregarUsuarios() {
-            return $http.get('/admin/usuario')
+            return $http.get('/api/usuario')
                 .then(getCarregarUsuarios)
                 .catch(getCarregarUsuariosError);
 
@@ -34,7 +34,7 @@
         function salvarUsuario(usuario) {
             return $http({
                 method: 'POST',
-                url: '/admin/usuario', data: usuario
+                url: '/api/usuario', data: usuario
             }).then(getSalvarUsuario)
                 .catch(getUsuarioErro);
 
@@ -49,7 +49,7 @@
         }
 
         function deletarUsuario(usuario) {
-            return $http.delete("/admin/usuario/" + usuario.id)
+            return $http.delete("/api/usuario/" + usuario.id)
                 .then(getDeletarUsuario)
                 .catch(getDeletarUsuarioError);
 
@@ -66,7 +66,7 @@
         function atualizarUsuario(usuario) {
             return $http({
                 method: 'PUT',
-                url: '/admin/usuario', data: usuario
+                url: '/api/usuario', data: usuario
             })
                 .then(getAtualizarUsuario)
                 .catch(getAtualizarUsuarioError);

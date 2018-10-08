@@ -2,7 +2,6 @@ package com.mangastech.controller;
 
 import java.io.IOException;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +23,7 @@ import com.mangastech.service.AutorService;
  *
  */
 @RestController
-@Transactional
+@RequestMapping(value = "/api")
 public class AutorController {
 
 	@Autowired
@@ -39,7 +38,7 @@ public class AutorController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value = "/user/autor", method = RequestMethod.GET)
+	@RequestMapping(value = "/autor", method = RequestMethod.GET)
 	public ResponseEntity<Page<AutorEntity>> ProcurarAutorEManga(Integer page) {
 
 		if (page == null) {
@@ -62,7 +61,7 @@ public class AutorController {
 	 * @param page
 	 * @return autor
 	 */
-	@RequestMapping(value = "/user/autor/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/autor/{id}", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Page<AutorEntity>> buscarMangaPorId(@PathVariable(value = "id") Long id,
 			Integer page) {
 
@@ -91,7 +90,7 @@ public class AutorController {
 	 * @param autor
 	 * @return
 	 */
-	@RequestMapping(value = "/admin/autor", method = RequestMethod.POST)
+	@RequestMapping(value = "/autor", method = RequestMethod.POST)
 	public ResponseEntity<AutorEntity> cadastrarAutor(@RequestBody AutorEntity autor) {
 
 		if (autorRepository.findOneByNome(autor.getNome()) != null) {
@@ -107,7 +106,7 @@ public class AutorController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/admin/autor/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/autor/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<AutorEntity> deletarAutor(@PathVariable("id") Long id) {
 		AutorEntity autor = autorRepository.findOne(id);
 
@@ -125,13 +124,13 @@ public class AutorController {
 	 * @param autor
 	 * @return usuario alterado
 	 */
-	@RequestMapping(value = "/admin/autor", method = RequestMethod.PUT)
+	@RequestMapping(value = "/autor", method = RequestMethod.PUT)
 	public ResponseEntity<AutorEntity> AlterarAutor(@RequestBody AutorEntity autor) throws IOException {
 
 		if (autorRepository.findOneByNome(autor.getNome()) != null
 				&& autorRepository.findOneByNome(autor.getNome()).getId() != autor.getId()) {
 			throw new RuntimeException("Nome Repetido");
-		}		
+		}
 
 		return new ResponseEntity<>(autorService.alterar(autor), HttpStatus.OK);
 	}
@@ -143,7 +142,7 @@ public class AutorController {
 	 * @param page
 	 * @return paginação de autor
 	 */
-	@RequestMapping(value = "/user/autor/letra/{letra}", method = RequestMethod.GET)
+	@RequestMapping(value = "/autor/letra/{letra}", method = RequestMethod.GET)
 	public ResponseEntity<Page<AutorEntity>> buscarPorNome(@PathVariable("letra") String letra, Integer page) {
 
 		if (page == null) {
@@ -154,7 +153,7 @@ public class AutorController {
 			page--;
 		}
 
-		Pageable pageable = new PageRequest(page, 20);		
+		Pageable pageable = new PageRequest(page, 20);
 
 		return new ResponseEntity<>(autorService.buscarPorLetra(letra, pageable), HttpStatus.OK);
 	}
@@ -164,7 +163,7 @@ public class AutorController {
 	 * 
 	 * @return lista de autor
 	 */
-	@RequestMapping(value = "/user/autor/lista", method = RequestMethod.GET)
+	@RequestMapping(value = "/autor/lista", method = RequestMethod.GET)
 	public List<AutorEntity> listarAutores() {
 
 		return autorService.listarTodos();

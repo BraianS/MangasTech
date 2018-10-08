@@ -19,7 +19,7 @@
         }
 
         function listaGrupos() {
-            return $http.get('/user/grupo/lista')
+            return $http.get('/api/grupo/lista')
                 .then(getListaGrupo)
                 .catch(getListaGruposError);
 
@@ -34,7 +34,7 @@
         }
 
         function carregarGrupos(numeroPagina) {
-            return $http.get('/user/grupo?page=' + numeroPagina)
+            return $http.get('/api/grupo?page=' + numeroPagina)
                 .then(getCarregarGrupos)
                 .catch(getCarregarGruposError);
 
@@ -49,7 +49,7 @@
         }
 
         function buscarAutorPorId(grupoId, pagina) {
-            return $http.get('/user/grupo/' + grupoId + "?page=" + pagina)
+            return $http.get('/api/grupo/' + grupoId + "?page=" + pagina)
                 .then(getBuscarAutorPorId)
                 .catch(getBuscarAutorPorIdError);
 
@@ -66,7 +66,7 @@
         function salvarGrupos(grupo) {
             return $http({
                 method: 'POST',
-                url: '/admin/grupo', data: grupo
+                url: '/api/grupo', data: grupo
             }).then(getsalvarGrupos)
                 .catch(getsalvarGruposError);
 
@@ -81,7 +81,7 @@
         }
 
         function excluirGrupos(grupo) {
-            return $http.delete('/admin/grupo/' + grupo.id)
+            return $http.delete('/api/grupo/' + grupo.id)
                 .then(getExcluirGrupos)
                 .catch(getExcluirGruposError);
 
@@ -96,7 +96,7 @@
         }
 
         function buscarPorLetra(letra, pagina) {
-            return $http.get('/user/grupo/letra/' + letra + '?page=' + pagina)
+            return $http.get('/api/grupo/letra/' + letra + '?page=' + pagina)
                 .then(getBuscarPorLetra)
                 .catch(getBuscarPorLetraErro);
 

@@ -1,7 +1,6 @@
 package com.mangastech.controller;
 
 import java.io.IOException;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,13 +23,12 @@ import com.mangastech.service.PaginasService;
  *
  */
 @RestController
-@Transactional
+@RequestMapping(value = "/api")
 public class PaginasController {
 
 	@Autowired
 	private PaginasService paginaService;
 
-	
 	/**
 	 * Método cadastrar pagina
 	 * 
@@ -41,18 +39,19 @@ public class PaginasController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/admin/pagina", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	@RequestMapping(value = "/pagina", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public @ResponseBody ResponseEntity<PaginasEntity> cadastrarPaginas(
 			@RequestParam(value = "paginas") MultipartFile paginas, @RequestParam(value = "nome") String nome,
-			@RequestParam(value = "capitulo") Long Capitulo, @RequestParam(value="numCapitulo", required = false) int numCapitulo) throws IOException {		
-		
-		if(!paginas.isEmpty()) {
-			numCapitulo++;	
-			
+			@RequestParam(value = "capitulo") Long Capitulo,
+			@RequestParam(value = "numCapitulo", required = false) int numCapitulo) throws IOException {
+
+		if (!paginas.isEmpty()) {
+			numCapitulo++;
+
 			CapitulosEntity capitulo = new CapitulosEntity();
 			capitulo.setId(Capitulo);
-			
-			PaginasEntity pagina = new PaginasEntity();			
+
+			PaginasEntity pagina = new PaginasEntity();
 			pagina.setFotos(paginas.getBytes());
 			pagina.setNome(nome);
 			pagina.setCapitulo(capitulo);
@@ -61,7 +60,7 @@ public class PaginasController {
 		} else {
 			throw new RuntimeException("Erro ao salvar Pagina");
 		}
-		
+
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
@@ -72,7 +71,7 @@ public class PaginasController {
 	 * @param page
 	 * @return pagina
 	 */
-	@RequestMapping(value = "/user/pagina/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/pagina/{id}", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Page<PaginasEntity>> procurarPorCapitulo(
 			@PathVariable(value = "id") CapitulosEntity id, Integer page) {
 

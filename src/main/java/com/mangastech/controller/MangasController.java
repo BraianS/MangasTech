@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.mangastech.model.CapitulosEntity;
 import com.mangastech.model.MangasEntity;
 import com.mangastech.repository.CapitulosRepository;
@@ -30,7 +31,7 @@ import com.mangastech.service.MangaService;
  *
  */
 @RestController
-@Transactional
+@RequestMapping(value = "/api")
 public class MangasController {
 
 	@Autowired
@@ -48,7 +49,7 @@ public class MangasController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value = "/user/manga", method = RequestMethod.GET)
+	@RequestMapping(value = "/manga", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Page<MangasEntity>> listar(Integer page) {
 
 		if (page == null) {
@@ -70,7 +71,7 @@ public class MangasController {
 	 * @param id
 	 * @return manga
 	 */
-	@RequestMapping(value = "/user/manga/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/manga/{id}", method = RequestMethod.GET)
 	public ResponseEntity<MangasEntity> detalheManga(@PathVariable(value = "id") Long id) {
 
 		MangasEntity manga = mangaRepository.findOne(id);
@@ -91,7 +92,7 @@ public class MangasController {
 	 * @throws Manga repetido
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/admin/manga", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	@RequestMapping(value = "/manga", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public ResponseEntity<MangasEntity> cadastrarManga(@RequestPart(value = "mangas") MangasEntity mangas,
 			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 
@@ -111,7 +112,7 @@ public class MangasController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/admin/manga/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/manga/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<MangasEntity> deletarManga(@PathVariable(value = "id") Long id) {
 
 		MangasEntity manga = mangaRepository.findOne(id);
@@ -130,7 +131,7 @@ public class MangasController {
 	 * @return manga alterado
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/admin/manga", method = RequestMethod.PUT, consumes = { "multipart/form-data" })
+	@RequestMapping(value = "/manga", method = RequestMethod.PUT, consumes = { "multipart/form-data" })
 	public ResponseEntity<MangasEntity> alterarManga(@RequestPart(value = "mangas") MangasEntity mangas,
 			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 
@@ -152,7 +153,7 @@ public class MangasController {
 	 * @param page
 	 * @return manga
 	 */
-	@RequestMapping(value = "/user/manga/az/{letra}", method = RequestMethod.GET)
+	@RequestMapping(value = "/manga/az/{letra}", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Page<MangasEntity>> procurarPorLetra(
 			@PathVariable(value = "letra") String letra, Integer page) {
 
@@ -179,7 +180,7 @@ public class MangasController {
 	 * @param page
 	 * @return manga
 	 */
-	@RequestMapping(value = "/user/manga/nome/{nome}", method = RequestMethod.GET)
+	@RequestMapping(value = "/manga/nome/{nome}", method = RequestMethod.GET)
 	public ResponseEntity<Page<MangasEntity>> procurarPeloNome(@PathVariable(value = "nome") String nome,
 			Integer page) {
 
@@ -200,7 +201,7 @@ public class MangasController {
 	 * 
 	 * @return lista com dez mangas
 	 */
-	@RequestMapping(value = "/user/manga/top10", method = RequestMethod.GET)
+	@RequestMapping(value = "/manga/top10", method = RequestMethod.GET)
 	public ResponseEntity<List<MangasEntity>> buscaTop5Mangas() {
 		return new ResponseEntity<>(mangasService.buscaTop10Mangas(), HttpStatus.OK);
 	}
@@ -210,7 +211,7 @@ public class MangasController {
 	 * 
 	 * @return lista de mangas
 	 */
-	@RequestMapping(value = "/user/manga/lista", method = RequestMethod.GET)
+	@RequestMapping(value = "/manga/lista", method = RequestMethod.GET)
 	public List<MangasEntity> mangaECapitulos() {
 
 		return mangasService.listaMangas();
@@ -222,7 +223,7 @@ public class MangasController {
 	 * @param id
 	 * @return lista de capitulos
 	 */
-	@RequestMapping(value = "/user/capitulo/lista/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/capitulo/lista/{id}", method = RequestMethod.GET)
 	public MangasEntity listarCapitulosPorManga(@PathVariable(value = "id") Long id) {
 
 		return mangaRepository.listarCapitulosPorManga(id);
@@ -235,7 +236,7 @@ public class MangasController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/user/capitulo/lista/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/capitulo/lista/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<CapitulosEntity> deletarCapituloDoManga(@PathVariable("id") Long id) throws IOException {
 		CapitulosEntity capitulo = capituloRepository.findOne(id);
 		if (capitulo == null) {
@@ -252,7 +253,7 @@ public class MangasController {
 	 * @param date
 	 * @return Lista de capitulos
 	 */
-	@RequestMapping(value = "/user/capitulo/lista/ordenado", method = RequestMethod.GET)
+	@RequestMapping(value = "/capitulo/lista/ordenado", method = RequestMethod.GET)
 	public @ResponseBody List<MangasEntity> carregarMangaECapitulos(
 			@RequestParam(name = "date") @DateTimeFormat(pattern = "dd-MM-yyyy") Date date) {
 

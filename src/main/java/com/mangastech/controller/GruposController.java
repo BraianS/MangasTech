@@ -2,7 +2,6 @@ package com.mangastech.controller;
 
 import java.io.IOException;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +22,7 @@ import com.mangastech.service.GrupoService;
  *
  */
 @RestController
-@Transactional
+@RequestMapping(value = "/api")
 public class GruposController {
 
 	@Autowired
@@ -38,7 +37,7 @@ public class GruposController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value = "/user/grupo", method = RequestMethod.GET)
+	@RequestMapping(value = "/grupo", method = RequestMethod.GET)
 	public ResponseEntity<Page<GruposEntity>> testeGrupos2(Integer page) {
 
 		if (page == null) {
@@ -60,7 +59,7 @@ public class GruposController {
 	 * @param page
 	 * @return autor
 	 */
-	@RequestMapping(value = "/user/grupo/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Page<GruposEntity>> buscarPorId(@PathVariable(value = "id") Long id, Integer page) {
 
 		if (page == null) {
@@ -69,7 +68,7 @@ public class GruposController {
 		if (page >= 1) {
 			page--;
 		}
-		
+
 		Pageable pageable = new PageRequest(page, 20);
 
 		return new ResponseEntity<>(grupoService.buscarMangaPeloIdAutor(id, pageable), HttpStatus.OK);
@@ -82,7 +81,7 @@ public class GruposController {
 	 * @return
 	 * @throws Autor repetido
 	 */
-	@RequestMapping(value = "/admin/grupo", method = RequestMethod.POST)
+	@RequestMapping(value = "/grupo", method = RequestMethod.POST)
 	public ResponseEntity<GruposEntity> salvarGrupos(@RequestBody GruposEntity grupos) throws IOException {
 
 		if (gruposRepository.findOneByNome(grupos.getNome()) != null) {
@@ -98,7 +97,7 @@ public class GruposController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/admin/grupo/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<GruposEntity> deletar(@PathVariable(value = "id") Long id) {
 
 		GruposEntity grupo = gruposRepository.findOne(id);
@@ -116,7 +115,7 @@ public class GruposController {
 	 * @param grupos
 	 * @return autor alterado
 	 */
-	@RequestMapping(value = "/admin/grupo", method = RequestMethod.PUT)
+	@RequestMapping(value = "/grupo", method = RequestMethod.PUT)
 	public ResponseEntity<GruposEntity> alterarGrupos(@RequestBody GruposEntity grupos) {
 		return new ResponseEntity<>(grupoService.alterar(grupos), HttpStatus.OK);
 	}
@@ -126,7 +125,7 @@ public class GruposController {
 	 * 
 	 * @return listar todos
 	 */
-	@RequestMapping(value = "/user/grupo/lista")
+	@RequestMapping(value = "/grupo/lista")
 	public List<GruposEntity> listaTodos() {
 
 		return grupoService.listarTodos();
@@ -139,7 +138,7 @@ public class GruposController {
 	 * @param page
 	 * @return autor
 	 */
-	@RequestMapping(value = "/user/grupo/letra/{letra}", method = RequestMethod.GET)
+	@RequestMapping(value = "/grupo/letra/{letra}", method = RequestMethod.GET)
 	public ResponseEntity<Page<GruposEntity>> buscarPorLetra(@PathVariable("letra") String letra, Integer page) {
 
 		if (page == null) {

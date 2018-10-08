@@ -18,7 +18,7 @@
         }
 
         function carregarPaginas(capituloId, numPagina) {
-            return $http.get('/user/pagina/' + capituloId + '?page=' + numPagina)
+            return $http.get('/api/pagina/' + capituloId + '?page=' + numPagina)
                 .then(getAutor)
                 .catch(getAutorErro);
 
@@ -33,7 +33,7 @@
         }
 
         function listaCapitulosPorManga(mangaId) {
-            return $http.get('/user/capitulo/lista/' + mangaId)
+            return $http.get('/api/capitulo/lista/' + mangaId)
                 .then(getListaCapitulosPorManga)
                 .catch(getListaCapitulosPorMangaError);
 
@@ -48,7 +48,7 @@
         }
 
         function excluirCapitulo(capitulo) {
-            return $http.delete('/user/capitulo/lista/' + capitulo.id)
+            return $http.delete('/api/capitulo/lista/' + capitulo.id)
                 .then(getExcluirCapitulo)
                 .catch(getCapituloError);
 
@@ -63,7 +63,7 @@
         }
 
         function carregarCapituloPorManga(manga) {
-            return $http.get('/user/capitulo/' + manga)
+            return $http.get('/api/capitulo/' + manga)
                 .then(getCapituloManga)
                 .catch(getCapituloErro);
 
@@ -80,7 +80,7 @@
         function salvarCapitulos(capitulo) {
             return $http({
                 method: 'POST',
-                url: '/admin/capitulo',
+                url: '/api/capitulo',
                 data: capitulo
             }).then(getCapitulo)
                 .catch(getCapituloError);

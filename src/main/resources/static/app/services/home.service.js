@@ -17,7 +17,7 @@
         }
 
         function carregarNovosCapitulos(dataHoje) {
-            return $http.get('/user/capitulo/lista/ordenado?date=' + dataHoje)
+            return $http.get('/api/capitulo/lista/ordenado?date=' + dataHoje)
                 .then(getCarregarNovosCapitulos)
                 .catch(getCarregarNovosCapitulosError);
 
@@ -32,7 +32,7 @@
         }
 
         function carregarMangasPorUmDia(dataOntem) {
-            return $http.get('/user/capitulo/lista/ordenado?date=' + dataOntem)
+            return $http.get('/api/capitulo/lista/ordenado?date=' + dataOntem)
                 .then(getCarregarMangasPorUmDia)
                 .catch(getCarregarMangasPorUmDiaError);
 
@@ -47,7 +47,7 @@
         }
 
         function carregarMangasDoisDiasAtras(dataAnteOntem) {
-            return $http.get('/user/capitulo/lista/ordenado?date=' + dataAnteOntem)
+            return $http.get('/api/capitulo/lista/ordenado?date=' + dataAnteOntem)
                 .then(getCarregarMangasDoisDiasAtras)
                 .catch(getCarregarMangasDoisDiasAtrasError);
 
@@ -62,7 +62,7 @@
         }
 
         function carregarNovosMangas() {
-            return $http.get('/user/manga/top10')
+            return $http.get('/api/manga/top10')
                 .then(getCarregarNovosMangas)
                 .catch(getCarregarNovosMangasError);
 

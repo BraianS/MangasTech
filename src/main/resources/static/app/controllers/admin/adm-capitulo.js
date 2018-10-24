@@ -31,10 +31,11 @@
 		vm.excluirCapitulo = excluirCapitulo;
 		vm.editarCapitulo = editarCapitulo;
 		vm.limparPaginas = limparPaginas;
+		vm.selecionarPagina = selecionarPagina;
 
 		carregarMangas();
 		carregarGrupos();
-
+		
 		vm.closeMsg = closeMsg;
 
 		function closeMsg() {
@@ -94,20 +95,18 @@
 			}
 		}
 
-		function uploadPaginas(paginas, paginaErro) {
-			vm.paginas = paginas;
-			vm.paginaErro = paginaErro;
-			if (paginas.length && vm.formPagina.$valid) {
-				angular.forEach(paginas, function (pagina, count) {
-					return uploadService.salvarPaginas(paginas, vm.pagina.descricao, vm.pagina.capitulo, count)
+		function selecionarPagina(files, errFiles) {
+			vm.paginas = files;
+			vm.paginaErro = errFiles;
+		}
+
+		function uploadPaginas() {
+			if (vm.paginas && vm.formPagina.$valid) {
+				angular.forEach(vm.paginas, function (file, count) {
+					return uploadService.salvarPaginas(file, vm.pagina.capitulo, vm.pagina.contador[count])
 						.then(function (data) {
-							var ultimoIndex = vm.paginas[vm.paginas.length - 1];
-							vm.progresso = 100;
-							if (ultimoIndex == pagina) {
-								cancelarPagina();
-								vm.mensagemPagina = data;
-							}
-						})
+							console.log(data);
+						});
 				})
 			} else {
 				vm.mensagemPagina = "Não foi salvo";
@@ -121,6 +120,9 @@
 		}
 
 		function cancelarPagina() {
+			angular.element("#pagina").val(null);
+			vm.paginas = {};
+			vm.paginaErro = {};
 			vm.pagina = {};
 			vm.mangaId = "";
 			vm.listaCapitulos = "";

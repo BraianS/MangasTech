@@ -247,3 +247,38 @@ ul {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.progress {
+    text-align: center;
+}
+
+.progress div {
+    font-size: smaller;
+    background: rgb(52, 173, 36);
+	width: 0;
+	font-weight: bold;
+}
+
+#alert-danger{
+	padding: 10px;
+}
+
+.custom-p {	
+	padding-bottom: 10px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+	max-width: 100%;
+	margin-top: 0px !important;
+	text-align: center;
+}
+
+#cpanel-custom .panel-body {
+	padding: 5px !important;
+}
+
+#image {
+	max-width: 100%;
+	height:180px;
+}

@@ -24,8 +24,7 @@ public class PaginasEntity {
 
 	private Long id;
 	private int numeroPagina;
-	private byte[] fotos;
-	private String nome;
+	private byte[] fotos;	
 
 	@Column
 	@Lob
@@ -67,16 +66,7 @@ public class PaginasEntity {
 
 	public void setCapitulo(CapitulosEntity capitulo) {
 		this.capitulo = capitulo;
-	}
-
-	@Column(name = "nome", columnDefinition = "varchar(50)")
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+	}	
 
 	public PaginasEntity() {		
 	}	
@@ -84,6 +74,6 @@ public class PaginasEntity {
 	@Override
 	public String toString() {
 		return "PaginasEntity [id=" + id + ", numeroPagina=" + numeroPagina + ", fotos=" + Arrays.toString(fotos)
-				+ ", nome=" + nome + ", capitulo=" + capitulo + "]";
+				+ ", capitulo=" + capitulo + "]";
 	}
 }

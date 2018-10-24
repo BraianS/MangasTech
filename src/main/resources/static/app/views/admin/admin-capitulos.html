@@ -13,8 +13,8 @@
 					<div class="form-group" ng-class=" {'has-error': vm.formCapitulo.capitulo.$invalid && vm.formCapitulo.capitulo.$dirty}">
 						<label for="Capitulo" class="control-label col-xs-3">Capitulo</label>
 						<div class=" col-xs-7">
-							<input name="capitulo" id="Capitulo" class="form-control" type="number" ng-model="vm.capitulo.capitulo" onKeyPress="if(this.value.length==4) return false;"
-							 min="0" max="9999" ng-maxlength="9998" required />
+							<input name="capitulo" id="Capitulo" class="form-control" type="number" ng-model="vm.capitulo.capitulo"
+							 onKeyPress="if(this.value.length==4) return false;" min="0" max="9999" ng-maxlength="9998" required />
 							<span ng-show="vm.formCapitulo.capitulo.$error.required && vm.formCapitulo.capitulo.$dirty">Campo Obrigatorio</span>
 						</div>
 					</div>
@@ -58,7 +58,6 @@
 	<div class="panel-heading text-center">
 		<h1 class="panel-title">Salvar Paginas</h1>
 	</div>
-
 	<div class="panel-body">
 		<div class="panel-info">
 			<!-- Form Salvar Paginas -->
@@ -76,65 +75,90 @@
 						</div>
 					</div>
 
-					<!-- Seleciona o capitulo do manga Retornado -->
+					<!-- Seleciona o capitulo do manga -->
 					<div class="form-group" ng-class=" {'has-error': vm.formPagina.capitulo.$invalid && vm.formPagina.capitulo.$touched}">
 						<label class="control-label col-xs-3">Capitulo</label>
 						<div class="col-xs-7">
 							<select id="Capitulo" name="capitulo" ng-model="vm.pagina.capitulo" ng-options="capitulo.id as capitulo.capitulo for capitulo in vm.capituloManga"
-							 required>
-							</select>
+							 required></select>
 							<span ng-show="vm.formPagina.capitulo.$touched && vm.formPagina.capitulo.$error.required">Campo Obrigatorio</span>
 						</div>
 					</div>
+					<!-- ./Seleciona o capitulo do manga  -->
 
-					<!-- Descrição -->
-					<div class="form-group" ng-class="{'has-error':vm.formPagina.descricao.$invalid && vm.formPagina.descricao.$dirty}">
-						<label for="Descricao" class="control-label col-xs-3">Descricao</label>
+					<!-- Seleciona Paginas -->
+					<div class="form-group">
+						<label class="control-label col-sm-3">Paginas</label><br>
 						<div class="col-xs-7">
-							<input id="Descricao" name="descricao" type="text" class="form-control" ng-model="vm.pagina.descricao" maxlength="80" ng-maxlength="79"
-							 required>
-							<span ng-show="vm.formPagina.descricao.$error.required && vm.formPagina.descricao.$dirty">Campo Obrigatorio</span>
-							<span ng-show="vm.formPagina.descricao.$error.maxlength">Máximo de 80 Caracteres</span>
+							<input type="file" id="pagina" name="pagina" ngf-select="vm.selecionarPagina($files,$invalidFiles)" ngf-pattern="image/*"
+							 multiple="multiple" ngf-max-size="2MB" class="form-control" placeholder="Files" accept="image/*">
+							<!-- ./Alert Erro da Pagina -->
 						</div>
+					</div>
+					<!-- ./Seleciona Paginas -->
+
+					<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 bar">
+						<!-- Lista de paginas -->
+						<div class="col-md-2 col-sm-3 col-lg-2 col-xs-6" ng-repeat="pagina in vm.paginas track by $index" ng-init="vm.pagina.contador[$index] = $index+1">
+							<div class="panel panel-default panel-front" id="cpanel-custom">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<!-- Display image -->
+										<img id="image" class="img-responsive" ng-show="pagina" ngf-src="pagina">
+									</h4>
+								</div>
+								<div class="panel-body">
+									<form class="form-horizontal">
+										<div class="form-group" ng-hide="pagina.progress >=0">
+											<label class="col-xs-6 col-md-6 col-sm-6 control-label">Pagina</label>
+											<div class="col-xs-6 col-md-6 col-sm-6">
+												<!-- Numero da pagina -->
+												<input class="form-control" type="number" id="pagina" accept="image/*" ng-model="vm.pagina.contador[$index]"
+												 ng-hide="pagina.progress >=0">
+											</div>
+										</div>
+									</form>
+									<!-- Progress upload -->
+									<span class="progress" ng-show="pagina.progress >= 0">
+										<div style="width:{{pagina.progress}}%" ng-bind="pagina.progress + '%'"></div>
+									</span>
+								</div>
+							</div>
+						</div>
+						<!-- Lista de paginas -->
+
+						<!-- Alert erro da pagina -->
+						<div ng-repeat="pagina in vm.paginaErro" class="col-md-2 col-sm-3 col-lg-2 col-xs-6" ng-if="vm.paginaErro.length">
+							<div class="panel panel-default panel-front" id="cpanel-custom">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<!-- Display image -->
+										<img id="image" class="img-responsive" ng-show="pagina" ngf-src="pagina">
+									</h4>
+								</div>
+								<div class="panel-body alert-danger" ng-hide="pagina.progress >=0">
+									<p class="custom-p">{{pagina.name}}</p>
+									<p>
+										{{pagina.size / 1000000|number:1}}MB -
+										Máximo 2mb por imagem
+									</p>
+								</div>
+							</div>
+						</div>
+						<!-- ./Alert erro da pagina -->
 					</div>
 
 					<div class="text-center">
 						<!-- Salva as fotos -->
-						<input class="btn btn-primary" multiple type="button" ng-disabled="vm.formPagina.$invalid" ngf-select="vm.uploadPaginas($files,$invalidFiles)"
-						 id="file" accept="image/*" ngf-max-size="2MB" value="Selecionar fotos" />
+						<input type="button" class="btn btn-primary" ng-disabled="vm.formPagina.$invalid" ng-click="vm.uploadPaginas()"
+						 id="save" value="Salvar" />
 
 						<!-- Cancelar -->
 						<input class="btn btn-primary" value="Cancelar" type="button" ng-click="vm.cancelarPagina()">
 					</div>
 				</form>
-
 				<!-- Alerta -->
 				<div class="alert alert-success text-center" ng-if="vm.paginas.length" ng-show="vm.mensagemPagina">{{vm.mensagemPagina}}</div>
-
-				<!-- Progress Bar de Paginas -->
-				<ul class="list-group bar">
-					<li class="list-group-item list-group-item-success col-md-3 col-sm-3 col-xs-7 " ng-repeat="pagina in vm.paginas">
-						<span class="glyphicon glyphicon-file"> </span>
-						{{pagina.name}}
-						<div class="progress">
-							<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{vm.progresso}}" aria-valuemin="0"
-							 aria-valuemax="100" style="width:{{vm.progresso}}%" ng-bind="vm.progresso + '%'">
-								<span class="sr-only">{{vm.progresso}} %</span>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<!-- ./Progress Bar de Paginas -->
-
-				<!-- Alert Erro da Pagina -->
-				<div class="alert alert-danger" ng-if="vm.paginaErro.length">
-					<i>
-						<div ng-repeat="paginaErro in vm.paginaErro">{{paginaErro.name}} - {{paginaErro.size / 1000000|number:1}}MB - Tamanho
-							Máximo 2MB
-						</div>
-					</i>
-				</div>
-				<!-- ./Alert Erro da Pagina -->
 			</div>
 			<!-- ./Form Salvar Paginas -->
 		</div>

@@ -41,24 +41,22 @@ public class PaginasController {
 	 */
 	@RequestMapping(value = "/pagina", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public @ResponseBody ResponseEntity<PaginasEntity> cadastrarPaginas(
-			@RequestParam(value = "paginas") MultipartFile paginas, @RequestParam(value = "nome") String nome,
-			@RequestParam(value = "capitulo") Long Capitulo,
+			@RequestParam(value = "paginas") MultipartFile paginas, @RequestParam(value = "capitulo") Long Capitulo,
 			@RequestParam(value = "numCapitulo", required = false) int numCapitulo) throws IOException {
 
-		if (!paginas.isEmpty()) {
-			numCapitulo++;
+		if (!paginas.isEmpty() && paginas.getContentType().endsWith("image/jpeg")
+				|| paginas.getContentType().endsWith("image/jpg") || paginas.getContentType().endsWith("image/png")) {
 
 			CapitulosEntity capitulo = new CapitulosEntity();
 			capitulo.setId(Capitulo);
 
 			PaginasEntity pagina = new PaginasEntity();
 			pagina.setFotos(paginas.getBytes());
-			pagina.setNome(nome);
 			pagina.setCapitulo(capitulo);
 			pagina.setNumeroPagina(numCapitulo);
 			paginaService.cadastrar(pagina);
 		} else {
-			throw new RuntimeException("Erro ao salvar Pagina");
+			throw new RuntimeException("So aceita imagens .jpeg .jpg .png");
 		}
 
 		return new ResponseEntity<>(HttpStatus.CREATED);

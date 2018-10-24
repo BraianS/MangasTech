@@ -13,13 +13,18 @@
             salvarPaginas: salvarPaginas
         }
 
-        function salvarPaginas(pagina, descricao, capitulo, count) {
-
+        function salvarPaginas(pagina, capitulo, count) {
             return Upload.upload({
                 url: '/api/pagina',
                 method: 'POST',
                 arrayKey: '',
-                data: { paginas: pagina[count], nome: descricao, capitulo: capitulo, numCapitulo: count }
+                data: { paginas: pagina, capitulo: capitulo, numCapitulo: count },
+                uploadEventHandlers: {
+                    progress: function (evt) {
+                        pagina.progress = Math.min(100, parseInt(100.0 *
+                            evt.loaded / evt.total))
+                    }
+                }
             }).then(getsalvarPaginas)
                 .catch(getsalvarPaginasError);
 

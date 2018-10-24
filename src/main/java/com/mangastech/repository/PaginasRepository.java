@@ -16,6 +16,6 @@ import com.mangastech.model.PaginasEntity;
 @Repository
 public interface PaginasRepository extends CrudRepository<PaginasEntity, Long> {
 
-	@Query("SELECT p FROM PaginasEntity as p WHERE p.capitulo =:id")
+	@Query("SELECT p FROM PaginasEntity as p WHERE p.capitulo =:id ORDER BY numeroPagina ASC")
 	public Page<PaginasEntity> buscarPaginaPorCapituloId(@Param("id") CapitulosEntity id, Pageable pageable);
 }

@@ -6,15 +6,17 @@
         .factory('capituloService', capituloService);
 
     //Injeta as dependências
-    capituloService.$inject = ['$http', '$log'];
+    capituloService.$inject = ['$http', '$state'];
 
-    function capituloService($http) {
+    function capituloService($http, $state) {
         return {
             listaCapitulosPorManga: listaCapitulosPorManga,
             carregarPaginas: carregarPaginas,
             excluirCapitulo: excluirCapitulo,
             carregarCapituloPorManga: carregarCapituloPorManga,
-            salvarCapitulos: salvarCapitulos
+            salvarCapitulos: salvarCapitulos,
+            mudarDeCapitulo: mudarDeCapitulo,
+            listaNumerosDePaginas: listaNumerosDePaginas
         }
 
         function carregarPaginas(capituloId, numPagina) {
@@ -91,6 +93,37 @@
 
             function getCapituloError(error) {
                 console.log("Erro ao salvar manga");
+                return error.data;
+            }
+        }
+
+        function listaNumerosDePaginas(capituloId) {
+            return $http.get('/api/paginas/' + capituloId)
+                .then(getPaginas)
+                .catch(getPaginasError);
+
+            function getPaginas(response) {
+                return response.data;
+            }
+
+            function getPaginasError(error) {
+                console.log('Erro ao carregar paginas');
+                return error.data;
+            }
+        }
+
+        function mudarDeCapitulo(mangaId, capitulo, pagina) {
+            return $http.get('/api/pagina/' + capitulo + '?page=' + pagina)
+                .then(getMudarPagina)
+                .catch(getMudarPaginaError);
+
+            function getMudarPagina(response) {
+                $state.go('nav.capitulo', { 'mangaId': mangaId, 'capituloId': capitulo })
+                return response.data;
+            }
+
+            function getMudarPaginaError(error) {
+                console.log("Erro ao carregar capitulo");
                 return error.data;
             }
         }

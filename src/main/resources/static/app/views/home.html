@@ -40,7 +40,7 @@
 									<strong class="caption">{{manga.nome}}</strong>
 								</a>
 								<ul class="list-inline">
-									<li ng-repeat="capitulo in manga.capitulo" class="badge" ui-sref="nav.capitulo({capituloId:capitulo.id})">
+									<li ng-repeat="capitulo in manga.capitulo" class="badge" ui-sref="nav.capitulo({mangaId:manga.id,capituloId:capitulo.id})">
 										<strong>{{capitulo.capitulo}}</strong>
 									</li>
 								</ul>
@@ -81,7 +81,7 @@
 									<strong class="caption">{{manga.nome}}</strong>
 								</a>
 								<ul class="list-inline">
-									<li ng-repeat="capitulo in manga.capitulo" class="badge" style="background-color:#3a87ad;" ui-sref="nav.capitulo({capituloId:capitulo.id})">
+									<li ng-repeat="capitulo in manga.capitulo" class="badge" style="background-color:#3a87ad;" ui-sref="nav.capitulo({mangaId:manga.id,capituloId:capitulo.id})">
 										<strong>{{capitulo.capitulo}}</strong>
 									</li>
 								</ul>
@@ -123,7 +123,7 @@
 									<strong class="caption">{{manga.nome}}</strong>
 								</a>
 								<ul class="list-inline">
-									<li ng-repeat="capitulo in manga.capitulo" class="badge" style="background-color:#3a87ad;" ui-sref="nav.capitulo({capituloId:capitulo.id})">
+									<li ng-repeat="capitulo in manga.capitulo" class="badge" style="background-color:#3a87ad;" ui-sref="nav.capitulo({mangaId:manga.id,capituloId:capitulo.id})">
 										<strong>{{capitulo.capitulo}}</strong>
 									</li>
 								</ul>

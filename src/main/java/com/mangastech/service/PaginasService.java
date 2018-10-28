@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import java.util.List;
 import com.mangastech.model.CapitulosEntity;
 import com.mangastech.model.PaginasEntity;
 import com.mangastech.repository.PaginasRepository;
@@ -26,5 +27,9 @@ public class PaginasService {
 
 	public Page<PaginasEntity> buscarPaginaPorCapituloId(CapitulosEntity id, Pageable pageable) {
 		return paginaRepository.buscarPaginaPorCapituloId(id, pageable);
+	}
+
+	public List<PaginasEntity> listaNumeroDePaginas(CapitulosEntity id) {
+		return paginaRepository.listaNumeroDePaginas(id);
 	}
 }

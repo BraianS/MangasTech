@@ -1,6 +1,7 @@
 package com.mangastech.controller;
 
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,5 +85,17 @@ public class PaginasController {
 		Pageable pageable = new PageRequest(page, 1);
 
 		return new ResponseEntity<>(paginaService.buscarPaginaPorCapituloId(id, pageable), HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * Método lista numero de paginas por capitulo ID
+	 * 
+	 * @param id
+	 * @return lista de capitulos
+	 */
+	@RequestMapping(value = "/paginas/{id}", method = RequestMethod.GET)
+	public List<PaginasEntity> buscarTodos(@PathVariable("id") CapitulosEntity id) {
+		return paginaService.listaNumeroDePaginas(id);
 	}
 }

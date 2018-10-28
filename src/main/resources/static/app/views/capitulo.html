@@ -1,24 +1,41 @@
 <div class="container" id="capituloDiv" tabindex="1" style="outline:none">
+	<div class="row text-center">
+		<ul class="pagination custom-pagination">
+			<!-- Manga -->
+			<a class="btn btn-default pull-left" ui-sref="nav.manga.detalhe({mangasId:vm.mangas.id})">{{vm.mangas.nome}}</a>
+
+			<!-- Lista de capitulos -->
+			<select class="form-control " style="margin-right: 24px" ng-model="vm.capitulo" ng-options="c.id as c.capitulo for c in vm.mangas.capitulo"
+			 ng-change="vm.mudarDeCapitulo()"></select>
+			<li>
+				<!-- Previus -->
+				<a href="" ng-click="vm.pagina = vm.pagina > 1 ? vm.pagina - 1: 1;vm.carregarCapitulo()">Prev</a>
+			</li>
+			<li>
+				<!-- Numero de paginas -->
+				<select class="form-control" ng-model="vm.pagina" ng-options="n.numeroPagina as n.numeroPagina for n in vm.numeroDePaginas"
+				 ng-change="vm.carregarCapitulo()">
+				</select>
+			</li>
+			<li>
+				<!-- Next -->
+				<a href="" ng-click="vm.pagina = vm.pagina < vm.totalElementos? vm.pagina + 1: vm.totalElementos;vm.carregarCapitulo()">Next</a>
+			</li>
+		</ul>
+	</div>
 	<div class="row">
-		<div class="col-md-12">
-			<div class="text-center">
-				<ul uib-pagination max-size="7" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarCapitulo()"
-				 items-per-page="1" boundary-links="true"></ul>
-			</div>
-
-			<!-- Carrega imagems do capitulo -->
-			<div class="text-center" ng-repeat="foto in vm.fotos">
-				<img ng-model="vm.pagina" id="imagem" class="img-responsive " data-ng-src="data:image/jpeg;base64,{{foto.fotos}}">
-			</div>
-			<!-- ./Carrega imagems do capitulo -->
-
-			<!-- Sem imagem -->
-			<div ng-if="!vm.fotos.length" class="text-center">
-				<h2 class="alert alert-warning">
-					Sem imagem
-				</h2>
-			</div>
-			<!-- ./Sem imagem -->
+		<!-- Paginas do capitulo -->
+		<div class="text-center">
+			<img ng-click="vm.proximaPagina()" ng-model="vm.pagina" id="imagem" class="img-responsive" data-ng-src="data:image/jpeg;base64,{{vm.paginas[0].fotos}}">
 		</div>
+		<!-- ./Paginas do capitulo -->
+
+		<!-- Sem pagina -->
+		<div ng-if="vm.paginas.length == 0" class="text-center">
+			<h2 class="alert alert-warning">
+				Sem imagem
+			</h2>
+		</div>
+		<!-- ./Sem pagina -->
 	</div>
 </div>

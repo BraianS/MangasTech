@@ -12,20 +12,59 @@
 
 		var vm = this;
 
-		vm.fotos = [];
 		vm.pagina = 1;
 		vm.totalElementos = [];
-		vm.carregarCapitulo = carregarCapitulo;
+		vm.numeroDePaginas = [];
+		vm.mangas = [];
+		vm.capitulo = [];
 		vm.capituloId = $stateParams.capituloId;
+		vm.mangaId = $stateParams.mangaId;
+		vm.carregarCapitulo = carregarCapitulo;
+		vm.listaNumeroDePaginas = listaNumeroDePaginas;
+		vm.mudarDeCapitulo = mudarDeCapitulo;
 
+		listaNumeroDePaginas();
+		carregarMangaECapitulos();
 		carregarCapitulo();
+
+		function listaNumeroDePaginas() {
+			return capituloService.listaNumerosDePaginas(vm.capituloId)
+				.then(function (data) {
+					vm.numeroDePaginas = data;
+				})
+		}
+
+		function carregarMangaECapitulos() {
+			return capituloService.listaCapitulosPorManga(vm.mangaId)
+				.then(function (data) {
+					vm.mangas = data;
+				})
+		}
 
 		function carregarCapitulo() {
 			return capituloService.carregarPaginas(vm.capituloId, vm.pagina)
 				.then(function (data) {
-
 					vm.totalElementos = data.totalElements;
-					vm.fotos = data.content;
+					vm.paginas = data.content;
+					vm.capitulo = vm.paginas[0].capitulo.id;
+				})
+		}
+
+		vm.proximaPagina = function () {
+			if (vm.pagina < vm.totalElementos) {
+				vm.pagina += 1;
+				carregarCapitulo();
+			} else {
+				vm.pagina = vm.pagina;
+				console.log("Limite de paginas");
+			}
+		}
+
+		function mudarDeCapitulo() {
+			return capituloService.mudarDeCapitulo(vm.mangaId, vm.capitulo, vm.pagina)
+				.then(function (data) {
+					vm.totalElementos = data.totalElements;
+					vm.paginas = data.content;
 				})
 		}
 

@@ -282,3 +282,27 @@ ul {
 	max-width: 100%;
 	height:180px;
 }
+
+.custom-pagination select {
+    display:inline-block;
+    width:75px;
+    border-radius:0px;
+    float: left;
+    vertical-align: top;
+    margin-left: -1px;
+}
+
+.navigation-bar .pagination {
+	margin-top: 0;
+	vertical-align: middle;
+  }
+
+  .navbar-nav {
+    float: none;
+    text-align: center;
+}
+
+.navbar-nav li {
+     float: none;
+    display: inline-block;
+}

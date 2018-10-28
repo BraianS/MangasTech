@@ -158,7 +158,7 @@
 
 		var capitulo = {
 			name: 'nav.capitulo',
-			url: 'manga/capitulo/:capituloId',
+			url: 'manga/:mangaId/:capituloId',
 			needToLogin: false,
 			reload: true,
 			views: {

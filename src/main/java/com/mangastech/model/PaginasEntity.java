@@ -24,7 +24,7 @@ public class PaginasEntity {
 
 	private Long id;
 	private int numeroPagina;
-	private byte[] fotos;	
+	private byte[] fotos;
 
 	@Column
 	@Lob
@@ -66,10 +66,15 @@ public class PaginasEntity {
 
 	public void setCapitulo(CapitulosEntity capitulo) {
 		this.capitulo = capitulo;
-	}	
+	}
 
-	public PaginasEntity() {		
-	}	
+	public PaginasEntity() {
+	}
+
+	public PaginasEntity(Long id, int numeroPagina) {
+		this.id = id;
+		this.numeroPagina = numeroPagina;
+	}
 
 	@Override
 	public String toString() {

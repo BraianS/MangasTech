@@ -5,10 +5,11 @@ MangasTech é um projeto para organizar, inserir, editar, visualizar os Mangas. 
 # Requisitos
 * Java 1.8
 * MySql
+* Maven
 
 # Instalação
 
-1. [Clone o repositorio MangasTech](https://github.com/BraianS/MangasTech.git).
+1. [Clone o repositório MangasTech](https://github.com/BraianS/MangasTech.git).
 1. Importe o projeto usando Maven
 
 # Uso
@@ -19,11 +20,10 @@ MangasTech é um projeto para organizar, inserir, editar, visualizar os Mangas. 
  Abra a Url
 > http://localhost:8080/
 
-# Construido com
+# Construído com
 
 * AngularJS 1.7.2
 * BootStrap 3.3.7
-* Thymeleaf
 * JSON Web Token (JWT) 0.9.1
 * Spring Boot
 * Spring Data(Jpa)
@@ -31,9 +31,17 @@ MangasTech é um projeto para organizar, inserir, editar, visualizar os Mangas. 
 * Java 1.8
 * MySql
 
+# Contribuindo
+
+* Faça um fork deste projeto
+* Crie uma nova branch
+* Commit as mudanças de sua branch
+* Push para sua nova branch
+* Envie um Pull request
+
 # Explicação
 
-Caso queirar alterar o nome da Database, basta abrir o `application.properties`
+Caso queira alterar o nome da Database, basta abrir o `application.properties`
 
 ```
 spring.datasource.url = jdbc:mysql://localhost:3306/DATABASE-NAME?useSSL=false
@@ -52,6 +60,14 @@ Se não quiser usar MySql pode comentar as linhas acima no `Application.properti
 </dependency>
 ```
 
-# autor
+# Autor
 
 **Braian Silva** - Twitter [@braiancode](https://twitter.com/braiancode) - Git [Git BraianS](https://github.com/BraianS)
+
+# Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](https://github.com/BraianS/MangasTech/blob/master/LICENSE) para detalhes
+
+# Agradecimentos
+
+* Inspirado por [Spring Boot Security JWT AngularJS](https://github.com/hendisantika/jwt-spring-boot-security-angular)

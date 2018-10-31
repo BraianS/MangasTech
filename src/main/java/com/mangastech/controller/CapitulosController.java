@@ -1,5 +1,6 @@
 package com.mangastech.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.mangastech.model.CapitulosEntity;
 import com.mangastech.model.MangasEntity;
+import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.service.CapituloService;
 
 /**
@@ -25,6 +27,9 @@ public class CapitulosController {
 
 	@Autowired
 	private CapituloService capituloService;
+
+	@Autowired
+	private CapitulosRepository capitulosRepository;
 
 	/**
 	 * Método recebe todos os capitulos
@@ -61,5 +66,25 @@ public class CapitulosController {
 
 		capitulos.setLancamento(new Date());
 		return new ResponseEntity<>(capituloService.cadastrar(capitulos), HttpStatus.OK);
+	}
+
+	/**
+	 * Método Deleta um capitulo de cada Manga
+	 * 
+	 * @param id
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<CapitulosEntity> deletarCapitulo(@PathVariable("id") Long id) throws IOException {
+
+		CapitulosEntity capitulo = capitulosRepository.findOne(id);
+
+		if (capitulo == null) {
+			throw new RuntimeException("Não encontrado");
+		}
+
+		capitulosRepository.delete(id);
+		return ResponseEntity.ok().build();
 	}
 }

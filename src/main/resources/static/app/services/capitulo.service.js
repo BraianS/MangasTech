@@ -10,7 +10,6 @@
 
     function capituloService($http, $state) {
         return {
-            listaCapitulosPorManga: listaCapitulosPorManga,
             carregarPaginas: carregarPaginas,
             excluirCapitulo: excluirCapitulo,
             carregarCapituloPorManga: carregarCapituloPorManga,
@@ -34,23 +33,8 @@
             }
         }
 
-        function listaCapitulosPorManga(mangaId) {
-            return $http.get('/api/capitulo/lista/' + mangaId)
-                .then(getListaCapitulosPorManga)
-                .catch(getListaCapitulosPorMangaError);
-
-            function getListaCapitulosPorManga(response) {
-                return response.data;
-            }
-
-            function getListaCapitulosPorMangaError(error) {
-                console.log("Erro ao listar de capitulos por manga");
-                return error.data;
-            }
-        }
-
         function excluirCapitulo(capitulo) {
-            return $http.delete('/api/capitulo/lista/' + capitulo.id)
+            return $http.delete('/api/capitulo/' + capitulo.id)
                 .then(getExcluirCapitulo)
                 .catch(getCapituloError);
 

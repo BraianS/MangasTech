@@ -6,9 +6,9 @@
 		.controller('capituloController', capituloController);
 
 	//Injeta as dependências
-	capituloController.$inject = ['capituloService', '$stateParams'];
+	capituloController.$inject = ['capituloService', '$stateParams','mangaService'];
 
-	function capituloController(capituloService, $stateParams) {
+	function capituloController(capituloService, $stateParams, mangaService) {
 
 		var vm = this;
 
@@ -35,7 +35,7 @@
 		}
 
 		function carregarMangaECapitulos() {
-			return capituloService.listaCapitulosPorManga(vm.mangaId)
+			return mangaService.buscarMangaPorId(vm.mangaId)
 				.then(function (data) {
 					vm.mangas = data;
 				})

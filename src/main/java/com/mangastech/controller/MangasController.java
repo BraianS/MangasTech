@@ -3,7 +3,6 @@ package com.mangastech.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import com.mangastech.model.CapitulosEntity;
 import com.mangastech.model.MangasEntity;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.repository.MangasRepository;
@@ -215,36 +212,6 @@ public class MangasController {
 	public List<MangasEntity> mangaECapitulos() {
 
 		return mangasService.listaMangas();
-	}
-
-	/**
-	 * Método Lista de capitulos por Manga id
-	 * 
-	 * @param id
-	 * @return lista de capitulos
-	 */
-	@RequestMapping(value = "/capitulo/lista/{id}", method = RequestMethod.GET)
-	public MangasEntity listarCapitulosPorManga(@PathVariable(value = "id") Long id) {
-
-		return mangaRepository.listarCapitulosPorManga(id);
-	}
-
-	/**
-	 * Método Deleta um capitulo de cada Manga
-	 * 
-	 * @param id
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping(value = "/capitulo/lista/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<CapitulosEntity> deletarCapituloDoManga(@PathVariable("id") Long id) throws IOException {
-		CapitulosEntity capitulo = capituloRepository.findOne(id);
-		if (capitulo == null) {
-			throw new RuntimeException("Não encontrado");
-		}
-
-		capituloRepository.delete(id);
-		return ResponseEntity.ok().build();
 	}
 
 	/**

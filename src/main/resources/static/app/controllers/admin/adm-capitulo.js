@@ -47,7 +47,7 @@
 		}
 
 		function listaCapitulosPorManga() {
-			return capituloService.listaCapitulosPorManga(vm.mangaId)
+			return mangaService.buscarMangaPorId(vm.mangaId)
 				.then(function (data) {
 					vm.listaCapitulos = data;
 				})

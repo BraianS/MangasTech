@@ -15,7 +15,8 @@
             salvarMangas: salvarMangas,
             excluirMangas: excluirMangas,
             atualizarManga: atualizarManga,
-            buscarMangaPorLetra: buscarMangaPorLetra
+            buscarMangaPorLetra: buscarMangaPorLetra,
+            buscarMangaPorId: buscarMangaPorId
         };
 
         function listaMangas() {
@@ -128,6 +129,21 @@
 
             function getBuscarMangaPorLetraError(error) {
                 console.log("Erro ao buscar manga por letra");
+                return error.data;
+            }
+        }
+
+        function buscarMangaPorId(mangaId) {
+            return $http.get('/api/manga/' + mangaId)
+                .then(getMangaId)
+                .catch(getMangaIdError);
+
+            function getMangaId(response) {
+                return response.data;
+            }
+
+            function getMangaIdError(error) {
+                console.log("Erro ao buscar id do manga");
                 return error.data;
             }
         }

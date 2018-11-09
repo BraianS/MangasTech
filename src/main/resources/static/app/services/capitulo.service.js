@@ -6,9 +6,9 @@
         .factory('capituloService', capituloService);
 
     //Injeta as dependências
-    capituloService.$inject = ['$http', '$state'];
+    capituloService.$inject = ['$http', '$state', 'Upload'];
 
-    function capituloService($http, $state) {
+    function capituloService($http, $state, Upload) {
         return {
             carregarPaginas: carregarPaginas,
             excluirCapitulo: excluirCapitulo,
@@ -63,11 +63,16 @@
             }
         }
 
-        function salvarCapitulos(capitulo) {
-            return $http({
+        function salvarCapitulos(capitulo, paginas) {
+            var cap = new Blob([angular.toJson(capitulo)], {
+                type: "application/json"
+            });
+            return Upload.upload({
                 method: 'POST',
                 url: '/api/capitulo',
-                data: capitulo
+                headers: { 'Content-Type': undefined },
+                arrayKey: '',
+                data: { capitulo: cap, paginas: paginas }
             }).then(getCapitulo)
                 .catch(getCapituloError);
 

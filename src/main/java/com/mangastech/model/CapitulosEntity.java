@@ -27,23 +27,25 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 @Entity
 @Table(name = "Capitulos")
 public class CapitulosEntity {
+
 	private Long id;
 	private Date lancamento;
 	private int capitulo;
 
-	@JsonIgnoreProperties(value={"capitulo"})
+	@JsonIgnoreProperties(value = { "capitulo" })
 	private GruposEntity grupo;
-	
+
 	public MangasEntity manga;
 
 	private List<PaginasEntity> pagina;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "capitulo", cascade = {CascadeType.REMOVE })
+	@OneToMany(mappedBy = "capitulo", cascade = { CascadeType.ALL })
 	public List<PaginasEntity> getPagina() {
 		return pagina;
 	}
 
+	@JsonProperty(access = Access.WRITE_ONLY)
 	public void setPagina(List<PaginasEntity> pagina) {
 		this.pagina = pagina;
 	}

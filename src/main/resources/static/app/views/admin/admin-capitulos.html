@@ -7,7 +7,8 @@
 		<div class="panel-info">
 			<!-- Form Capitulo -->
 			<div class="form-group">
-				<form name="vm.formCapitulo" class="form-horizontal" ng-submit="vm.salvarCapitulos()" novalidate>
+				<form name="vm.formCapitulo" class="form-horizontal" ng-submit="vm.salvarCapitulos();vm.progresssBar = true"
+				 novalidate>
 
 					<!-- Numero do Capitulo -->
 					<div class="form-group" ng-class=" {'has-error': vm.formCapitulo.capitulo.$invalid && vm.formCapitulo.capitulo.$dirty}">
@@ -37,6 +38,16 @@
 						<span ng-show="vm.formCapitulo.grupo.$touched && vm.formCapitulo.grupo.$error.required">Campo Obrigatorio</span>
 					</div>
 
+					<!-- Seleciona Paginas -->
+					<div class="form-group">
+						<label class="control-label col-sm-3">Paginas</label><br>
+						<div class="col-xs-7">
+							<input type="file" id="pagina" name="pagina" ngf-select="vm.selecionarPagina($files,$invalidFiles)" ngf-pattern="image/*"
+							 multiple="multiple" ngf-max-size="2MB" class="form-control" placeholder="Files" accept="image/*">
+							<!-- ./Alert Erro da Pagina -->
+						</div>
+					</div>
+
 					<div class="text-center">
 						<!-- Salvar Capitulo-->
 						<input type="submit" class="btn btn-primary text-center" ng-disabled="vm.formCapitulo.$invalid" value="Salvar">
@@ -45,8 +56,15 @@
 						<input type="button" class="btn btn-primary" value="cancelar" ng-click="vm.cancelarCapitulo()">
 					</div>
 
+					<!-- Progress bar -->
+					<div class="progress" ng-show="vm.progresssBar">
+						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+						 aria-valuemax="100" style="width:100%">
+							<strong>Carregando, por favor espere</strong>
+						</div>
+					</div>
 					<!-- Alerta -->
-					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2500" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
+					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2500" ng-if="vm.mensagem">{{vm.mensagem}}</div>
 				</form>
 			</div>
 			<!-- ./Form Capitulo -->

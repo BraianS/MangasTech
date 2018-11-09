@@ -12,6 +12,7 @@
 
 		var vm = this;
 
+		vm.progresssBar = false;
 		vm.capitulo = {};
 		vm.pagina = {};
 		vm.paginas = [];
@@ -35,7 +36,7 @@
 
 		carregarMangas();
 		carregarGrupos();
-		
+
 		vm.closeMsg = closeMsg;
 
 		function closeMsg() {
@@ -84,8 +85,9 @@
 
 		function salvarCapitulos() {
 			if (vm.formCapitulo.$valid) {
-				return capituloService.salvarCapitulos(vm.capitulo)
+				return capituloService.salvarCapitulos(vm.capitulo, vm.paginas)
 					.then(function (data) {
+						vm.progresssBar = false;
 						vm.mensagem = data;
 						cancelarCapitulo();
 						cancelarPagina();

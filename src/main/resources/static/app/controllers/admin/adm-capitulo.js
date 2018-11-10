@@ -6,9 +6,9 @@
 		.controller('admCapituloController', admCapituloController);
 
 	//Injeta as dependências
-	admCapituloController.$inject = ['mangaService', 'grupoService', 'capituloService', 'uploadService'];
+	admCapituloController.$inject = ['mangaService', 'grupoService', 'capituloService'];
 
-	function admCapituloController(mangaService, grupoService, capituloService, uploadService) {
+	function admCapituloController(mangaService, grupoService, capituloService) {
 
 		var vm = this;
 
@@ -25,7 +25,6 @@
 		vm.mensagem = "";
 		vm.capituloPorManga = capituloPorManga;
 		vm.salvarCapitulos = salvarCapitulos;
-		vm.uploadPaginas = uploadPaginas;
 		vm.cancelarCapitulo = cancelarCapitulo;
 		vm.cancelarPagina = cancelarPagina;
 		vm.listaCapitulosPorManga = listaCapitulosPorManga;
@@ -100,19 +99,6 @@
 		function selecionarPagina(files, errFiles) {
 			vm.paginas = files;
 			vm.paginaErro = errFiles;
-		}
-
-		function uploadPaginas() {
-			if (vm.paginas && vm.formPagina.$valid) {
-				angular.forEach(vm.paginas, function (file, count) {
-					return uploadService.salvarPaginas(file, vm.pagina.capitulo, vm.pagina.contador[count])
-						.then(function (data) {
-							console.log(data);
-						});
-				})
-			} else {
-				vm.mensagemPagina = "Não foi salvo";
-			}
 		}
 
 		function cancelarCapitulo() {

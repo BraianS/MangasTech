@@ -1,94 +1,94 @@
-<div class="panel panel-default">
-	<div class="panel-heading text-center">
-		<h3 class="panel-title">Salvar Grupos</h3>
-	</div>
+<div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<h3 class="panel-title">Salvar Grupo</h3>
+		</div>
+		<div class="panel-body">
+			<div class="panel-info">
+				<!-- Form Grupo -->
+				<div class="form-group">
+					<form name="vm.formGrupo" ng-submit="vm.salvarGrupos()">
 
-	<div class="panel-body">
-		<div class="panel-info">
-			<!-- Form Grupo -->
-			<div class="form-group">
-				<form name="vm.formGrupo" ng-submit="vm.salvarGrupos()">
+						<!-- Nome -->
+						<div class="form-group" ng-class="{ 'has-error': vm.formGrupo.nome.$dirty && vm.formGrupo.nome.$invalid}">
+							<label for="nome" class="control-label">Nome</label>
+							<input type="text" placeholder="Digite um nome" maxlength="50" ng-maxlength="49" class="form-control" ng-model="vm.grupo.nome"
+							 id="nome" name="nome" required>
+							<span ng-show="vm.formGrupo.nome.$error.required && vm.formGrupo.nome.$dirty">Campo Obrigatorio</span>
+							<span ng-show="vm.formGrupo.nome.$error.maxlength">Tamanho maximo</span>
+						</div>
 
-					<!-- Nome -->
-					<div class="form-group" ng-class="{ 'has-error': vm.formGrupo.nome.$dirty && vm.formGrupo.nome.$invalid}">
-						<label for="nome">Nome</label>
-						<input type="text" maxlength="50" ng-maxlength="49" class="form-control" ng-model="vm.grupo.nome" id="nome" name="nome" required>
-						<span ng-show="vm.formGrupo.nome.$error.required && vm.formGrupo.nome.$dirty">Campo Obrigatorio</span>
-						<span ng-show="vm.formGrupo.nome.$error.maxlength">Tamanho maximo</span>
-					</div>
+						<div class="text-center">
+							<!-- Salvar -->
+							<input type="submit" class="btn btn-primary text-center" value="Salvar" ng-disabled="vm.formGrupo.$invalid" />
 
-					<div class="text-center">
-						<!-- Salvar -->
-						<input type="submit" class="btn btn-primary text-center" value="Salvar" ng-disabled="vm.formGrupo.$invalid" />
-
-						<!-- Cancelar -->
-						<input type="button" class="btn btn-primary" value="cancelar" ng-click="vm.cancelar()">
-					</div>
-
-					<!-- Alerta -->
-					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2500" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
-				</form>
+							<!-- Cancelar -->
+							<input type="button" class="btn btn-primary" value="cancelar" ng-click="vm.cancelar()">
+						</div>
+						<!-- Alerta -->
+						<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2500" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
+					</form>
+				</div>
+				<!-- ./Salvar Grupo -->
 			</div>
-			<!-- ./Salvar Grupo -->
 		</div>
 	</div>
 </div>
-
-<div class="panel panel-default">
-	<div class="panel-heading  text-center">
-		<h3 class="panel-title">Editar Grupos</h3>
-	</div>
-
-	<div class="panel-body">
-		<div class="panel-info">
-			<!-- Tabela de Grupos -->
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>Editar</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="grupo in vm.grupos">
-						<td>
-							<a ui-sref="nav.grupo.detalhe({gruposId:grupo.id})">{{grupo.nome}}</a>
-						</td>
-						<td>	
-							<div class="btn-group btn-group-xs">
-								<!-- Excluir -->
-								<button type="button" class="btn btn-default" ng-click="vm.deletarGrupos(grupo)">
-									<span class="glyphicon glyphicon-remove"></span>
-								</button>
-								<!-- Alterar -->
-								<button type="button" class="btn btn-default" ng-click="vm.alterarGrupos(grupo)">
-									<span class="glyphicon glyphicon-pencil"></span>
-								</button>
-								<!-- Cancelar -->
-								<button type="button" class="btn btn-default" ng-click="vm.cancelarGrupo()">
-									<span class="glyphicon glyphicon-asterisk"></span>
-								</button>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+<div class="col-sm-6 col-md-6 col-xs-6">
+	<div class="panel panel-default">
+		<div class="panel-heading  text-center">
+			<h3 class="panel-title">Editar Grupos</h3>
 		</div>
-		<!-- ./Lista de grupos -->
-	</div>
-
-	<div class="panel-footer text-center">
-		<div ng-if="vm.grupos.length">
-			<!-- Pagination de grupos -->
-			<ul uib-pagination max-size="10" ng-if="vm.totalElementos" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarGrupos()"
-			 items-per-page="20" boundary-links="true"></ul>
-			<!-- ./Pagination de grupos -->
+		<div class="panel-body">
+			<div class="panel-info">
+				<!-- Tabela de Grupos -->
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Editar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="grupo in vm.grupos">
+							<td>
+								<a ui-sref="nav.grupo.detalhe({gruposId:grupo.id})">{{grupo.nome}}</a>
+							</td>
+							<td>
+								<div class="btn-group btn-group-xs">
+									<!-- Excluir -->
+									<button type="button" class="btn btn-default" ng-click="vm.deletarGrupos(grupo)">
+										<span class="glyphicon glyphicon-remove"></span>
+									</button>
+									<!-- Alterar -->
+									<button type="button" class="btn btn-default" ng-click="vm.alterarGrupos(grupo)">
+										<span class="glyphicon glyphicon-pencil"></span>
+									</button>
+									<!-- Cancelar -->
+									<button type="button" class="btn btn-default" ng-click="vm.cancelarGrupo()">
+										<span class="glyphicon glyphicon-asterisk"></span>
+									</button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- ./Lista de grupos -->
 		</div>
+		<div class="panel-footer text-center">
+			<div ng-if="vm.grupos.length">
+				<!-- Pagination de grupos -->
+				<ul uib-pagination max-size="10" ng-if="vm.totalElementos" total-items="vm.totalElementos" ng-model="vm.pagina"
+				 ng-click="vm.carregarGrupos()" items-per-page="20" boundary-links="true"></ul>
+				<!-- ./Pagination de grupos -->
+			</div>
 
-		<!-- Sem Grupos -->
-		<div ng-if="!vm.grupos.length">
-			<h3 class="alert">Sem Grupos</h3>
+			<!-- Sem Grupos -->
+			<div ng-if="!vm.grupos.length">
+				<h3 class="alert">Sem Grupos</h3>
+			</div>
+			<!-- ./Sem Grupos -->
 		</div>
-		<!-- ./Sem Grupos -->
 	</div>
 </div>

@@ -299,3 +299,7 @@ ul {
      float: none;
     display: inline-block;
 }
+
+.option {
+	display: none;
+}

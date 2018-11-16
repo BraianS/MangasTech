@@ -21,7 +21,8 @@
 		vm.Grupos = [];
 		vm.capituloManga = [];
 		vm.listaCapitulos = [];
-		vm.mangaId = [];
+		vm.mangaId = null;
+		vm.closeMsg = closeMsg;
 		vm.mensagem = "";
 		vm.capituloPorManga = capituloPorManga;
 		vm.salvarCapitulos = salvarCapitulos;
@@ -36,8 +37,6 @@
 		carregarMangas();
 		carregarGrupos();
 
-		vm.closeMsg = closeMsg;
-
 		function closeMsg() {
 			vm.mensagem = "";
 		}
@@ -50,6 +49,7 @@
 			return mangaService.buscarMangaPorId(vm.mangaId)
 				.then(function (data) {
 					vm.listaCapitulos = data;
+					limparPaginas();
 				})
 		}
 
@@ -105,6 +105,7 @@
 			vm.capitulo = {};
 			vm.formCapitulo.$setPristine();
 			vm.formCapitulo.$setUntouched();
+			cancelarPagina();
 		}
 
 		function cancelarPagina() {
@@ -112,10 +113,8 @@
 			vm.paginas = {};
 			vm.paginaErro = {};
 			vm.pagina = {};
-			vm.mangaId = "";
-			vm.listaCapitulos = "";
-			vm.formPagina.$setUntouched();
-			vm.formPagina.$setPristine();
+			vm.mangaId = null;
+			vm.listaCapitulos = [];
 		}
 
 		function limparPaginas() {

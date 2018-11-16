@@ -1,79 +1,75 @@
 <div class="container">
-	<div class="row">
-		<div class="page-header text-center">
-			<h1>Registrar</h1>
+	<div class="page-header text-center">
+		<h1>Registrar</h1>
+	</div>
+	<!-- Form Registrar -->
+	<form name="vm.formRegistrar" class="form-horizontal" ng-submit="vm.cadastrar()">
+
+		<!-- Nome -->
+		<div class="form-group" ng-class="{ 'has-error' :vm.formRegistrar.nome.$invalid && vm.formRegistrar.nome.$dirty}">
+			<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+				<input name="nome" placeholder="nome" maxlength="21" minlength="3" ng-maxlength="20" ng-minlength="3" class="form-control"
+				 type="text" ng-model="vm.registrar.nome" id="nome" maxlength="50" ng-maxlength="49" required>
+				<span ng-show="vm.formRegistrar.nome.$error.required && vm.formRegistrar.nome.$dirty">Campo Nome Obrigatorio</span>
+				<span ng-show="vm.formRegistrar.nome.$error.maxlength || vm.formRegistrar.nome.$error.minlength">Nome deve ter
+					entre 6 e 20 caracteres</span>
+			</div>
 		</div>
 
-		<!-- Form Registrar -->
-		<form name="vm.formRegistrar" class="form-horizontal" ng-submit="vm.cadastrar()">
-
-			<!-- Nome -->
-			<div class="form-group" ng-class="{ 'has-error' :vm.formRegistrar.nome.$invalid && vm.formRegistrar.nome.$dirty}">
-				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-					<input name="nome" placeholder="nome" maxlength="21" minlength="3" ng-maxlength="20" ng-minlength="3" class="form-control"
-					 type="text" ng-model="vm.registrar.nome" id="nome" maxlength="50" ng-maxlength="49" required>
-					<span ng-show="vm.formRegistrar.nome.$error.required && vm.formRegistrar.nome.$dirty">Campo Nome Obrigatorio</span>					
-					<span ng-show="vm.formRegistrar.nome.$error.maxlength || vm.formRegistrar.nome.$error.minlength">Nome deve ter
-						entre 6 e 20 caracteres</span>
-				</div>
+		<!-- Username -->
+		<div class="form-group" ng-class=" {'has-error' :vm.formRegistrar.username.$invalid && vm.formRegistrar.username.$dirty}">
+			<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+				<input name="username" placeholder="username" maxlength="21" minlength="3" ng-maxlength="20" ng-minlength="3" class="form-control"
+				 type="text" ng-model="vm.registrar.username" id="username" maxlength="50" ng-maxlength="49" required>
+				<span ng-show="vm.formRegistrar.username.$error.required && vm.formRegistrar.username.$dirty ">Campo Nome
+					Obrigatorio</span>
+				<span ng-show="vm.formRegistrar.username.$error.maxlength || vm.formRegistrar.username.$error.minlength">Username
+					deve ter entre 6 e 20 caracteres</span>
 			</div>
+		</div>
 
-			<!-- Username -->
-			<div class="form-group" ng-class=" {'has-error' :vm.formRegistrar.username.$invalid && vm.formRegistrar.username.$dirty}">
-				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-					<input name="username" placeholder="username" maxlength="21" minlength="3" ng-maxlength="20" ng-minlength="3"
-					 class="form-control" type="text" ng-model="vm.registrar.username" id="username" maxlength="50" ng-maxlength="49"
-					 required>
-					<span ng-show="vm.formRegistrar.username.$error.required && vm.formRegistrar.username.$dirty ">Campo Nome
-						Obrigatorio</span>
-					<span ng-show="vm.formRegistrar.username.$error.maxlength || vm.formRegistrar.username.$error.minlength">Username
-						deve ter entre 6 e 20 caracteres</span>
-				</div>
+		<!-- Password -->
+		<div class="form-group" ng-class="{'has-error': vm.formRegistrar.senha.$invalid && vm.formRegistrar.senha.$dirty}">
+			<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+				<input name="senha" placeholder="password" minlength="6" maxlength="21" ng-maxlength="20" ng-minlength="6" class="form-control col-xs-6"
+				 type="password" ng-model="vm.registrar.password" id="senha" maxlength="50" ng-maxlength="49" required>
+				<span ng-show="vm.formRegistrar.senha.$dirty && vm.formRegistrar.senha.$error.required">Campo Senha Obrigatorio</span>
+				<span ng-show="vm.formRegistrar.senha.$error.maxlength || vm.formRegistrar.senha.$error.minlength">Senha deve ter
+					entre 6 e 20 caracteres</span>
 			</div>
+		</div>
 
-			<!-- Password -->
-			<div class="form-group" ng-class="{'has-error': vm.formRegistrar.senha.$invalid && vm.formRegistrar.senha.$dirty}">
-				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-					<input name="senha" placeholder="password" minlength="6" maxlength="21" ng-maxlength="20" ng-minlength="6" class="form-control col-xs-6"
-					 type="password" ng-model="vm.registrar.password" id="senha" maxlength="50" ng-maxlength="49" required>
-					<span ng-show="vm.formRegistrar.senha.$dirty && vm.formRegistrar.senha.$error.required">Campo Senha Obrigatorio</span>
-					<span ng-show="vm.formRegistrar.senha.$error.maxlength || vm.formRegistrar.senha.$error.minlength">Senha deve ter
-						entre 6 e 20 caracteres</span>
-				</div>
+		<!-- Confirmar Senha -->
+		<div class=form-group ng-class="{ 'has-error': vm.formRegistrar.confirmarSenha.$invalid && vm.formRegistrar.confirmarSenha.$dirty}">
+			<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+				<input type="password" placeholder="Repetir Senha" minlength="6" maxlength="21" ng-maxlength="20" ng-minlength="6"
+				 name="confirmarSenha" class="form-control col-xs-6" id="confirmar" maxlength="50" ng-maxlength="49" ng-model="vm.confirmarSenha"
+				 required>
+				<span ng-show="vm.formRegistrar.confirmarSenha.$dirty && vm.formRegistrar.confirmarSenha.$error.required">Campo
+					Obrigatorio</span>
+				<span ng-show="vm.formRegistrar.confirmarSenha.$error.maxlength || vm.formRegistrar.confirmarSenha.$error.minlength">Senha
+					deve ter entre 6 e 20 caracteres</span>
 			</div>
+		</div>
 
-			<!-- Confirmar Senha -->
-			<div class=form-group ng-class="{ 'has-error': vm.formRegistrar.confirmarSenha.$invalid && vm.formRegistrar.confirmarSenha.$dirty}">
-				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-					<input type="password" placeholder="Repetir Senha" minlength="6" maxlength="21" ng-maxlength="20" ng-minlength="6"
-					 name="confirmarSenha" class="form-control col-xs-6" id="confirmar" maxlength="50" ng-maxlength="49" ng-model="vm.confirmarSenha"
-					 required>
-					<span ng-show="vm.formRegistrar.confirmarSenha.$dirty && vm.formRegistrar.confirmarSenha.$error.required">Campo
-						Obrigatorio</span>
-					<span ng-show="vm.formRegistrar.confirmarSenha.$error.maxlength || vm.formRegistrar.confirmarSenha.$error.minlength">Senha
-						deve ter entre 6 e 20 caracteres</span>
-				</div>
+		<!-- Alerta -->
+		<div class="col-xs-10">
+			<div class="alert alert-warning warning-top-5" ng-show="vm.confirmarSenha != vm.registrar.password">
+				Senha nao é igual
 			</div>
+		</div>
 
-			<!-- Alerta -->
-			<div class="col-xs-10">
-				<div class="alert alert-warning warning-top-5" ng-show="vm.confirmarSenha != vm.registrar.password">
-					Senha nao é igual
-				</div>
-			</div>
+		<!-- Alerta -->
+		<div class="col-xs-10">
+			<div class="alert alert-info warning-top-5" ng-show="vm.mensagem">{{vm.mensagem}}</div>
+		</div>
 
-			<!-- Alerta -->
-			<div class="col-xs-10">
-				<div class="alert alert-info warning-top-5" ng-show="vm.mensagem">{{vm.mensagem}}</div>
+		<div class="form-group">
+			<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 text-center">
+				<!-- Salvar -->
+				<button class="btn btn-primary" type="submit" ng-disabled="vm.formRegistrar.$invalid">Salvar</button>
 			</div>
-
-			<div class="form-group">
-				<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 text-center">
-					<!-- Salvar -->
-					<button class="btn btn-primary" type="submit" ng-disabled="vm.formRegistrar.$invalid">Salvar</button>
-				</div>
-			</div>
-		</form>
-		<!-- ./Form Registrar -->
-	</div>
+		</div>
+	</form>
+	<!-- ./Form Registrar -->
 </div>

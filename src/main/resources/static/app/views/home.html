@@ -1,7 +1,6 @@
 <div class="container">
 	<div class="row">
-
-		<div class="container">
+		<div class="container" ng-if="vm.novosMangas.length">
 			<h3 class="text-center alert novo">Novos Mangas</h3>
 			<data-owl-carousel class="owl-carousel owl-theme" id="owl-example" data-options="vm.default">
 				<div owl-carousel-item="" class="thumb" ng-repeat="manga in vm.novosMangas">
@@ -16,7 +15,7 @@
 			</data-owl-carousel>
 		</div>
 
-		<div class="col-md-6 col-sm-6 col-xs-12">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 			<!-- Ultimos capitulos adicionados -->
 			<div class="panel panel-primary ">
 				<div class="panel-heading">
@@ -48,14 +47,14 @@
 						</li>
 					</ul>
 					<div ng-if="!vm.mangaCapitulo.length">
-						<h3 class="alert alert-warning text-center">Sem Capitulos</h3>
+						<h3 class="alert alert-info text-center">Sem Capitulos</h3>
 					</div>
 				</div>
 			</div>
 			<!-- ./Ultimos capitulos adicionados -->
 
 			<button type="button" class="btn btn-primary custom" ng-click="vm.mangaUmDiaAtras()" ng-hide="vm.ontemStatus">Ontem</button>
-
+			<!-- Capitulos de ontem -->
 			<div class="panel panel-primary " ng-if="vm.ontemStatus">
 				<div class="panel-heading text-center">
 					<h4 class="panel-title">Ontem</h4>
@@ -89,15 +88,15 @@
 						</li>
 					</ul>
 					<div ng-if="!vm.MangasOntem.length">
-						<h3 class="alert alert-warning text-center">Sem Capitulos</h3>
+						<h3 class="alert alert-info text-center">Sem Capitulos</h3>
 					</div>
 				</div>
 			</div>
-			<!-- ./Ultimos capitulos adicionados -->
+			<!-- ./Capitulos de ontem -->
 
 			<button type="button" class="btn btn-primary custom" ng-click="vm.mangasDoisDiasAtras()" ng-if="vm.ontemStatus"
-			 ng-hide="vm.anteOntemStatus">Ante Ontem</button>
-
+			 ng-hide="vm.anteOntemStatus">Anteontem</button>
+			<!--  Capitulos de Anteontem -->
 			<div class="panel panel-primary " ng-if="vm.anteOntemStatus">
 				<div class="panel-heading text-center">
 					<h4 class="panel-title"> {{vm.anteontem | date :'dd, MM'}}</h4>
@@ -131,11 +130,11 @@
 						</li>
 					</ul>
 					<div ng-if="!vm.MangasAnteOntem.length">
-						<h3 class="alert alert-warning text-center">Sem Capitulos</h3>
+						<h3 class="alert alert-info text-center">Sem Capitulos</h3>
 					</div>
 				</div>
 			</div>
-			<!-- ./Ultimos capitulos adicionados -->
+			<!-- ./Capitulos de Anteontem -->
 		</div>
 	</div>
 </div>

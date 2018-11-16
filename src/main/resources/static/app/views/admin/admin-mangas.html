@@ -1,66 +1,83 @@
 <div class="panel panel-default">
 	<div class="panel-heading text-center">
-		<h3 class="panel-title">Salvar Mangas</h3>
+		<h3 class="panel-title">Salvar Manga</h3>
 	</div>
-
 	<div class="panel-body">
 		<div class="panel-info">
 			<!-- Form Manga -->
 			<div class="form-group">
 				<form novalidate name="vm.formNovoManga" ng-submit="vm.submit()">
-
 					<!-- Mostrar imagem -->
 					<div class="col-sm-3">
-						<div>
-							<img class="img-responsive" id="img" ng-show="vm.recebeImagem" ngf-src="vm.recebeImagem">
-						</div>
+						<img class="img-responsive" id="img" ng-show="vm.recebeImagem.length" ngf-src="vm.recebeImagem">
+						<img class="img-responsive" id="img" src="/app/img/image.JPG" ng-show="vm.recebeImagem.length == 0">
 					</div>
 
 					<div class="col-sm-9">
 						<!-- Nome -->
 						<div class="form-group" ng-class="{ 'has-error': vm.formNovoManga.nome.$error.required && vm.formNovoManga.nome.$dirty}">
-							<label for="nome-manga">Nome</label>
-							<input name="nome" maxlength="100" ng-maxlength="99" type="text" class="form-control " ng-model="vm.manga.nome" placeholder="Nome do Manga"
-							 id="nome" required/>
-							<span ng-show="vm.formNovoManga.nome.$error.required && vm.formNovoManga.nome.$dirty">Campo Nome Obrigatorio</span>
+							<label for="nome-manga" class="control-label">Nome</label>
+							<input name="nome" maxlength="100" ng-maxlength="99" type="text" class="form-control " ng-model="vm.manga.nome"
+							 placeholder="Nome do Manga" id="nome" required />
+							<span ng-show="vm.formNovoManga.nome.$error.required && vm.formNovoManga.nome.$dirty">Campo nome obrigatório</span>
 							<span ng-show="vm.formNovoManga.nome.$error.maxlength">Tamanho maximo</span>
 						</div>
 
-						<!-- Opcao -->
-						<div class="form-group">
-							<label for="opcao-manga">Opcao</label>
-							<select name="opcao" maxlength="100" ng-maxlength="99" ng-model="vm.manga.status" ng-options="s for s in vm.status" required></select>
-							<span ng-show="vm.formNovoManga.opcao.$error.required && vm.formNovoManga.opcao.$dirty">Campo Opcao E Obrigatorio</span>
+						<!-- Status -->
+						<div class="form-group" ng-class="{ 'has-error': vm.formNovoManga.status.$invalid && vm.formNovoManga.status.$touched}">
+							<label for="opcao-manga" class="control-label">Status</label>
+							<select class="form-control" name="status" maxlength="100" ng-maxlength="99" ng-model="vm.manga.status"
+							 ng-options="status for status in vm.status" required>
+								<option class="option" value="">Selecionar opção</option>
+							</select>
+							<span ng-show="vm.formNovoManga.status.$error.required && vm.formNovoManga.status.$touched">Campo Status
+								obrigatório</span>
 						</div>
 
-						<!-- Anos -->
-						<div class="form-group">
-							<label for="grupo-manga">Anos:</label>
-							<select name="anos" ng-model="vm.manga.dataLancado" ng-options="year.value as year.value for year in vm.years" required></select>
-							<span ng-show="vm.formNovoManga.anos.$error.required && formnNovoManga.anos.$dirty">Campo Anos e Obrigatorio</span>
+						<!-- Lançamento -->
+						<div class="form-group" ng-class="{'has-error': vm.formNovoManga.lancamento.$invalid && vm.formNovoManga.lancamento.$touched}">
+							<label for="grupo-manga" class="control-label">Lançamento:</label>
+							<select class="form-control" name="lancamento" ng-model="vm.manga.dataLancado" ng-options="year.value as year.value for year in vm.years"
+							 required>
+								<option class="option" value="">Selecionar ano</option>
+							</select>
+							<span ng-show="vm.formNovoManga.lancamento.$error.required && vm.formNovoManga.lancamento.$touched">Campo
+								Lançamento
+								obrigatório</span>
 						</div>
 
 						<!-- Autor -->
-						<div class="form-group">
-							<label for="autor-manga">Autor</label>
-							<select name="autor" ng-model="vm.manga.autor" ng-options="autor.nome for autor in vm.autor track by autor.id" placeholder="Escolha o autor"></select>
-							<span ng-show="vm.formNovoManga.grupo.$error.required && vm.formNovoManga.grupo.$dirty">Campo Autor e Obrigatorio</span>
+						<div class="form-group" ng-class="{ 'has-error': vm.formNovoManga.autor.$invalid && vm.formNovoManga.autor.$touched}">
+							<label for="autor-manga" class="control-label">Autor</label>
+							<select class="form-control" name="autor" ng-model="vm.manga.autor" ng-options="autor.nome for autor in vm.autor track by autor.id"
+							 required>
+								<option class="option" value="">Selecionar autor</option>
+							</select>
+							<span ng-show="vm.formNovoManga.autor.$error.required && vm.formNovoManga.autor.$touched">Campo Autor
+								Obrigatorio</span>
 						</div>
 
-						<!-- Descricao -->
-						<div class="form-group">
-							<label for="descricao-manga">Descricao</label>
-							<textarea name="descricao" class="form-control" ng-model="vm.manga.descricao" placeholder="Escreva a descricao" required></textarea>
-							<span ng-show="vm.formNovoManga.descricao.$error.required && vm.formNovoManga.descricao.$dirty">Campo Descricao Obrigatorio</span>
+						<!-- Descrição -->
+						<div class="form-group" ng-class="{ 'has-error':vm.formNovoManga.descricao.$error.required && vm.formNovoManga.descricao.$dirty}">
+							<label for="descricao-manga" class="control-label">Descrição</label>
+							<textarea name="descricao" class="form-control" ng-model="vm.manga.descricao" placeholder="Escreva a descrição"
+							 required></textarea>
+							<span ng-show="vm.formNovoManga.descricao.$error.required && vm.formNovoManga.descricao.$dirty">Campo descrição
+								obrigatório</span>
 						</div>
 
 						<!-- Seleciona imagem -->
-						<div class="form-group">
-							<input type="file" id="capas" name="capa" class="form-control" value="clicar" ngf-select="vm.selecionaImagem($file)" accept="image/*"/>
+						<div class="form-group" ng-class="{ 'has-error': vm.errorImage.$error === 'pattern'}">
+							<label for="capa" class="control-label">Capa</label>
+							<input type="file" id="capas" name="capa" class="form-control" ngf-change="vm.selecionaImagem($files,$invalidFiles)"
+							 ngf-select ng-model="vm.recebeImagem" ngf-pattern="image/*" value="clicar" accept="image/*" required>
+							<div uib-alert close="vm.closeCapa()" dismiss-on-timeout="8000" class="alert alert-danger" ng-if="vm.errorImage.$error === 'pattern'"><i
+								 class="glyphicon glyphicon-file"></i> <strong>Arquivo invalido</strong> Por favor, envie uma imagem ou deixe
+								este campo vazio</div>
 						</div>
 					</div>
 
-					<div class="col-sm-12 col-md-12 col-xs-12">
+					<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 						<!-- Lista de generos -->
 						<div class="text-center">
 							<h3>GENEROS </h3>
@@ -86,20 +103,19 @@
 						<input type="button" value="cancelar" class="btn btn-primary" ng-click="vm.cancelarMangas()">
 					</div>
 
-					<!-- Alerta -->						
-						<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>			
+					<!-- Alerta -->
+					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
 				</form>
 			</div>
-			<!-- ./Form Mangas -->			
+			<!-- ./Form Mangas -->
 		</div>
 	</div>
 </div>
-
+<!-- Panel Editar mangas -->
 <div class="panel panel-default">
 	<div class="panel-heading text-center">
 		<h3 class="panel-title">Editar Mangas</h3>
 	</div>
-
 	<div class="panel-body">
 		<div class="panel-info">
 			<div class="table-responsive">
@@ -115,7 +131,6 @@
 							<th>editar</th>
 						</tr>
 					</thead>
-
 					<!-- Lista de mangas -->
 					<tbody>
 						<tr ng-repeat="manga in vm.Mangas ">
@@ -131,7 +146,6 @@
 							<td class="text">
 								<span>{{manga.descricao}}</span>
 							</td>
-
 							<td>
 								<div class="btn-group btn-group-xs" role="group" ng-init="editmode=false">
 									<!-- Excluir -->
@@ -157,18 +171,17 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="panel-footer text-center">
 		<!-- Pagination de mangas -->
 		<div ng-if="vm.Mangas.length">
-			<ul uib-pagination max-size="10" ng-change="vm.pageChange()" total-items="vm.totalElementos" ng-model="vm.pagina" ng-click="vm.carregarMangas()"
-			 items-per-page="20" boundary-links="true"></ul>
+			<ul uib-pagination max-size="10" ng-change="vm.pageChange()" total-items="vm.totalElementos" ng-model="vm.pagina"
+			 ng-click="vm.carregarMangas()" items-per-page="20" boundary-links="true"></ul>
 		</div>
 		<!-- ./Pagination de mangas  -->
 
 		<!-- Sem Mangas -->
 		<div ng-if="!vm.Mangas.length">
-			<uib-alert type="success" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.show">
+			<uib-alert type="success" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.show=true">
 				Sem Mangas
 			</uib-alert>
 		</div>

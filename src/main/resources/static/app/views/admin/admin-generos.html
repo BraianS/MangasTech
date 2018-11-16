@@ -1,80 +1,83 @@
-<div class="panel panel-default">
-	<div class="panel-heading text-center">
-		<h3 class="panel-title">Salvar Generos</h3>
-	</div>
+<div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<h3 class="panel-title">Salvar Genero</h3>
+		</div>
+		<div class="panel-body">
+			<div class="panel-info">
+				<!-- Form Genero -->
+				<div class="form-group">
+					<form name="vm.formGenero" ng-submit="vm.submit()">
 
-	<div class="panel-body">
-		<div class="panel-info">
-			<!-- Form Genero -->
-			<div class="form-group">
-				<form name="vm.formGenero" ng-submit="vm.submit()">
+						<!-- Nome -->
+						<div class="form-group" ng-class="{ 'has-error': vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty}">
+							<label for="nome" class="control-label">Nome</label>
+							<input type="text" maxlength="50" placeholder="Digite um genero" ng-maxlength="49" class="form-control" ng-model="vm.genero.nome"
+							 ng-change="vm.genero.nome=vm.genero.nome.toUpperCase();" id="nome" name="nome" required />
+							<span ng-show="vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty">Campo Obrigatorio</span>
+							<span ng-show="vm.formGenero.nome.$error.maxlength">Tamanho Maximo</span>
+						</div>
 
-					<!-- Nome -->
-					<div class="form-group" ng-class="{ 'has-error': vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty}">
-						<label for="nome">Nome</label>
-						<input type="text" maxlength="50" ng-maxlength="49" class="form-control" ng-model="vm.genero.nome" ng-change="vm.genero.nome=vm.genero.nome.toUpperCase();"id="nome"
-						 name="nome" required/>
-						<span ng-show="vm.formGenero.nome.$error.required && vm.formGenero.nome.$dirty">Campo Obrigatorio</span>
-						<span ng-show="vm.formGenero.nome.$error.maxlength">Tamanho Maximo</span>
-					</div>
+						<div class="text-center">
+							<!-- Salvar Genero-->
+							<input class="btn btn-primary" type="submit" value="salvar" ng-disabled="vm.formGenero.$invalid">
 
-					<div class="text-center">
-						<!-- Salvar Genero-->
-						<input class="btn btn-primary" type="submit" value="salvar" ng-disabled="vm.formGenero.$invalid">
+							<!-- Cancelar -->
+							<input class="btn btn-primary" type="button" value="cancelar" ng-click="vm.cancelarGeneros()">
+						</div>
 
-						<!-- Cancelar -->
-						<input class="btn btn-primary" type="button" value="cancelar" ng-click="vm.cancelarGeneros()">
-					</div>
+						<!-- Alerta -->
+						<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
 
-					<!-- Alerta -->
-					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
-
-				</form>
+					</form>
+				</div>
+				<!-- ./Form Genero -->
 			</div>
-			<!-- ./Form Genero -->
 		</div>
 	</div>
 </div>
-
-<div class="panel panel-default">
-	<div class="panel-heading text-center">
-		<h3 class="panel-title">Editar Generos</h3>
-	</div>
-
-	<div class="panel-body">
-		<div class="panel-info">
-			<!-- Tabela de Generos -->
-			<table class="table table-hover table-flex">
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>Edit</th>
+<div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<h3 class="panel-title">Editar Generos</h3>
+		</div>
+		<div class="panel-body">
+			<div class="panel-info">
+				<!-- Tabela de Generos -->
+				<table class="table table-hover table-flex" ng-if="vm.generos.length">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Edit</th>
+						</tr>
+					</thead>
+					<tr ng-repeat="genero in vm.generos">
+						<td>
+							<a ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
+						</td>
+						<td>
+							<div class="btn-group btn-group-xs">
+								<!-- Excluir -->
+								<button type="button" class="btn btn-default">
+									<span class="glyphicon glyphicon-remove" ng-click="vm.deletarGeneros(genero)"></span>
+								</button>
+								<!-- Alterar -->
+								<button type="button" class="btn btn-default">
+									<span class="glyphicon glyphicon-pencil" ng-click="vm.alterarGeneros(genero)"></span>
+								</button>
+								<!-- Cancelar -->
+								<button type="button" class="btn btn-default">
+									<span class="glyphicon glyphicon-asterisk" ng-click="vm.cancelarGeneros()"></span>
+								</button>
+							</div>
+						</td>
 					</tr>
-				</thead>
-
-				<tr ng-repeat="genero in vm.generos">
-					<td>
-						<a ui-sref="nav.genero.detalhe({generoId:genero.id})">{{genero.nome}}</a>
-					</td>
-					<td>
-						<div class="btn-group btn-group-xs">
-							<!-- Excluir -->
-							<button type="button" class="btn btn-default">
-								<span class="glyphicon glyphicon-remove" ng-click="vm.deletarGeneros(genero)"></span>
-							</button>
-							<!-- Alterar -->
-							<button type="button" class="btn btn-default">
-								<span class="glyphicon glyphicon-pencil" ng-click="vm.alterarGeneros(genero)"></span>
-							</button>
-							<!-- Cancelar -->
-							<button type="button" class="btn btn-default">
-								<span class="glyphicon glyphicon-asterisk" ng-click="vm.cancelarGeneros()"></span>
-							</button>
-						</div>
-					</td>
-				</tr>
-			</table>
-			<!-- ./Lista de generos -->
+				</table>
+				<!-- ./Lista de generos -->
+				<div ng-if="!vm.generos.length" class="text-center">
+					<h3 class="alert">Sem Generos</h3>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

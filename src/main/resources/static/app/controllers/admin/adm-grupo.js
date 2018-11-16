@@ -34,7 +34,7 @@
 			return grupoService.carregarGrupos(vm.pagina)
 				.then(function (data) {
 					vm.grupos = data.content;
-					vm.totalElementos = data.totalElementos;
+					vm.totalElementos = data.totalElements;
 				})
 		}
 

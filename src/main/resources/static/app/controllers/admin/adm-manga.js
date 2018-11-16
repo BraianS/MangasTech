@@ -18,7 +18,7 @@
 		vm.pagina = 1;
 		vm.totalElementos = [];
 		vm.generos = [];
-		vm.recebeImagem = {};
+		vm.recebeImagem = [];
 		vm.selecionaImagem = selecionaImagem;
 		vm.status = ["COMPLETO", "LANCANDO", "PAUSADO"];
 		vm.Selecionar = Selecionar;
@@ -28,8 +28,11 @@
 		vm.excluirMangas = excluirMangas;
 		vm.cancelarMangas = cancelarMangas;
 		vm.editarUsuario = false;
+		vm.show = false;
 		vm.submit = submit;
 		vm.carregarMangas = carregarMangas;
+		vm.closeMsg = closeMsg;
+		vm.closeCapa = closeCapa;
 
 		vm.years = [{ value: '2021', disabled: true }];
 		for (var i = 2020; i >= 1990; i--) {
@@ -40,16 +43,18 @@
 		carregarAutor();
 		carregarGeneros();
 
-		vm.closeMsg = closeMsg;
-		vm.show = false;
-
 		function closeMsg() {
 			vm.show = false;
 			vm.mensagem = "";
 		}
 
-		function selecionaImagem(imagem) {
-			vm.recebeImagem = imagem;
+		function closeCapa() {
+			vm.errorImage = [];
+		}
+
+		function selecionaImagem(imagem, errorImage) {
+			vm.recebeImagem = imagem[0];
+			vm.errorImage = errorImage[0];
 		}
 
 		function salvarMangas() {
@@ -69,7 +74,6 @@
 
 		function Selecionar(argument) {
 			vm.manga.genero = $filter('filter')(vm.generos, { Selecionado: true });
-			console.log($filter('filter')(vm.generos, { Selecionado: true }));
 		}
 
 		function carregarGeneros() {
@@ -127,8 +131,9 @@
 
 		function cancelarMangas() {
 			vm.manga = {};
-			vm.recebeImagem = "";
+			vm.recebeImagem = [];
 			vm.formNovoManga.$setPristine(true);
+			vm.formNovoManga.$setUntouched(true);
 			angular.element("#capas").val(null);
 		}
 

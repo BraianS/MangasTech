@@ -1,106 +1,107 @@
-<div class="panel panel-default">
-	<div class="panel-heading text-center">
-		<h3 class="panel-title">Salvar Autores</h3>
-	</div>
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<h3 class="panel-title">Salvar Autor</h3>
+		</div>
+		<div class="panel-body">
+			<div class="panel-info">
+				<!-- Form Autor -->
+				<div class="form-group">
+					<form name="vm.formAutor" ng-submit="vm.submit()">
 
-	<div class="panel-body">
-		<div class="panel-info">
-			<!-- Form Autor -->
-			<div class="form-group">
-				<form name="vm.formAutor" ng-submit="vm.submit()">
+						<!-- Nome -->
+						<div class="form-group" ng-class="{'has-error':vm.formAutor.nome.$invalid && vm.formAutor.nome.$dirty}">
+							<label for="nome" class="control-label">Nome</label>
+							<input name="nome" placeholder="Digite um nome" maxlength="50" ng-MaxLength="49" type="text" class="form-control"
+							 ng-model="vm.autores.nome" id="nome" required />
+							<span ng-show="vm.formAutor.nome.$error.required && vm.formAutor.nome.$dirty">Campo Obrigatorio</span>
+							<span ng-show="vm.formAutor.nome.$error.maxlength">Tamanho maximo</span>
+						</div>
 
-					<!-- Nome -->
-					<div class="form-group" ng-class="{'has-error':vm.formAutor.nome.$invalid && vm.formAutor.nome.$dirty}">
-						<label for="nome">Nome</label>
-						<input name="nome" maxlength="50" ng-MaxLength="49" type="text" class="form-control" ng-model="vm.autores.nome" id="nome"
-						 required/>
-						<span ng-show="vm.formAutor.nome.$error.required && vm.formAutor.nome.$dirty">Campo Obrigatorio</span>
-						<span ng-show="vm.formAutor.nome.$error.maxlength">Tamanho maximo</span>
-					</div>
+						<!-- Descrição -->
+						<div class="form-group">
+							<label for="descricao">Descrição</label>
+							<textarea name="descricao" placeholder="Escreva a descrição" type="text" class="form-control" ng-model="vm.autores.info"
+							 id="descricao"></textarea>
+						</div>
 
-					<!-- Descricao -->
-					<div class="form-group">
-						<label for="descricao">Descricao</label>
-						<textarea name="descricao" type="text" class="form-control" ng-model="vm.autores.info" id="descricao"></textarea>
-					</div>
+						<div class="text-center">
+							<!-- Salvar Autor-->
+							<input class="btn btn-primary " ng-disabled="vm.formAutor.$invalid" type="submit" value="salvar">
 
-					<div class="text-center">
-						<!-- Salvar Autor-->
-						<input class="btn btn-primary " ng-disabled="vm.formAutor.$invalid" type="submit" value="salvar">
-
-						<!-- Cancelar -->
-						<input class="btn btn-primary" value="cancelar" type="button" ng-click="vm.cancelar()">
-					</div>
-
-					<!-- Alerta -->
-					<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
-				</form>
+							<!-- Cancelar -->
+							<input class="btn btn-primary" value="cancelar" type="button" ng-click="vm.cancelar()">
+						</div>
+						<!-- Alerta -->
+						<div uib-alert class="alert alert-success text-center" close="vm.closeMsg()" dismiss-on-timeout="2000" ng-if="vm.mensagem.length">{{vm.mensagem}}</div>
+					</form>
+				</div>
+				<!-- ./Form Autor -->
 			</div>
-			<!-- ./Form Autor -->
 		</div>
 	</div>
 </div>
-
-<div class="panel panel-default">
-	<div class="panel-heading text-center">
-		<h3 class="panel-title">Editar Autor</h3>
-	</div>
-
-	<div class="panel-body">
-		<div class="panel-info">
-			<!-- Tabela de Autores -->
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>Descricao</th>
-						<th>Editar</th>
-					</tr>
-				</thead>
-
-				<tr ng-repeat="autor in vm.autor">
-					<td>
-						<a ui-sref="nav.autor.detalhe({autorId:autor.id})">
-							{{autor.nome}}
-						</a>
-					</td>
-					<td class="text">
-						<span>{{autor.info}}</span>
-					</td>
-					<td>
-						<div class="btn-group btn-group-xs">
-							<!-- Excluir -->
-							<button type="button" class="btn btn-default" ng-click="vm.excluirAutor(autor)">
-								<span class="glyphicon glyphicon-remove"></span>
-							</button>
-							<!-- Alterar -->
-							<button type="button" class="btn btn-default" ng-click="vm.alterarAutores(autor)">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</button>
-							<!-- Cancelar -->
-							<button type="button" class="btn btn-default" ng-click="vm.cancelar()">
-								<span class="glyphicon glyphicon-asterisk"></span>
-							</button>
-						</div>
-					</td>
-				</tr>
-			</table>
-			<!-- ./Lista de autores -->
-		</div>
-	</div>
-
-	<div class="panel-footer text-center">
-		<div ng-if="vm.autor.length">
-			<!-- Pagination de autores-->
-			<ul uib-pagination max-size="10" total-items="vm.totalItems" ng-model="vm.pagina" ng-click="vm.carregarAutores()" items-per-page="20"
-			 boundary-links="true"></ul>
-			<!-- ./Pagination de autores -->
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+	<div class="panel panel-default">
+		<div class="panel-heading text-center">
+			<h3 class="panel-title">Editar Autores</h3>
 		</div>
 
-		<!-- Sem autor -->
-		<div ng-if="!vm.autor.length">
-			<h3 class="alert">Sem Autor</h3>
+		<div class="panel-body">
+			<div class="panel-info">
+				<!-- Tabela de Autores -->
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Nome</th>
+								<th>Descricao</th>
+								<th>Editar</th>
+							</tr>
+						</thead>
+						<tr ng-repeat="autor in vm.autor">
+							<td>
+								<a ui-sref="nav.autor.detalhe({autorId:autor.id})">
+									{{autor.nome}}
+								</a>
+							</td>
+							<td class="text">
+								<span>{{autor.info}}</span>
+							</td>
+							<td>
+								<div class="btn-group btn-group-xs">
+									<!-- Excluir -->
+									<button type="button" class="btn btn-default" ng-click="vm.excluirAutor(autor)">
+										<span class="glyphicon glyphicon-remove"></span>
+									</button>
+									<!-- Alterar -->
+									<button type="button" class="btn btn-default" ng-click="vm.alterarAutores(autor)">
+										<span class="glyphicon glyphicon-pencil"></span>
+									</button>
+									<!-- Cancelar -->
+									<button type="button" class="btn btn-default" ng-click="vm.cancelar()">
+										<span class="glyphicon glyphicon-asterisk"></span>
+									</button>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!-- ./Lista de autores -->
+			</div>
 		</div>
-		<!-- ./Sem autor -->
+		<div class="panel-footer text-center">
+			<div ng-if="vm.autor.length">
+				<!-- Pagination de autores-->
+				<ul uib-pagination max-size="10" total-items="vm.totalItems" ng-model="vm.pagina" ng-click="vm.carregarAutores()"
+				 items-per-page="20" boundary-links="true"></ul>
+				<!-- ./Pagination de autores -->
+			</div>
+			<!-- Sem autor -->
+			<div ng-if="!vm.autor.length">
+				<h3 class="alert">Sem Autor</h3>
+			</div>
+			<!-- ./Sem autor -->
+		</div>
 	</div>
 </div>

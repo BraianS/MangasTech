@@ -33,8 +33,8 @@
 			}
 		}
 
-		function carregarGeneros() {
-			return $http.get('/api/genero')
+		function carregarGeneros(pagina) {
+			return $http.get('/api/genero/?page=' + pagina)
 				.then(getCarregarGeneros)
 				.catch(getCarregarGenerosErro);
 

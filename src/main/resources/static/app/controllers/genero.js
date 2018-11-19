@@ -14,13 +14,15 @@
 
 		vm.genero = [];
 		vm.carregarGeneros = carregarGeneros;
+		vm.pagina = 1;
 
 		carregarGeneros();
 
 		function carregarGeneros() {
-			return generoService.carregarGeneros()
+			return generoService.carregarGeneros(vm.pagina)
 				.then(function (data) {
 					vm.genero = data.content;
+					vm.totalElementos = data.totalElements;
 				})
 		}
 	}

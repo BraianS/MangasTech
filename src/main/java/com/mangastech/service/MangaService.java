@@ -25,7 +25,7 @@ public class MangaService {
 	}
 
 	public Page<MangasEntity> buscarTodos(Pageable pageable) {
-		return mangaRepository.buscarTodos(pageable);
+		return mangaRepository.findAllByOrderByNomeAsc(pageable);
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -43,7 +43,7 @@ public class MangaService {
 	}
 
 	public List<MangasEntity> listaMangas() {
-		return mangaRepository.listaMangas();
+		return mangaRepository.findAllIdAndNome();
 	}
 
 	public Page<MangasEntity> buscarNomeQualquerPosicao(String nome, Pageable pageable) {

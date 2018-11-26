@@ -43,7 +43,7 @@ public class AutorService {
 	}
 
 	public List<AutorEntity> listarTodos() {
-		return autorRepository.listarTodos();
+		return autorRepository.findAllIdAndNome();
 	}
 
 	public Page<AutorEntity> buscarPorLetra(String nome, Pageable pageable) {

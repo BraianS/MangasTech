@@ -20,7 +20,7 @@ public class GrupoService {
 	private GruposRepository grupoRepository;
 
 	public Page<GruposEntity> buscarTodos(Pageable pageable) {
-		return grupoRepository.buscarTodos(pageable);
+		return grupoRepository.pageAllIdAndNome(pageable);
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -43,7 +43,7 @@ public class GrupoService {
 	}
 
 	public List<GruposEntity> listarTodos() {
-		return grupoRepository.listaTodos();
+		return grupoRepository.findAllIdAndNome();
 	}
 
 	public Page<GruposEntity> buscarPorLetra(String letra, Pageable pageable) {

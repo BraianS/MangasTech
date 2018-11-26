@@ -20,7 +20,7 @@ public class GeneroService {
 	private GeneroRepository generoRepository;
 
 	public Page<GenerosEntity> buscarTodos(Pageable pageable) {
-		return generoRepository.buscarTodos(pageable);
+		return generoRepository.findAllByOrderByNomeAsc(pageable);
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -43,6 +43,6 @@ public class GeneroService {
 	}
 
 	public List<GenerosEntity> listarTodos() {
-		return generoRepository.listaTodos();
+		return generoRepository.findAllIdAndNome();
 	}
 }

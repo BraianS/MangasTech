@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Mangas")
-public class MangasEntity {
+public class Mangas {
 
 	private Long id;
 	private byte[] capa;
@@ -33,13 +33,13 @@ public class MangasEntity {
 	private Integer dataLancado;
 	private String descricao;
 
-	private List<CapitulosEntity> capitulo;
+	private List<Capitulos> capitulo;
 	
 	@JsonIgnoreProperties(value = "manga")
-	private AutorEntity autor;
+	private Autor autor;
 
 	@JsonIgnoreProperties(value = "manga")
-	private Collection<GenerosEntity> genero = new HashSet<>();
+	private Collection<Generos> genero = new HashSet<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -90,36 +90,36 @@ public class MangasEntity {
 	}
 	
 	@OneToMany(mappedBy = "manga", cascade = { CascadeType.REMOVE })
-	public List<CapitulosEntity> getCapitulo() {
+	public List<Capitulos> getCapitulo() {
 		return capitulo;
 	}
 
-	public void setcapitulo(List<CapitulosEntity> capitulo) {
+	public void setcapitulo(List<Capitulos> capitulo) {
 		this.capitulo = capitulo;
 	}
 
-	@ManyToOne(targetEntity = AutorEntity.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Autor.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "autor_id")
-	public AutorEntity getAutor() {
+	public Autor getAutor() {
 		return autor;
 	}
 
-	public void setAutor(AutorEntity autor) {
+	public void setAutor(Autor autor) {
 		this.autor = autor;
 	}
 
-	@ManyToMany(targetEntity = GenerosEntity.class)
+	@ManyToMany(targetEntity = Generos.class)
 	@JoinTable(name = "mangas_generos", joinColumns = @JoinColumn(name = "manga_id", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(name = "genero_id", referencedColumnName = "id"))
-	public Collection<GenerosEntity> getGenero() {
+	public Collection<Generos> getGenero() {
 		return genero;
 	}
 
-	public void setGenero(Collection<GenerosEntity> genero2) {
+	public void setGenero(Collection<Generos> genero2) {
 		this.genero = genero2;
 	}
 
-	public MangasEntity(Long id) {
+	public Mangas(Long id) {
 		this.id = id;
 	}
 
@@ -133,15 +133,15 @@ public class MangasEntity {
 		this.capa = capa;
 	}
 
-	public MangasEntity() {
+	public Mangas() {
 	}
 
-	public MangasEntity(Long id, String nome) {
+	public Mangas(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public MangasEntity(String nome, Status status, Integer dataLancado, AutorEntity autor) {
+	public Mangas(String nome, Status status, Integer dataLancado, Autor autor) {
 		super();
 		this.nome = nome;
 		this.status = status;
@@ -149,7 +149,7 @@ public class MangasEntity {
 		this.autor = autor;
 	}
 
-	public MangasEntity(MangasEntity m) {
+	public Mangas(Mangas m) {
 		this.nome = m.nome;
 		this.dataLancado = m.dataLancado;
 	}

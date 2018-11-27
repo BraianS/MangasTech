@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
-import com.mangastech.model.UsuarioEntity;
+import com.mangastech.model.Usuario;
 import com.mangastech.repository.UsuarioRepository;
 import com.mangastech.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
-	public ResponseEntity<UsuarioEntity> registrar(@RequestBody UsuarioEntity usuario) {
+	public ResponseEntity<Usuario> registrar(@RequestBody Usuario usuario) {
 
 		if (usuarioRepository.findOneByUsername(usuario.getUsername()) != null) {
 			throw new RuntimeException("Usuario Ja existe");
@@ -54,7 +54,7 @@ public class HomeController {
 		roles.add("USER");
 		usuario.setRoles(roles);
 
-		return new ResponseEntity<UsuarioEntity>(usuarioRepository.save(usuario), HttpStatus.CREATED);
+		return new ResponseEntity<Usuario>(usuarioRepository.save(usuario), HttpStatus.CREATED);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class HomeController {
 	public ResponseEntity<Map<String, Object>> login(@RequestParam String username, @RequestParam String password,
 			HttpServletResponse response) throws IOException {
 		String token = null;
-		UsuarioEntity usuario = usuarioRepository.findOneByUsername(username);
+		Usuario usuario = usuarioRepository.findOneByUsername(username);
 		Map<String, Object> tokenMap = new HashMap<String, Object>();
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			token = Jwts.builder().setSubject(username).claim("roles", usuario.getRoles()).setIssuedAt(new Date())
@@ -91,7 +91,7 @@ public class HomeController {
 	 * @return usuario
 	 */
 	@RequestMapping("/user")
-	public UsuarioEntity usuario(Principal principal) {
+	public Usuario usuario(Principal principal) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String loggedUsername = auth.getName();
 		return usuarioRepository.findOneByUsername(loggedUsername);

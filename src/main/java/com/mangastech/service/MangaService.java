@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import com.mangastech.model.MangasEntity;
+import com.mangastech.model.Mangas;
 import com.mangastech.repository.MangasRepository;
 
 /**
@@ -20,11 +20,11 @@ public class MangaService {
 	private MangasRepository mangaRepository;
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public MangasEntity cadastrar(MangasEntity manga) {
+	public Mangas cadastrar(Mangas manga) {
 		return mangaRepository.save(manga);
 	}
 
-	public Page<MangasEntity> buscarTodos(Pageable pageable) {
+	public Page<Mangas> buscarTodos(Pageable pageable) {
 		return mangaRepository.findAllByOrderByNomeAsc(pageable);
 	}
 
@@ -34,23 +34,23 @@ public class MangaService {
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public MangasEntity alterar(MangasEntity mangas) {
+	public Mangas alterar(Mangas mangas) {
 		return mangaRepository.save(mangas);
 	}
 
-	public Page<MangasEntity> buscarNomeNoInicio(String nome, Pageable pageable) {
+	public Page<Mangas> buscarNomeNoInicio(String nome, Pageable pageable) {
 		return mangaRepository.buscarNomeNoInicio(nome, pageable);
 	}
 
-	public List<MangasEntity> listaMangas() {
+	public List<Mangas> listaMangas() {
 		return mangaRepository.findAllIdAndNome();
 	}
 
-	public Page<MangasEntity> buscarNomeQualquerPosicao(String nome, Pageable pageable) {
+	public Page<Mangas> buscarNomeQualquerPosicao(String nome, Pageable pageable) {
 		return mangaRepository.buscarNomeQualquerPosicao(nome, pageable);
 	}
 
-	public List<MangasEntity> buscaTop10Mangas() {
+	public List<Mangas> buscaTop10Mangas() {
 		return mangaRepository.findTop10ByOrderByIdDesc();
 	}
 }

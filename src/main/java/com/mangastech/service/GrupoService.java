@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import com.mangastech.model.GruposEntity;
+import com.mangastech.model.Grupos;
 import com.mangastech.repository.GruposRepository;
 
 /**
@@ -19,12 +19,12 @@ public class GrupoService {
 	@Autowired
 	private GruposRepository grupoRepository;
 
-	public Page<GruposEntity> buscarTodos(Pageable pageable) {
+	public Page<Grupos> buscarTodos(Pageable pageable) {
 		return grupoRepository.pageAllIdAndNome(pageable);
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public GruposEntity cadastrar(GruposEntity grupos) {
+	public Grupos cadastrar(Grupos grupos) {
 		return grupoRepository.save(grupos);
 	}
 
@@ -34,19 +34,19 @@ public class GrupoService {
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public GruposEntity alterar(GruposEntity grupos) {
+	public Grupos alterar(Grupos grupos) {
 		return grupoRepository.save(grupos);
 	}
 
-	public Page<GruposEntity> buscarMangaPeloIdAutor(Long id, Pageable pageable) {
+	public Page<Grupos> buscarMangaPeloIdAutor(Long id, Pageable pageable) {
 		return grupoRepository.buscarMangaPeloIdAutor(id, pageable);
 	}
 
-	public List<GruposEntity> listarTodos() {
+	public List<Grupos> listarTodos() {
 		return grupoRepository.findAllIdAndNome();
 	}
 
-	public Page<GruposEntity> buscarPorLetra(String letra, Pageable pageable) {
+	public Page<Grupos> buscarPorLetra(String letra, Pageable pageable) {
 		return grupoRepository.buscarPorLetra(letra, pageable);
 	}
 }

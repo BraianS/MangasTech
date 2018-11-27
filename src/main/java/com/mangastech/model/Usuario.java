@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
  */
 @Entity
 @Table(name = "Usuario")
-public class UsuarioEntity implements UserDetails {
+public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
@@ -72,7 +72,7 @@ public class UsuarioEntity implements UserDetails {
 		this.roles = roles;
 	}
 
-	public UsuarioEntity(String nome, String username, String password, List<String> roles) {
+	public Usuario(String nome, String username, String password, List<String> roles) {
 		super();
 		this.nome = nome;
 		this.username = username;
@@ -80,7 +80,7 @@ public class UsuarioEntity implements UserDetails {
 		this.roles = roles;
 	}
 
-	public UsuarioEntity() {
+	public Usuario() {
 		super();
 	}
 

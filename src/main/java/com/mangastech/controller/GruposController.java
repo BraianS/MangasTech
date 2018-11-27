@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.mangastech.model.GruposEntity;
+import com.mangastech.model.Grupos;
 import com.mangastech.repository.GruposRepository;
 import com.mangastech.service.GrupoService;
 
@@ -38,7 +38,7 @@ public class GruposController {
 	 * @return
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.GET)
-	public ResponseEntity<Page<GruposEntity>> testeGrupos2(Integer page) {
+	public ResponseEntity<Page<Grupos>> testeGrupos2(Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -60,7 +60,7 @@ public class GruposController {
 	 * @return autor
 	 */
 	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Page<GruposEntity>> buscarPorId(@PathVariable(value = "id") Long id, Integer page) {
+	public ResponseEntity<Page<Grupos>> buscarPorId(@PathVariable(value = "id") Long id, Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -82,7 +82,7 @@ public class GruposController {
 	 * @throws Autor repetido
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.POST)
-	public ResponseEntity<GruposEntity> salvarGrupos(@RequestBody GruposEntity grupos) throws IOException {
+	public ResponseEntity<Grupos> salvarGrupos(@RequestBody Grupos grupos) throws IOException {
 
 		if (gruposRepository.findOneByNome(grupos.getNome()) != null) {
 			throw new RuntimeException("Nome repetido");
@@ -98,9 +98,9 @@ public class GruposController {
 	 * @return
 	 */
 	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<GruposEntity> deletar(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Grupos> deletar(@PathVariable(value = "id") Long id) {
 
-		GruposEntity grupo = gruposRepository.findOne(id);
+		Grupos grupo = gruposRepository.findOne(id);
 		if (grupo.getId() == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -116,7 +116,7 @@ public class GruposController {
 	 * @return autor alterado
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.PUT)
-	public ResponseEntity<GruposEntity> alterarGrupos(@RequestBody GruposEntity grupos) {
+	public ResponseEntity<Grupos> alterarGrupos(@RequestBody Grupos grupos) {
 		return new ResponseEntity<>(grupoService.alterar(grupos), HttpStatus.OK);
 	}
 
@@ -126,7 +126,7 @@ public class GruposController {
 	 * @return listar todos
 	 */
 	@RequestMapping(value = "/grupo/lista")
-	public List<GruposEntity> listaTodos() {
+	public List<Grupos> listaTodos() {
 
 		return grupoService.listarTodos();
 	}
@@ -139,7 +139,7 @@ public class GruposController {
 	 * @return autor
 	 */
 	@RequestMapping(value = "/grupo/letra/{letra}", method = RequestMethod.GET)
-	public ResponseEntity<Page<GruposEntity>> buscarPorLetra(@PathVariable("letra") String letra, Integer page) {
+	public ResponseEntity<Page<Grupos>> buscarPorLetra(@PathVariable("letra") String letra, Integer page) {
 
 		if (page == null) {
 			page = 0;

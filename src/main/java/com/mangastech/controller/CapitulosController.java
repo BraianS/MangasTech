@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.mangastech.model.CapitulosEntity;
-import com.mangastech.model.MangasEntity;
-import com.mangastech.model.PaginasEntity;
+import com.mangastech.model.Capitulos;
+import com.mangastech.model.Mangas;
+import com.mangastech.model.Paginas;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.service.CapituloService;
 
@@ -41,7 +41,7 @@ public class CapitulosController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/capitulo", method = RequestMethod.GET)
-	public ResponseEntity<List<CapitulosEntity>> listarCapitulos() {
+	public ResponseEntity<List<Capitulos>> listarCapitulos() {
 
 		return new ResponseEntity<>(capituloService.listarCapitulos(), HttpStatus.OK);
 	}
@@ -53,8 +53,8 @@ public class CapitulosController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<CapitulosEntity>> buscarCapitulosPorManga(
-			@PathVariable(value = "id") MangasEntity id) {
+	public @ResponseBody ResponseEntity<List<Capitulos>> buscarCapitulosPorManga(
+			@PathVariable(value = "id") Mangas id) {
 
 		return new ResponseEntity<>(capituloService.buscarCapitulosPorManga(id), HttpStatus.OK);
 	}
@@ -69,11 +69,11 @@ public class CapitulosController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/capitulo", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public ResponseEntity<CapitulosEntity> cadastrarCapituloEPaginas(
-			@RequestPart(value = "capitulo") CapitulosEntity capitulo,
+	public ResponseEntity<Capitulos> cadastrarCapituloEPaginas(
+			@RequestPart(value = "capitulo") Capitulos capitulo,
 			@RequestParam(value = "paginas") MultipartFile[] paginas) throws IOException {
 
-		List<PaginasEntity> ListPaginas = new ArrayList<PaginasEntity>();
+		List<Paginas> ListPaginas = new ArrayList<Paginas>();
 
 		final long limit = 2 * 1024 * 1024;
 		int count = 1;
@@ -87,7 +87,7 @@ public class CapitulosController {
 		} else {
 			for (MultipartFile file : paginas) {
 				if (file.getSize() < limit) {
-					PaginasEntity pagina = new PaginasEntity();
+					Paginas pagina = new Paginas();
 					pagina.setCapitulo(capitulo);
 					pagina.setFotos(file.getBytes());
 					pagina.setNumeroPagina(count);
@@ -112,9 +112,9 @@ public class CapitulosController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<CapitulosEntity> deletarCapitulo(@PathVariable("id") Long id) throws IOException {
+	public ResponseEntity<Capitulos> deletarCapitulo(@PathVariable("id") Long id) throws IOException {
 
-		CapitulosEntity capitulo = capitulosRepository.findOne(id);
+		Capitulos capitulo = capitulosRepository.findOne(id);
 
 		if (capitulo == null) {
 			throw new RuntimeException("Não encontrado");

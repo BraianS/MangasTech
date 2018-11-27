@@ -19,12 +19,12 @@ import org.hibernate.annotations.CascadeType;
  */
 @Entity
 @Table(name = "Grupos")
-public class GruposEntity {
+public class Grupos {
 
 	private Long id;
 	private String nome;
 
-	private Set<CapitulosEntity> capitulo = new HashSet<CapitulosEntity>();
+	private Set<Capitulos> capitulo = new HashSet<Capitulos>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,30 +44,30 @@ public class GruposEntity {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	@Cascade({CascadeType.MERGE, CascadeType.REMOVE})
-	@OneToMany(mappedBy = "grupo", targetEntity = CapitulosEntity.class, fetch = FetchType.EAGER)
-	public Set<CapitulosEntity> getCapitulo() {
+
+	@Cascade({ CascadeType.MERGE, CascadeType.REMOVE })
+	@OneToMany(mappedBy = "grupo", targetEntity = Capitulos.class, fetch = FetchType.EAGER)
+	public Set<Capitulos> getCapitulo() {
 		return capitulo;
 	}
 
-	public void setCapitulo(Set<CapitulosEntity> capitulo) {
+	public void setCapitulo(Set<Capitulos> capitulo) {
 		this.capitulo = capitulo;
 	}
 
-	public GruposEntity() {		
+	public Grupos() {
 	}
 
-	public GruposEntity(Long id, String nome) {
+	public Grupos(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
-	
-	public GruposEntity(String nome) {
+
+	public Grupos(String nome) {
 		this.nome = nome;
 	}
 
-	public GruposEntity(Long id, String nome, Set<CapitulosEntity> capitulo) {
+	public Grupos(Long id, String nome, Set<Capitulos> capitulo) {
 		super();
 		this.id = id;
 		this.nome = nome;

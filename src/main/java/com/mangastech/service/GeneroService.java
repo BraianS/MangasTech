@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import com.mangastech.model.GenerosEntity;
+import com.mangastech.model.Generos;
 import com.mangastech.repository.GeneroRepository;
 
 /**
@@ -19,12 +19,12 @@ public class GeneroService {
 	@Autowired
 	private GeneroRepository generoRepository;
 
-	public Page<GenerosEntity> buscarTodos(Pageable pageable) {
+	public Page<Generos> buscarTodos(Pageable pageable) {
 		return generoRepository.findAllByOrderByNomeAsc(pageable);
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public GenerosEntity cadastrar(GenerosEntity generos) {
+	public Generos cadastrar(Generos generos) {
 		return generoRepository.save(generos);
 	}
 
@@ -34,15 +34,15 @@ public class GeneroService {
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public GenerosEntity alterar(GenerosEntity genero) {
+	public Generos alterar(Generos genero) {
 		return generoRepository.save(genero);
 	}
 
-	public Page<GenerosEntity> buscarMangaPorId(Long id, Pageable pageable) {
+	public Page<Generos> buscarMangaPorId(Long id, Pageable pageable) {
 		return generoRepository.buscarMangaPorId(id, pageable);
 	}
 
-	public List<GenerosEntity> listarTodos() {
+	public List<Generos> listarTodos() {
 		return generoRepository.findAllIdAndNome();
 	}
 }

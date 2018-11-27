@@ -20,7 +20,7 @@ import org.hibernate.annotations.CascadeType;
  */
 @Entity
 @Table(name = "paginas")
-public class PaginasEntity {
+public class Paginas {
 
 	private Long id;
 	private int numeroPagina;
@@ -36,7 +36,7 @@ public class PaginasEntity {
 		this.fotos = fotos;
 	}
 
-	private CapitulosEntity capitulo;
+	private Capitulos capitulo;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,20 +58,20 @@ public class PaginasEntity {
 	}
 
 	@Cascade({ CascadeType.MERGE, CascadeType.REMOVE })
-	@ManyToOne(targetEntity = CapitulosEntity.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Capitulos.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "capitulo_id")
-	public CapitulosEntity getCapitulo() {
+	public Capitulos getCapitulo() {
 		return capitulo;
 	}
 
-	public void setCapitulo(CapitulosEntity capitulo) {
+	public void setCapitulo(Capitulos capitulo) {
 		this.capitulo = capitulo;
 	}
 
-	public PaginasEntity() {
+	public Paginas() {
 	}
 
-	public PaginasEntity(Long id, int numeroPagina) {
+	public Paginas(Long id, int numeroPagina) {
 		this.id = id;
 		this.numeroPagina = numeroPagina;
 	}

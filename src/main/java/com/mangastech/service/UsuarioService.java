@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import com.mangastech.model.UsuarioEntity;
+import com.mangastech.model.Usuario;
 import com.mangastech.repository.UsuarioRepository;
 
 @Service
@@ -14,7 +14,7 @@ public class UsuarioService {
 	private UsuarioRepository usuarioRepository;
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public UsuarioEntity cadastrar(UsuarioEntity usuario) {
+	public Usuario cadastrar(Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
 
@@ -24,11 +24,11 @@ public class UsuarioService {
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public UsuarioEntity alterar(UsuarioEntity usuario) {
+	public Usuario alterar(Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
 
-	public List<UsuarioEntity> buscarTodos() {
+	public List<Usuario> buscarTodos() {
 		return usuarioRepository.findAll();
 	}
 }

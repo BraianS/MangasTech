@@ -4,8 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import com.mangastech.model.CapitulosEntity;
-import com.mangastech.model.MangasEntity;
+import com.mangastech.model.Capitulos;
+import com.mangastech.model.Mangas;
 import com.mangastech.repository.CapitulosRepository;
 
 /**
@@ -19,15 +19,15 @@ public class CapituloService {
 	public CapitulosRepository capituloRepository;
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public CapitulosEntity cadastrar(CapitulosEntity capitulo) {
+	public Capitulos cadastrar(Capitulos capitulo) {
 		return capituloRepository.save(capitulo);
 	}
 
-	public List<CapitulosEntity> listarCapitulos() {
+	public List<Capitulos> listarCapitulos() {
 		return capituloRepository.findAll();
 	}
 
-	public List<CapitulosEntity> buscarCapitulosPorManga(MangasEntity id) {
+	public List<Capitulos> buscarCapitulosPorManga(Mangas id) {
 		return capituloRepository.buscarCapitulosPorMangaId(id);
 	}
 }

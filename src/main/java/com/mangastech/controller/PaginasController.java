@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.mangastech.model.CapitulosEntity;
-import com.mangastech.model.PaginasEntity;
+import com.mangastech.model.Capitulos;
+import com.mangastech.model.Paginas;
 import com.mangastech.service.PaginasService;
 
 /**
@@ -35,8 +35,8 @@ public class PaginasController {
 	 * @return pagina
 	 */
 	@RequestMapping(value = "/pagina/{id}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Page<PaginasEntity>> procurarPorCapitulo(
-			@PathVariable(value = "id") CapitulosEntity id, Integer page) {
+	public @ResponseBody ResponseEntity<Page<Paginas>> procurarPorCapitulo(
+			@PathVariable(value = "id") Capitulos id, Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -59,7 +59,7 @@ public class PaginasController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/paginas/{id}", method = RequestMethod.GET)
-	public List<PaginasEntity> buscarTodos(@PathVariable("id") CapitulosEntity id) {
+	public List<Paginas> buscarTodos(@PathVariable("id") Capitulos id) {
 		return paginaService.listaNumeroDePaginas(id);
 	}
 }

@@ -21,14 +21,14 @@ import org.hibernate.annotations.CascadeType;
  */
 @Entity
 @Table(name = "Generos")
-public class GenerosEntity implements Serializable {
+public class Generos implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nome;
 
 	@JsonIgnoreProperties(value = { "genero" })
-	private List<MangasEntity> manga = new ArrayList<>();;
+	private List<Mangas> manga = new ArrayList<>();;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,19 +50,19 @@ public class GenerosEntity implements Serializable {
 	}
 
 	@Cascade({ CascadeType.REMOVE, CascadeType.MERGE })
-	@ManyToMany(mappedBy = "genero", targetEntity = MangasEntity.class, fetch = FetchType.LAZY)
-	public List<MangasEntity> getManga() {
+	@ManyToMany(mappedBy = "genero", targetEntity = Mangas.class, fetch = FetchType.LAZY)
+	public List<Mangas> getManga() {
 		return manga;
 	}
 
-	public void setManga(List<MangasEntity> manga) {
+	public void setManga(List<Mangas> manga) {
 		this.manga = manga;
 	}
 
-	public GenerosEntity() {
+	public Generos() {
 	}
 
-	public GenerosEntity(Long id, String nome) {
+	public Generos(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}

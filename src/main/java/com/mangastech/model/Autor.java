@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "Autor")
-public class AutorEntity implements Serializable {
+public class Autor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
@@ -29,7 +29,7 @@ public class AutorEntity implements Serializable {
 	private String info;
 
 	@JsonIgnoreProperties({ "autor" })
-	private List<MangasEntity> manga = new ArrayList<>();
+	private List<Mangas> manga = new ArrayList<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,12 +52,12 @@ public class AutorEntity implements Serializable {
 	}
 
 	@Cascade({ CascadeType.MERGE, CascadeType.PERSIST })
-	@OneToMany(mappedBy = "autor", targetEntity = MangasEntity.class, fetch = FetchType.LAZY, orphanRemoval = true)
-	public List<MangasEntity> getManga() {
+	@OneToMany(mappedBy = "autor", targetEntity = Mangas.class, fetch = FetchType.LAZY, orphanRemoval = true)
+	public List<Mangas> getManga() {
 		return manga;
 	}
 
-	public void setManga(List<MangasEntity> manga) {
+	public void setManga(List<Mangas> manga) {
 		this.manga = manga;
 	}
 
@@ -75,20 +75,20 @@ public class AutorEntity implements Serializable {
 		return "AutorEntity [id=" + id + ", nome=" + nome + ", info=" + info + ", manga=" + manga + "]";
 	}
 
-	public AutorEntity() {
+	public Autor() {
 	}
 
-	public AutorEntity(Long id, String nome) {
+	public Autor(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 	
-	public AutorEntity(String nome) {
+	public Autor(String nome) {
 		this.nome = nome;
 	}
 	
 
-	public AutorEntity(Long id, String nome, String info) {
+	public Autor(Long id, String nome, String info) {
 		this.id = id;
 		this.nome = nome;
 		this.info = info;

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.mangastech.model.GenerosEntity;
+import com.mangastech.model.Generos;
 import com.mangastech.repository.GeneroRepository;
 import com.mangastech.service.GeneroService;
 
@@ -37,7 +37,7 @@ public class GeneroController {
 	 * @return
 	 */
 	@RequestMapping(value = "/genero", method = RequestMethod.GET)
-	public ResponseEntity<Page<GenerosEntity>> getAll(Integer page) {
+	public ResponseEntity<Page<Generos>> getAll(Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -59,9 +59,9 @@ public class GeneroController {
 	 * @return
 	 */
 	@RequestMapping(value = "/genero/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Page<GenerosEntity>> buscarPorId(@PathVariable(value = "id") Long id, Integer page) {
+	public ResponseEntity<Page<Generos>> buscarPorId(@PathVariable(value = "id") Long id, Integer page) {
 
-		GenerosEntity genero = generoRepository.findOne(id);
+		Generos genero = generoRepository.findOne(id);
 
 		if (genero == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -86,7 +86,7 @@ public class GeneroController {
 	 * @return
 	 */
 	@RequestMapping(value = "/genero", method = RequestMethod.POST)
-	public ResponseEntity<GenerosEntity> salvarGeneros(@RequestBody GenerosEntity genero) {
+	public ResponseEntity<Generos> salvarGeneros(@RequestBody Generos genero) {
 
 		if (generoRepository.findOneByNome(genero.getNome()) != null) {
 			throw new RuntimeException("Nome repetido");
@@ -102,9 +102,9 @@ public class GeneroController {
 	 * @return
 	 */
 	@RequestMapping(value = "/genero/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<GenerosEntity> deletarGeneros(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Generos> deletarGeneros(@PathVariable(value = "id") Long id) {
 
-		GenerosEntity genero = generoRepository.findOne(id);
+		Generos genero = generoRepository.findOne(id);
 
 		if (genero == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -121,7 +121,7 @@ public class GeneroController {
 	 * @return genero editado
 	 */
 	@RequestMapping(value = "/genero", method = RequestMethod.PUT)
-	public ResponseEntity<GenerosEntity> alterarGeneros(@RequestBody GenerosEntity genero) {
+	public ResponseEntity<Generos> alterarGeneros(@RequestBody Generos genero) {
 
 		return new ResponseEntity<>(generoService.alterar(genero), HttpStatus.OK);
 	}
@@ -132,7 +132,7 @@ public class GeneroController {
 	 * @return lista de generos
 	 */
 	@RequestMapping(value = "/genero/lista", method = RequestMethod.GET)
-	public List<GenerosEntity> listaTodos() {
+	public List<Generos> listaTodos() {
 
 		return generoService.listarTodos();
 	}

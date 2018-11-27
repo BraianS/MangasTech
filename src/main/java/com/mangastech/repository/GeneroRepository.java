@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.mangastech.model.GenerosEntity;
+import com.mangastech.model.Generos;
 import com.mangastech.repository.BaseRepository;
 
 /**
@@ -14,8 +14,8 @@ import com.mangastech.repository.BaseRepository;
  *
  */
 @Repository
-public interface GeneroRepository extends BaseRepository<GenerosEntity>, JpaRepository<GenerosEntity, Long> {
+public interface GeneroRepository extends BaseRepository<Generos>, JpaRepository<Generos, Long> {
 
-	@Query("Select m FROM GenerosEntity g JOIN g.manga m where g.id=:id ORDER BY m.nome ASC ")
-	public Page<GenerosEntity> buscarMangaPorId(@Param("id") Long id, Pageable page);
+	@Query("Select m FROM Generos g JOIN g.manga m where g.id=:id ORDER BY m.nome ASC ")
+	public Page<Generos> buscarMangaPorId(@Param("id") Long id, Pageable page);
 }

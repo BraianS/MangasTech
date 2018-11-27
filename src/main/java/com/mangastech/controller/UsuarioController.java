@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.mangastech.model.Role;
-import com.mangastech.model.UsuarioEntity;
+import com.mangastech.model.Usuario;
 import com.mangastech.repository.RoleRepository;
 import com.mangastech.repository.UsuarioRepository;
 import com.mangastech.service.UsuarioService;
@@ -54,7 +54,7 @@ public class UsuarioController {
 	 * @return lista usuarios
 	 */
 	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
-	public List<UsuarioEntity> buscarUmUser(UsuarioEntity usuario) {
+	public List<Usuario> buscarUmUser(Usuario usuario) {
 		return usuarioService.buscarTodos();
 	}
 
@@ -66,9 +66,9 @@ public class UsuarioController {
 	 * @throws usuario não encontrado / Não pode deletar sua conta
 	 */
 	@RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<UsuarioEntity> deletarUsuario(@PathVariable(value = "id") Long id) throws IOException {
+	public ResponseEntity<Usuario> deletarUsuario(@PathVariable(value = "id") Long id) throws IOException {
 
-		UsuarioEntity usuario = usuarioRepository.findOne(id);
+		Usuario usuario = usuarioRepository.findOne(id);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String usuarioLogado = auth.getName();
 		if (usuario == null) {
@@ -89,7 +89,7 @@ public class UsuarioController {
 	 * @throws usuario repetido
 	 */
 	@RequestMapping(value = "/usuario", method = RequestMethod.PUT)
-	public ResponseEntity<UsuarioEntity> alterarUsuario(@RequestBody UsuarioEntity usuario) throws IOException {
+	public ResponseEntity<Usuario> alterarUsuario(@RequestBody Usuario usuario) throws IOException {
 		if (usuarioRepository.findOneByUsername(usuario.getNome()) != null
 				&& usuarioRepository.findOneByUsername(usuario.getNome()).getId() != usuario.getId()) {
 			throw new RuntimeException("Usuario já existe");
@@ -106,7 +106,7 @@ public class UsuarioController {
 	 * @throws usuario repetido
 	 */
 	@RequestMapping(value = "/usuario", method = RequestMethod.POST)
-	public ResponseEntity<UsuarioEntity> cadastrarUsuario(@RequestBody UsuarioEntity usuario) throws IOException {
+	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) throws IOException {
 
 		if (usuarioRepository.findOneByUsername(usuario.getNome()) != null) {
 			throw new RuntimeException("Nome já Existe");

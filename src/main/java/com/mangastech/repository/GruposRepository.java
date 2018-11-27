@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.mangastech.model.GruposEntity;
+import com.mangastech.model.Grupos;
 import com.mangastech.repository.BaseRepository;
 
 /**
@@ -14,11 +14,11 @@ import com.mangastech.repository.BaseRepository;
  *
  */
 @Repository
-public interface GruposRepository extends BaseRepository<GruposEntity>, JpaRepository<GruposEntity, Long> {
+public interface GruposRepository extends BaseRepository<Grupos>, JpaRepository<Grupos, Long> {
 
-	@Query("SELECT DISTINCT capitulo.manga FROM GruposEntity g JOIN g.capitulo as capitulo WHERE g.id =:id  ORDER BY capitulo.manga.nome ASC")
-	public Page<GruposEntity> buscarMangaPeloIdAutor(@Param("id") Long id, Pageable pageable);
+	@Query("SELECT DISTINCT capitulo.manga FROM Grupos g JOIN g.capitulo as capitulo WHERE g.id =:id  ORDER BY capitulo.manga.nome ASC")
+	public Page<Grupos> buscarMangaPeloIdAutor(@Param("id") Long id, Pageable pageable);
 
-	@Query("SELECT g FROM GruposEntity g where g.nome LIKE :nome%")
-	public Page<GruposEntity> buscarPorLetra(@Param("nome") String nome, Pageable pageable);
+	@Query("SELECT g FROM Grupos g where g.nome LIKE :nome%")
+	public Page<Grupos> buscarPorLetra(@Param("nome") String nome, Pageable pageable);
 }

@@ -26,27 +26,27 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
  */
 @Entity
 @Table(name = "Capitulos")
-public class CapitulosEntity {
+public class Capitulos {
 
 	private Long id;
 	private Date lancamento;
 	private int capitulo;
 
 	@JsonIgnoreProperties(value = { "capitulo" })
-	private GruposEntity grupo;
+	private Grupos grupo;
 
-	public MangasEntity manga;
+	public Mangas manga;
 
-	private List<PaginasEntity> pagina;
+	private List<Paginas> pagina;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "capitulo", cascade = { CascadeType.ALL })
-	public List<PaginasEntity> getPagina() {
+	public List<Paginas> getPagina() {
 		return pagina;
 	}
 
 	@JsonProperty(access = Access.WRITE_ONLY)
-	public void setPagina(List<PaginasEntity> pagina) {
+	public void setPagina(List<Paginas> pagina) {
 		this.pagina = pagina;
 	}
 
@@ -80,28 +80,28 @@ public class CapitulosEntity {
 	}
 
 	@JsonIgnore
-	@ManyToOne(targetEntity = MangasEntity.class, fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	@ManyToOne(targetEntity = Mangas.class, fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "manga_id")
-	public MangasEntity getManga() {
+	public Mangas getManga() {
 		return manga;
 	}
 
 	@JsonProperty(access = Access.WRITE_ONLY)
-	public void setManga(MangasEntity manga) {
+	public void setManga(Mangas manga) {
 		this.manga = manga;
 	}
 
-	@ManyToOne(targetEntity = GruposEntity.class, fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	@ManyToOne(targetEntity = Grupos.class, fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "grupo_id")
-	public GruposEntity getGrupo() {
+	public Grupos getGrupo() {
 		return grupo;
 	}
 
-	public void setGrupo(GruposEntity grupo) {
+	public void setGrupo(Grupos grupo) {
 		this.grupo = grupo;
 	}
 
-	public CapitulosEntity(Long id, Date lancamento, int capitulo, GruposEntity grupo, MangasEntity manga) {
+	public Capitulos(Long id, Date lancamento, int capitulo, Grupos grupo, Mangas manga) {
 		super();
 		this.id = id;
 		this.lancamento = lancamento;
@@ -110,7 +110,7 @@ public class CapitulosEntity {
 		this.manga = manga;
 	}
 
-	public CapitulosEntity() {
+	public Capitulos() {
 		super();
 	}
 

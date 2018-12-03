@@ -1,18 +1,7 @@
 package com.mangastech.model;
 
 import java.util.Arrays;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import javax.persistence.*;
 
 /**
  * @author Braian
@@ -20,14 +9,21 @@ import org.hibernate.annotations.CascadeType;
  */
 @Entity
 @Table(name = "paginas")
-public class Paginas {
+public class Paginas extends BaseEntity {
 
-	private Long id;
-	private int numeroPagina;
+	private static final long serialVersionUID = 1L;
+
+	@Lob
+	@Column
 	private byte[] fotos;
 
-	@Column
-	@Lob
+	@Column(name = "numero_pagina")
+	private int numeroPagina;
+
+	@ManyToOne
+	@JoinColumn(name = "capitulo_id")
+	private Capitulos capitulo;
+
 	public byte[] getFotos() {
 		return fotos;
 	}
@@ -36,19 +32,6 @@ public class Paginas {
 		this.fotos = fotos;
 	}
 
-	private Capitulos capitulo;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@Column(name = "numero_pagina")
 	public int getNumeroPagina() {
 		return numeroPagina;
 	}
@@ -57,9 +40,6 @@ public class Paginas {
 		this.numeroPagina = string;
 	}
 
-	@Cascade({ CascadeType.MERGE, CascadeType.REMOVE })
-	@ManyToOne(targetEntity = Capitulos.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "capitulo_id")
 	public Capitulos getCapitulo() {
 		return capitulo;
 	}

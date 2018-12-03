@@ -1,58 +1,46 @@
 package com.mangastech.model;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.mangastech.model.Status;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Mangas")
-public class Mangas {
+public class Mangas extends BaseEntity {
 
-	private Long id;
+	private static final long serialVersionUID = 1L;
+
+	@Lob
+	@Column(name = "capa")
 	private byte[] capa;
+
+	@Column(name = "nome", length = 50)
 	private String nome;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status", length = 50)
 	private Status status;
-	private Integer dataLancado;
+
+	@Column(name = "lancamento")
+	private Integer lancamento;
+
+	@Column(name = "descricao", columnDefinition = "TEXT")
 	private String descricao;
 
+	@OneToMany(mappedBy = "manga", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Capitulos> capitulo;
-	
-	@JsonIgnoreProperties(value = "manga")
+
+	@ManyToOne
+	@JoinColumn(name = "autor_id")
 	private Autor autor;
 
-	@JsonIgnoreProperties(value = "manga")
-	private Collection<Generos> genero = new HashSet<>();
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(joinColumns = @JoinColumn(name = "manga_id"), inverseJoinColumns = @JoinColumn(name = "genero_id"))
+	private Set<Generos> genero = new HashSet<>();
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@Column(name = "nome", columnDefinition = "varchar(100)")
 	public String getNome() {
 		return nome;
 	}
@@ -61,8 +49,6 @@ public class Mangas {
 		this.nome = nome;
 	}
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status", columnDefinition = "varchar(50)")
 	public Status getStatus() {
 		return status;
 	}
@@ -71,16 +57,14 @@ public class Mangas {
 		this.status = status;
 	}
 
-	@Column(name = "lancamento")
 	public Integer getDataLancado() {
-		return dataLancado;
+		return lancamento;
 	}
 
 	public void setDataLancado(Integer dataLancado) {
-		this.dataLancado = dataLancado;
+		this.lancamento = dataLancado;
 	}
 
-	@Column(name = "descricao", columnDefinition = "TEXT")
 	public String getDescricao() {
 		return descricao;
 	}
@@ -88,8 +72,7 @@ public class Mangas {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	@OneToMany(mappedBy = "manga", cascade = { CascadeType.REMOVE })
+
 	public List<Capitulos> getCapitulo() {
 		return capitulo;
 	}
@@ -98,8 +81,7 @@ public class Mangas {
 		this.capitulo = capitulo;
 	}
 
-	@ManyToOne(targetEntity = Autor.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "autor_id")
+	@JsonIgnoreProperties("manga")
 	public Autor getAutor() {
 		return autor;
 	}
@@ -108,23 +90,19 @@ public class Mangas {
 		this.autor = autor;
 	}
 
-	@ManyToMany(targetEntity = Generos.class)
-	@JoinTable(name = "mangas_generos", joinColumns = @JoinColumn(name = "manga_id", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "genero_id", referencedColumnName = "id"))
-	public Collection<Generos> getGenero() {
+	@JsonIgnoreProperties("manga")
+	public Set<Generos> getGenero() {
 		return genero;
 	}
 
-	public void setGenero(Collection<Generos> genero2) {
-		this.genero = genero2;
+	public void setGenero(Set<Generos> genero) {
+		this.genero = genero;
 	}
 
 	public Mangas(Long id) {
 		this.id = id;
 	}
 
-	@Column(name = "capa")
-	@Lob
 	public byte[] getCapa() {
 		return capa;
 	}
@@ -141,22 +119,17 @@ public class Mangas {
 		this.nome = nome;
 	}
 
-	public Mangas(String nome, Status status, Integer dataLancado, Autor autor) {
+	public Mangas(String nome, Status status, Integer lancamento, Autor autor) {
 		super();
 		this.nome = nome;
 		this.status = status;
-		this.dataLancado = dataLancado;
+		this.lancamento = lancamento;
 		this.autor = autor;
-	}
-
-	public Mangas(Mangas m) {
-		this.nome = m.nome;
-		this.dataLancado = m.dataLancado;
 	}
 
 	@Override
 	public String toString() {
-		return "MangasEntity [id=" + id + ", nome=" + nome + ", status=" + status + ", dataLancado=" + dataLancado
+		return "MangasEntity [id=" + id + ", nome=" + nome + ", status=" + status + ", dataLancado=" + lancamento
 				+ ", descricao=" + descricao + ", capitulo=" + capitulo + ", autor=" + autor + ", genero=" + genero
 				+ "]";
 	}

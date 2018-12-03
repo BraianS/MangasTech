@@ -1,19 +1,9 @@
 package com.mangastech.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 /**
  * @author Braian
@@ -21,26 +11,16 @@ import org.hibernate.annotations.CascadeType;
  */
 @Entity
 @Table(name = "Generos")
-public class Generos implements Serializable {
+public class Generos extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	private Long id;
+
+	@Column(name = "nome", length = 50)
 	private String nome;
 
-	@JsonIgnoreProperties(value = { "genero" })
-	private List<Mangas> manga = new ArrayList<>();;
+	@ManyToMany(mappedBy = "genero", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<Mangas> manga = new HashSet<>();
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@Column(name = "nome", columnDefinition = "varchar(50)")
 	public String getNome() {
 		return nome;
 	}
@@ -49,13 +29,12 @@ public class Generos implements Serializable {
 		this.nome = nome;
 	}
 
-	@Cascade({ CascadeType.REMOVE, CascadeType.MERGE })
-	@ManyToMany(mappedBy = "genero", targetEntity = Mangas.class, fetch = FetchType.LAZY)
-	public List<Mangas> getManga() {
+	@JsonIgnoreProperties("genero")
+	public Set<Mangas> getManga() {
 		return manga;
 	}
 
-	public void setManga(List<Mangas> manga) {
+	public void setManga(Set<Mangas> manga) {
 		this.manga = manga;
 	}
 

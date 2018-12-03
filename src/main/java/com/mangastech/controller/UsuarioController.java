@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.mangastech.model.Role;
 import com.mangastech.model.Usuario;
-import com.mangastech.repository.RoleRepository;
 import com.mangastech.repository.UsuarioRepository;
 import com.mangastech.service.UsuarioService;
 
@@ -31,21 +29,6 @@ public class UsuarioController {
 
 	@Autowired
 	public UsuarioService usuarioService;
-
-	@Autowired
-	public RoleRepository roleRepository;
-
-	/**
-	 * Método registrar um novo cargo
-	 * 
-	 * @param role
-	 * @return
-	 */
-	@RequestMapping(value = "/role", method = RequestMethod.POST)
-	public ResponseEntity<Role> salvarRole(@RequestBody Role role) {
-
-		return new ResponseEntity<>(roleRepository.save(role), HttpStatus.OK);
-	}
 
 	/**
 	 * Método busca lista de usuarios

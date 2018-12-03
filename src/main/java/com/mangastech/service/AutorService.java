@@ -1,52 +1,27 @@
 package com.mangastech.service;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Service;
 import com.mangastech.model.Autor;
-import com.mangastech.repository.AutorRepository;
 
 /**
  * @author Braian
  *
  */
-@Service
-public class AutorService {
+public interface AutorService {
 
-	@Autowired
-	public AutorRepository autorRepository;
+	Autor cadastrar(Autor autor);
 
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public Autor cadastrar(Autor autor) {
-		return autorRepository.save(autor);
-	}
+	void deletar(Autor autor);
 
-	public Page<Autor> paginationAutor(Pageable pageable) {
-		return autorRepository.paginationAutor(pageable);
-	}
+	List<Autor> listarTodos();
 
-	public Page<Autor> buscarMangaPorId(Long id, Pageable pageable) {
-		return autorRepository.buscarMangaPorId(id, pageable);
-	}
+	Page<Autor> paginationAutor(Pageable pageable);
 
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public void deletar(Autor autor) {
-		autorRepository.delete(autor);
-	}
+	Page<Autor> buscarMangaPorId(Long id, Pageable pageable);
 
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public Autor alterar(Autor autor) {
-		return autorRepository.save(autor);
-	}
+	Autor alterar(Autor autor);
 
-	public List<Autor> listarTodos() {
-		return autorRepository.findAllIdAndNome();
-	}
-
-	public Page<Autor> buscarPorLetra(String nome, Pageable pageable) {
-		return autorRepository.buscarPorLetra(nome, pageable);
-	}
+	Page<Autor> buscarPorLetra(String nome, Pageable pageable);
 }

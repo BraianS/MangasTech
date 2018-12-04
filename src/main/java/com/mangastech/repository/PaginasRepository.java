@@ -18,8 +18,8 @@ import com.mangastech.model.Paginas;
 public interface PaginasRepository extends CrudRepository<Paginas, Long> {
 
 	@Query("SELECT p FROM Paginas as p WHERE p.capitulo =:id ORDER BY numeroPagina ASC")
-	public Page<Paginas> buscarPaginaPorCapituloId(@Param("id") Capitulos id, Pageable pageable);
+	public Page<Paginas> findPaginasByCapitulo(@Param("id") Capitulos id, Pageable pageable);
 
 	@Query("Select new Paginas(p.id,p.numeroPagina) FROM Paginas p WHERE p.capitulo =:id ORDER BY p.numeroPagina ASC")
-	public List<Paginas> listaNumeroDePaginas(@Param("id") Capitulos id);
+	public List<Paginas> findNumeroPaginasByCapitulo(@Param("id") Capitulos id);
 }

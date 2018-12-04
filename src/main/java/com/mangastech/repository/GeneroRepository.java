@@ -17,5 +17,5 @@ import com.mangastech.repository.BaseRepository;
 public interface GeneroRepository extends BaseRepository<Generos>, JpaRepository<Generos, Long> {
 
 	@Query("Select m FROM Generos g JOIN g.manga m where g.id=:id ORDER BY m.nome ASC ")
-	public Page<Generos> buscarMangaPorId(@Param("id") Long id, Pageable page);
+	public Page<Generos> findAllMangasByGenero(@Param("id") Long id, Pageable page);
 }

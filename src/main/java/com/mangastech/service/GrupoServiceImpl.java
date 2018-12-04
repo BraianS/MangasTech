@@ -39,7 +39,7 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     public Page<Grupos> findByIdAndPage(Long id, Pageable pageable) {
-        return grupoRepository.buscarMangaPeloIdAutor(id, pageable);
+        return grupoRepository.findDistinctMangasByAutor(id, pageable);
     }
 
     public List<Grupos> listAll() {
@@ -47,6 +47,6 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     public Page<Grupos> findByNomeStartWith(String letra, Pageable pageable) {
-        return grupoRepository.buscarPorLetra(letra, pageable);
+        return grupoRepository.findByNomeStartingWith(letra, pageable);
     }
 }

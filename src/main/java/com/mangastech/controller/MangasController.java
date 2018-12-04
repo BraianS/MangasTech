@@ -220,6 +220,6 @@ public class MangasController {
 	public @ResponseBody List<Mangas> carregarMangaECapitulos(
 			@RequestParam(name = "date") @DateTimeFormat(pattern = "dd-MM-yyyy") Date date) {
 
-		return mangaRepository.capitulosDoMangaAgrupado(date);
+		return mangaRepository.findDistinctMangasByCapituloData(date);
 	}
 }

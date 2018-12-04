@@ -19,17 +19,15 @@ import com.mangastech.repository.BaseRepository;
 @Repository
 public interface MangasRepository extends BaseRepository<Mangas>, JpaRepository<Mangas, Long> {
 
-	@Query("SELECT m FROM Mangas m where m.nome LIKE :nome%")
-	public Page<Mangas> buscarNomeNoInicio(@Param("nome") String nome, Pageable pageable);
+	public Page<Mangas> findByNomeStartingWith(String nome, Pageable pageable);
 
-	@Query("SELECT m FROM Mangas m where m.nome LIKE %:nome%")
-	public Page<Mangas> buscarNomeQualquerPosicao(@Param("nome") String nome, Pageable pageable);
+	public Page<Mangas> findByNomeContaining(String nome, Pageable pageable);
 
 	public List<Mangas> findTop10ByOrderByIdDesc();
 
 	@Query("SELECT m FROM Mangas m LEFT JOIN FETCH m.capitulo AS capitulo WHERE m.id=:id ORDER BY capitulo.id DESC")
-	public Mangas listarCapitulosPorManga(@Param("id") Long id);
+	public Mangas findById(@Param("id") Long id);
 
 	@Query("SELECT DISTINCT m FROM Mangas m JOIN FETCH m.capitulo c WHERE c.lancamento = :data GROUP BY c.id ORDER BY c.id DESC")
-	public List<Mangas> capitulosDoMangaAgrupado(@Param("data") Date data);
+	public List<Mangas> findDistinctMangasByCapituloData(@Param("data") Date data);
 }

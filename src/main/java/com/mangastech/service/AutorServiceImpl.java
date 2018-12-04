@@ -38,12 +38,12 @@ public class AutorServiceImpl implements AutorService {
 
     @Override
     public Page<Autor> listAllByPage(Pageable pageable) {
-        return autorRepository.paginationAutor(pageable);
+        return autorRepository.findAllByPage(pageable);
     }
 
     @Override
     public Page<Autor> findByIdAndPage(Long id, Pageable pageable) {
-        return autorRepository.buscarMangaPorId(id, pageable);
+        return autorRepository.findAllMangasByAutor(id, pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -54,6 +54,6 @@ public class AutorServiceImpl implements AutorService {
 
     @Override
     public Page<Autor> findByNomeStartWith(String nome, Pageable pageable) {
-        return autorRepository.buscarPorLetra(nome, pageable);
+        return autorRepository.findAllByNomeAndPage(nome, pageable);
     }
 }

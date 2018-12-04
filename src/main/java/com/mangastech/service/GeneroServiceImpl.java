@@ -44,7 +44,7 @@ public class GeneroServiceImpl implements GeneroService {
 
     @Override
     public Page<Generos> findByIdAndPage(Long id, Pageable pageable) {
-        return generoRepository.buscarMangaPorId(id, pageable);
+        return generoRepository.findAllMangasByGenero(id, pageable);
     }
 
     @Override

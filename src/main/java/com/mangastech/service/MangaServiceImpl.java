@@ -40,7 +40,7 @@ public class MangaServiceImpl implements MangaService {
 
     @Override
     public Page<Mangas> findByNomeStartWith(String nome, Pageable pageable) {
-        return mangaRepository.buscarNomeNoInicio(nome, pageable);
+        return mangaRepository.findByNomeStartingWith(nome, pageable);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MangaServiceImpl implements MangaService {
 
     @Override
     public Page<Mangas> listAllByNomeAndPage(String nome, Pageable pageable) {
-        return mangaRepository.buscarNomeQualquerPosicao(nome, pageable);
+        return mangaRepository.findByNomeContaining(nome, pageable);
     }
 
     @Override

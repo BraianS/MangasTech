@@ -17,11 +17,11 @@ public class PaginasServiceImpl implements PaginasService {
 
     @Override
     public Page<Paginas> findPaginaByCapituloIdAngPage(Capitulos id, Pageable pageable) {
-        return paginaRepository.buscarPaginaPorCapituloId(id, pageable);
+        return paginaRepository.findPaginasByCapitulo(id, pageable);
     }
 
     @Override
     public List<Paginas> listPaginasByCapituloId(Capitulos id) {
-        return paginaRepository.listaNumeroDePaginas(id);
+        return paginaRepository.findNumeroPaginasByCapitulo(id);
     }
 }

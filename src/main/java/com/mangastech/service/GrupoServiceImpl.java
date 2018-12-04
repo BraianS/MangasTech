@@ -19,34 +19,34 @@ public class GrupoServiceImpl implements GrupoService {
     @Autowired
     private GruposRepository grupoRepository;
 
-    public Page<Grupos> buscarTodos(Pageable pageable) {
+    public Page<Grupos> listAllByPage(Pageable pageable) {
         return grupoRepository.pageAllIdAndNome(pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Grupos cadastrar(Grupos grupos) {
+    public Grupos save(Grupos grupos) {
         return grupoRepository.save(grupos);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void excluir(Long id) {
+    public void delete(Long id) {
         grupoRepository.delete(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Grupos alterar(Grupos grupos) {
+    public Grupos update(Grupos grupos) {
         return grupoRepository.save(grupos);
     }
 
-    public Page<Grupos> buscarMangaPeloIdAutor(Long id, Pageable pageable) {
+    public Page<Grupos> findByIdAndPage(Long id, Pageable pageable) {
         return grupoRepository.buscarMangaPeloIdAutor(id, pageable);
     }
 
-    public List<Grupos> listarTodos() {
+    public List<Grupos> listAll() {
         return grupoRepository.findAllIdAndNome();
     }
 
-    public Page<Grupos> buscarPorLetra(String letra, Pageable pageable) {
+    public Page<Grupos> findByNomeStartWith(String letra, Pageable pageable) {
         return grupoRepository.buscarPorLetra(letra, pageable);
     }
 }

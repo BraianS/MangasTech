@@ -37,7 +37,7 @@ public class GeneroController {
 	 * @return
 	 */
 	@RequestMapping(value = "/genero", method = RequestMethod.GET)
-	public ResponseEntity<Page<Generos>> getAll(Integer page) {
+	public ResponseEntity<Page<Generos>> listAllGenerosByPage(Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -48,7 +48,7 @@ public class GeneroController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(generoService.buscarTodos(pageable), HttpStatus.OK);
+		return new ResponseEntity<>(generoService.listAllByPage(pageable), HttpStatus.OK);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class GeneroController {
 	 * @return
 	 */
 	@RequestMapping(value = "/genero/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Generos>> buscarPorId(@PathVariable(value = "id") Long id, Integer page) {
+	public ResponseEntity<Page<Generos>> listAllMangasByGenero(@PathVariable(value = "id") Long id, Integer page) {
 
 		Generos genero = generoRepository.findOne(id);
 
@@ -76,7 +76,7 @@ public class GeneroController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(generoService.buscarMangaPorId(id, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(generoService.findByIdAndPage(id, pageable), HttpStatus.OK);
 	}
 
 	/**
@@ -86,13 +86,13 @@ public class GeneroController {
 	 * @return
 	 */
 	@RequestMapping(value = "/genero", method = RequestMethod.POST)
-	public ResponseEntity<Generos> salvarGeneros(@RequestBody Generos genero) {
+	public ResponseEntity<Generos> addGenero(@RequestBody Generos genero) {
 
 		if (generoRepository.findOneByNome(genero.getNome()) != null) {
 			throw new RuntimeException("Nome repetido");
 		}
 
-		return new ResponseEntity<>(generoService.cadastrar(genero), HttpStatus.CREATED);
+		return new ResponseEntity<>(generoService.save(genero), HttpStatus.CREATED);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class GeneroController {
 	 * @return
 	 */
 	@RequestMapping(value = "/genero/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Generos> deletarGeneros(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Generos> deleteGenero(@PathVariable(value = "id") Long id) {
 
 		Generos genero = generoRepository.findOne(id);
 
@@ -110,7 +110,7 @@ public class GeneroController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		generoService.excluir(id);
+		generoService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
@@ -121,9 +121,9 @@ public class GeneroController {
 	 * @return genero editado
 	 */
 	@RequestMapping(value = "/genero", method = RequestMethod.PUT)
-	public ResponseEntity<Generos> alterarGeneros(@RequestBody Generos genero) {
+	public ResponseEntity<Generos> updateGenero(@RequestBody Generos genero) {
 
-		return new ResponseEntity<>(generoService.alterar(genero), HttpStatus.OK);
+		return new ResponseEntity<>(generoService.update(genero), HttpStatus.OK);
 	}
 
 	/**
@@ -132,8 +132,8 @@ public class GeneroController {
 	 * @return lista de generos
 	 */
 	@RequestMapping(value = "/genero/lista", method = RequestMethod.GET)
-	public List<Generos> listaTodos() {
+	public List<Generos> listAllGeneros() {
 
-		return generoService.listarTodos();
+		return generoService.listAll();
 	}
 }

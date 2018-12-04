@@ -10,9 +10,9 @@ import com.mangastech.model.Mangas;
  */
 public interface CapituloService {
 
-	Capitulos cadastrar(Capitulos capitulo);
+	Capitulos save(Capitulos capitulo);
 
-	List<Capitulos> listarCapitulos();
+	List<Capitulos> listAll();
 
-	List<Capitulos> buscarCapitulosPorManga(Mangas id);
+	List<Capitulos> findByMangaId(Mangas id);
 }

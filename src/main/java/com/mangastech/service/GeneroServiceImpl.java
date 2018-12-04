@@ -20,35 +20,35 @@ public class GeneroServiceImpl implements GeneroService {
     private GeneroRepository generoRepository;
 
     @Override
-    public Page<Generos> buscarTodos(Pageable pageable) {
+    public Page<Generos> listAllByPage(Pageable pageable) {
         return generoRepository.findAllByOrderByNomeAsc(pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Generos cadastrar(Generos generos) {
+    public Generos save(Generos generos) {
         return generoRepository.save(generos);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public void excluir(Long id) {
+    public void delete(Long id) {
         generoRepository.delete(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Generos alterar(Generos genero) {
+    public Generos update(Generos genero) {
         return generoRepository.save(genero);
     }
 
     @Override
-    public Page<Generos> buscarMangaPorId(Long id, Pageable pageable) {
+    public Page<Generos> findByIdAndPage(Long id, Pageable pageable) {
         return generoRepository.buscarMangaPorId(id, pageable);
     }
 
     @Override
-    public List<Generos> listarTodos() {
+    public List<Generos> listAll() {
         return generoRepository.findAllIdAndNome();
     }
 }

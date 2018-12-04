@@ -11,17 +11,17 @@ import com.mangastech.model.Autor;
  */
 public interface AutorService {
 
-	Autor cadastrar(Autor autor);
+	Autor save(Autor autor);
 
-	void deletar(Autor autor);
+	void delete(Autor autor);
 
-	List<Autor> listarTodos();
+	List<Autor> listAll();
 
-	Page<Autor> paginationAutor(Pageable pageable);
+	Page<Autor> listAllByPage(Pageable pageable);
 
-	Page<Autor> buscarMangaPorId(Long id, Pageable pageable);
+	Page<Autor> findByIdAndPage(Long id, Pageable pageable);
 
-	Autor alterar(Autor autor);
+	Autor update(Autor autor);
 
-	Page<Autor> buscarPorLetra(String nome, Pageable pageable);
+	Page<Autor> findByNomeStartWith(String nome, Pageable pageable);
 }

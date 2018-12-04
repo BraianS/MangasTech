@@ -18,21 +18,21 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Usuario cadastrar(Usuario usuario) {
+    public Usuario save(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void excluir(Long id) {
+    public void delete(Long id) {
         usuarioRepository.delete(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Usuario alterar(Usuario usuario) {
+    public Usuario update(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
-    public List<Usuario> buscarTodos() {
+    public List<Usuario> listall() {
         return usuarioRepository.findAll();
     }
 }

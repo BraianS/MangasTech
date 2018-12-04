@@ -20,17 +20,17 @@ public class CapituloServiceImpl implements CapituloService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Capitulos cadastrar(Capitulos capitulo) {
+    public Capitulos save(Capitulos capitulo) {
         return capitulosRepository.save(capitulo);
     }
 
     @Override
-    public List<Capitulos> listarCapitulos() {
+    public List<Capitulos> listAll() {
         return capitulosRepository.findAll();
     }
 
     @Override
-    public List<Capitulos> buscarCapitulosPorManga(Mangas id) {
+    public List<Capitulos> findByMangaId(Mangas id) {
         return capitulosRepository.buscarCapitulosPorMangaId(id);
     }
 }

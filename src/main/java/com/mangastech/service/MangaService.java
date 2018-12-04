@@ -3,7 +3,6 @@ package com.mangastech.service;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.mangastech.model.Mangas;
 
 /**
@@ -12,21 +11,21 @@ import com.mangastech.model.Mangas;
  */
 public interface MangaService {
 
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public Mangas cadastrar(Mangas manga);
+	public Mangas save(Mangas manga);
 
-	public Page<Mangas> buscarTodos(Pageable pageable);
+	public Page<Mangas> findAllByPage(Pageable pageable);
 
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public void excluir(Long id);
+	public void delete(Long id);
 
-	public Mangas alterar(Mangas mangas);
+	public Mangas update(Mangas mangas);
 
-	public Page<Mangas> buscarNomeNoInicio(String nome, Pageable pageable);
+	Mangas findById(Long id);
 
-	public List<Mangas> listaMangas();
+	public Page<Mangas> listAllByNomeAndPage(String nome, Pageable pageable);
 
-	public Page<Mangas> buscarNomeQualquerPosicao(String nome, Pageable pageable);
+	public List<Mangas> listAll();
 
-	public List<Mangas> buscaTop10Mangas();
+	public Page<Mangas> findByNomeStartWith(String nome, Pageable pageable);
+
+	public List<Mangas> findTop10Mangas();
 }

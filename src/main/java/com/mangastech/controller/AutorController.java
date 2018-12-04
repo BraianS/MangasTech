@@ -39,7 +39,7 @@ public class AutorController {
 	 * @return
 	 */
 	@RequestMapping(value = "/autor", method = RequestMethod.GET)
-	public ResponseEntity<Page<Autor>> ProcurarAutorEManga(Integer page) {
+	public ResponseEntity<Page<Autor>> listAllAutoresByPage(Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -51,7 +51,7 @@ public class AutorController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(autorService.paginationAutor(pageable), HttpStatus.OK);
+		return new ResponseEntity<>(autorService.listAllByPage(pageable), HttpStatus.OK);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class AutorController {
 	 * @return autor
 	 */
 	@RequestMapping(value = "/autor/{id}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Page<Autor>> buscarMangaPorId(@PathVariable(value = "id") Long id,
+	public @ResponseBody ResponseEntity<Page<Autor>> listAllMangasByAutor(@PathVariable(value = "id") Long id,
 			Integer page) {
 
 		Autor autor = autorRepository.findOne(id);
@@ -81,7 +81,7 @@ public class AutorController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(autorService.buscarMangaPorId(id, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(autorService.findByIdAndPage(id, pageable), HttpStatus.OK);
 	}
 
 	/**
@@ -91,13 +91,13 @@ public class AutorController {
 	 * @return
 	 */
 	@RequestMapping(value = "/autor", method = RequestMethod.POST)
-	public ResponseEntity<Autor> cadastrarAutor(@RequestBody Autor autor) {
+	public ResponseEntity<Autor> addAutor(@RequestBody Autor autor) {
 
 		if (autorRepository.findOneByNome(autor.getNome()) != null) {
 			throw new RuntimeException("Nome Repetido");
 		}
 
-		return new ResponseEntity<>(autorService.cadastrar(autor), HttpStatus.OK);
+		return new ResponseEntity<>(autorService.save(autor), HttpStatus.OK);
 	}
 
 	/**
@@ -107,14 +107,14 @@ public class AutorController {
 	 * @return
 	 */
 	@RequestMapping(value = "/autor/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Autor> deletarAutor(@PathVariable("id") Long id) {
+	public ResponseEntity<Autor> deleteAutor(@PathVariable("id") Long id) {
 		Autor autor = autorRepository.findOne(id);
 
 		if (autor == null) {
 			return ResponseEntity.notFound().build();
 		}
 
-		autorService.deletar(autor);
+		autorService.delete(autor);
 		return ResponseEntity.ok().build();
 	}
 
@@ -125,14 +125,14 @@ public class AutorController {
 	 * @return usuario alterado
 	 */
 	@RequestMapping(value = "/autor", method = RequestMethod.PUT)
-	public ResponseEntity<Autor> AlterarAutor(@RequestBody Autor autor) throws IOException {
+	public ResponseEntity<Autor> updateAutor(@RequestBody Autor autor) throws IOException {
 
 		if (autorRepository.findOneByNome(autor.getNome()) != null
 				&& autorRepository.findOneByNome(autor.getNome()).getId() != autor.getId()) {
 			throw new RuntimeException("Nome Repetido");
 		}
 
-		return new ResponseEntity<>(autorService.alterar(autor), HttpStatus.OK);
+		return new ResponseEntity<>(autorService.update(autor), HttpStatus.OK);
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class AutorController {
 	 * @return paginação de autor
 	 */
 	@RequestMapping(value = "/autor/letra/{letra}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Autor>> buscarPorNome(@PathVariable("letra") String letra, Integer page) {
+	public ResponseEntity<Page<Autor>> listAllAutoresByNome(@PathVariable("letra") String letra, Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -155,7 +155,7 @@ public class AutorController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(autorService.buscarPorLetra(letra, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(autorService.findByNomeStartWith(letra, pageable), HttpStatus.OK);
 	}
 
 	/**
@@ -164,8 +164,7 @@ public class AutorController {
 	 * @return lista de autor
 	 */
 	@RequestMapping(value = "/autor/lista", method = RequestMethod.GET)
-	public List<Autor> listarAutores() {
-
-		return autorService.listarTodos();
+	public List<Autor> listAllAutores() {
+		return autorService.listAll();
 	}
 }

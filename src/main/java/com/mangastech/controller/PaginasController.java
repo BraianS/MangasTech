@@ -35,8 +35,8 @@ public class PaginasController {
 	 * @return pagina
 	 */
 	@RequestMapping(value = "/pagina/{id}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Page<Paginas>> procurarPorCapitulo(
-			@PathVariable(value = "id") Capitulos id, Integer page) {
+	public @ResponseBody ResponseEntity<Page<Paginas>> getPaginaByCapitulo(@PathVariable(value = "id") Capitulos id,
+			Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -48,7 +48,7 @@ public class PaginasController {
 
 		Pageable pageable = new PageRequest(page, 1);
 
-		return new ResponseEntity<>(paginaService.buscarPaginaPorCapituloId(id, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(paginaService.findPaginaByCapituloIdAngPage(id, pageable), HttpStatus.OK);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class PaginasController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/paginas/{id}", method = RequestMethod.GET)
-	public List<Paginas> buscarTodos(@PathVariable("id") Capitulos id) {
-		return paginaService.listaNumeroDePaginas(id);
+	public List<Paginas> listAllPaginasByCapitulo(@PathVariable("id") Capitulos id) {
+		return paginaService.listPaginasByCapituloId(id);
 	}
 }

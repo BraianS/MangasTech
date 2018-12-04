@@ -41,9 +41,9 @@ public class CapitulosController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/capitulo", method = RequestMethod.GET)
-	public ResponseEntity<List<Capitulos>> listarCapitulos() {
+	public ResponseEntity<List<Capitulos>> listAllCapitulos() {
 
-		return new ResponseEntity<>(capituloService.listarCapitulos(), HttpStatus.OK);
+		return new ResponseEntity<>(capituloService.listAll(), HttpStatus.OK);
 	}
 
 	/**
@@ -53,10 +53,9 @@ public class CapitulosController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<Capitulos>> buscarCapitulosPorManga(
-			@PathVariable(value = "id") Mangas id) {
+	public @ResponseBody ResponseEntity<List<Capitulos>> listCapitulosByManga(@PathVariable(value = "id") Mangas id) {
 
-		return new ResponseEntity<>(capituloService.buscarCapitulosPorManga(id), HttpStatus.OK);
+		return new ResponseEntity<>(capituloService.findByMangaId(id), HttpStatus.OK);
 	}
 
 	/**
@@ -69,8 +68,7 @@ public class CapitulosController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/capitulo", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public ResponseEntity<Capitulos> cadastrarCapituloEPaginas(
-			@RequestPart(value = "capitulo") Capitulos capitulo,
+	public ResponseEntity<Capitulos> addCapitulo(@RequestPart(value = "capitulo") Capitulos capitulo,
 			@RequestParam(value = "paginas") MultipartFile[] paginas) throws IOException {
 
 		List<Paginas> ListPaginas = new ArrayList<Paginas>();
@@ -101,7 +99,7 @@ public class CapitulosController {
 
 		capitulo.setPagina(ListPaginas);
 		capitulo.setLancamento(new Date());
-		return new ResponseEntity<>(capituloService.cadastrar(capitulo), HttpStatus.OK);
+		return new ResponseEntity<>(capituloService.save(capitulo), HttpStatus.OK);
 	}
 
 	/**
@@ -112,7 +110,7 @@ public class CapitulosController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Capitulos> deletarCapitulo(@PathVariable("id") Long id) throws IOException {
+	public ResponseEntity<Capitulos> deleteCapitulo(@PathVariable("id") Long id) throws IOException {
 
 		Capitulos capitulo = capitulosRepository.findOne(id);
 

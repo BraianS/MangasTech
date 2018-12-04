@@ -21,39 +21,39 @@ public class AutorServiceImpl implements AutorService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Autor cadastrar(Autor autor) {
+    public Autor save(Autor autor) {
         return autorRepository.save(autor);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public void deletar(Autor autor) {
+    public void delete(Autor autor) {
         autorRepository.delete(autor);
     }
 
     @Override
-    public List<Autor> listarTodos() {
+    public List<Autor> listAll() {
         return autorRepository.findAllIdAndNome();
     }
 
     @Override
-    public Page<Autor> paginationAutor(Pageable pageable) {
+    public Page<Autor> listAllByPage(Pageable pageable) {
         return autorRepository.paginationAutor(pageable);
     }
 
     @Override
-    public Page<Autor> buscarMangaPorId(Long id, Pageable pageable) {
+    public Page<Autor> findByIdAndPage(Long id, Pageable pageable) {
         return autorRepository.buscarMangaPorId(id, pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Autor alterar(Autor autor) {
+    public Autor update(Autor autor) {
         return autorRepository.save(autor);
     }
 
     @Override
-    public Page<Autor> buscarPorLetra(String nome, Pageable pageable) {
+    public Page<Autor> findByNomeStartWith(String nome, Pageable pageable) {
         return autorRepository.buscarPorLetra(nome, pageable);
     }
 }

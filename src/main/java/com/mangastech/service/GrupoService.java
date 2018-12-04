@@ -11,17 +11,17 @@ import com.mangastech.model.Grupos;
  */
 public interface GrupoService {
 
-	Page<Grupos> buscarTodos(Pageable pageable);
+	Page<Grupos> listAllByPage(Pageable pageable);
 
-	Grupos cadastrar(Grupos grupos);
+	Grupos save(Grupos grupos);
 
-	void excluir(Long id);
+	void delete(Long id);
 
-	Grupos alterar(Grupos grupos);
+	Grupos update(Grupos grupos);
 
-	Page<Grupos> buscarMangaPeloIdAutor(Long id, Pageable pageable);
+	Page<Grupos> findByIdAndPage(Long id, Pageable pageable);
 
-	List<Grupos> listarTodos();
+	List<Grupos> listAll();
 
-	Page<Grupos> buscarPorLetra(String letra, Pageable pageable);
+	Page<Grupos> findByNomeStartWith(String letra, Pageable pageable);
 }

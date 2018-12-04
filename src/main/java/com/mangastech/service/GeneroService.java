@@ -11,15 +11,15 @@ import com.mangastech.model.Generos;
  */
 public interface GeneroService {
 
-	Page<Generos> buscarTodos(Pageable pageable);
+	Page<Generos> listAllByPage(Pageable pageable);
 
-	Generos cadastrar(Generos generos);
+	Generos save(Generos generos);
 
-	void excluir(Long id);
+	void delete(Long id);
 
-	Generos alterar(Generos genero);
+	Generos update(Generos genero);
 
-	Page<Generos> buscarMangaPorId(Long id, Pageable pageable);
+	Page<Generos> findByIdAndPage(Long id, Pageable pageable);
 
-	List<Generos> listarTodos();
+	List<Generos> listAll();
 }

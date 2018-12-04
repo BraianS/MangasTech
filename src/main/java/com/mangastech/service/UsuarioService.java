@@ -9,11 +9,11 @@ import com.mangastech.model.Usuario;
  */
 public interface UsuarioService {
 
-	Usuario cadastrar(Usuario usuario);
+	Usuario save(Usuario usuario);
 
-	void excluir(Long id);
+	void delete(Long id);
 
-	Usuario alterar(Usuario usuario);
+	Usuario update(Usuario usuario);
 
-	List<Usuario> buscarTodos();
+	List<Usuario> listall();
 }

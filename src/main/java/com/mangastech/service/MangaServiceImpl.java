@@ -17,44 +17,49 @@ public class MangaServiceImpl implements MangaService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Mangas cadastrar(Mangas manga) {
+    public Mangas save(Mangas manga) {
         return mangaRepository.save(manga);
     }
 
     @Override
-    public Page<Mangas> buscarTodos(Pageable pageable) {
+    public Page<Mangas> findAllByPage(Pageable pageable) {
         return mangaRepository.findAllByOrderByNomeAsc(pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public void excluir(Long id) {
+    public void delete(Long id) {
         mangaRepository.delete(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Mangas alterar(Mangas mangas) {
+    public Mangas update(Mangas mangas) {
         return mangaRepository.save(mangas);
     }
 
     @Override
-    public Page<Mangas> buscarNomeNoInicio(String nome, Pageable pageable) {
+    public Page<Mangas> findByNomeStartWith(String nome, Pageable pageable) {
         return mangaRepository.buscarNomeNoInicio(nome, pageable);
     }
 
     @Override
-    public List<Mangas> listaMangas() {
+    public List<Mangas> listAll() {
         return mangaRepository.findAllIdAndNome();
     }
 
     @Override
-    public Page<Mangas> buscarNomeQualquerPosicao(String nome, Pageable pageable) {
+    public Page<Mangas> listAllByNomeAndPage(String nome, Pageable pageable) {
         return mangaRepository.buscarNomeQualquerPosicao(nome, pageable);
     }
 
     @Override
-    public List<Mangas> buscaTop10Mangas() {
+    public List<Mangas> findTop10Mangas() {
         return mangaRepository.findTop10ByOrderByIdDesc();
+    }
+
+    @Override
+    public Mangas findById(Long id) {
+        return mangaRepository.findOne(id);
     }
 }

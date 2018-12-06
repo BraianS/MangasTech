@@ -38,7 +38,7 @@ public class AutorServiceImpl implements AutorService {
 
     @Override
     public Page<Autor> listAllByPage(Pageable pageable) {
-        return autorRepository.findAllByPage(pageable);
+        return autorRepository.findAllByOrderByNomeAsc(pageable);
     }
 
     @Override
@@ -54,6 +54,6 @@ public class AutorServiceImpl implements AutorService {
 
     @Override
     public Page<Autor> findByNomeStartWith(String nome, Pageable pageable) {
-        return autorRepository.findAllByNomeAndPage(nome, pageable);
+        return autorRepository.findByNomeStartingWith(nome, pageable);
     }
 }

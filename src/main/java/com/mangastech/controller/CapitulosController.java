@@ -36,17 +36,6 @@ public class CapitulosController {
 	private CapitulosRepository capitulosRepository;
 
 	/**
-	 * Método recebe todos os capitulos
-	 * 
-	 * @return lista de capitulos
-	 */
-	@RequestMapping(value = "/capitulo", method = RequestMethod.GET)
-	public ResponseEntity<List<Capitulos>> listAllCapitulos() {
-
-		return new ResponseEntity<>(capituloService.listAll(), HttpStatus.OK);
-	}
-
-	/**
 	 * Método busca capitulos por manga ID
 	 * 
 	 * @param id

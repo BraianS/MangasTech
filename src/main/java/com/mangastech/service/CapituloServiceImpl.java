@@ -25,11 +25,6 @@ public class CapituloServiceImpl implements CapituloService {
     }
 
     @Override
-    public List<Capitulos> listAll() {
-        return capitulosRepository.findAll();
-    }
-
-    @Override
     public List<Capitulos> findByMangaId(Mangas id) {
         return capitulosRepository.findAllCapitulosByManga(id);
     }

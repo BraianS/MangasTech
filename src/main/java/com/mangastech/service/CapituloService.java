@@ -12,7 +12,5 @@ public interface CapituloService {
 
 	Capitulos save(Capitulos capitulo);
 
-	List<Capitulos> listAll();
-
 	List<Capitulos> findByMangaId(Mangas id);
 }

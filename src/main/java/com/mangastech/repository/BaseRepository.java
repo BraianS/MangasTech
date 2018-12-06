@@ -27,4 +27,6 @@ public interface BaseRepository<T> extends Repository<T, Long> {
     public T findOneByNome(String nome);
 
     public Page<T> findAllByOrderByNomeAsc(Pageable pageable);
+
+    public Page<T> findByNomeStartingWith(String nome, Pageable pageable);
 }

@@ -19,8 +19,6 @@ import com.mangastech.repository.BaseRepository;
 @Repository
 public interface MangasRepository extends BaseRepository<Mangas>, JpaRepository<Mangas, Long> {
 
-	public Page<Mangas> findByNomeStartingWith(String nome, Pageable pageable);
-
 	public Page<Mangas> findByNomeContaining(String nome, Pageable pageable);
 
 	public List<Mangas> findTop10ByOrderByIdDesc();

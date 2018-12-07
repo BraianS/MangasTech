@@ -76,7 +76,7 @@ public class CapitulosController {
 				if (file.getSize() < limit) {
 					Paginas pagina = new Paginas();
 					pagina.setCapitulo(capitulo);
-					pagina.setFotos(file.getBytes());
+					pagina.setPagina(file.getBytes());
 					pagina.setNumeroPagina(count);
 					ListPaginas.add(pagina);
 					count++;

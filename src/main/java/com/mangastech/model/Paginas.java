@@ -15,7 +15,7 @@ public class Paginas extends BaseEntity {
 
 	@Lob
 	@Column
-	private byte[] fotos;
+	private byte[] pagina;
 
 	@Column(name = "numero_pagina")
 	private int numeroPagina;
@@ -24,12 +24,12 @@ public class Paginas extends BaseEntity {
 	@JoinColumn(name = "capitulo_id")
 	private Capitulos capitulo;
 
-	public byte[] getFotos() {
-		return fotos;
+	public byte[] getPagina() {
+		return pagina;
 	}
 
-	public void setFotos(byte[] fotos) {
-		this.fotos = fotos;
+	public void setPagina(byte[] pagina) {
+		this.pagina = pagina;
 	}
 
 	public int getNumeroPagina() {
@@ -58,7 +58,7 @@ public class Paginas extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "PaginasEntity [id=" + id + ", numeroPagina=" + numeroPagina + ", fotos=" + Arrays.toString(fotos)
+		return "PaginasEntity [id=" + id + ", numeroPagina=" + numeroPagina + ", fotos=" + Arrays.toString(pagina)
 				+ ", capitulo=" + capitulo + "]";
 	}
 }

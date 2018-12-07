@@ -90,24 +90,4 @@ public class CapitulosController {
 		capitulo.setLancamento(new Date());
 		return new ResponseEntity<>(capituloService.save(capitulo), HttpStatus.OK);
 	}
-
-	/**
-	 * Método Deleta um capitulo de cada Manga
-	 * 
-	 * @param id
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Capitulos> deleteCapitulo(@PathVariable("id") Long id) throws IOException {
-
-		Capitulos capitulo = capitulosRepository.findOne(id);
-
-		if (capitulo == null) {
-			throw new RuntimeException("Não encontrado");
-		}
-
-		capitulosRepository.delete(id);
-		return ResponseEntity.ok().build();
-	}
 }

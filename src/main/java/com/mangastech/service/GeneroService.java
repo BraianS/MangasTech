@@ -9,7 +9,7 @@ import com.mangastech.model.Generos;
  * @author Braian
  *
  */
-public interface GeneroService {
+public interface GeneroService extends CrudService<Generos> {
 
 	Page<Generos> listAllByPage(Pageable pageable);
 

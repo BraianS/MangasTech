@@ -9,7 +9,7 @@ import com.mangastech.model.Autor;
  * @author Braian
  *
  */
-public interface AutorService {
+public interface AutorService extends CrudService<Autor> {
 
 	Autor save(Autor autor);
 

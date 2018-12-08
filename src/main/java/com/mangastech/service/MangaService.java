@@ -9,7 +9,7 @@ import com.mangastech.model.Mangas;
  * @author Braian
  *
  */
-public interface MangaService {
+public interface MangaService extends CrudService<Mangas> {
 
 	public Mangas save(Mangas manga);
 

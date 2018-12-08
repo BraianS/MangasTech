@@ -9,7 +9,7 @@ import com.mangastech.model.Grupos;
  * @author Braian
  *
  */
-public interface GrupoService {
+public interface GrupoService extends CrudService<Grupos> {
 
 	Page<Grupos> listAllByPage(Pageable pageable);
 

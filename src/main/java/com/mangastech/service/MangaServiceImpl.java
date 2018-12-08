@@ -62,4 +62,12 @@ public class MangaServiceImpl implements MangaService {
     public Mangas findById(Long id) {
         return mangaRepository.findOne(id);
     }
+
+    @Override
+    public Mangas findByNome(String nome) {
+        if (nome != null) {
+            mangaRepository.findOneByNome(nome);
+        }
+        return null;
+    }
 }

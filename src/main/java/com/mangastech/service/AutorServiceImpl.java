@@ -56,4 +56,12 @@ public class AutorServiceImpl implements AutorService {
     public Page<Autor> findByNomeStartWith(String nome, Pageable pageable) {
         return autorRepository.findByNomeStartingWith(nome, pageable);
     }
+
+    @Override
+    public Autor findByNome(String nome) {
+        if (nome != null) {
+            autorRepository.findOneByNome(nome);
+        }
+        return null;
+    }
 }

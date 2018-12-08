@@ -11,6 +11,8 @@ import com.mangastech.model.Mangas;
  */
 public interface MangaService extends CrudService<Mangas> {
 
+	Mangas findByNome(String nome);
+
 	public Page<Mangas> findAllByPage(Pageable pageable);
 
 	Mangas findById(Long id);

@@ -51,4 +51,12 @@ public class GeneroServiceImpl implements GeneroService {
     public List<Generos> listAll() {
         return generoRepository.findAllIdAndNome();
     }
+
+    @Override
+    public Generos findByNome(String nome) {
+        if (nome != null) {
+            generoRepository.findOneByNome(nome);
+        }
+        return null;
+    }
 }

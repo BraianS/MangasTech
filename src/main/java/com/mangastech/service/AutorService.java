@@ -10,6 +10,8 @@ import com.mangastech.model.Autor;
  */
 public interface AutorService extends CrudService<Autor> {
 
+	Autor findByNome(String nome);
+
 	Page<Autor> listAllByPage(Pageable pageable);
 
 	Page<Autor> findByIdAndPage(Long id, Pageable pageable);

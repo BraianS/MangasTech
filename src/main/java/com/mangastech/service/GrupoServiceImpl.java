@@ -49,4 +49,12 @@ public class GrupoServiceImpl implements GrupoService {
     public Page<Grupos> findByNomeStartWith(String letra, Pageable pageable) {
         return grupoRepository.findByNomeStartingWith(letra, pageable);
     }
+
+    @Override
+    public Grupos findByNome(String nome) {
+        if (nome != null) {
+            grupoRepository.findOneByNome(nome);
+        }
+        return null;
+    }
 }

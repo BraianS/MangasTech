@@ -10,6 +10,8 @@ import com.mangastech.model.Grupos;
  */
 public interface GrupoService extends CrudService<Grupos> {
 
+	Grupos findByNome(String nome);
+
 	Page<Grupos> listAllByPage(Pageable pageable);
 
 	Page<Grupos> findByIdAndPage(Long id, Pageable pageable);

@@ -38,7 +38,7 @@ public class UsuarioController {
 	 */
 	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
 	public List<Usuario> buscarUmUser(Usuario usuario) {
-		return usuarioService.listall();
+		return usuarioService.listAll();
 	}
 
 	/**

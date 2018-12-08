@@ -32,7 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public List<Usuario> listall() {
+    public List<Usuario> listAll() {
         return usuarioRepository.findAll();
     }
 }

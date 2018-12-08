@@ -1,19 +1,11 @@
 package com.mangastech.service;
 
-import java.util.List;
 import com.mangastech.model.Usuario;
 
 /**
  * @author Braian
  *
  */
-public interface UsuarioService {
+public interface UsuarioService extends CrudService<Usuario> {
 
-	Usuario save(Usuario usuario);
-
-	void delete(Long id);
-
-	Usuario update(Usuario usuario);
-
-	List<Usuario> listall();
 }

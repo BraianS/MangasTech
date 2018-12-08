@@ -114,7 +114,7 @@ public class AutorController {
 			return ResponseEntity.notFound().build();
 		}
 
-		autorService.delete(autor);
+		autorService.delete(id);
 		return ResponseEntity.ok().build();
 	}
 

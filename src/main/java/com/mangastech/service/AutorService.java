@@ -13,7 +13,7 @@ public interface AutorService extends CrudService<Autor> {
 
 	Autor save(Autor autor);
 
-	void delete(Autor autor);
+	void delete(Long id);
 
 	List<Autor> listAll();
 

@@ -27,8 +27,8 @@ public class AutorServiceImpl implements AutorService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public void delete(Autor autor) {
-        autorRepository.delete(autor);
+    public void delete(Long id) {
+        autorRepository.delete(id);
     }
 
     @Override

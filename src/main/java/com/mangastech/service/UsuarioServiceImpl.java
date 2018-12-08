@@ -35,4 +35,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> listAll() {
         return usuarioRepository.findAll();
     }
+
+    @Override
+    public Usuario findByUsername(String username) {
+        if(username!=null){
+            usuarioRepository.findOneByUsername(username);
+        }
+        return null;
+    }
 }

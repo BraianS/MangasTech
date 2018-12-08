@@ -8,4 +8,5 @@ import com.mangastech.model.Usuario;
  */
 public interface UsuarioService extends CrudService<Usuario> {
 
+    Usuario findByUsername(String username);
 }

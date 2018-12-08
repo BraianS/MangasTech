@@ -17,4 +17,8 @@ public interface CrudService<T> {
     T update(T entity);
 
     void delete(Long id);
+
+    T findById(Long id);
+
+    boolean isExist(T entity);
 }

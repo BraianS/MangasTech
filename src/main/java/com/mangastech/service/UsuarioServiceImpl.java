@@ -43,4 +43,14 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         return null;
     }
+
+    @Override
+    public Usuario findById(Long id) {
+        return usuarioRepository.findOne(id);
+    }
+
+    @Override
+    public boolean isExist(Usuario usuario) {
+        return usuarioRepository.findOneByUsername(usuario.getUsername()) != null;
+    }
 }

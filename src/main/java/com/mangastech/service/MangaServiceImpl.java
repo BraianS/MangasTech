@@ -70,4 +70,9 @@ public class MangaServiceImpl implements MangaService {
         }
         return null;
     }
+
+    @Override
+    public boolean isExist(Mangas manga) {
+        return findByNome(manga.getNome()) != null;
+    }
 }

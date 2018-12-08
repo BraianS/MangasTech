@@ -59,4 +59,14 @@ public class GeneroServiceImpl implements GeneroService {
         }
         return null;
     }
+
+    @Override
+    public Generos findById(Long id) {
+        return generoRepository.findOne(id);
+    }
+
+    @Override
+    public boolean isExist(Generos genero) {
+        return generoRepository.findOneByNome(genero.getNome()) != null;
+    }
 }

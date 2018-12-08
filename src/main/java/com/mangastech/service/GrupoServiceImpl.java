@@ -57,4 +57,14 @@ public class GrupoServiceImpl implements GrupoService {
         }
         return null;
     }
+
+    @Override
+    public Grupos findById(Long id) {
+        return grupoRepository.findOne(id);
+    }
+
+    @Override
+    public boolean isExist(Grupos grupo) {
+        return grupoRepository.findOneByNome(grupo.getNome()) != null;
+    }
 }

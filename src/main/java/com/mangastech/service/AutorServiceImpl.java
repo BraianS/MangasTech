@@ -64,4 +64,14 @@ public class AutorServiceImpl implements AutorService {
         }
         return null;
     }
+
+    @Override
+    public Autor findById(Long id) {
+        return autorRepository.findOne(id);
+    }
+
+    @Override
+    public boolean isExist(Autor autor) {
+        return autorRepository.findOneByNome(autor.getNome()) != null;
+    }
 }

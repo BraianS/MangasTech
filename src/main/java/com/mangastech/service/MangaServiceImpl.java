@@ -1,7 +1,10 @@
 package com.mangastech.service;
 
 import java.util.List;
+
+import com.mangastech.model.Capitulos;
 import com.mangastech.model.Mangas;
+import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.repository.MangasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +17,9 @@ public class MangaServiceImpl implements MangaService {
 
     @Autowired
     private MangasRepository mangaRepository;
+
+    @Autowired
+    private CapitulosRepository capitulosRepository;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
@@ -74,5 +80,13 @@ public class MangaServiceImpl implements MangaService {
     @Override
     public boolean isExist(Mangas manga) {
         return findByNome(manga.getNome()) != null;
+    }
+
+    @Override
+    public void deletarCapitulo(Long mangaId, Long capituloId) {
+        Mangas manga = mangaRepository.findOne(mangaId);
+        Capitulos capitulo = capitulosRepository.findOne(capituloId);
+        manga.removerCapitulo(capitulo);
+        mangaRepository.save(manga);
     }
 }

@@ -22,4 +22,6 @@ public interface MangaService extends CrudService<Mangas> {
 	public Page<Mangas> findByNomeStartWith(String nome, Pageable pageable);
 
 	public List<Mangas> findTop10Mangas();
+
+	public void deletarCapitulo(Long mangaId,Long capituloId);
 }

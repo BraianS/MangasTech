@@ -222,4 +222,16 @@ public class MangasController {
 
 		return mangaRepository.findDistinctMangasByCapituloData(date);
 	}
+
+	/**
+	 * Método deleta um capitulo de cada manga
+	 * 
+	 * @param mangaId
+	 * @param capituloId
+	 * @return
+	 */@RequestMapping(value="/manga/{manga}/{capitulo}")
+	public ResponseEntity<Mangas> deleteCapitulo(@PathVariable("manga")Long mangaId,@PathVariable("capitulo")Long capituloId){
+		mangasService.deletarCapitulo(mangaId, capituloId);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

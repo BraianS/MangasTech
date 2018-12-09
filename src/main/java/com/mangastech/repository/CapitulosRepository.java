@@ -17,4 +17,7 @@ public interface CapitulosRepository extends JpaRepository<Capitulos, Long> {
 
 	@Query("SELECT c FROM Capitulos as c where c.manga =:id ORDER BY c.id ASC")
 	public List<Capitulos> findAllCapitulosByManga(@Param("id") Mangas id);
+
+	@Query("SELECT c FROM Capitulos as c WHERE manga_id =:manga AND id=:capitulo")
+	Capitulos findOne(@Param("manga")Long mangaId, @Param("capitulo") Long capituloId);
 }

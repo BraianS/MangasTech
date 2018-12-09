@@ -111,6 +111,11 @@ public class Mangas extends BaseEntity {
 		this.capa = capa;
 	}
 
+	public boolean removerCapitulo(Capitulos c){
+		c.setManga(null);
+		return capitulo.remove(c);
+	}
+
 	public Mangas() {
 	}
 

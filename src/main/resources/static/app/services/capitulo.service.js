@@ -33,8 +33,8 @@
             }
         }
 
-        function excluirCapitulo(capitulo) {
-            return $http.delete('/api/capitulo/' + capitulo.id)
+        function excluirCapitulo(manga,capitulo) {
+            return $http.delete('/api/manga/'+manga.id+'/'+capitulo.id)
                 .then(getExcluirCapitulo)
                 .catch(getCapituloError);
 

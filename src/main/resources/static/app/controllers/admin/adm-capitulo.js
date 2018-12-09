@@ -53,8 +53,8 @@
 				})
 		}
 
-		function excluirCapitulo(capitulo) {
-			return capituloService.excluirCapitulo(capitulo)
+		function excluirCapitulo(manga,capitulo) {
+			return capituloService.excluirCapitulo(manga,capitulo)
 				.then(function (data) {
 					vm.mensagem = data;
 					listaCapitulosPorManga();

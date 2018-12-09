@@ -108,7 +108,7 @@
 								<td>{{capitulo.lancamento | date:'dd MM,yyyy'}}</td>
 								<td>
 									<div class="btn-group btn-group-xs">
-										<button class="btn btn-default" value="excluir" ng-click="vm.excluirCapitulo(capitulo)">
+										<button class="btn btn-default" value="excluir" ng-click="vm.excluirCapitulo(vm.listaCapitulos,capitulo)">
 											<span class="glyphicon glyphicon-remove"></span>
 										</button>
 									</div>

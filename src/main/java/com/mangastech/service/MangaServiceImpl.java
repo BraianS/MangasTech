@@ -82,6 +82,7 @@ public class MangaServiceImpl implements MangaService {
         return findByNome(manga.getNome()) != null;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public void deletarCapitulo(Long mangaId, Long capituloId) {
         Mangas manga = mangaRepository.findOne(mangaId);

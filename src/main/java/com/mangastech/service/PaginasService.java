@@ -12,7 +12,7 @@ import com.mangastech.model.Paginas;
  */
 public interface PaginasService {
 
-	public Page<Paginas> findPaginaByCapituloIdAngPage(Capitulos id, Pageable pageable);
+	Page<Paginas> findPaginaByCapituloIdAngPage(Capitulos id, Pageable pageable);
 
-	public List<Paginas> listPaginasByCapituloId(Capitulos id);
+	List<Paginas> listPaginasByCapituloId(Capitulos id);
 }

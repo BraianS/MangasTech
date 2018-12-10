@@ -17,5 +17,5 @@ import com.mangastech.repository.BaseRepository;
 public interface AutorRepository extends BaseRepository<Autor>, JpaRepository<Autor, Long> {
 
 	@Query("Select m FROM Autor a JOIN a.manga m where a.id=:id ORDER BY m.nome ASC")
-	public Page<Autor> findAllMangasByAutor(@Param("id") Long id, Pageable page);
+	Page<Autor> findAllMangasByAutor(@Param("id") Long id, Pageable page);
 }

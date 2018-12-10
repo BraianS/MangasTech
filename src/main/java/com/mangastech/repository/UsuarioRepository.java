@@ -11,5 +11,5 @@ import com.mangastech.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-	public Usuario findOneByUsername(String username);
+	Usuario findOneByUsername(String username);
 }

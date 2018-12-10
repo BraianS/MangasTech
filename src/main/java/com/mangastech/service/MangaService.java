@@ -13,15 +13,15 @@ public interface MangaService extends CrudService<Mangas> {
 
 	Mangas findByNome(String nome);
 
-	public Page<Mangas> findAllByPage(Pageable pageable);
+	Page<Mangas> findAllByPage(Pageable pageable);
 
 	Mangas findById(Long id);
 
-	public Page<Mangas> listAllByNomeAndPage(String nome, Pageable pageable);
+	Page<Mangas> listAllByNomeAndPage(String nome, Pageable pageable);
 
-	public Page<Mangas> findByNomeStartWith(String nome, Pageable pageable);
+	Page<Mangas> findByNomeStartWith(String nome, Pageable pageable);
 
-	public List<Mangas> findTop10Mangas();
+	List<Mangas> findTop10Mangas();
 
-	public void deletarCapitulo(Long mangaId,Long capituloId);
+	void deletarCapitulo(Long mangaId,Long capituloId);
 }

@@ -54,7 +54,7 @@ public class HomeController {
 		roles.add("USER");
 		usuario.setRoles(roles);
 
-		return new ResponseEntity<Usuario>(usuarioService.save(usuario), HttpStatus.CREATED);
+		return new ResponseEntity<Usuario>(usuarioService.newUsuario(usuario), HttpStatus.CREATED);
 	}
 
 	/**

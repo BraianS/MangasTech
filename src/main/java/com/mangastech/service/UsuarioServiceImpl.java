@@ -53,4 +53,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     public boolean isExist(Usuario usuario) {
         return usuarioRepository.findOneByUsername(usuario.getUsername()) != null;
     }
+
+    @Override
+    public Usuario newUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
 }

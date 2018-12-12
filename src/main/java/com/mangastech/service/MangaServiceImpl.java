@@ -1,5 +1,6 @@
 package com.mangastech.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.mangastech.model.Capitulos;
@@ -90,4 +91,9 @@ public class MangaServiceImpl implements MangaService {
         manga.removerCapitulo(capitulo);
         mangaRepository.save(manga);
     }
+
+    @Override
+    public List<Mangas> listarCapitulosPorData(Date data) {
+        return mangaRepository.findDistinctMangasByCapituloData(data);
+	}
 }

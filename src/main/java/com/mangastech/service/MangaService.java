@@ -1,5 +1,6 @@
 package com.mangastech.service;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,4 +25,6 @@ public interface MangaService extends CrudService<Mangas> {
 	List<Mangas> buscarTop10Mangas();
 
 	void deletarCapituloPorManga(Long mangaId,Long capituloId);
+
+	List<Mangas> listarCapitulosPorData(Date data);
 }

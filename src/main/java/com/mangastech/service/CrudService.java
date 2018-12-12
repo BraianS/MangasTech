@@ -10,15 +10,15 @@ import java.util.List;
  */
 public interface CrudService<T> {
 
-    T save(T entity);
+    T salvar(T entity);
 
-    List<T> listAll();
+    List<T> listarTodos();
 
-    T update(T entity);
+    T atualizar(T entity);
 
-    void delete(Long id);
+    void deletar(Long id);
 
-    T findById(Long id);
+    T buscarPorId(Long id);
 
-    boolean isExist(T entity);
+    boolean existe(T entity);
 }

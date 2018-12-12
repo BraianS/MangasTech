@@ -10,9 +10,9 @@ import com.mangastech.model.Generos;
  */
 public interface GeneroService extends CrudService<Generos> {
 
-	Generos findByNome(String nome);
+	Generos buscarPorNome(String nome);
 
-	Page<Generos> listAllByPage(Pageable pageable);
+	Page<Generos> listaPaginada(Pageable pageable);
 
-	Page<Generos> findByIdAndPage(Long id, Pageable pageable);
+	Page<Generos> buscarPorId(Long id, Pageable pageable);
 }

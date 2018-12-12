@@ -16,12 +16,12 @@ public class PaginasServiceImpl implements PaginasService {
     private PaginasRepository paginaRepository;
 
     @Override
-    public Page<Paginas> findPaginaByCapituloIdAngPage(Capitulos id, Pageable pageable) {
+    public Page<Paginas> buscarPaginaPorCapitulo(Capitulos id, Pageable pageable) {
         return paginaRepository.findPaginasByCapitulo(id, pageable);
     }
 
     @Override
-    public List<Paginas> listPaginasByCapituloId(Capitulos id) {
+    public List<Paginas> listarPaginasPorCapitulo(Capitulos id) {
         return paginaRepository.findNumeroPaginasByCapitulo(id);
     }
 }

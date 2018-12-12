@@ -18,26 +18,26 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Usuario save(Usuario usuario) {
+    public Usuario salvar(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void delete(Long id) {
+    public void deletar(Long id) {
         usuarioRepository.delete(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Usuario update(Usuario usuario) {
+    public Usuario atualizar(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
-    public List<Usuario> listAll() {
+    public List<Usuario> listarTodos() {
         return usuarioRepository.findAll();
     }
 
     @Override
-    public Usuario findByUsername(String username) {
+    public Usuario buscarPorUsername(String username) {
         if(username!=null){
             usuarioRepository.findOneByUsername(username);
         }
@@ -45,17 +45,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario findById(Long id) {
+    public Usuario buscarPorId(Long id) {
         return usuarioRepository.findOne(id);
     }
 
     @Override
-    public boolean isExist(Usuario usuario) {
+    public boolean existe(Usuario usuario) {
         return usuarioRepository.findOneByUsername(usuario.getUsername()) != null;
     }
 
     @Override
-    public Usuario newUsuario(Usuario usuario) {
+    public Usuario salvaNovoUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 }

@@ -43,7 +43,7 @@ public class MangasController {
 	 * @return
 	 */
 	@RequestMapping(value = "/manga", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Page<Mangas>> listAllMangas(Integer page) {
+	public @ResponseBody ResponseEntity<Page<Mangas>> listarMangas(Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -55,7 +55,7 @@ public class MangasController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(mangasService.findAllByPage(pageable), HttpStatus.OK);
+		return new ResponseEntity<>(mangasService.listaPaginada(pageable), HttpStatus.OK);
 	}
 
 	/**
@@ -65,9 +65,9 @@ public class MangasController {
 	 * @return manga
 	 */
 	@RequestMapping(value = "/manga/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Mangas> getManga(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Mangas> buscarAutorPorId(@PathVariable(value = "id") Long id) {
 
-		Mangas manga = mangasService.findById(id);
+		Mangas manga = mangasService.buscarPorId(id);
 
 		if (manga == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -86,7 +86,7 @@ public class MangasController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/manga", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public ResponseEntity<Mangas> addManga(@RequestPart(value = "mangas") Mangas mangas,
+	public ResponseEntity<Mangas> salvarManga(@RequestPart(value = "mangas") Mangas mangas,
 			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 
 		if (mangaRepository.findOneByNome(mangas.getNome()) != null) {
@@ -96,7 +96,7 @@ public class MangasController {
 			mangas.setCapa(file.getBytes());
 		}
 
-		return new ResponseEntity<>(mangasService.save(mangas), HttpStatus.CREATED);
+		return new ResponseEntity<>(mangasService.salvar(mangas), HttpStatus.CREATED);
 	}
 
 	/**
@@ -106,14 +106,14 @@ public class MangasController {
 	 * @return
 	 */
 	@RequestMapping(value = "/manga/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Mangas> deleteManga(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Mangas> deletarMangaPorId(@PathVariable(value = "id") Long id) {
 
 		Mangas manga = mangaRepository.findOne(id);
 		if (manga == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		mangasService.delete(id);
+		mangasService.deletar(id);
 		return ResponseEntity.ok().build();
 	}
 
@@ -125,7 +125,7 @@ public class MangasController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/manga", method = RequestMethod.PUT, consumes = { "multipart/form-data" })
-	public ResponseEntity<Mangas> updateManga(@RequestPart(value = "mangas") Mangas mangas,
+	public ResponseEntity<Mangas> atualizarManga(@RequestPart(value = "mangas") Mangas mangas,
 			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 
 		if (mangaRepository.findOneByNome(mangas.getNome()) != null
@@ -136,18 +136,18 @@ public class MangasController {
 			mangas.setCapa(file.getBytes());
 		}
 
-		return new ResponseEntity<>(mangasService.update(mangas), HttpStatus.OK);
+		return new ResponseEntity<>(mangasService.atualizar(mangas), HttpStatus.OK);
 	}
 
 	/**
-	 * Método buscar manga com nome no início
+	 * Método buscar manga com letra no início
 	 * 
 	 * @param nome
 	 * @param page
 	 * @return manga
 	 */
 	@RequestMapping(value = "/manga/az/{letra}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Page<Mangas>> listAllMangasByNome(@PathVariable(value = "letra") String letra,
+	public @ResponseBody ResponseEntity<Page<Mangas>> buscarMangaPorLetra(@PathVariable(value = "letra") String letra,
 			Integer page) {
 
 		if (letra == null || letra.isEmpty()) {
@@ -163,18 +163,18 @@ public class MangasController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(mangasService.findByNomeStartWith(letra, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(mangasService.buscaPorLetra(letra, pageable), HttpStatus.OK);
 	}
 
 	/**
-	 * Método buscar nome do manga em qualquer posição
+	 * Método busca nome do manga em qualquer posição
 	 * 
 	 * @param nome
 	 * @param page
 	 * @return manga
 	 */
 	@RequestMapping(value = "/manga/nome/{nome}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Mangas>> listAllMangasByNomeAnyPosition(@PathVariable(value = "nome") String nome,
+	public ResponseEntity<Page<Mangas>> buscarMangaPorNome(@PathVariable(value = "nome") String nome,
 			Integer page) {
 
 		if (page == null) {
@@ -186,28 +186,28 @@ public class MangasController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(mangasService.listAllByNomeAndPage(nome, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(mangasService.buscarPorNome(nome, pageable), HttpStatus.OK);
 	}
 
 	/**
-	 * Método recebe dez novos mangas
+	 * Método recebe lista top 10 mangas
 	 * 
 	 * @return lista com dez mangas
 	 */
 	@RequestMapping(value = "/manga/top10", method = RequestMethod.GET)
-	public ResponseEntity<List<Mangas>> getTop10Mangas() {
-		return new ResponseEntity<>(mangasService.findTop10Mangas(), HttpStatus.OK);
+	public ResponseEntity<List<Mangas>> buscarTop10Mangas() {
+		return new ResponseEntity<>(mangasService.buscarTop10Mangas(), HttpStatus.OK);
 	}
 
 	/**
-	 * Método recebe todos os mangas
+	 * Método lista o ID e Nome dos mangas
 	 * 
 	 * @return lista de mangas
 	 */
 	@RequestMapping(value = "/manga/lista", method = RequestMethod.GET)
-	public List<Mangas> listAllMangas() {
+	public List<Mangas> listaDeNomesTodosMangas() {
 
-		return mangasService.listAll();
+		return mangasService.listarTodos();
 	}
 
 	/**
@@ -230,8 +230,8 @@ public class MangasController {
 	 * @param capituloId
 	 * @return
 	 */@RequestMapping(value="/manga/{manga}/{capitulo}")
-	public ResponseEntity<Mangas> deleteCapitulo(@PathVariable("manga")Long mangaId,@PathVariable("capitulo")Long capituloId){
-		mangasService.deletarCapitulo(mangaId, capituloId);
+	public ResponseEntity<Mangas> deletarCapituloPorMangaId(@PathVariable("manga")Long mangaId,@PathVariable("capitulo")Long capituloId){
+		mangasService.deletarCapituloPorManga(mangaId, capituloId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

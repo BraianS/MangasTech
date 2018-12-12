@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mangastech.model.Capitulos;
 import com.mangastech.model.Mangas;
 import com.mangastech.model.Paginas;
-import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.service.CapituloService;
 
 /**
@@ -32,9 +31,6 @@ public class CapitulosController {
 	@Autowired
 	private CapituloService capituloService;
 
-	@Autowired
-	private CapitulosRepository capitulosRepository;
-
 	/**
 	 * Método busca capitulos por manga ID
 	 * 
@@ -42,9 +38,9 @@ public class CapitulosController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<Capitulos>> listCapitulosByManga(@PathVariable(value = "id") Mangas id) {
+	public @ResponseBody ResponseEntity<List<Capitulos>> listarCapitulosPorManga(@PathVariable(value = "id") Mangas id) {
 
-		return new ResponseEntity<>(capituloService.findByMangaId(id), HttpStatus.OK);
+		return new ResponseEntity<>(capituloService.buscarPorId(id), HttpStatus.OK);
 	}
 
 	/**
@@ -57,7 +53,7 @@ public class CapitulosController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/capitulo", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public ResponseEntity<Capitulos> addCapitulo(@RequestPart(value = "capitulo") Capitulos capitulo,
+	public ResponseEntity<Capitulos> salvarCapitulo(@RequestPart(value = "capitulo") Capitulos capitulo,
 			@RequestParam(value = "paginas") MultipartFile[] paginas) throws IOException {
 
 		List<Paginas> ListPaginas = new ArrayList<Paginas>();
@@ -88,6 +84,6 @@ public class CapitulosController {
 
 		capitulo.setPagina(ListPaginas);
 		capitulo.setLancamento(new Date());
-		return new ResponseEntity<>(capituloService.save(capitulo), HttpStatus.OK);
+		return new ResponseEntity<>(capituloService.salvar(capitulo), HttpStatus.OK);
 	}
 }

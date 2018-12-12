@@ -38,7 +38,7 @@ public class UsuarioController {
 	 */
 	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
 	public List<Usuario> buscarUmUser(Usuario usuario) {
-		return usuarioService.listAll();
+		return usuarioService.listarTodos();
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class UsuarioController {
 		} else if (usuario.getUsername().equalsIgnoreCase(usuarioLogado)) {
 			throw new RuntimeException("Não pode deletar sua conta");
 		} else {
-			usuarioService.delete(id);
+			usuarioService.deletar(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
@@ -78,7 +78,7 @@ public class UsuarioController {
 			throw new RuntimeException("Usuario já existe");
 		}
 
-		return new ResponseEntity<>(usuarioService.update(usuario), HttpStatus.OK);
+		return new ResponseEntity<>(usuarioService.atualizar(usuario), HttpStatus.OK);
 	}
 
 	/**
@@ -95,6 +95,6 @@ public class UsuarioController {
 			throw new RuntimeException("Nome já Existe");
 		}
 
-		return new ResponseEntity<>(usuarioService.save(usuario), HttpStatus.OK);
+		return new ResponseEntity<>(usuarioService.salvar(usuario), HttpStatus.OK);
 	}
 }

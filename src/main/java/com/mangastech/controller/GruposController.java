@@ -38,7 +38,7 @@ public class GruposController {
 	 * @return
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.GET)
-	public ResponseEntity<Page<Grupos>> listAllGrupos(Integer page) {
+	public ResponseEntity<Page<Grupos>> listarGrupos(Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -49,7 +49,7 @@ public class GruposController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(grupoService.listAllByPage(pageable), HttpStatus.OK);
+		return new ResponseEntity<>(grupoService.listaPaginada(pageable), HttpStatus.OK);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class GruposController {
 	 * @return autor
 	 */
 	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Grupos>> getGrupo(@PathVariable(value = "id") Long id, Integer page) {
+	public ResponseEntity<Page<Grupos>> buscarGrupoPorId(@PathVariable(value = "id") Long id, Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -71,7 +71,7 @@ public class GruposController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(grupoService.findByIdAndPage(id, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(grupoService.buscarPorId(id, pageable), HttpStatus.OK);
 	}
 
 	/**
@@ -82,13 +82,13 @@ public class GruposController {
 	 * @throws Autor repetido
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.POST)
-	public ResponseEntity<Grupos> addGrupo(@RequestBody Grupos grupos) throws IOException {
+	public ResponseEntity<Grupos> salvarGrupo(@RequestBody Grupos grupos) throws IOException {
 
 		if (gruposRepository.findOneByNome(grupos.getNome()) != null) {
 			throw new RuntimeException("Nome repetido");
 		}
 
-		return new ResponseEntity<>(grupoService.save(grupos), HttpStatus.OK);
+		return new ResponseEntity<>(grupoService.salvar(grupos), HttpStatus.OK);
 	}
 
 	/**
@@ -98,14 +98,14 @@ public class GruposController {
 	 * @return
 	 */
 	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Grupos> deleteGrupo(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Grupos> deletarGrupoPorId(@PathVariable(value = "id") Long id) {
 
 		Grupos grupo = gruposRepository.findOne(id);
 		if (grupo.getId() == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		grupoService.delete(id);
+		grupoService.deletar(id);
 		return ResponseEntity.ok().build();
 	}
 
@@ -116,19 +116,19 @@ public class GruposController {
 	 * @return autor alterado
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.PUT)
-	public ResponseEntity<Grupos> updateGrupo(@RequestBody Grupos grupos) {
-		return new ResponseEntity<>(grupoService.update(grupos), HttpStatus.OK);
+	public ResponseEntity<Grupos> atualizarGrupo(@RequestBody Grupos grupos) {
+		return new ResponseEntity<>(grupoService.atualizar(grupos), HttpStatus.OK);
 	}
 
 	/**
-	 * Método lista de autores
+	 * Método lista o ID e Nome dos grupos
 	 * 
 	 * @return listar todos
 	 */
 	@RequestMapping(value = "/grupo/lista")
-	public List<Grupos> listAllGrupos() {
+	public List<Grupos> listaDeNomesTodosGrupos() {
 
-		return grupoService.listAll();
+		return grupoService.listarTodos();
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class GruposController {
 	 * @return autor
 	 */
 	@RequestMapping(value = "/grupo/letra/{letra}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Grupos>> listAllGruposByNome(@PathVariable("letra") String letra, Integer page) {
+	public ResponseEntity<Page<Grupos>> buscarGrupoPorLetra(@PathVariable("letra") String letra, Integer page) {
 
 		if (page == null) {
 			page = 0;
@@ -150,6 +150,6 @@ public class GruposController {
 
 		Pageable pageable = new PageRequest(page, 20);
 
-		return new ResponseEntity<>(grupoService.findByNomeStartWith(letra, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(grupoService.buscaPorLetra(letra, pageable), HttpStatus.OK);
 	}
 }

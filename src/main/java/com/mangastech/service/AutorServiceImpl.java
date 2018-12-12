@@ -21,44 +21,44 @@ public class AutorServiceImpl implements AutorService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Autor save(Autor autor) {
+    public Autor salvar(Autor autor) {
         return autorRepository.save(autor);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public void delete(Long id) {
+    public void deletar(Long id) {
         autorRepository.delete(id);
     }
 
     @Override
-    public List<Autor> listAll() {
+    public List<Autor> listarTodos() {
         return autorRepository.findAllIdAndNome();
     }
 
     @Override
-    public Page<Autor> listAllByPage(Pageable pageable) {
+    public Page<Autor> listaPaginada(Pageable pageable) {
         return autorRepository.findAllByOrderByNomeAsc(pageable);
     }
 
     @Override
-    public Page<Autor> findByIdAndPage(Long id, Pageable pageable) {
+    public Page<Autor> buscarPorId(Long id, Pageable pageable) {
         return autorRepository.findAllMangasByAutor(id, pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Autor update(Autor autor) {
+    public Autor atualizar(Autor autor) {
         return autorRepository.save(autor);
     }
 
     @Override
-    public Page<Autor> findByNomeStartWith(String nome, Pageable pageable) {
+    public Page<Autor> buscaPorLetra(String nome, Pageable pageable) {
         return autorRepository.findByNomeStartingWith(nome, pageable);
     }
 
     @Override
-    public Autor findByNome(String nome) {
+    public Autor buscarPorNome(String nome) {
         if (nome != null) {
             autorRepository.findOneByNome(nome);
         }
@@ -66,12 +66,12 @@ public class AutorServiceImpl implements AutorService {
     }
 
     @Override
-    public Autor findById(Long id) {
+    public Autor buscarPorId(Long id) {
         return autorRepository.findOne(id);
     }
 
     @Override
-    public boolean isExist(Autor autor) {
+    public boolean existe(Autor autor) {
         return autorRepository.findOneByNome(autor.getNome()) != null;
     }
 }

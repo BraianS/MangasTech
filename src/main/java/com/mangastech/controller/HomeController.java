@@ -44,7 +44,7 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
-	public ResponseEntity<Usuario> addUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> salvarNovoUsuario(@RequestBody Usuario usuario) {
 
 		if (usuarioRepository.findOneByUsername(usuario.getUsername()) != null) {
 			throw new RuntimeException("Usuario Ja existe");
@@ -54,7 +54,7 @@ public class HomeController {
 		roles.add("USER");
 		usuario.setRoles(roles);
 
-		return new ResponseEntity<Usuario>(usuarioService.newUsuario(usuario), HttpStatus.CREATED);
+		return new ResponseEntity<Usuario>(usuarioService.salvaNovoUsuario(usuario), HttpStatus.CREATED);
 	}
 
 	/**

@@ -11,17 +11,17 @@ import com.mangastech.model.Mangas;
  */
 public interface MangaService extends CrudService<Mangas> {
 
-	Mangas findByNome(String nome);
+	Mangas buscarPorNome(String nome);
 
-	Page<Mangas> findAllByPage(Pageable pageable);
+	Page<Mangas> listaPaginada(Pageable pageable);
 
-	Mangas findById(Long id);
+	Mangas buscarPorId(Long id);
 
-	Page<Mangas> listAllByNomeAndPage(String nome, Pageable pageable);
+	Page<Mangas> buscarPorNome(String nome, Pageable pageable);
 
-	Page<Mangas> findByNomeStartWith(String nome, Pageable pageable);
+	Page<Mangas> buscaPorLetra(String nome, Pageable pageable);
 
-	List<Mangas> findTop10Mangas();
+	List<Mangas> buscarTop10Mangas();
 
-	void deletarCapitulo(Long mangaId,Long capituloId);
+	void deletarCapituloPorManga(Long mangaId,Long capituloId);
 }

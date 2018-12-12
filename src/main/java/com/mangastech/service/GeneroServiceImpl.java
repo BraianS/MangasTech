@@ -20,40 +20,40 @@ public class GeneroServiceImpl implements GeneroService {
     private GeneroRepository generoRepository;
 
     @Override
-    public Page<Generos> listAllByPage(Pageable pageable) {
+    public Page<Generos> listaPaginada(Pageable pageable) {
         return generoRepository.findAllByOrderByNomeAsc(pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Generos save(Generos generos) {
+    public Generos salvar(Generos generos) {
         return generoRepository.save(generos);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public void delete(Long id) {
+    public void deletar(Long id) {
         generoRepository.delete(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
-    public Generos update(Generos genero) {
+    public Generos atualizar(Generos genero) {
         return generoRepository.save(genero);
     }
 
     @Override
-    public Page<Generos> findByIdAndPage(Long id, Pageable pageable) {
+    public Page<Generos> buscarPorId(Long id, Pageable pageable) {
         return generoRepository.findAllMangasByGenero(id, pageable);
     }
 
     @Override
-    public List<Generos> listAll() {
+    public List<Generos> listarTodos() {
         return generoRepository.findAllIdAndNome();
     }
 
     @Override
-    public Generos findByNome(String nome) {
+    public Generos buscarPorNome(String nome) {
         if (nome != null) {
             generoRepository.findOneByNome(nome);
         }
@@ -61,12 +61,12 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @Override
-    public Generos findById(Long id) {
+    public Generos buscarPorId(Long id) {
         return generoRepository.findOne(id);
     }
 
     @Override
-    public boolean isExist(Generos genero) {
+    public boolean existe(Generos genero) {
         return generoRepository.findOneByNome(genero.getNome()) != null;
     }
 }

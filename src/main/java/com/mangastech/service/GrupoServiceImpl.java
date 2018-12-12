@@ -19,39 +19,39 @@ public class GrupoServiceImpl implements GrupoService {
     @Autowired
     private GruposRepository grupoRepository;
 
-    public Page<Grupos> listAllByPage(Pageable pageable) {
+    public Page<Grupos> listaPaginada(Pageable pageable) {
         return grupoRepository.pageAllIdAndNome(pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Grupos save(Grupos grupos) {
+    public Grupos salvar(Grupos grupos) {
         return grupoRepository.save(grupos);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public void delete(Long id) {
+    public void deletar(Long id) {
         grupoRepository.delete(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Grupos update(Grupos grupos) {
+    public Grupos atualizar(Grupos grupos) {
         return grupoRepository.save(grupos);
     }
 
-    public Page<Grupos> findByIdAndPage(Long id, Pageable pageable) {
+    public Page<Grupos> buscarPorId(Long id, Pageable pageable) {
         return grupoRepository.findDistinctMangasByAutor(id, pageable);
     }
 
-    public List<Grupos> listAll() {
+    public List<Grupos> listarTodos() {
         return grupoRepository.findAllIdAndNome();
     }
 
-    public Page<Grupos> findByNomeStartWith(String letra, Pageable pageable) {
+    public Page<Grupos> buscaPorLetra(String letra, Pageable pageable) {
         return grupoRepository.findByNomeStartingWith(letra, pageable);
     }
 
     @Override
-    public Grupos findByNome(String nome) {
+    public Grupos buscarPorNome(String nome) {
         if (nome != null) {
             grupoRepository.findOneByNome(nome);
         }
@@ -59,12 +59,12 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @Override
-    public Grupos findById(Long id) {
+    public Grupos buscarPorId(Long id) {
         return grupoRepository.findOne(id);
     }
 
     @Override
-    public boolean isExist(Grupos grupo) {
+    public boolean existe(Grupos grupo) {
         return grupoRepository.findOneByNome(grupo.getNome()) != null;
     }
 }

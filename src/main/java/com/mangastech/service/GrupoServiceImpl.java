@@ -74,7 +74,7 @@ public class GrupoServiceImpl implements GrupoService {
     @Override
     public Grupos buscarPorNome(String nome) {
         if (nome != null) {
-            grupoRepository.findOneByNome(nome);
+           return grupoRepository.findOneByNome(nome);
         }
         return null;
     }

@@ -72,7 +72,7 @@ public class GeneroServiceImpl implements GeneroService {
     @Override
     public Generos buscarPorNome(String nome) {
         if (nome != null) {
-            generoRepository.findOneByNome(nome);
+            return generoRepository.findOneByNome(nome);
         }
         return null;
     }

@@ -82,7 +82,7 @@ public class AutorServiceImpl implements AutorService {
     @Override
     public Autor buscarPorNome(String nome) {
         if (nome != null) {
-            autorRepository.findOneByNome(nome);
+            return autorRepository.findOneByNome(nome);
         }
         return null;
     }

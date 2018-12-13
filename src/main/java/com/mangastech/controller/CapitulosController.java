@@ -1,8 +1,6 @@
 package com.mangastech.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.mangastech.model.Capitulos;
 import com.mangastech.model.Mangas;
-import com.mangastech.model.Paginas;
 import com.mangastech.service.CapituloService;
 
 /**
@@ -38,13 +35,17 @@ public class CapitulosController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<Capitulos>> listarCapitulosPorManga(@PathVariable(value = "id") Mangas id) {
-
+	public @ResponseBody ResponseEntity<List<Capitulos>> listarCapitulosPorManga(
+			@PathVariable(value = "id") Mangas id) {
+		List<Capitulos> capitulo = capituloService.buscarPorId(id);
+		if (capitulo.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<>(capituloService.buscarPorId(id), HttpStatus.OK);
 	}
 
 	/**
-	 * Método salvar capitulo e array de paginas
+	 * Método salvar capitulo e lista de paginas
 	 * 
 	 * @param capitulo
 	 * @param paginas
@@ -54,36 +55,13 @@ public class CapitulosController {
 	@ResponseBody
 	@RequestMapping(value = "/capitulo", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public ResponseEntity<Capitulos> salvarCapitulo(@RequestPart(value = "capitulo") Capitulos capitulo,
-			@RequestParam(value = "paginas") MultipartFile[] paginas) throws IOException {
-
-		List<Paginas> ListPaginas = new ArrayList<Paginas>();
-
-		final long limit = 2 * 1024 * 1024;
-		int count = 1;
-
-		if (null == capitulo) {
+			@RequestParam(value = "paginas") List<MultipartFile> paginas) throws IOException {
+		if (capitulo == null) {
 			throw new IOException("Capitulo vazio");
 		}
-
-		if (paginas == null || paginas.length == 0) {
+		if (paginas.isEmpty()) {
 			throw new IOException("Paginas vazias");
-		} else {
-			for (MultipartFile file : paginas) {
-				if (file.getSize() < limit) {
-					Paginas pagina = new Paginas();
-					pagina.setCapitulo(capitulo);
-					pagina.setPagina(file.getBytes());
-					pagina.setNumeroPagina(count);
-					ListPaginas.add(pagina);
-					count++;
-				} else {
-					System.out.println("Arquivo muito grande: " + file.getOriginalFilename());
-				}
-			}
 		}
-
-		capitulo.setPagina(ListPaginas);
-		capitulo.setLancamento(new Date());
-		return new ResponseEntity<>(capituloService.salvar(capitulo), HttpStatus.OK);
+		return new ResponseEntity<>(capituloService.salvar(capitulo, paginas), HttpStatus.OK);
 	}
 }

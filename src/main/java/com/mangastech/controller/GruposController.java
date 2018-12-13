@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.mangastech.model.Grupos;
-import com.mangastech.repository.GruposRepository;
 import com.mangastech.service.GrupoService;
 
 /**
@@ -26,9 +24,6 @@ import com.mangastech.service.GrupoService;
 public class GruposController {
 
 	@Autowired
-	private GruposRepository gruposRepository;
-
-	@Autowired
 	private GrupoService grupoService;
 
 	/**
@@ -38,18 +33,12 @@ public class GruposController {
 	 * @return
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.GET)
-	public ResponseEntity<Page<Grupos>> listarGrupos(Integer page) {
-
-		if (page == null) {
-			page = 0;
+	public ResponseEntity<Page<Grupos>> listarGrupos(Pageable pageable) {
+		Page<Grupos> grupos = grupoService.listaPaginada(pageable);
+		if (grupos == null) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		if (page >= 1) {
-			page--;
-		}
-
-		Pageable pageable = new PageRequest(page, 20);
-
-		return new ResponseEntity<>(grupoService.listaPaginada(pageable), HttpStatus.OK);
+		return new ResponseEntity<>(grupos, HttpStatus.OK);
 	}
 
 	/**
@@ -60,18 +49,12 @@ public class GruposController {
 	 * @return autor
 	 */
 	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Grupos>> buscarGrupoPorId(@PathVariable(value = "id") Long id, Integer page) {
-
-		if (page == null) {
-			page = 0;
+	public ResponseEntity<Page<Grupos>> buscarGrupoPorId(@PathVariable(value = "id") Long id, Pageable pageable) {
+		Page<Grupos> grupos = grupoService.buscarPorId(id, pageable);
+		if (grupos == null) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		if (page >= 1) {
-			page--;
-		}
-
-		Pageable pageable = new PageRequest(page, 20);
-
-		return new ResponseEntity<>(grupoService.buscarPorId(id, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(grupos, HttpStatus.OK);
 	}
 
 	/**
@@ -83,11 +66,9 @@ public class GruposController {
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.POST)
 	public ResponseEntity<Grupos> salvarGrupo(@RequestBody Grupos grupos) throws IOException {
-
-		if (gruposRepository.findOneByNome(grupos.getNome()) != null) {
+		if (grupoService.existe(grupos)) {
 			throw new RuntimeException("Nome repetido");
 		}
-
 		return new ResponseEntity<>(grupoService.salvar(grupos), HttpStatus.OK);
 	}
 
@@ -99,14 +80,12 @@ public class GruposController {
 	 */
 	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Grupos> deletarGrupoPorId(@PathVariable(value = "id") Long id) {
-
-		Grupos grupo = gruposRepository.findOne(id);
-		if (grupo.getId() == null) {
+		Grupos grupo = grupoService.buscarPorId(id);
+		if (grupo == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
 		grupoService.deletar(id);
-		return ResponseEntity.ok().build();
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	/**
@@ -117,6 +96,10 @@ public class GruposController {
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.PUT)
 	public ResponseEntity<Grupos> atualizarGrupo(@RequestBody Grupos grupos) {
+		Grupos grupoExiste = grupoService.buscarPorId(grupos.getId());
+		if (grupoExiste == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<>(grupoService.atualizar(grupos), HttpStatus.OK);
 	}
 
@@ -126,9 +109,12 @@ public class GruposController {
 	 * @return listar todos
 	 */
 	@RequestMapping(value = "/grupo/lista")
-	public List<Grupos> listaDeNomesTodosGrupos() {
-
-		return grupoService.listarTodos();
+	public ResponseEntity<List<Grupos>> listaDeNomesTodosGrupos() {
+		List<Grupos> grupo = grupoService.listarTodos();
+		if (grupo.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(grupo,HttpStatus.OK);
 	}
 
 	/**
@@ -139,17 +125,11 @@ public class GruposController {
 	 * @return autor
 	 */
 	@RequestMapping(value = "/grupo/letra/{letra}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Grupos>> buscarGrupoPorLetra(@PathVariable("letra") String letra, Integer page) {
-
-		if (page == null) {
-			page = 0;
+	public ResponseEntity<Page<Grupos>> buscarGrupoPorLetra(@PathVariable("letra") String letra, Pageable pageable) {
+		Page<Grupos> grupos = grupoService.buscaPorLetra(letra, pageable);
+		if (grupos == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		if (page >= 1) {
-			page--;
-		}
-
-		Pageable pageable = new PageRequest(page, 20);
-
-		return new ResponseEntity<>(grupoService.buscaPorLetra(letra, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(grupos, HttpStatus.OK);
 	}
 }

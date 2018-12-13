@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.mangastech.model.Autor;
-import com.mangastech.repository.AutorRepository;
 import com.mangastech.service.AutorService;
 
 /**
@@ -27,9 +25,6 @@ import com.mangastech.service.AutorService;
 public class AutorController {
 
 	@Autowired
-	private AutorRepository autorRepository;
-
-	@Autowired
 	private AutorService autorService;
 
 	/**
@@ -39,19 +34,12 @@ public class AutorController {
 	 * @return
 	 */
 	@RequestMapping(value = "/autor", method = RequestMethod.GET)
-	public ResponseEntity<Page<Autor>> listarAutores(Integer page) {
-
-		if (page == null) {
-			page = 0;
+	public ResponseEntity<Page<Autor>> listarAutores(Pageable pageable) {
+		Page<Autor> autor = autorService.listaPaginada(pageable);
+		if (autor == null) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-
-		if (page >= 1) {
-			page--;
-		}
-
-		Pageable pageable = new PageRequest(page, 20);
-
-		return new ResponseEntity<>(autorService.listaPaginada(pageable), HttpStatus.OK);
+		return new ResponseEntity<>(autor, HttpStatus.OK);
 	}
 
 	/**
@@ -63,25 +51,12 @@ public class AutorController {
 	 */
 	@RequestMapping(value = "/autor/{id}", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Page<Autor>> buscarAutorPorId(@PathVariable(value = "id") Long id,
-			Integer page) {
-
-		Autor autor = autorRepository.findOne(id);
-
+			Pageable pageable) {
+		Page<Autor> autor = autorService.buscarPorId(id, pageable);
 		if (autor == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
-		if (page == null) {
-			page = 0;
-		}
-
-		if (page >= 1) {
-			page--;
-		}
-
-		Pageable pageable = new PageRequest(page, 20);
-
-		return new ResponseEntity<>(autorService.buscarPorId(id, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(autor, HttpStatus.OK);
 	}
 
 	/**
@@ -89,14 +64,13 @@ public class AutorController {
 	 * 
 	 * @param autor
 	 * @return
+	 * @throws Autor repetido
 	 */
 	@RequestMapping(value = "/autor", method = RequestMethod.POST)
-	public ResponseEntity<Autor> salvarAutor(@RequestBody Autor autor) {
-
-		if (autorRepository.findOneByNome(autor.getNome()) != null) {
+	public ResponseEntity<Autor> salvarAutor(@RequestBody Autor autor) throws IOException {
+		if (autorService.existe(autor)) {
 			throw new RuntimeException("Nome Repetido");
 		}
-
 		return new ResponseEntity<>(autorService.salvar(autor), HttpStatus.OK);
 	}
 
@@ -108,14 +82,12 @@ public class AutorController {
 	 */
 	@RequestMapping(value = "/autor/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Autor> deletarAutorPorId(@PathVariable("id") Long id) {
-		Autor autor = autorRepository.findOne(id);
-
+		Autor autor = autorService.buscarPorId(id);
 		if (autor == null) {
-			return ResponseEntity.notFound().build();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
 		autorService.deletar(id);
-		return ResponseEntity.ok().build();
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	/**
@@ -126,12 +98,10 @@ public class AutorController {
 	 */
 	@RequestMapping(value = "/autor", method = RequestMethod.PUT)
 	public ResponseEntity<Autor> atualizarAutor(@RequestBody Autor autor) throws IOException {
-
-		if (autorRepository.findOneByNome(autor.getNome()) != null
-				&& autorRepository.findOneByNome(autor.getNome()).getId() != autor.getId()) {
-			throw new RuntimeException("Nome Repetido");
+		Autor autorExiste = autorService.buscarPorId(autor.getId());
+		if (autorExiste == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
 		return new ResponseEntity<>(autorService.atualizar(autor), HttpStatus.OK);
 	}
 
@@ -143,19 +113,12 @@ public class AutorController {
 	 * @return paginação de autor
 	 */
 	@RequestMapping(value = "/autor/letra/{letra}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Autor>> buscarAutorPorLetra(@PathVariable("letra") String letra, Integer page) {
-
-		if (page == null) {
-			page = 0;
+	public ResponseEntity<Page<Autor>> buscarAutorPorLetra(@PathVariable("letra") String letra, Pageable pageable) {
+		Page<Autor> autor = autorService.buscaPorLetra(letra, pageable);
+		if (autor == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
-		if (page >= 1) {
-			page--;
-		}
-
-		Pageable pageable = new PageRequest(page, 20);
-
-		return new ResponseEntity<>(autorService.buscaPorLetra(letra, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(autor, HttpStatus.OK);
 	}
 
 	/**
@@ -164,7 +127,11 @@ public class AutorController {
 	 * @return lista de autor
 	 */
 	@RequestMapping(value = "/autor/lista", method = RequestMethod.GET)
-	public List<Autor> listaDeNomesTodosAutores() {
-		return autorService.listarTodos();
+	public ResponseEntity<List<Autor>> listaDeNomesTodosAutores() {
+		List<Autor> autor = autorService.listarTodos();
+		if (autor.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(autor, HttpStatus.OK);
 	}
 }

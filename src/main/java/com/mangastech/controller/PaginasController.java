@@ -3,7 +3,6 @@ package com.mangastech.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,19 +35,12 @@ public class PaginasController {
 	 */
 	@RequestMapping(value = "/pagina/{id}", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Page<Paginas>> bucarPaginaPorCapitulo(@PathVariable(value = "id") Capitulos id,
-			Integer page) {
-
-		if (page == null) {
-			page = 0;
+			Pageable pageable) {
+		Page<Paginas> paginas = paginaService.buscarPaginaPorCapitulo(id, pageable);
+		if (paginas == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
-		if (page >= 1) {
-			page--;
-		}
-
-		Pageable pageable = new PageRequest(page, 1);
-
-		return new ResponseEntity<>(paginaService.buscarPaginaPorCapitulo(id, pageable), HttpStatus.OK);
+		return new ResponseEntity<>(paginas, HttpStatus.OK);
 	}
 
 	/**
@@ -59,7 +51,11 @@ public class PaginasController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/paginas/{id}", method = RequestMethod.GET)
-	public List<Paginas> listarPaginasPorCapituloId(@PathVariable("id") Capitulos id) {
-		return paginaService.listarPaginasPorCapitulo(id);
+	public ResponseEntity<List<Paginas>> listarPaginasPorCapituloId(@PathVariable("id") Capitulos id) {
+		List<Paginas> paginas = paginaService.listarPaginasPorCapitulo(id);
+		if (paginas.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(paginas, HttpStatus.OK);
 	}
 }

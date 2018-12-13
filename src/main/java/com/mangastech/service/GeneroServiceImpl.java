@@ -5,6 +5,7 @@ import com.mangastech.model.Generos;
 import com.mangastech.repository.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,20 @@ public class GeneroServiceImpl implements GeneroService {
 
     @Override
     public Page<Generos> listaPaginada(Pageable pageable) {
-        return generoRepository.findAllByOrderByNomeAsc(pageable);
+        Page<Generos> generos = generoRepository.findAll(pageable);
+        if (generos != null && pageable.getPageNumber() <= 0) {
+            return generos;
+        }
+        return generoRepository
+                .findAllByOrderByNomeAsc(new PageRequest(pageable.getPageNumber() - 1, pageable.getPageSize()));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public Generos salvar(Generos generos) {
+        if (buscarPorNome(generos.getNome()) != null) {
+            throw new RuntimeException("Nome repetido");
+        }
         return generoRepository.save(generos);
     }
 
@@ -39,12 +48,20 @@ public class GeneroServiceImpl implements GeneroService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public Generos atualizar(Generos genero) {
+        if (buscarPorNome(genero.getNome()) != null && buscarPorNome(genero.getNome()).getId() != genero.getId()) {
+            throw new RuntimeException("Nome repetido");
+        }
         return generoRepository.save(genero);
     }
 
     @Override
     public Page<Generos> buscarPorId(Long id, Pageable pageable) {
-        return generoRepository.findAllMangasByGenero(id, pageable);
+        Page<Generos> generos = generoRepository.findAllMangasByGenero(id, pageable);
+        if (generos != null && pageable.getPageNumber() <= 0) {
+            return generos;
+        }
+        return generoRepository.findAllMangasByGenero(id,
+                new PageRequest(pageable.getPageNumber() - 1, pageable.getPageSize()));
     }
 
     @Override
@@ -67,6 +84,6 @@ public class GeneroServiceImpl implements GeneroService {
 
     @Override
     public boolean existe(Generos genero) {
-        return generoRepository.findOneByNome(genero.getNome()) != null;
+        return buscarPorNome(genero.getNome()) != null;
     }
 }

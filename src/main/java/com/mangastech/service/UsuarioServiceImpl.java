@@ -1,11 +1,19 @@
 package com.mangastech.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import com.mangastech.model.Usuario;
 import com.mangastech.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  * @author Braian
@@ -19,16 +27,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public Usuario salvar(Usuario usuario) {
+        if (buscarPorUsername(usuario.getUsername()) != null) {
+            throw new RuntimeException("Username já existe");
+        }
         return usuarioRepository.save(usuario);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public void deletar(Long id) {
+        Usuario usuario = buscarPorId(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String usuarioLogado = auth.getName();
+        if (usuario != null && usuario.getUsername().equalsIgnoreCase(usuarioLogado)) {
+            throw new RuntimeException("Não pode deletar sua conta");
+        }
         usuarioRepository.delete(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public Usuario atualizar(Usuario usuario) {
+        if (buscarPorUsername(usuario.getUsername()) != null
+                && buscarPorUsername(usuario.getUsername()).getId() != usuario.getId()) {
+            throw new RuntimeException("Username já existe");
+        }
         return usuarioRepository.save(usuario);
     }
 
@@ -38,8 +59,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario buscarPorUsername(String username) {
-        if(username!=null){
-            usuarioRepository.findOneByUsername(username);
+        if (username != null) {
+            return usuarioRepository.findOneByUsername(username);
         }
         return null;
     }
@@ -51,11 +72,34 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public boolean existe(Usuario usuario) {
-        return usuarioRepository.findOneByUsername(usuario.getUsername()) != null;
+        return buscarPorUsername(usuario.getUsername()) != null;
     }
 
     @Override
     public Usuario salvaNovoUsuario(Usuario usuario) {
+        if (buscarPorUsername(usuario.getUsername()) != null) {
+            throw new RuntimeException("Usuario já existe");
+        }
+        List<String> roles = new ArrayList<>();
+        roles.add("USER");
+        usuario.setRoles(roles);
         return usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public Map<String, Object> login(String username, String password) {
+        Map<String, Object> tokeMap = new HashMap<String, Object>();
+        Usuario usuario = buscarPorUsername(username);
+        String token = null;
+        if (usuario != null && usuario.getPassword().equals(password)) {
+            token = Jwts.builder().setSubject(username).claim("roles", usuario.getRoles()).setIssuedAt(new Date())
+                    .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+            tokeMap.put("token", token);
+            tokeMap.put("user", usuario);
+            return tokeMap;
+        } else {
+            tokeMap.put("token", null);
+            return tokeMap;
+        }
     }
 }

@@ -6,7 +6,7 @@
 
 			<!-- Lista de capitulos -->
 			<select class="form-control " style="margin-right: 24px" ng-model="vm.capitulo" ng-options="c.id as c.capitulo for c in vm.mangas.capitulo"
-			 ng-change="vm.mudarDeCapitulo()"></select>
+			 ng-change="vm.pagina=1;vm.mudarDeCapitulo()"></select>
 			<li>
 				<!-- Previus -->
 				<a href="" ng-click="vm.pagina = vm.pagina > 1 ? vm.pagina - 1: 1;vm.carregarCapitulo()">Prev</a>
@@ -26,7 +26,7 @@
 	<div class="row">
 		<!-- Paginas do capitulo -->
 		<div class="text-center">
-			<img ng-click="vm.proximaPagina()" ng-model="vm.pagina" id="imagem" class="img-responsive" data-ng-src="data:image/jpeg;base64,{{vm.paginas[0].fotos}}">
+			<img ng-click="vm.proximaPagina()" ng-model="vm.pagina" id="imagem" class="img-responsive" data-ng-src="data:image/jpeg;base64,{{vm.paginas[0].pagina}}">
 		</div>
 		<!-- ./Paginas do capitulo -->
 

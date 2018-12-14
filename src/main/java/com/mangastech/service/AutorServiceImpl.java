@@ -5,7 +5,6 @@ import com.mangastech.model.Autor;
 import com.mangastech.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -42,22 +41,12 @@ public class AutorServiceImpl implements AutorService {
 
     @Override
     public Page<Autor> listaPaginada(Pageable pageable) {
-        Page<Autor> autor = autorRepository.findAll(pageable);
-        if (autor != null && pageable.getPageNumber() <= 0) {
-            return autor;
-        }
-        return autorRepository
-                .findAllByOrderByNomeAsc(new PageRequest(pageable.getPageNumber() - 1, pageable.getPageSize()));
+        return autorRepository.findAll(pageable);
     }
 
     @Override
     public Page<Autor> buscarPorId(Long id, Pageable pageable) {
-        Page<Autor> autor = autorRepository.findAllMangasByAutor(id, pageable);
-        if (autor != null && pageable.getPageNumber() <= 0) {
-            return autor;
-        }
-        return autorRepository.findAllMangasByAutor(id,
-                new PageRequest(pageable.getPageNumber() - 1, pageable.getPageSize()));
+        return autorRepository.findAllMangasByAutor(id, pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -71,12 +60,7 @@ public class AutorServiceImpl implements AutorService {
 
     @Override
     public Page<Autor> buscaPorLetra(String nome, Pageable pageable) {
-        Page<Autor> autor = autorRepository.findAll(pageable);
-        if (autor != null && pageable.getPageNumber() <= 0) {
-            return autor;
-        }
-        return autorRepository.findByNomeStartingWith(nome,
-                new PageRequest(pageable.getPageNumber() - 1, pageable.getPageSize()));
+        return autorRepository.findByNomeStartingWith(nome, pageable);
     }
 
     @Override

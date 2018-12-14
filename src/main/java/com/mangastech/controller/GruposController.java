@@ -35,7 +35,7 @@ public class GruposController {
 	@RequestMapping(value = "/grupo", method = RequestMethod.GET)
 	public ResponseEntity<Page<Grupos>> listarGrupos(Pageable pageable) {
 		Page<Grupos> grupos = grupoService.listaPaginada(pageable);
-		if (grupos == null) {
+		if (grupos.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(grupos, HttpStatus.OK);
@@ -51,7 +51,7 @@ public class GruposController {
 	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Grupos>> buscarGrupoPorId(@PathVariable(value = "id") Long id, Pageable pageable) {
 		Page<Grupos> grupos = grupoService.buscarPorId(id, pageable);
-		if (grupos == null) {
+		if (grupos.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(grupos, HttpStatus.OK);
@@ -114,7 +114,7 @@ public class GruposController {
 		if (grupo.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<>(grupo,HttpStatus.OK);
+		return new ResponseEntity<>(grupo, HttpStatus.OK);
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class GruposController {
 	@RequestMapping(value = "/grupo/letra/{letra}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Grupos>> buscarGrupoPorLetra(@PathVariable("letra") String letra, Pageable pageable) {
 		Page<Grupos> grupos = grupoService.buscaPorLetra(letra, pageable);
-		if (grupos == null) {
+		if (grupos.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(grupos, HttpStatus.OK);

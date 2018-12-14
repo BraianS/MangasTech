@@ -35,7 +35,7 @@ public class GeneroController {
 	@RequestMapping(value = "/genero", method = RequestMethod.GET)
 	public ResponseEntity<Page<Generos>> listarGeneros(Pageable pageable) {
 		Page<Generos> generos = generoService.listaPaginada(pageable);
-		if (generos == null) {
+		if (generos.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(generoService.listaPaginada(pageable), HttpStatus.OK);
@@ -51,7 +51,7 @@ public class GeneroController {
 	@RequestMapping(value = "/genero/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Generos>> buscarGeneroPorId(@PathVariable(value = "id") Long id, Pageable pageable) {
 		Page<Generos> generoAtual = generoService.buscarPorId(id, pageable);
-		if (generoAtual == null) {
+		if (generoAtual.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(generoAtual, HttpStatus.OK);
@@ -114,6 +114,6 @@ public class GeneroController {
 		if (genero.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(genero, HttpStatus.OK);
 	}
 }

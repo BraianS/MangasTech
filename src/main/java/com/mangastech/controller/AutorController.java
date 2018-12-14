@@ -36,7 +36,7 @@ public class AutorController {
 	@RequestMapping(value = "/autor", method = RequestMethod.GET)
 	public ResponseEntity<Page<Autor>> listarAutores(Pageable pageable) {
 		Page<Autor> autor = autorService.listaPaginada(pageable);
-		if (autor == null) {
+		if (autor.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<>(autor, HttpStatus.OK);
@@ -53,7 +53,7 @@ public class AutorController {
 	public @ResponseBody ResponseEntity<Page<Autor>> buscarAutorPorId(@PathVariable(value = "id") Long id,
 			Pageable pageable) {
 		Page<Autor> autor = autorService.buscarPorId(id, pageable);
-		if (autor == null) {
+		if (autor.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(autor, HttpStatus.OK);
@@ -115,7 +115,7 @@ public class AutorController {
 	@RequestMapping(value = "/autor/letra/{letra}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Autor>> buscarAutorPorLetra(@PathVariable("letra") String letra, Pageable pageable) {
 		Page<Autor> autor = autorService.buscaPorLetra(letra, pageable);
-		if (autor == null) {
+		if (autor.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(autor, HttpStatus.OK);

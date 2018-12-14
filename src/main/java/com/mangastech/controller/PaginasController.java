@@ -37,7 +37,7 @@ public class PaginasController {
 	public @ResponseBody ResponseEntity<Page<Paginas>> bucarPaginaPorCapitulo(@PathVariable(value = "id") Capitulos id,
 			Pageable pageable) {
 		Page<Paginas> paginas = paginaService.buscarPaginaPorCapitulo(id, pageable);
-		if (paginas == null) {
+		if (paginas.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(paginas, HttpStatus.OK);

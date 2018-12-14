@@ -5,7 +5,6 @@ import com.mangastech.model.Grupos;
 import com.mangastech.repository.GruposRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -21,12 +20,7 @@ public class GrupoServiceImpl implements GrupoService {
     private GruposRepository grupoRepository;
 
     public Page<Grupos> listaPaginada(Pageable pageable) {
-        Page<Grupos> grupos = grupoRepository.pageAllIdAndNome(pageable);
-        if (grupos != null && pageable.getPageNumber() <= 0) {
-            return grupos;
-        }
-
-        return grupoRepository.pageAllIdAndNome(new PageRequest(pageable.getPageNumber() - 1, pageable.getPageSize()));
+        return grupoRepository.pageAllIdAndNome(pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -52,11 +46,10 @@ public class GrupoServiceImpl implements GrupoService {
 
     public Page<Grupos> buscarPorId(Long id, Pageable pageable) {
         Page<Grupos> grupos = grupoRepository.findDistinctMangasByAutor(id, pageable);
-        if (grupos != null && pageable.getPageNumber() <= 0) {
+        if (!grupos.getContent().isEmpty()) {
             return grupos;
         }
-        return grupoRepository.findDistinctMangasByAutor(id,
-                new PageRequest(pageable.getPageNumber() - 1, pageable.getPageSize()));
+        return null;
     }
 
     public List<Grupos> listarTodos() {
@@ -64,17 +57,13 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     public Page<Grupos> buscaPorLetra(String letra, Pageable pageable) {
-        Page<Grupos> grupos = grupoRepository.findByNomeStartingWith(letra, pageable);
-        if (grupos != null && pageable.getPageNumber() <= 0) {
-            return grupos;
-        }
         return grupoRepository.findByNomeStartingWith(letra, pageable);
     }
 
     @Override
     public Grupos buscarPorNome(String nome) {
         if (nome != null) {
-           return grupoRepository.findOneByNome(nome);
+            return grupoRepository.findOneByNome(nome);
         }
         return null;
     }

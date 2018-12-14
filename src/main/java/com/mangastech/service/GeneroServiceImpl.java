@@ -5,7 +5,6 @@ import com.mangastech.model.Generos;
 import com.mangastech.repository.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -22,12 +21,7 @@ public class GeneroServiceImpl implements GeneroService {
 
     @Override
     public Page<Generos> listaPaginada(Pageable pageable) {
-        Page<Generos> generos = generoRepository.findAll(pageable);
-        if (generos != null && pageable.getPageNumber() <= 0) {
-            return generos;
-        }
-        return generoRepository
-                .findAllByOrderByNomeAsc(new PageRequest(pageable.getPageNumber() - 1, pageable.getPageSize()));
+        return generoRepository.findAll(pageable);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -56,12 +50,7 @@ public class GeneroServiceImpl implements GeneroService {
 
     @Override
     public Page<Generos> buscarPorId(Long id, Pageable pageable) {
-        Page<Generos> generos = generoRepository.findAllMangasByGenero(id, pageable);
-        if (generos != null && pageable.getPageNumber() <= 0) {
-            return generos;
-        }
-        return generoRepository.findAllMangasByGenero(id,
-                new PageRequest(pageable.getPageNumber() - 1, pageable.getPageSize()));
+        return generoRepository.findAllMangasByGenero(id, pageable);
     }
 
     @Override

@@ -8,7 +8,9 @@ import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.repository.MangasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ public class MangaServiceImpl implements MangaService {
 
     @Override
     public Page<Mangas> listaPaginada(Pageable pageable) {
-        return mangaRepository.findAll(pageable);
+        return mangaRepository.findAll(new PageRequest(pageable.getPageNumber(), 20, Direction.ASC,"nome"));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

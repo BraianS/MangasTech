@@ -17,6 +17,7 @@
 		vm.pagina = 1;
 		vm.palavraPesquisada = pesquisaService.getNome();
 		vm.mensagem = "";
+		vm.pesquisarNome = pesquisarNome;
 
 		pesquisarNome();
 

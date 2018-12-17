@@ -36,7 +36,7 @@ public class UsuarioController {
 		if (usuario.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
 
 	/**
@@ -81,9 +81,8 @@ public class UsuarioController {
 	 */
 	@RequestMapping(value = "/usuario", method = RequestMethod.POST)
 	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) throws IOException {
-		Usuario usuarioAtual = usuarioService.buscarPorId(usuario.getId());
-		if (usuarioAtual == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		if (usuarioService.existe(usuario)) {
+			throw new RuntimeException("Usuário repetido");
 		}
 		return new ResponseEntity<>(usuarioService.salvar(usuario), HttpStatus.OK);
 	}

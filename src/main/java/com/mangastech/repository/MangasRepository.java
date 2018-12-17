@@ -28,4 +28,7 @@ public interface MangasRepository extends BaseRepository<Mangas>, JpaRepository<
 
 	@Query("SELECT DISTINCT m FROM Mangas m JOIN FETCH m.capitulo c WHERE c.lancamento = :data GROUP BY c.id ORDER BY c.id DESC")
 	List<Mangas> findDistinctMangasByCapituloData(@Param("data") Date data);
+
+	@Query("UPDATE Mangas set acessos = acessos +1 WHERE id:=id")
+	Integer incrementaAcessos(@Param("id")Long id);
 }

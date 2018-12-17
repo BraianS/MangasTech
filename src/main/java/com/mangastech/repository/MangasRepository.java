@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,7 @@ public interface MangasRepository extends BaseRepository<Mangas>, JpaRepository<
 	@Query("SELECT DISTINCT m FROM Mangas m JOIN FETCH m.capitulo c WHERE c.lancamento = :data GROUP BY c.id ORDER BY c.id DESC")
 	List<Mangas> findDistinctMangasByCapituloData(@Param("data") Date data);
 
-	@Query("UPDATE Mangas set acessos = acessos +1 WHERE id:=id")
+	@Modifying
+	@Query("UPDATE Mangas set acessos = acessos +1 WHERE id=:id")
 	Integer incrementaAcessos(@Param("id")Long id);
 }

@@ -37,9 +37,20 @@ public class Mangas extends BaseEntity {
 	@JoinColumn(name = "autor_id")
 	private Autor autor;
 
+	@Column(name = "acessos")
+	private Long acessos = 0L;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(joinColumns = @JoinColumn(name = "manga_id"), inverseJoinColumns = @JoinColumn(name = "genero_id"))
 	private Set<Generos> genero = new HashSet<>();
+
+	public Long getAcessos() {
+		return this.acessos;
+	}
+
+	public void setAcessos(Long acessos) {
+		this.acessos = acessos;
+	}
 
 	public String getNome() {
 		return nome;

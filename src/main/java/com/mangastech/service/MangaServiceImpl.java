@@ -74,6 +74,7 @@ public class MangaServiceImpl implements MangaService {
 
     @Override
     public Mangas buscarPorId(Long id) {
+        mangaRepository.incrementaAcessos(id);
         return mangaRepository.findOne(id);
     }
 

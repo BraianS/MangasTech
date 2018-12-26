@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MangaServiceImpl implements MangaService {
@@ -72,6 +73,7 @@ public class MangaServiceImpl implements MangaService {
         return mangaRepository.findTop10ByOrderByIdDesc();
     }
 
+    @Transactional
     @Override
     public Mangas buscarPorId(Long id) {
         mangaRepository.incrementaAcessos(id);
@@ -91,6 +93,7 @@ public class MangaServiceImpl implements MangaService {
         return buscarPorNome(manga.getNome()) != null;
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public void deletarCapituloPorManga(Long mangaId, Long capituloId) {

@@ -27,4 +27,6 @@ public interface MangaService extends CrudService<Mangas> {
 	void deletarCapituloPorManga(Long mangaId,Long capituloId);
 
 	List<Mangas> listarCapitulosPorData(Date data);
+
+	List<Mangas> Top10MangasAcessados();
 }

@@ -186,6 +186,20 @@ public class MangasController {
 	}
 
 	/**
+	 * Método lista top 10 mangas acessados
+	 * 
+	 * @return top 10 mangas decrescente
+	 */
+	@RequestMapping(value = "/manga/listaAcessos", method = RequestMethod.GET)
+	public ResponseEntity<List<Mangas>> top10MangasAcessados() {
+		List<Mangas> mangas = mangasService.Top10MangasAcessados();
+		if (mangas.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(mangas, HttpStatus.OK);
+	}
+
+	/**
 	 * Método Lista os capitulos por Data
 	 * 
 	 * @param date

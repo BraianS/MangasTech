@@ -33,4 +33,6 @@ public interface MangasRepository extends BaseRepository<Mangas>, JpaRepository<
 	@Modifying
 	@Query("UPDATE Mangas set acessos = acessos +1 WHERE id=:id")
 	Integer incrementaAcessos(@Param("id")Long id);
+
+	List<Mangas> findTop10ByOrderByAcessosDesc();
 }

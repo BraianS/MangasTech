@@ -110,4 +110,9 @@ public class MangaServiceImpl implements MangaService {
     public List<Mangas> listarCapitulosPorData(Date data) {
         return mangaRepository.findDistinctMangasByCapituloData(data);
     }
+
+    @Override
+    public List<Mangas> Top10MangasAcessados() {
+        return mangaRepository.findTop10ByOrderByAcessosDesc();
+    }
 }

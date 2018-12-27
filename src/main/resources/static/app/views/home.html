@@ -136,5 +136,31 @@
 			</div>
 			<!-- ./Capitulos de Anteontem -->
 		</div>
+		<!-- Lista os 10 mangas mais acessados -->
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<div class="panel panel-primary" ng-if="vm.listaTop10MangasAcessados">
+				<div class="panel-heading text-center">
+					<h3 class="panel-title ">
+						Top Mangas
+					</h3>
+				</div>
+				<div class="panel-body body-custom">
+					<ul class="list-group">
+						<li class="list-group-item clearfix" ng-repeat="manga in vm.listaTop10MangasAcessados">
+							<span class="pull-left">
+								<img ng-if="manga.capa" class="img-custom img-responsive" data-ng-src="data:image/jpg;base64,{{manga.capa}}">
+								<img ng-if="!manga.capa" class="img-custom img-responsive" src="/app/img/image.JPG">
+							</span>
+							<p class="border p">
+								{{manga.nome}}
+							</p>
+							<span class="pull-right glyphicon glyphicon-eye-open">
+								{{manga.acessos}}
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

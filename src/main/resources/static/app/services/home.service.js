@@ -13,7 +13,8 @@
             carregarNovosCapitulos: carregarNovosCapitulos,
             carregarMangasPorUmDia: carregarMangasPorUmDia,
             carregarMangasDoisDiasAtras: carregarMangasDoisDiasAtras,
-            carregarNovosMangas: carregarNovosMangas
+            carregarNovosMangas: carregarNovosMangas,
+            carregarTop10Mangas: carregarTop10Mangas
         }
 
         function carregarNovosCapitulos(dataHoje) {
@@ -72,6 +73,21 @@
 
             function getCarregarNovosMangasError(error) {
                 console.log("erro ao carregar novos mangas");
+                return error.data;
+            }
+        }
+
+        function carregarTop10Mangas() {
+            return $http.get('/api/manga/listaAcessos')
+                .then(getCarregarListaTop10Mangas)
+                .catch(getCarregarListaTop10MangasError);
+
+            function getCarregarListaTop10Mangas(response) {
+                return response.data;
+            }
+
+            function getCarregarListaTop10MangasError(error) {
+                console.log("erro ao carregar lista top 10 mangas");
                 return error.data;
             }
         }

@@ -31,9 +31,11 @@
 		vm.mangasDoisDiasAtras = mangasDoisDiasAtras;
 		vm.ontemStatus = false;
 		vm.anteOntemStatus = false;
+		vm.listaTop10MangasAcessados = [];
 
 		carregarNovosCapitulos();
 		carregarNovosMangas();
+		carregarTop10MangasAcessados();
 
 		function carregarNovosCapitulos() {
 			return homeService.carregarNovosCapitulos(vm.hoje)
@@ -62,6 +64,13 @@
 			return homeService.carregarNovosMangas()
 				.then(function (data) {
 					vm.novosMangas = data;
+				})
+		}
+
+		function carregarTop10MangasAcessados() {
+			return homeService.carregarTop10Mangas()
+				.then(function (data) {
+					vm.listaTop10MangasAcessados = data;
 				})
 		}
 

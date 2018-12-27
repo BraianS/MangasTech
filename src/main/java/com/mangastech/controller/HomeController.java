@@ -34,12 +34,11 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
-	public ResponseEntity<Usuario> salvarNovoUsuario(@RequestBody Usuario usuario) {
-		Usuario usuarioAtual = usuarioService.buscarPorId(usuario.getId());
-		if (usuarioAtual == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	public ResponseEntity<Usuario> salvarNovoUsuario(@RequestBody Usuario usuario) throws IOException {
+		if (usuarioService.existe(usuario)) {
+			throw new RuntimeException("Username já existe");
 		}
-		return new ResponseEntity<Usuario>(usuarioService.salvar(usuario), HttpStatus.CREATED);
+		return new ResponseEntity<Usuario>(usuarioService.salvaNovoUsuario(usuario), HttpStatus.CREATED);
 	}
 
 	/**

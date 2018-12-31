@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import com.mangastech.model.Usuario;
 import com.mangastech.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +37,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public void deletar(Long id) {
-        Usuario usuario = buscarPorId(id);
+        Usuario usuario = buscarPorId(id).orElse(null);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String usuarioLogado = auth.getName();
         if (usuario != null && usuario.getUsername().equalsIgnoreCase(usuarioLogado)) {
             throw new RuntimeException("Não pode deletar sua conta");
         }
-        usuarioRepository.delete(id);
+        usuarioRepository.deleteById(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -66,8 +68,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario buscarPorId(Long id) {
-        return usuarioRepository.findOne(id);
+    public Optional<Usuario> buscarPorId(Long id) {
+        return usuarioRepository.findById(id);
     }
 
     @Override

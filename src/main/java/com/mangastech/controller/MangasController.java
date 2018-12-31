@@ -3,6 +3,7 @@ package com.mangastech.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,7 +60,7 @@ public class MangasController {
 	 */
 	@RequestMapping(value = "/manga/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Mangas> buscarAutorPorId(@PathVariable(value = "id") Long id) {
-		Mangas manga = mangasService.buscarPorId(id);
+		Mangas manga = mangasService.buscarPorId(id).get();
 		if (manga == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -95,7 +96,7 @@ public class MangasController {
 	 */
 	@RequestMapping(value = "/manga/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Mangas> deletarMangaPorId(@PathVariable(value = "id") Long id) {
-		Mangas manga = mangasService.buscarPorId(id);
+		Optional<Mangas> manga = mangasService.buscarPorId(id);
 		if (manga == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -113,7 +114,7 @@ public class MangasController {
 	@RequestMapping(value = "/manga", method = RequestMethod.PUT, consumes = { "multipart/form-data" })
 	public ResponseEntity<Mangas> atualizarManga(@RequestPart(value = "mangas") Mangas mangas,
 			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
-		Mangas mangaExiste = mangasService.buscarPorId(mangas.getId());
+		Optional<Mangas> mangaExiste = mangasService.buscarPorId(mangas.getId());
 		if (mangaExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -226,8 +227,8 @@ public class MangasController {
 	@RequestMapping(value = "/manga/{manga}/{capitulo}")
 	public ResponseEntity<Mangas> deletarCapituloPorMangaId(@PathVariable("manga") Long mangaId,
 			@PathVariable("capitulo") Long capituloId) throws IOException {
-		Mangas manga = mangasService.buscarPorId(mangaId);
-		Capitulos capitulo = capituloRepo.findOne(capituloId);
+		Mangas manga = mangasService.buscarPorId(mangaId).get();
+		Capitulos capitulo = capituloRepo.findById(capituloId).orElse(null);
 		if (manga == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

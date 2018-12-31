@@ -1,6 +1,8 @@
 package com.mangastech.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import com.mangastech.model.Autor;
 import com.mangastech.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class AutorServiceImpl implements AutorService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public void deletar(Long id) {
-        autorRepository.delete(id);
+        autorRepository.deleteById(id);
     }
 
     @Override
@@ -72,8 +74,8 @@ public class AutorServiceImpl implements AutorService {
     }
 
     @Override
-    public Autor buscarPorId(Long id) {
-        return autorRepository.findOne(id);
+    public Optional<Autor> buscarPorId(Long id) {
+        return autorRepository.findById(id);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.mangastech.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import com.mangastech.model.Generos;
 import com.mangastech.repository.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class GeneroServiceImpl implements GeneroService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public void deletar(Long id) {
-        generoRepository.delete(id);
+        generoRepository.deleteById(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -67,8 +69,8 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @Override
-    public Generos buscarPorId(Long id) {
-        return generoRepository.findOne(id);
+    public Optional<Generos> buscarPorId(Long id) {
+        return generoRepository.findById(id);
     }
 
     @Override

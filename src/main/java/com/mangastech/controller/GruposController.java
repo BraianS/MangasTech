@@ -2,6 +2,7 @@ package com.mangastech.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -80,7 +81,7 @@ public class GruposController {
 	 */
 	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Grupos> deletarGrupoPorId(@PathVariable(value = "id") Long id) {
-		Grupos grupo = grupoService.buscarPorId(id);
+		Optional<Grupos> grupo = grupoService.buscarPorId(id);
 		if (grupo == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -96,7 +97,7 @@ public class GruposController {
 	 */
 	@RequestMapping(value = "/grupo", method = RequestMethod.PUT)
 	public ResponseEntity<Grupos> atualizarGrupo(@RequestBody Grupos grupos) {
-		Grupos grupoExiste = grupoService.buscarPorId(grupos.getId());
+		Optional<Grupos> grupoExiste = grupoService.buscarPorId(grupos.getId());
 		if (grupoExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

@@ -2,6 +2,7 @@ package com.mangastech.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.mangastech.model.Mangas;
@@ -16,7 +17,7 @@ public interface MangaService extends CrudService<Mangas> {
 
 	Page<Mangas> listaPaginada(Pageable pageable);
 
-	Mangas buscarPorId(Long id);
+	Optional<Mangas> buscarPorId(Long id);
 
 	Page<Mangas> buscarPorNome(String nome, Pageable pageable);
 

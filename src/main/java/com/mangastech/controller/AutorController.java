@@ -2,6 +2,7 @@ package com.mangastech.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -82,7 +83,7 @@ public class AutorController {
 	 */
 	@RequestMapping(value = "/autor/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Autor> deletarAutorPorId(@PathVariable("id") Long id) {
-		Autor autor = autorService.buscarPorId(id);
+		Optional<Autor> autor = autorService.buscarPorId(id);
 		if (autor == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -98,7 +99,7 @@ public class AutorController {
 	 */
 	@RequestMapping(value = "/autor", method = RequestMethod.PUT)
 	public ResponseEntity<Autor> atualizarAutor(@RequestBody Autor autor) throws IOException {
-		Autor autorExiste = autorService.buscarPorId(autor.getId());
+		Optional<Autor> autorExiste = autorService.buscarPorId(autor.getId());
 		if (autorExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

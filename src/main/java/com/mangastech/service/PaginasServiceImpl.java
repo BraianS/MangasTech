@@ -18,7 +18,7 @@ public class PaginasServiceImpl implements PaginasService {
 
     @Override
     public Page<Paginas> buscarPaginaPorCapitulo(Capitulos id, Pageable pageable) {
-        return paginaRepository.findPaginasByCapitulo(id, new PageRequest(pageable.getPageNumber(), 1));
+        return paginaRepository.findPaginasByCapitulo(id, PageRequest.of(pageable.getPageNumber(), 1));
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.mangastech.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import com.mangastech.model.Grupos;
 import com.mangastech.repository.GruposRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ public class GrupoServiceImpl implements GrupoService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public void deletar(Long id) {
-        grupoRepository.delete(id);
+        grupoRepository.deleteById(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -69,8 +71,8 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @Override
-    public Grupos buscarPorId(Long id) {
-        return grupoRepository.findOne(id);
+    public Optional<Grupos> buscarPorId(Long id) {
+        return grupoRepository.findById(id);
     }
 
     @Override

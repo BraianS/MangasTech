@@ -2,6 +2,7 @@ package com.mangastech.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import com.mangastech.model.Capitulos;
 import com.mangastech.model.Mangas;
 import com.mangastech.repository.CapitulosRepository;
@@ -35,13 +36,13 @@ public class MangaServiceImpl implements MangaService {
 
     @Override
     public Page<Mangas> listaPaginada(Pageable pageable) {
-        return mangaRepository.findAll(new PageRequest(pageable.getPageNumber(), 20, Direction.ASC,"nome"));
+        return mangaRepository.findAll(PageRequest.of(pageable.getPageNumber(), 20, Direction.ASC,"nome"));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public void deletar(Long id) {
-        mangaRepository.delete(id);
+        mangaRepository.deleteById(id);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -75,9 +76,9 @@ public class MangaServiceImpl implements MangaService {
 
     @Transactional
     @Override
-    public Mangas buscarPorId(Long id) {
+    public Optional<Mangas> buscarPorId(Long id) {
         mangaRepository.incrementaAcessos(id);
-        return mangaRepository.findOne(id);
+        return mangaRepository.findById(id);
     }
 
     @Override
@@ -97,8 +98,8 @@ public class MangaServiceImpl implements MangaService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Override
     public void deletarCapituloPorManga(Long mangaId, Long capituloId) {
-        Mangas manga = buscarPorId(mangaId);
-        Capitulos capitulo = capitulosRepository.findOne(capituloId);
+        Mangas manga = buscarPorId(mangaId).orElse(null);
+        Capitulos capitulo = capitulosRepository.findById(capituloId).orElse(null);
         if (manga != null && !manga.getCapitulo().contains(capitulo)) {
             throw new RuntimeException("Manga ou capitulo não encontrados");
         }

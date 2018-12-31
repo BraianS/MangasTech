@@ -2,6 +2,7 @@ package com.mangastech.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class UsuarioController {
 	 */
 	@RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Usuario> deletarUsuario(@PathVariable(value = "id") Long id) throws IOException {
-		Usuario usuario = usuarioService.buscarPorId(id);
+		Optional<Usuario> usuario = usuarioService.buscarPorId(id);
 		if (usuario == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -65,7 +66,7 @@ public class UsuarioController {
 	 */
 	@RequestMapping(value = "/usuario", method = RequestMethod.PUT)
 	public ResponseEntity<Usuario> alterarUsuario(@RequestBody Usuario usuario) throws IOException {
-		Usuario usuarioExiste = usuarioService.buscarPorId(usuario.getId());
+		Optional<Usuario> usuarioExiste = usuarioService.buscarPorId(usuario.getId());
 		if (usuarioExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

@@ -2,6 +2,7 @@ package com.mangastech.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -80,7 +81,7 @@ public class GeneroController {
 	 */
 	@RequestMapping(value = "/genero/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Generos> deletarGeneroPorId(@PathVariable(value = "id") Long id) {
-		Generos genero = generoService.buscarPorId(id);
+		Optional<Generos> genero = generoService.buscarPorId(id);
 		if (genero == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -96,7 +97,7 @@ public class GeneroController {
 	 */
 	@RequestMapping(value = "/genero", method = RequestMethod.PUT)
 	public ResponseEntity<Generos> atualizarGenero(@RequestBody Generos genero) {
-		Generos generoExiste = generoService.buscarPorId(genero.getId());
+		Optional<Generos> generoExiste = generoService.buscarPorId(genero.getId());
 		if (generoExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

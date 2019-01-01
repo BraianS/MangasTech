@@ -1,13 +1,15 @@
 package com.mangastech.service;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+import com.mangastech.model.Role;
+import com.mangastech.model.RoleNome;
 import com.mangastech.model.Usuario;
+import com.mangastech.repository.RoleRepository;
 import com.mangastech.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +28,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public Usuario salvar(Usuario usuario) {
@@ -82,9 +87,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (buscarPorUsername(usuario.getUsername()) != null) {
             throw new RuntimeException("Usuario já existe");
         }
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
-        usuario.setRoles(roles);
+        Role roleNome = roleRepository.findByNome(RoleNome.ROLE_USER);
+        if (roleNome == null) {
+            throw new RuntimeException("Role não foi setado");
+        }
+        usuario.setRoles(Collections.singleton(roleNome));
         return usuarioRepository.save(usuario);
     }
 

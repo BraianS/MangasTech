@@ -1,8 +1,8 @@
 package com.mangastech.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
  *
  */
 @Entity
-@Table(name = "Usuario")
+@Table(name = "usuario")
 public class Usuario extends BaseEntity implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -30,8 +30,9 @@ public class Usuario extends BaseEntity implements UserDetails {
 	@Column(name = "password", length = 50)
 	private String password;
 
-	@ElementCollection
-	private List<String> roles = new ArrayList<>();
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Set<Role> roles = new HashSet<>();
 
 	public String getNome() {
 		return nome;
@@ -49,11 +50,11 @@ public class Usuario extends BaseEntity implements UserDetails {
 		this.password = password;
 	}
 
-	public List<String> getRoles() {
-		return roles;
+	public Set<Role> getRoles() {
+		return this.roles;
 	}
 
-	public void setRoles(List<String> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 
@@ -64,9 +65,9 @@ public class Usuario extends BaseEntity implements UserDetails {
 	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> authorities = new ArrayList<>();
-		for (String role : roles) {
-			authorities.add(new SimpleGrantedAuthority(role));
+		Set<GrantedAuthority> authorities = new HashSet<>();
+		for (Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority("" + role));
 		}
 		return authorities;
 	}

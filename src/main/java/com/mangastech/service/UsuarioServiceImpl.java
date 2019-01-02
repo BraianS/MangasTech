@@ -111,4 +111,14 @@ public class UsuarioServiceImpl implements UsuarioService {
             return tokeMap;
         }
     }
+
+    @Override
+    public Boolean existsByUsername(String username) {
+        return usuarioRepository.existsByUsername(username);
+    }
+
+    @Override
+    public Boolean existsByEmail(String email) {
+        return usuarioRepository.existsByEmail(email);
+    }
 }

@@ -12,4 +12,8 @@ import com.mangastech.model.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	Usuario findOneByUsername(String username);
+
+	Boolean existsByUsername(String username);
+
+	Boolean existsByEmail(String email);
 }

@@ -14,4 +14,8 @@ public interface UsuarioService extends CrudService<Usuario> {
     Usuario salvaNovoUsuario(Usuario usuario);
 
     Map<String, Object> login(String username, String password);
+
+    Boolean existsByUsername(String username);
+
+	Boolean existsByEmail(String email);
 }

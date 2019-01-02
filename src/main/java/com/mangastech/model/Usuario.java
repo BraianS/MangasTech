@@ -30,6 +30,9 @@ public class Usuario extends BaseEntity implements UserDetails {
 	@Column(name = "password", length = 50)
 	private String password;
 
+	@Column(name="email",length=50)
+	private String email;
+
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles = new HashSet<>();
@@ -48,6 +51,14 @@ public class Usuario extends BaseEntity implements UserDetails {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Set<Role> getRoles() {

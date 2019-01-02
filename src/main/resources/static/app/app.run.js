@@ -31,7 +31,7 @@
 						var role = AuthService.user.roles[i];
 						//Se a Data do estado e o usuario for admin
 						//Libera o acesso					
-						if (newToState.data.role == role) {
+						if (newToState.data.role == role.nome) {
 							hasAccess = true;
 							break;
 						}

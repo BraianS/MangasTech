@@ -15,7 +15,7 @@
             name: 'nav.admin',
             url: 'admin',
             data: {
-                role: 'ADMIN'
+                role: 'ROLE_ADMIN'
             },
             needToLogin: true,
             views: {
@@ -29,7 +29,7 @@
             name: 'nav.admin.capitulo',
             url: '/capitulo',
             data: {
-                role: 'ADMIN'
+                role: 'ROLE_ADMIN'
             },
             needToLogin: true,
             views: {

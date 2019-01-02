@@ -34,7 +34,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public Usuario salvar(Usuario usuario) {
-        if (buscarPorUsername(usuario.getUsername()) != null) {
+        if (existsByUsername(usuario.getUsername())) {
             throw new RuntimeException("Username já existe");
         }
         return usuarioRepository.save(usuario);
@@ -53,7 +53,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public Usuario atualizar(Usuario usuario) {
-        if (buscarPorUsername(usuario.getUsername()) != null
+        if (existsByUsername(usuario.getUsername())
                 && buscarPorUsername(usuario.getUsername()).getId() != usuario.getId()) {
             throw new RuntimeException("Username já existe");
         }
@@ -85,7 +85,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario salvaNovoUsuario(Usuario usuario) {
         if (buscarPorUsername(usuario.getUsername()) != null) {
-            throw new RuntimeException("Usuario já existe");
+            throw new RuntimeException("Usuario ja existe");
+        }
+        if (existsByEmail(usuario.getEmail())) {
+            throw new RuntimeException("Email ja existe");
         }
         Role roleNome = roleRepository.findByNome(RoleNome.ROLE_USER);
         if (roleNome == null) {

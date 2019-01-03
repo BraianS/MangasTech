@@ -1,66 +1,68 @@
 package com.mangastech.config;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.mangastech.security.JwtProvider;
+import com.mangastech.security.UsuarioDetailsServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.web.filter.GenericFilterBean;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * @author Braian
  *
  */
-public class JWTAuthenticationFilter extends GenericFilterBean {
+public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-	private static final String AUTHORIZATION_HEADER = "Authorization";
-	private static final String AUTHORITIES_KEY = "roles";
+	@Autowired
+	private JwtProvider tokenProvider;
+
+	@Autowired
+	private UsuarioDetailsServiceImpl usuarioDetailsService;
+
+	private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
 	@Override
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
-			throws IOException, ServletException {
+	protected void doFilterInternal(HttpServletRequest request,
+									HttpServletResponse response,
+									FilterChain filterChain)
+										throws ServletException, IOException {
 
-		HttpServletRequest request = (HttpServletRequest) req;
-		String authReader = request.getHeader(AUTHORIZATION_HEADER);
-		if (authReader == null || !authReader.startsWith("Bearer ")) {
-			((HttpServletResponse) res).sendError(HttpServletResponse.SC_UNAUTHORIZED, "invalido autorization");
+		try {
+			String jwt = getJwt(request);
+			if (jwt != null && tokenProvider.validateJwtToken(jwt)) {
+				String username = tokenProvider.getUsuarioNomeFromJwtToken(jwt);
 
-		} else {
-			try {
-				final String token = authReader.substring(7);
-				final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
-				request.setAttribute("claims", claims);
-				SecurityContextHolder.getContext().setAuthentication(getAuthentication(claims));
-				filterChain.doFilter(req, res);
-			} catch (SignatureException e) {
-				((HttpServletResponse) res).sendError(HttpServletResponse.SC_UNAUTHORIZED, "invalid toklen");
+				UserDetails userDetails = usuarioDetailsService.loadUserByUsername(username);
+				UsernamePasswordAuthenticationToken authentication
+					= new UsernamePasswordAuthenticationToken(
+						userDetails, null, userDetails.getAuthorities());
+				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
+
+		} catch (Exception e) {
+			logger.error("Não pode definir autenticação do usuário -> Mensagem : {}", e);
 		}
+
+		filterChain.doFilter(request, response);
 	}
 
-	public Authentication getAuthentication(Claims claims) {
-		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-		List<String> roles = (List<String>) claims.get(AUTHORITIES_KEY);
-		for (String role : roles) {
-			authorities.add(new SimpleGrantedAuthority(role));
+	private String getJwt(HttpServletRequest request) {
+		String authHeader = request.getHeader("Authorization");
+
+		if (authHeader != null && authHeader.startsWith("Bearer ")) {
+			return authHeader.replace("Bearer ", "");
 		}
-
-		User principal = new User(claims.getSubject(), "", authorities);
-		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToklen = new UsernamePasswordAuthenticationToken(
-				principal, "", authorities);
-
-		return usernamePasswordAuthenticationToklen;
+		return null;
 	}
 }

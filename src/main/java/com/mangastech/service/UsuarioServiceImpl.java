@@ -67,7 +67,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario buscarPorUsername(String username) {
         if (username != null) {
-            return usuarioRepository.findOneByUsername(username);
+            return usuarioRepository.findOneByUsername(username).get();
         }
         return null;
     }

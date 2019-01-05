@@ -27,14 +27,16 @@ public class Usuario extends BaseEntity implements UserDetails {
 	@Column(name = "username", length = 50)
 	private String username;
 
-	@Column(name = "password", length = 50)
+	@Column(name = "password", length = 100)
 	private String password;
 
 	@Column(name="email",length=50)
 	private String email;
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@JoinTable(name = "usuario_roles",
+				joinColumns = @JoinColumn(name = "usuario_id",referencedColumnName = "id"),
+				inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private Set<Role> roles = new HashSet<>();
 
 	public String getNome() {
@@ -116,5 +118,12 @@ public class Usuario extends BaseEntity implements UserDetails {
 	@Override
 	public String getUsername() {
 		return username;
+	}
+
+	public Usuario(String nome, String username, String password, String email) {
+		this.nome = nome;
+		this.username = username;
+		this.password = password;
+		this.email = email;
 	}
 }

@@ -84,7 +84,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario salvaNovoUsuario(Usuario usuario) {
-        if (buscarPorUsername(usuario.getUsername()) != null) {
+        if (existsByUsername(usuario.getUsername())) {
             throw new RuntimeException("Usuario ja existe");
         }
         if (existsByEmail(usuario.getEmail())) {

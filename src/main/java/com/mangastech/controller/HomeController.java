@@ -36,7 +36,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
 	public ResponseEntity<Usuario> salvarNovoUsuario(@RequestBody Usuario usuario) throws IOException {
-		if (usuarioService.existe(usuario)) {
+		if (usuarioService.existsByUsername(usuario.getUsername())) {
 			throw new RuntimeException("Username já existe");
 		}
 		return new ResponseEntity<Usuario>(usuarioService.salvaNovoUsuario(usuario), HttpStatus.CREATED);

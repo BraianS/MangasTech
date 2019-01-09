@@ -59,17 +59,4 @@ public class HomeController {
 		}
 		return ResponseEntity.ok(usuarioService.login(loginRequest));
 	}
-
-	/**
-	 * Método retorna usuario logado
-	 * 
-	 * @param principal
-	 * @return usuario
-	 */
-	@RequestMapping("/user")
-	public Usuario usuario(Principal principal) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String loggedUsername = auth.getName();
-		return usuarioService.buscarPorUsername(loggedUsername);
-	}
 }

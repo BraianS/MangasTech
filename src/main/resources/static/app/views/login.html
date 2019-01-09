@@ -4,14 +4,14 @@
 	</div>
 
 	<!-- Form Autenticar -->
-	<form name="vm.formLogin" class="form-horizontal" ng-submit="vm.autenticar()">
+	<form name="vm.formLogin" class="form-horizontal" ng-submit="vm.autenticar()" novalidate>
 		<!-- Nome -->
-		<div class="form-group text-center" ng-class="{ 'has-error': vm.formLogin.nome.$invalid && vm.formLogin.nome.$dirty}">
+		<div class="form-group text-center" ng-class="{ 'has-error': vm.formLogin.username.$invalid && vm.formLogin.username.$dirty}">
 			<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
 				<input class="form-control" placeholder="username" maxlength="21" minlength="3" ng-maxlength="20" ng-minlength="3"
-				 type="text" ng-model="vm.username" id="vm.username" name="nome" ng-maxlength="49" maxlength="50" required />
-				<span ng-show="vm.formLogin.nome.$dirty && vm.formLogin.nome.$error.required">Campo Nome Obrigatorio</span>
-				<span ng-show="vm.formLogin.nome.$error.maxlength || vm.formLogin.nome.$error.minlength">Nome deve ter
+				 type="text" ng-model="vm.login.username" id="username" name="username" ng-maxlength="49" maxlength="50" required />
+				<span ng-show="vm.formLogin.username.$dirty && vm.formLogin.username.$error.required">Campo Nome Obrigatorio</span>
+				<span ng-show="vm.formLogin.username.$error.maxlength || vm.formLogin.username.$error.minlength">Nome deve ter
 					entre 6 e 20 caracteres</span>
 			</div>
 		</div>
@@ -20,7 +20,7 @@
 		<div class="form-group text-center" ng-class="{ 'has-error':vm.formLogin.senha.$invalid && vm.formLogin.senha.$dirty}">
 			<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
 				<input class="form-control " placeholder="password" maxlength="21" minlength="3" ng-maxlength="20" ng-minlength="3"
-				 type="password" ng-model="vm.password" id="vm.password" name="senha" ng-maxlength="49" maxlength="50" required>
+				 type="password" ng-model="vm.login.password" id="password" name="senha" ng-maxlength="49" maxlength="50" required>
 				<span ng-show="vm.formLogin.senha.$dirty && vm.formLogin.senha.$error.required">Campo Senha Obrigatorio</span>
 				<span ng-show="vm.formLogin.senha.$error.maxlength || vm.formLogin.senha.$error.minlength">Senha deve ter
 					entre 6 e 20 caracteres</span>
@@ -38,7 +38,7 @@
 		</div>
 
 		<!-- Alert  -->
-		<div class="alert alert-warning warning-top-5" ng-show="vm.mensagem">
+		<div class="alert alert-warning warning-top-5 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 text-center" ng-show="vm.mensagem">
 			{{vm.mensagem}}
 		</div>
 	</form>

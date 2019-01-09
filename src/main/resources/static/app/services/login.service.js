@@ -13,14 +13,11 @@
             login: login
         }
 
-        function login(username, password) {
+        function login(login) {
             return $http({
                 method: 'POST',
-                url: '/autenticar',
-                params: {
-                    username: username,
-                    password: password
-                }
+                url: '/api/auth/autenticar',
+                data:login
             }).then(getLogin)
                 .catch(getLoginError);
 
@@ -30,7 +27,7 @@
 
             function getLoginError(error) {
                 console.log("Erro no login");
-                return "Autenticação falhou";
+                return error.data;
             }
         }
     }

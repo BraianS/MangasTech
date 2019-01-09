@@ -12,28 +12,28 @@
 
 		var vm = this;
 
-		vm.token = [];
-		vm.username = [];
-		vm.password = [];
 		vm.autenticar = autenticar;
-
+		vm.login = {};
 		/* Autenticar um Usuario */
 		function autenticar() {
 			if (vm.formLogin.$valid) {
-				return loginService.login(vm.username, vm.password)
+				return loginService.login(vm.login)
 					.then(function (data) {
-						vm.password = null;
-						if (data.token) {
+						if (data.accessToken) {
 							vm.mensagem = '';
-							$http.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
-							AuthService.user = data.user;
+							console.log(vm.mensagem);
+							$http.defaults.headers.common['Authorization'] = 'Bearer ' + data.accessToken;
+							AuthService.user = data;
 							$rootScope.$broadcast('LoginSuccessful');
 							$state.go('nav');
 						}
+						else {
+							vm.mensagem = data.message;
+							vm.login = {};
+							vm.formLogin.$setPristine(true);
+							console.log("vm.formlogin: " + vm.usuario)
+						}
 					})
-			}
-			else {
-				alert("Formulario invalido")
 			}
 		};
 	}

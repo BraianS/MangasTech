@@ -21,7 +21,7 @@ public class AutorServiceImpl implements AutorService {
     @Autowired
     private AutorRepository autorRepository;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Autor salvar(Autor autor) {
         if (buscarPorNome(autor.getNome()) != null) {
@@ -30,7 +30,7 @@ public class AutorServiceImpl implements AutorService {
         return autorRepository.save(autor);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public void deletar(Long id) {
         autorRepository.deleteById(id);
@@ -51,7 +51,7 @@ public class AutorServiceImpl implements AutorService {
         return autorRepository.findAllMangasByAutor(id, pageable);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Autor atualizar(Autor autor) {
         if (buscarPorNome(autor.getNome()) != null && buscarPorNome(autor.getNome()).getId() != autor.getId()) {

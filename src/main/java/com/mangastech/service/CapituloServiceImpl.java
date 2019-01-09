@@ -23,7 +23,7 @@ public class CapituloServiceImpl implements CapituloService {
     @Autowired
     private CapitulosRepository capitulosRepository;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Capitulos salvar(Capitulos capitulo, List<MultipartFile> paginas) throws IOException {
         List<Paginas> ListPaginas = new ArrayList<Paginas>();

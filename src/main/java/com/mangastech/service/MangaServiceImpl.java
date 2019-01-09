@@ -25,7 +25,7 @@ public class MangaServiceImpl implements MangaService {
     @Autowired
     private CapitulosRepository capitulosRepository;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Mangas salvar(Mangas manga) {
         if (buscarPorNome(manga.getNome()) != null) {
@@ -39,13 +39,13 @@ public class MangaServiceImpl implements MangaService {
         return mangaRepository.findAll(PageRequest.of(pageable.getPageNumber(), 20, Direction.ASC,"nome"));
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public void deletar(Long id) {
         mangaRepository.deleteById(id);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Mangas atualizar(Mangas mangas) {
         if (buscarPorNome(mangas.getNome()) != null && buscarPorNome(mangas.getNome()).getId() != mangas.getId()) {
@@ -95,7 +95,7 @@ public class MangaServiceImpl implements MangaService {
     }
 
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public void deletarCapituloPorManga(Long mangaId, Long capituloId) {
         Mangas manga = buscarPorId(mangaId).orElse(null);

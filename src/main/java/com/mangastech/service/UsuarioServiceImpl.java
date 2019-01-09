@@ -43,7 +43,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private RoleRepository roleRepository;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Usuario salvar(Usuario usuario) {
         if (existsByUsername(usuario.getUsername())) {
             throw new RuntimeException("Username já existe");
@@ -51,7 +51,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deletar(Long id) {
         Usuario usuario = buscarPorId(id).orElse(null);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -62,7 +62,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Usuario atualizar(Usuario usuario) {
         if (existsByUsername(usuario.getUsername())
                 && buscarPorUsername(usuario.getUsername()).getId() != usuario.getId()) {

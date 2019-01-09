@@ -26,7 +26,7 @@ public class GeneroServiceImpl implements GeneroService {
         return generoRepository.findAll(pageable);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Generos salvar(Generos generos) {
         if (buscarPorNome(generos.getNome()) != null) {
@@ -35,13 +35,13 @@ public class GeneroServiceImpl implements GeneroService {
         return generoRepository.save(generos);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public void deletar(Long id) {
         generoRepository.deleteById(id);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public Generos atualizar(Generos genero) {
         if (buscarPorNome(genero.getNome()) != null && buscarPorNome(genero.getNome()).getId() != genero.getId()) {

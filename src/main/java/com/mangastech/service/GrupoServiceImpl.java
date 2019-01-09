@@ -25,7 +25,7 @@ public class GrupoServiceImpl implements GrupoService {
         return grupoRepository.pageAllIdAndNome(pageable);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Grupos salvar(Grupos grupos) {
         if (buscarPorNome(grupos.getNome()) != null) {
             throw new RuntimeException("Nome repetido");
@@ -33,12 +33,12 @@ public class GrupoServiceImpl implements GrupoService {
         return grupoRepository.save(grupos);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deletar(Long id) {
         grupoRepository.deleteById(id);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Grupos atualizar(Grupos grupos) {
         if (buscarPorNome(grupos.getNome()) != null && buscarPorNome(grupos.getNome()).getId() != grupos.getId()) {
             throw new RuntimeException("Nome repetido");

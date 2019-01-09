@@ -16,16 +16,19 @@ public class JwtProvider {
     @Value("${mangastech.app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${mangastech.app.jwtExpiration}")
-    private int jwtExpiration;
+    @Value("${mangastech.app.jwtExpirationInMs}")
+    private int jwtExpirationInMs;
 
     public String generateToken(Authentication authentication) {
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
 
+        Date now = new Date();
+        Date expireDate = new Date(now.getTime()+jwtExpirationInMs);
+
         return Jwts.builder()
                         .setSubject((usuarioPrincipal.getUsername()))
                         .setIssuedAt(new Date())
-                        .setExpiration(new Date((new Date()).getTime() + jwtExpiration))
+                        .setExpiration(expireDate)
                         .signWith(SignatureAlgorithm.HS512, jwtSecret)
                         .compact();
     }

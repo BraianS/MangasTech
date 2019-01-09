@@ -118,7 +118,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
-        JwtResponse jwtResponse = new JwtResponse(jwt);
+        JwtResponse jwtResponse = new JwtResponse(jwt,loginRequest.getUsername(),authentication.getAuthorities());
         return jwtResponse;
     }
 

@@ -16,7 +16,7 @@
         function registrarUsuario(usuario) {
             return $http({
                 method: 'POST',
-                url: '/registrar', data: usuario
+                url: '/api/auth/registrar', data: usuario
             })
                 .then(getUsuarioSalvo)
                 .catch(getUsuarioError);

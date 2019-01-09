@@ -14,6 +14,7 @@
 
 		vm.registrar = {};
 		vm.cadastrar = cadastrar;
+		vm.cancelar = cancelar;
 
 		function cadastrar() {
 			if (vm.formRegistrar.$valid) {
@@ -29,6 +30,12 @@
 			else {
 				alert("Formulario invalido");
 			}
+		}
+
+		function cancelar(){
+			vm.registrar = {};
+			vm.confirmarSenha = null;
+			vm.formRegistrar.$setPristine(true);
 		}
 	}
 })();

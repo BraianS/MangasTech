@@ -1,23 +1,25 @@
 package com.mangastech.service;
 
 import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import com.mangastech.model.Role;
 import com.mangastech.model.RoleNome;
 import com.mangastech.model.Usuario;
+import com.mangastech.payload.JwtResponse;
+import com.mangastech.payload.LoginRequest;
+import com.mangastech.payload.SignUpRequest;
 import com.mangastech.repository.RoleRepository;
 import com.mangastech.repository.UsuarioRepository;
+import com.mangastech.security.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  * @author Braian
@@ -25,6 +27,15 @@ import io.jsonwebtoken.SignatureAlgorithm;
  */
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+
+    @Autowired
+    private PasswordEncoder encoder;
+
+    @Autowired
+    private JwtProvider jwtProvider;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -83,14 +94,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario salvaNovoUsuario(Usuario usuario) {
-        if (existsByUsername(usuario.getUsername())) {
+    public Usuario salvaNovoUsuario(SignUpRequest signUpRequest) {
+        if (existsByUsername(signUpRequest.getUsername())) {
             throw new RuntimeException("Usuario ja existe");
         }
-        if (existsByEmail(usuario.getEmail())) {
+        if (existsByEmail(signUpRequest.getEmail())) {
             throw new RuntimeException("Email ja existe");
         }
+        Usuario usuario = new Usuario(signUpRequest.getNome(), signUpRequest.getUsername(),
+                encoder.encode(signUpRequest.getPassword()), signUpRequest.getEmail());
         Role roleNome = roleRepository.findByNome(RoleNome.ROLE_USER);
+
         if (roleNome == null) {
             throw new RuntimeException("Role não foi setado");
         }
@@ -99,20 +113,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Map<String, Object> login(String username, String password) {
-        Map<String, Object> tokeMap = new HashMap<String, Object>();
-        Usuario usuario = buscarPorUsername(username);
-        String token = null;
-        if (usuario != null && usuario.getPassword().equals(password)) {
-            token = Jwts.builder().setSubject(username).claim("roles", usuario.getRoles()).setIssuedAt(new Date())
-                    .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
-            tokeMap.put("token", token);
-            tokeMap.put("user", usuario);
-            return tokeMap;
-        } else {
-            tokeMap.put("token", null);
-            return tokeMap;
-        }
+    public JwtResponse login(LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtProvider.generateToken(authentication);
+        JwtResponse jwtResponse = new JwtResponse(jwt);
+        return jwtResponse;
     }
 
     @Override

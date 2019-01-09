@@ -1,7 +1,9 @@
 package com.mangastech.service;
 
-import java.util.Map;
 import com.mangastech.model.Usuario;
+import com.mangastech.payload.JwtResponse;
+import com.mangastech.payload.LoginRequest;
+import com.mangastech.payload.SignUpRequest;
 
 /**
  * @author Braian
@@ -11,11 +13,11 @@ public interface UsuarioService extends CrudService<Usuario> {
 
     Usuario buscarPorUsername(String username);
 
-    Usuario salvaNovoUsuario(Usuario usuario);
+    Usuario salvaNovoUsuario(SignUpRequest signUpRequest);
 
-    Map<String, Object> login(String username, String password);
+    JwtResponse login(LoginRequest loginRequest);
 
     Boolean existsByUsername(String username);
 
-	Boolean existsByEmail(String email);
+    Boolean existsByEmail(String email);
 }

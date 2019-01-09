@@ -27,11 +27,11 @@
 				//Se o estado é admin		
 				if (newToState.data && newToState.data.role) {
 					var hasAccess = false;
-					for (var i = 0; i < AuthService.user.roles.length; i++) {
-						var role = AuthService.user.roles[i];
+					for (var i = 0; i < AuthService.user.authorities.length; i++) {
+						var role = AuthService.user.authorities[i];
 						//Se a Data do estado e o usuario for admin
 						//Libera o acesso					
-						if (newToState.data.role == role.nome) {
+						if (newToState.data.role == role.authority) {
 							hasAccess = true;
 							break;
 						}

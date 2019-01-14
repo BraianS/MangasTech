@@ -3,16 +3,21 @@ package com.mangastech;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
-@SpringBootApplication(scanBasePackages={"com.mangastech.service"})
-@Configuration
+/**
+ * @author Braian
+ *
+ */
+@SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan
+@EntityScan(basePackageClasses = {
+		MangasTechApplication.class,
+		Jsr310JpaConverters.class})
 public class MangasTechApplication {
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(MangasTechApplication.class, args);
-	}	
+	}
 }

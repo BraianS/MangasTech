@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @author Braian
  */
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseIdEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

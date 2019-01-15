@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Grupos")
-public class Grupos extends BaseEntity {
+public class Grupos extends BaseIdEntity {
 
 	private static final long serialVersionUID = 1L;
 

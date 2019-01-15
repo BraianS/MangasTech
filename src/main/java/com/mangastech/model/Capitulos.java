@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
  */
 @Entity
 @Table(name = "Capitulos")
-public class Capitulos extends BaseEntity {
+public class Capitulos extends BaseIdEntity {
 
 	private static final long serialVersionUID = 1L;
 

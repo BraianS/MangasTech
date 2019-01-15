@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Mangas")
-public class Mangas extends BaseEntity {
+public class Mangas extends BaseIdEntity {
 
 	private static final long serialVersionUID = 1L;
 

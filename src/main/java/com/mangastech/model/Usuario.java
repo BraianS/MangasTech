@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
  */
 @Entity
 @Table(name = "usuario")
-public class Usuario extends BaseIdEntity implements UserDetails {
+public class Usuario extends DateAudit implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 

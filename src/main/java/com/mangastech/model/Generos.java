@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "Generos")
-public class Generos extends BaseIdEntity {
+public class Generos extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
 

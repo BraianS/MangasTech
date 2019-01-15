@@ -7,9 +7,13 @@ import com.mangastech.model.Status;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * @author Braian
+ *
+ */
 @Entity
 @Table(name = "Mangas")
-public class Mangas extends BaseIdEntity {
+public class Mangas extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
 

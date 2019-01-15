@@ -1,15 +1,8 @@
 package com.mangastech.model;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 /**
  * @author Braian
@@ -17,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
  */
 @Entity
 @Table(name = "usuario")
-public class Usuario extends DateAudit implements UserDetails {
+public class Usuario extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,8 +40,16 @@ public class Usuario extends DateAudit implements UserDetails {
 		this.nome = nome;
 	}
 
+	public String getUsername() {
+		return this.username;
+	}
+
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPassword() {
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -73,51 +74,6 @@ public class Usuario extends DateAudit implements UserDetails {
 
 	public Usuario() {
 		super();
-	}
-
-	@JsonIgnore
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> authorities = new HashSet<>();
-		for (Role role : roles) {
-			authorities.add(new SimpleGrantedAuthority("" + role));
-		}
-		return authorities;
-	}
-
-	@JsonIgnore
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@JsonIgnore
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@JsonIgnore
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@JsonIgnore
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-
-	@Override
-	@JsonProperty(access = Access.WRITE_ONLY)
-	public String getPassword() {
-		return password;
-	}
-
-	@Override
-	public String getUsername() {
-		return username;
 	}
 
 	public Usuario(String nome, String username, String password, String email) {

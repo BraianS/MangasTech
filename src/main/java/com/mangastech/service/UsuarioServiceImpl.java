@@ -103,7 +103,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         Usuario usuario = new Usuario(signUpRequest.getNome(), signUpRequest.getUsername(),
                 encoder.encode(signUpRequest.getPassword()), signUpRequest.getEmail());
-        Role roleNome = roleRepository.findByNome(RoleNome.ROLE_USER);
+        Role roleNome = roleRepository.findByNome(RoleNome.ROLE_USER).orElse(null);
 
         if (roleNome == null) {
             throw new RuntimeException("Role não foi setado");

@@ -1,8 +1,12 @@
 package com.mangastech.service;
 
+import java.io.IOException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import com.mangastech.model.Role;
 import com.mangastech.model.RoleNome;
 import com.mangastech.model.Usuario;
@@ -103,11 +107,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         Usuario usuario = new Usuario(signUpRequest.getNome(), signUpRequest.getUsername(),
                 encoder.encode(signUpRequest.getPassword()), signUpRequest.getEmail());
-        Role roleNome = roleRepository.findByNome(RoleNome.ROLE_USER).orElse(null);
-
-        if (roleNome == null) {
-            throw new RuntimeException("Role não foi setado");
-        }
+        Role roleNome = roleRepository.findByNome(RoleNome.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Role vazio"));
         usuario.setRoles(Collections.singleton(roleNome));
         return usuarioRepository.save(usuario);
     }
@@ -118,7 +119,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
-        JwtResponse jwtResponse = new JwtResponse(jwt,loginRequest.getUsername(),authentication.getAuthorities());
+        JwtResponse jwtResponse = new JwtResponse(jwt, loginRequest.getUsername(), authentication.getAuthorities());
         return jwtResponse;
     }
 
@@ -130,5 +131,37 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Boolean existsByEmail(String email) {
         return usuarioRepository.existsByEmail(email);
+    }
+
+    public Usuario salvarUsuario(SignUpRequest signUpRequest) throws IOException {
+        if (existsByUsername(signUpRequest.getUsername())) {
+            throw new RuntimeException("Username já existe");
+        }
+        if (existsByEmail(signUpRequest.getEmail())) {
+            throw new RuntimeException("Email já existe");
+        }
+        if (signUpRequest.getRoles() == null) {
+            throw new RuntimeException("LISTA ROLES VAZIA");
+        }
+        Usuario usuario = new Usuario(signUpRequest.getNome(), signUpRequest.getUsername(),
+                encoder.encode(signUpRequest.getPassword()), signUpRequest.getEmail());
+        Set<String> strRoles = signUpRequest.getRoles();
+        Set<Role> roles = new HashSet<>();
+
+        strRoles.forEach(role -> {
+            switch (role) {
+            case "admin":
+                Role adminRole = roleRepository.findByNome(RoleNome.ROLE_ADMIN)
+                        .orElseThrow(() -> new RuntimeException("Erro! -> Role não foi setado"));
+                roles.add(adminRole);
+                break;
+            default:
+                Role userRole = roleRepository.findByNome(RoleNome.ROLE_USER)
+                        .orElseThrow(() -> new RuntimeException("Erro! -> Role não foi setado"));
+                roles.add(userRole);
+            }
+        });
+        usuario.setRoles(roles);
+        return usuarioRepository.save(usuario);
     }
 }

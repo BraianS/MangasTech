@@ -3,6 +3,7 @@ package com.mangastech.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.mangastech.model.Usuario;
+import com.mangastech.payload.SignUpRequest;
 import com.mangastech.service.UsuarioService;
 
 /**
@@ -76,15 +78,21 @@ public class UsuarioController {
 	/**
 	 * Método salvar usuario
 	 * 
-	 * @param usuario
+	 * @param signUpRequest
 	 * @return
-	 * @throws usuario repetido
+	 * @throws usuario repetido / email repetido / role vazio
 	 */
 	@RequestMapping(value = "/usuario", method = RequestMethod.POST)
-	public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) throws IOException {
-		if (usuarioService.existe(usuario)) {
+	public ResponseEntity<Usuario> cadastrarUsuario(@Valid @RequestBody SignUpRequest signUpRequest) throws IOException {
+		if (usuarioService.existsByUsername(signUpRequest.getUsername())) {
 			throw new RuntimeException("Usuário repetido");
 		}
-		return new ResponseEntity<>(usuarioService.salvar(usuario), HttpStatus.OK);
+		if(usuarioService.existsByEmail(signUpRequest.getEmail())){
+			throw new RuntimeException("Email repetido");
+		}
+		if(signUpRequest.getRoles()==null){
+			throw new RuntimeException("Roles vázio");
+		}
+		return new ResponseEntity<>(usuarioService.salvarUsuario(signUpRequest), HttpStatus.OK);
 	}
 }

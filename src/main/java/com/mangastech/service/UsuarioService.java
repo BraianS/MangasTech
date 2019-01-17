@@ -1,5 +1,7 @@
 package com.mangastech.service;
 
+import java.io.IOException;
+
 import com.mangastech.model.Usuario;
 import com.mangastech.payload.JwtResponse;
 import com.mangastech.payload.LoginRequest;
@@ -20,4 +22,6 @@ public interface UsuarioService extends CrudService<Usuario> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+
+    Usuario salvarUsuario(SignUpRequest signUpRequest) throws IOException;
 }

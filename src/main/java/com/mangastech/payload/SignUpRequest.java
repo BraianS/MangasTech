@@ -1,5 +1,6 @@
 package com.mangastech.payload;
 
+import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -22,6 +23,8 @@ public class SignUpRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+    private Set<String> roles;
 
     public String getNome() {
         return this.nome;
@@ -52,5 +55,13 @@ public class SignUpRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<String> getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
     }
 }

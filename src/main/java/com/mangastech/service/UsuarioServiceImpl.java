@@ -47,16 +47,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Override
     @PreAuthorize("hasRole('ADMIN')")
-    public Usuario salvar(Usuario usuario) {
+    public Usuario salvar(Usuario usuario) throws IOException {
         if (existsByUsername(usuario.getUsername())) {
             throw new RuntimeException("Username já existe");
         }
         return usuarioRepository.save(usuario);
     }
 
+    @Override
     @PreAuthorize("hasRole('ADMIN')")
-    public void deletar(Long id) {
+    public void deletar(Long id) throws IOException {
         Usuario usuario = buscarPorId(id).orElse(null);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String usuarioLogado = auth.getName();
@@ -66,8 +68,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
+    @Override
     @PreAuthorize("hasRole('ADMIN')")
-    public Usuario atualizar(Usuario usuario) {
+    public Usuario atualizar(Usuario usuario) throws IOException {
         if (existsByUsername(usuario.getUsername())
                 && buscarPorUsername(usuario.getUsername()).getId() != usuario.getId()) {
             throw new RuntimeException("Username já existe");
@@ -98,7 +101,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario salvaNovoUsuario(SignUpRequest signUpRequest) {
+    public Usuario salvaNovoUsuario(SignUpRequest signUpRequest) throws IOException{
         if (existsByUsername(signUpRequest.getUsername())) {
             throw new RuntimeException("Usuario ja existe");
         }
@@ -133,6 +136,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public Usuario salvarUsuario(SignUpRequest signUpRequest) throws IOException {
         if (existsByUsername(signUpRequest.getUsername())) {
             throw new RuntimeException("Username já existe");

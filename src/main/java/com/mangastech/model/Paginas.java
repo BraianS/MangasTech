@@ -9,9 +9,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "paginas")
-public class Paginas extends BaseIdEntity {
+public class Paginas {
 
-	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@Lob
 	@Column

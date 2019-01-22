@@ -4,13 +4,23 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
-public class Role extends BaseIdEntity {
+public class Role {
 
-    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 60)
     private RoleNome nome;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Role() {
     }
@@ -23,8 +33,8 @@ public class Role extends BaseIdEntity {
         this.nome = nome;
     }
 
-	public Role(Long id,RoleNome nome) {
-		this.id = id;
-		this.nome = nome;
-	}    
+    public Role(Long id, RoleNome nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 }

@@ -3,7 +3,7 @@ package com.mangastech.model;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
-import com.mangastech.model.audit.DateAudit;
+import com.mangastech.model.audit.UsuarioAudit;
 
 /**
  * @author Braian
@@ -11,7 +11,7 @@ import com.mangastech.model.audit.DateAudit;
  */
 @Entity
 @Table(name = "usuario")
-public class Usuario extends DateAudit {
+public class Usuario extends UsuarioAudit {
 
 	private static final long serialVersionUID = 1L;
 

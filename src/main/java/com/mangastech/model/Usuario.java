@@ -3,6 +3,7 @@ package com.mangastech.model;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import com.mangastech.model.audit.DateAudit;
 
 /**
  * @author Braian

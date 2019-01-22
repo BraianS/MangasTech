@@ -3,6 +3,7 @@ package com.mangastech.model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import com.mangastech.model.audit.DateAudit;
 
 /**
  * @author Braian

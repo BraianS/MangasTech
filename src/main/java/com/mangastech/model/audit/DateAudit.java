@@ -1,4 +1,4 @@
-package com.mangastech.model;
+package com.mangastech.model.audit;
 
 import java.io.Serializable;
 import java.time.Instant;

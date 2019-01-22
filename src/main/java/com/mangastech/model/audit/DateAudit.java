@@ -36,14 +36,6 @@ public abstract class DateAudit implements Serializable{
     @Column(nullable = false)
     private Instant atualizadoEm;
 
-    @CreatedBy
-    @Column(nullable = false, updatable = false)
-    private String criadoPor;
-
-    @LastModifiedBy
-    @Column(nullable=false)
-    private String atualizadoPor;
-
     public Long getId() {
         return this.id;
     }
@@ -66,21 +58,5 @@ public abstract class DateAudit implements Serializable{
 
     public void setAtualizadoEm(Instant atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
-    }
-
-    public String getCriadoPor() {
-        return this.criadoPor;
-    }
-
-    public void setCriadoPor(String criadoPor) {
-        this.criadoPor = criadoPor;
-    }
-
-    public String getAtualizadoPor() {
-        return this.atualizadoPor;
-    }
-
-    public void setAtualizadoPor(String atualizadoPor) {
-        this.atualizadoPor = atualizadoPor;
     }
 }

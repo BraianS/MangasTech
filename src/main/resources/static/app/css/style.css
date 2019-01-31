@@ -323,3 +323,21 @@ ul {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.textarea-custom {
+	resize: none;
+	border: 1px solid #F2F2F2;
+}
+
+.panel-custom {
+	border: 1px solid rgb(209, 204, 204);
+	padding: 10px;
+}
+
+.text {
+	white-space: pre-line;
+}
+
+.ul-custom {
+	margin-bottom: 0px;
+}

@@ -6,9 +6,9 @@
 		.controller('capituloController', capituloController);
 
 	//Injeta as dependências
-	capituloController.$inject = ['capituloService', '$stateParams','mangaService'];
+	capituloController.$inject = ['capituloService', '$stateParams', 'mangaService', '$state'];
 
-	function capituloController(capituloService, $stateParams, mangaService) {
+	function capituloController(capituloService, $stateParams, mangaService, $state) {
 
 		var vm = this;
 
@@ -47,6 +47,7 @@
 					vm.totalElementos = data.totalElements;
 					vm.paginas = data.content;
 					vm.capitulo = vm.paginas[0].capitulo.id;
+					vm.fim = data.last;
 				})
 		}
 
@@ -54,6 +55,9 @@
 			if (vm.pagina < vm.totalElementos) {
 				vm.pagina += 1;
 				carregarCapitulo();
+			}
+			if (vm.fim == true) {
+				$state.go('nav.comentarioCapitulo', { 'mangaId': vm.mangaId, 'capituloId': vm.capituloId });
 			} else {
 				vm.pagina = vm.pagina;
 				console.log("Limite de paginas");

@@ -1,0 +1,119 @@
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">Comentarios sobre o capitulo {{vm.capituloId}} de {{vm.mangaNome}}</h3>
+            </div>
+
+            <div class="panel-body">
+                <!-- FORM SALVAR COMENTARIO -->
+                <form name="vm.formComentario" novalidate ng-submit="vm.salvarcomentario()">
+                    <div class="form-group">
+                        <textarea class="form-control textarea-custom" name="comentario" ng-click="vm.buscarUsuarioAutenticado()"
+                            ng-MaxLength="1999" placeholder="Escreva seu comentario" rows="5" MaxLength="2000" ng-model="vm.comentario.comentario"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <span>Caracteres restantes: {{2000 - vm.comentario.comentario.length}}</span>
+                        <input type="submit" value="Salvar" class="btn btn-large btn-primary pull-right" ng-disabled="vm.formComentario.$invalid">
+                    </div>
+                </form>
+                <!-- /FORM SALVAR COMENTARIO-->
+
+                <!-- Lista comentarios -->
+                <div class="panel-custom" ng-repeat="comentario in vm.comentarios ">
+                    <strong>{{comentario.criadoPor}} </strong> <small>
+                        <span class="glyphicon glyphicon-time"></span>
+                    </small> {{comentario.criadoEm | date:'yyyy-MM-dd HH:mm:ss Z'}}
+                    <span class="text">
+                        {{comentario.comentario}}
+                    </span>
+
+                    <!-- Responder -->
+                    <button class="btn btn-primary btn-xs" type="button" ng-click="vm.selecionarResposta(comentario.id)"
+                        ng-hide="vm.idSelecionado === comentario.id">Responder</button>
+                    <!--  Cancelar -->
+                    <button class="btn btn-primary btn-xs" type="button" ng-click="vm.cancelar()" ng-show="vm.idSelecionado === comentario.id">Cancelar</button>
+                    <!-- Deletar -->
+                    <button class="btn btn-primary btn-xs" type="button" ng-click="vm.deletarComentario(comentario.id)"
+                        ng-show="comentario.criadoPor === vm.usernameAutenticado">Deletar</button>
+                    <!--  Atualizar -->
+                    <button class="btn btn-primary btn-xs" type="button" ng-click="vm.atualizar(comentario)" ng-show="comentario.criadoPor === vm.usernameAutenticado">Atualizar</button>
+
+                    <!-- FORM Comentario Pai-->
+                    <form name="vm.formComentarios" novalidate ng-show="vm.idSelecionado === comentario.id" ng-submit="vm.submitComentarioPai(comentario.id)">
+                        <div class="form-group">
+                            <textarea class="form-control textarea-custom" name="comentario" ng-click="vm.buscarUsuarioAutenticado()"
+                                ng-MaxLength="1999" placeholder="Escreva seu comentario" rows="5" MaxLength="2000"
+                                ng-model="vm.comentarioPai.comentario" required></textarea>
+
+                            <div class="form-group">
+                                <span>Caracteres restantes: {{2000 - vm.comentario.comentario.length}}</span>
+                                <input type="submit" value="Salvar" class="btn btn-large btn-primary pull-right"
+                                    ng-disabled="vm.formComentarios.$invalid">
+                            </div>
+                        </div>
+                    </form>
+                    <!-- /FORM Comentario Pai-->
+
+                    <!-- NG INCLUDE -->
+                    <div ng-include="'comentarioRecursivo'"></div>
+                </div>
+                <!-- /Lista comentarios -->
+            </div>
+
+            <!-- SCRIPT NG TEMPLATE -->
+            <script type="text/ng-template" id="comentarioRecursivo">
+            <ul class="list-group ul-custom">
+                <!-- Lista comentarios filhos -->
+                <li class="list-group-item" ng-repeat="filho in comentario.filho">
+                    <div>
+                        <strong>{{filho.criadoPor}}</strong> <span class="glyphicon glyphicon-arrow-right"></span> <i>{{comentario.criadoPor}}</i><small>
+                            <span class="glyphicon glyphicon-time"></span>
+                        </small> {{filho.criadoEm | date:'yyyy-MM-dd HH:mm:ss Z'}}
+                        <span class="text">
+                            {{filho.comentario}}
+                        </span>
+                    </div>
+
+                    <!-- Responder -->
+                    <button class="btn btn-primary btn-xs" type="button" ng-click="vm.selecionarResposta(filho.id)"
+                        ng-hide="vm.idSelecionado === filho.id">Responder</button>
+                    <!-- Cancelar -->
+                    <button class="btn btn-primary btn-xs" type="button" ng-click="vm.cancelar()" 
+                        ng-show="vm.idSelecionado === filho.id">Cancelar</button>
+                    <!-- Deletar -->
+                    <button class="btn btn-primary btn-xs" type="button" ng-click="vm.deletarComentario(filho.id)"
+                        ng-show="filho.criadoPor === vm.usernameAutenticado">Deletar</button>
+                    <!-- Atualizar -->
+                    <button class="btn btn-primary btn-xs" type="button" ng-click="vm.atualizar(filho)" 
+                        ng-show="filho.criadoPor === vm.usernameAutenticado">Atualizar</button>
+
+                    <!-- Form Comentario Pai -->
+                    <form name="vm.formComentariosFilho" novalidate ng-if="vm.idSelecionado === filho.id" ng-submit="vm.submitComentarioPai(filho.id)">
+                        <div class="form-group">
+                            <textarea class="form-control textarea-custom" name="comentario" ng-click="vm.buscarUsuarioAutenticado()"
+                                ng-MaxLength="1999" placeholder="Escreva seu comentario" rows="5" MaxLength="2000"
+                                ng-model="vm.comentarioPai.comentario" required></textarea>
+
+                            <div class="form-group">
+                                <span>Caracteres restantes: {{2000 - vm.comentarioPai.comentario.length}}</span>
+                                <input type="submit" value="Salvar" class="btn btn-large btn-primary pull-right"
+                                    ng-disabled="vm.formComentariosFilho.$invalid">
+                            </div>
+                        </div>
+                    </form> <!-- /Form Comentario Pai -->
+
+                    <div ng-if="comentario.filho && comentario.filho.length">
+                        <!-- NG INCLUDE -->
+                        <div ng-include="'comentarioRecursivo'" ng-init="comentario = filho">
+                        </div>
+                    </div>
+                </li> <!-- /Lista comentarios filhos -->
+            </ul>
+              </script>
+            <!-- /SCRIPT NG TEMPLATE  -->
+        </div>
+    </div>
+</div>
+</div>

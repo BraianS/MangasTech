@@ -194,6 +194,18 @@
 			}
 		};
 
+		var comentarioCapitulo = {
+			name: 'nav.comentarioCapitulo',
+			url : 'comentario/:mangaId/:capituloId/fim',
+			views: {
+				'home@': {
+					templateUrl:'/app/views/comentario.html',
+					controller:'comentarioController',
+					controllerAs:'vm'
+				}
+			}
+		};
+
 		var acessoNegado = {
 			name: 'acessoNegado',
 			url: 'acesso-negado',
@@ -220,7 +232,8 @@
 			.state('nav.capitulo', capitulo)
 			.state('nav.registrar', registrar)
 			.state('nav.login', login)
-			.state('nav.acessoNegado', acessoNegado);
+			.state('nav.acessoNegado', acessoNegado)
+			.state('nav.comentarioCapitulo',comentarioCapitulo);
 	}
 
 	//Adiciona a configuração ao modulo

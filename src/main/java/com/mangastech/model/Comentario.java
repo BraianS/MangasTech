@@ -6,6 +6,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mangastech.model.audit.UsuarioAudit;
@@ -16,6 +17,7 @@ import com.mangastech.model.audit.UsuarioAudit;
  */
 @Entity
 @Table(name = "Comentario")
+@JsonIgnoreProperties(value= {"capitulo"},allowGetters=true)
 public class Comentario extends UsuarioAudit {
 
     private static final long serialVersionUID = 1L;

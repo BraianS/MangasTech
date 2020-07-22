@@ -109,7 +109,7 @@ public class GruposController {
 	 * 
 	 * @return listar todos
 	 */
-	@RequestMapping(value = "/grupo/lista")
+	@RequestMapping(value = "/grupo/lista",method = RequestMethod.GET)
 	public ResponseEntity<List<Grupos>> listaDeNomesTodosGrupos() {
 		List<Grupos> grupo = grupoService.listarTodos();
 		if (grupo.isEmpty()) {

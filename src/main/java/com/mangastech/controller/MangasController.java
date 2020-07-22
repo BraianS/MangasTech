@@ -224,7 +224,7 @@ public class MangasController {
 	 * @return
 	 * @throws capitulo não encontrado
 	 */
-	@RequestMapping(value = "/manga/{manga}/{capitulo}")
+	@RequestMapping(value = "/manga/{manga}/{capitulo}",method = RequestMethod.DELETE)
 	public ResponseEntity<Mangas> deletarCapituloPorMangaId(@PathVariable("manga") Long mangaId,
 			@PathVariable("capitulo") Long capituloId) throws IOException {
 		Mangas manga = mangasService.buscarPorId(mangaId).get();

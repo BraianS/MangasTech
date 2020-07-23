@@ -177,7 +177,7 @@ public class MangasController {
 	 * 
 	 * @return lista de mangas
 	 */
-	@RequestMapping(value = "/manga/lista", method = RequestMethod.GET)
+	@RequestMapping(value = "/manga/nomes", method = RequestMethod.GET)
 	public ResponseEntity<List<Mangas>> listaDeNomesTodosMangas() {
 		List<Mangas> mangas = mangasService.listarTodos();
 		if (mangas.isEmpty()) {

@@ -6,9 +6,9 @@
 		.controller('homeController', homeController);
 
 	//Injeta as dependências
-	homeController.$inject = ['homeService'];
+	homeController.$inject = ['autenticacaoService'];
 
-	function homeController(homeService) {
+	function homeController(autenticacaoService) {
 
 		var vm = this;
 
@@ -38,14 +38,14 @@
 		carregarTop10MangasAcessados();
 
 		function carregarNovosCapitulos() {
-			return homeService.carregarNovosCapitulos(vm.hoje)
+			return autenticacaoService.carregarNovosCapitulos(vm.hoje)
 				.then(function (data) {
 					vm.mangaCapitulo = data;
 				})
 		}
 
 		function mangaUmDiaAtras() {
-			return homeService.carregarMangasPorUmDia(vm.ontem)
+			return autenticacaoService.carregarMangasPorUmDia(vm.ontem)
 				.then(function (data) {
 					vm.MangasOntem = data;
 					vm.ontemStatus = true;
@@ -53,7 +53,7 @@
 		}
 
 		function mangasDoisDiasAtras() {
-			return homeService.carregarMangasDoisDiasAtras(vm.anteontem)
+			return autenticacaoService.carregarMangasDoisDiasAtras(vm.anteontem)
 				.then(function (data) {
 					vm.MangasAnteOntem = data;
 					vm.anteOntemStatus = true;
@@ -61,14 +61,14 @@
 		}
 
 		function carregarNovosMangas() {
-			return homeService.carregarNovosMangas()
+			return autenticacaoService.carregarNovosMangas()
 				.then(function (data) {
 					vm.novosMangas = data;
 				})
 		}
 
 		function carregarTop10MangasAcessados() {
-			return homeService.carregarTop10Mangas()
+			return autenticacaoService.carregarTop10Mangas()
 				.then(function (data) {
 					vm.listaTop10MangasAcessados = data;
 				})

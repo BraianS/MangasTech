@@ -3,12 +3,12 @@
     /* Adiciona o factory ao modulo */
     angular
         .module('appCliente')
-        .factory('homeService', homeService);
+        .factory('autenticacaoService', autenticacaoService);
 
     //Injeta as dependências
-    homeService.$inject = ['$http'];
+    autenticacaoService.$inject = ['$http'];
 
-    function homeService($http) {
+    function autenticacaoService($http) {
         return {
             carregarNovosCapitulos: carregarNovosCapitulos,
             carregarMangasPorUmDia: carregarMangasPorUmDia,

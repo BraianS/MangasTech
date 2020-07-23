@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/api/auth")
-public class HomeController {
+public class AuthenticacaoController {
 
 	@Autowired
 	public UsuarioService usuarioService;

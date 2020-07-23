@@ -206,7 +206,7 @@ public class MangasController {
 	 * @param date
 	 * @return Lista de capitulos
 	 */
-	@RequestMapping(value = "/capitulo/lista/ordenado", method = RequestMethod.GET)
+	@RequestMapping(value = "/manga/listarCapitulosPorData", method = RequestMethod.GET)
 	public ResponseEntity<List<Mangas>> carregarMangaECapitulos(
 			@RequestParam(name = "date") @DateTimeFormat(pattern = "dd-MM-yyyy") Date date) {
 		List<Mangas> mangas = mangasService.listarCapitulosPorData(date);

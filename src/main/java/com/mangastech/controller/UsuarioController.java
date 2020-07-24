@@ -21,7 +21,7 @@ import com.mangastech.service.UsuarioService;
  *
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/usuario")
 public class UsuarioController {
 
 	@Autowired
@@ -33,7 +33,7 @@ public class UsuarioController {
 	 * @param usuario
 	 * @return lista usuarios
 	 */
-	@RequestMapping(value = "/usuario", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Usuario>> listarTodos() {
 		List<Usuario> usuario = usuarioService.listarTodos();
 		if (usuario.isEmpty()) {
@@ -49,7 +49,7 @@ public class UsuarioController {
 	 * @return
 	 * @throws usuario não encontrado / Não pode deletar sua conta
 	 */
-	@RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Usuario> deletarUsuario(@PathVariable(value = "id") Long id) throws IOException {
 		Optional<Usuario> usuario = usuarioService.buscarPorId(id);
 		if (usuario == null) {
@@ -66,7 +66,7 @@ public class UsuarioController {
 	 * @return usuario atualizado
 	 * @throws usuario repetido
 	 */
-	@RequestMapping(value = "/usuario", method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<Usuario> alterarUsuario(@RequestBody Usuario usuario) throws IOException {
 		Optional<Usuario> usuarioExiste = usuarioService.buscarPorId(usuario.getId());
 		if (usuarioExiste == null) {
@@ -82,7 +82,7 @@ public class UsuarioController {
 	 * @return
 	 * @throws usuario repetido / email repetido / role vazio
 	 */
-	@RequestMapping(value = "/usuario", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Usuario> cadastrarUsuario(@Valid @RequestBody SignUpRequest signUpRequest) throws IOException {
 		if (usuarioService.existsByUsername(signUpRequest.getUsername())) {
 			throw new RuntimeException("Usuário repetido");

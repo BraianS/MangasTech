@@ -20,7 +20,7 @@ import com.mangastech.service.PaginasService;
  *
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/pagina")
 public class PaginasController {
 
 	@Autowired
@@ -33,10 +33,10 @@ public class PaginasController {
 	 * @param page
 	 * @return pagina
 	 */
-	@RequestMapping(value = "/pagina/{id}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Page<Paginas>> bucarPaginaPorCapitulo(@PathVariable(value = "id") Capitulos id,
+	@RequestMapping(value = "/{capituloID}", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<Page<Paginas>> bucarPaginaPorCapitulo(@PathVariable(value = "id") Capitulos capituloID,
 			Pageable pageable) {
-		Page<Paginas> paginas = paginaService.buscarPaginaPorCapitulo(id, pageable);
+		Page<Paginas> paginas = paginaService.buscarPaginaPorCapitulo(capituloID, pageable);
 		if (paginas.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -50,8 +50,8 @@ public class PaginasController {
 	 * @param id
 	 * @return lista de capitulos
 	 */
-	@RequestMapping(value = "/paginas/{id}", method = RequestMethod.GET)
-	public ResponseEntity<List<Paginas>> listarPaginasPorCapituloId(@PathVariable("id") Capitulos id) {
+	@RequestMapping(value = "/numeroDePaginas/{capituloID}", method = RequestMethod.GET)
+	public ResponseEntity<List<Paginas>> listarPaginasPorCapituloId(@PathVariable("capituloID") Capitulos id) {
 		List<Paginas> paginas = paginaService.listarPaginasPorCapitulo(id);
 		if (paginas.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -22,7 +22,7 @@ import com.mangastech.service.CapituloService;
  *
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/capitulo")
 public class CapitulosController {
 
 	@Autowired
@@ -34,7 +34,7 @@ public class CapitulosController {
 	 * @param id
 	 * @return lista de capitulos
 	 */
-	@RequestMapping(value = "/capitulo/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Capitulos>> listarCapitulosPorManga(
 			@PathVariable(value = "id") Mangas id) {
 		List<Capitulos> capitulo = capituloService.buscarPorId(id);
@@ -53,7 +53,7 @@ public class CapitulosController {
 	 * @throws IOException Paginas vazias/Capitulo vazio
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/capitulo", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	@RequestMapping(method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public ResponseEntity<Capitulos> salvarCapitulo(@RequestPart(value = "capitulo") Capitulos capitulo,
 			@RequestParam(value = "paginas") List<MultipartFile> paginas) throws IOException {
 		if (capitulo == null) {

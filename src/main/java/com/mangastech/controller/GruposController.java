@@ -21,7 +21,7 @@ import com.mangastech.service.GrupoService;
  *
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/grupo")
 public class GruposController {
 
 	@Autowired
@@ -33,7 +33,7 @@ public class GruposController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value = "/grupo", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Grupos>> listarGrupos(Pageable pageable) {
 		Page<Grupos> grupos = grupoService.listaPaginada(pageable);
 		if (grupos.getContent().isEmpty()) {
@@ -49,7 +49,7 @@ public class GruposController {
 	 * @param page
 	 * @return autor
 	 */
-	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Grupos>> buscarGrupoPorId(@PathVariable(value = "id") Long id, Pageable pageable) {
 		Page<Grupos> grupos = grupoService.buscarPorId(id, pageable);
 		if (grupos.getContent().isEmpty()) {
@@ -65,7 +65,7 @@ public class GruposController {
 	 * @return
 	 * @throws Autor repetido
 	 */
-	@RequestMapping(value = "/grupo", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Grupos> salvarGrupo(@RequestBody Grupos grupos) throws IOException {
 		if (grupoService.existe(grupos)) {
 			throw new RuntimeException("Nome repetido");
@@ -79,7 +79,7 @@ public class GruposController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/grupo/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Grupos> deletarGrupoPorId(@PathVariable(value = "id") Long id) {
 		Optional<Grupos> grupo = grupoService.buscarPorId(id);
 		if (grupo == null) {
@@ -95,7 +95,7 @@ public class GruposController {
 	 * @param grupos
 	 * @return autor alterado
 	 */
-	@RequestMapping(value = "/grupo", method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<Grupos> atualizarGrupo(@RequestBody Grupos grupos) {
 		Optional<Grupos> grupoExiste = grupoService.buscarPorId(grupos.getId());
 		if (grupoExiste == null) {
@@ -109,7 +109,7 @@ public class GruposController {
 	 * 
 	 * @return listar todos
 	 */
-	@RequestMapping(value = "/grupo/lista",method = RequestMethod.GET)
+	@RequestMapping(value = "/lista",method = RequestMethod.GET)
 	public ResponseEntity<List<Grupos>> listaDeNomesTodosGrupos() {
 		List<Grupos> grupo = grupoService.listarTodos();
 		if (grupo.isEmpty()) {
@@ -125,7 +125,7 @@ public class GruposController {
 	 * @param page
 	 * @return autor
 	 */
-	@RequestMapping(value = "/grupo/letra/{letra}", method = RequestMethod.GET)
+	@RequestMapping(value = "/letra/{letra}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Grupos>> buscarGrupoPorLetra(@PathVariable("letra") String letra, Pageable pageable) {
 		Page<Grupos> grupos = grupoService.buscaPorLetra(letra, pageable);
 		if (grupos.getContent().isEmpty()) {

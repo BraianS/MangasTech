@@ -21,7 +21,7 @@ import com.mangastech.service.GeneroService;
  *
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/genero")
 public class GeneroController {
 
 	@Autowired
@@ -33,7 +33,7 @@ public class GeneroController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value = "/genero", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Generos>> listarGeneros(Pageable pageable) {
 		Page<Generos> generos = generoService.listaPaginada(pageable);
 		if (generos.getContent().isEmpty()) {
@@ -49,7 +49,7 @@ public class GeneroController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value = "/genero/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Generos>> buscarGeneroPorId(@PathVariable(value = "id") Long id, Pageable pageable) {
 		Page<Generos> generoAtual = generoService.buscarPorId(id, pageable);
 		if (generoAtual.getContent().isEmpty()) {
@@ -65,7 +65,7 @@ public class GeneroController {
 	 * @return
 	 * @throws genero repetido
 	 */
-	@RequestMapping(value = "/genero", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Generos> salvarGenero(@RequestBody Generos genero) throws IOException {
 		if (generoService.existe(genero)) {
 			throw new RuntimeException("Nome repetido");
@@ -79,7 +79,7 @@ public class GeneroController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/genero/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Generos> deletarGeneroPorId(@PathVariable(value = "id") Long id) {
 		Optional<Generos> genero = generoService.buscarPorId(id);
 		if (genero == null) {
@@ -95,7 +95,7 @@ public class GeneroController {
 	 * @param genero
 	 * @return genero editado
 	 */
-	@RequestMapping(value = "/genero", method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<Generos> atualizarGenero(@RequestBody Generos genero) {
 		Optional<Generos> generoExiste = generoService.buscarPorId(genero.getId());
 		if (generoExiste == null) {
@@ -109,7 +109,7 @@ public class GeneroController {
 	 * 
 	 * @return lista de generos
 	 */
-	@RequestMapping(value = "/genero/lista", method = RequestMethod.GET)
+	@RequestMapping(value = "/lista", method = RequestMethod.GET)
 	public ResponseEntity<List<Generos>> listaDeNomesTodosGeneros() {
 		List<Generos> genero = generoService.listarTodos();
 		if (genero.isEmpty()) {

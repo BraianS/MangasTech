@@ -28,7 +28,7 @@ import com.mangastech.service.MangaService;
  *
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/manga")
 public class MangasController {
 
 	@Autowired
@@ -43,7 +43,7 @@ public class MangasController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value = "/manga", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Page<Mangas>> listarMangas(Pageable pageable) {
 		Page<Mangas> mangas = mangasService.listaPaginada(pageable);
 		if (mangas == null) {
@@ -58,7 +58,7 @@ public class MangasController {
 	 * @param id
 	 * @return manga
 	 */
-	@RequestMapping(value = "/manga/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Mangas> buscarAutorPorId(@PathVariable(value = "id") Long id) {
 		Mangas manga = mangasService.buscarPorId(id).get();
 		if (manga == null) {
@@ -76,7 +76,7 @@ public class MangasController {
 	 * @throws Manga repetido
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/manga", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	@RequestMapping(method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public ResponseEntity<Mangas> salvarManga(@RequestPart(value = "mangas") Mangas mangas,
 			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 		if (mangasService.existe(mangas)) {
@@ -94,7 +94,7 @@ public class MangasController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/manga/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Mangas> deletarMangaPorId(@PathVariable(value = "id") Long id) {
 		Optional<Mangas> manga = mangasService.buscarPorId(id);
 		if (manga == null) {
@@ -111,7 +111,7 @@ public class MangasController {
 	 * @return manga alterado
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/manga", method = RequestMethod.PUT, consumes = { "multipart/form-data" })
+	@RequestMapping(method = RequestMethod.PUT, consumes = { "multipart/form-data" })
 	public ResponseEntity<Mangas> atualizarManga(@RequestPart(value = "mangas") Mangas mangas,
 			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
 		Optional<Mangas> mangaExiste = mangasService.buscarPorId(mangas.getId());
@@ -131,7 +131,7 @@ public class MangasController {
 	 * @param page
 	 * @return manga
 	 */
-	@RequestMapping(value = "/manga/az/{letra}", method = RequestMethod.GET)
+	@RequestMapping(value = "/az/{letra}", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Page<Mangas>> buscarMangaPorLetra(@PathVariable(value = "letra") String letra,
 			Pageable pageable) {
 		Page<Mangas> mangas = mangasService.buscaPorLetra(letra, pageable);
@@ -148,7 +148,7 @@ public class MangasController {
 	 * @param page
 	 * @return manga
 	 */
-	@RequestMapping(value = "/manga/nome/{nome}", method = RequestMethod.GET)
+	@RequestMapping(value = "/nome/{nome}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Mangas>> buscarMangaPorNome(@PathVariable(value = "nome") String nome,
 			Pageable pageable) {
 		Page<Mangas> mangas = mangasService.buscarPorNome(nome, pageable);
@@ -163,7 +163,7 @@ public class MangasController {
 	 * 
 	 * @return lista com dez mangas
 	 */
-	@RequestMapping(value = "/manga/top10", method = RequestMethod.GET)
+	@RequestMapping(value = "/top10", method = RequestMethod.GET)
 	public ResponseEntity<List<Mangas>> buscarTop10Mangas() {
 		List<Mangas> mangas = mangasService.buscarTop10Mangas();
 		if (mangas.isEmpty()) {
@@ -177,7 +177,7 @@ public class MangasController {
 	 * 
 	 * @return lista de mangas
 	 */
-	@RequestMapping(value = "/manga/nomes", method = RequestMethod.GET)
+	@RequestMapping(value = "/nomes", method = RequestMethod.GET)
 	public ResponseEntity<List<Mangas>> listaDeNomesTodosMangas() {
 		List<Mangas> mangas = mangasService.listarTodos();
 		if (mangas.isEmpty()) {
@@ -191,7 +191,7 @@ public class MangasController {
 	 * 
 	 * @return top 10 mangas decrescente
 	 */
-	@RequestMapping(value = "/manga/listaAcessos", method = RequestMethod.GET)
+	@RequestMapping(value = "/listaAcessos", method = RequestMethod.GET)
 	public ResponseEntity<List<Mangas>> top10MangasAcessados() {
 		List<Mangas> mangas = mangasService.Top10MangasAcessados();
 		if (mangas.isEmpty()) {
@@ -206,7 +206,7 @@ public class MangasController {
 	 * @param date
 	 * @return Lista de capitulos
 	 */
-	@RequestMapping(value = "/manga/listarCapitulosPorData", method = RequestMethod.GET)
+	@RequestMapping(value = "/listarCapitulosPorData", method = RequestMethod.GET)
 	public ResponseEntity<List<Mangas>> carregarMangaECapitulos(
 			@RequestParam(name = "date") @DateTimeFormat(pattern = "dd-MM-yyyy") Date date) {
 		List<Mangas> mangas = mangasService.listarCapitulosPorData(date);
@@ -224,7 +224,7 @@ public class MangasController {
 	 * @return
 	 * @throws capitulo não encontrado
 	 */
-	@RequestMapping(value = "/manga/{manga}/{capitulo}",method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{manga}/{capitulo}",method = RequestMethod.DELETE)
 	public ResponseEntity<Mangas> deletarCapituloPorMangaId(@PathVariable("manga") Long mangaId,
 			@PathVariable("capitulo") Long capituloId) throws IOException {
 		Mangas manga = mangasService.buscarPorId(mangaId).get();

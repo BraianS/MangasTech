@@ -22,7 +22,7 @@ import com.mangastech.service.AutorService;
  *
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/autor")
 public class AutorController {
 
 	@Autowired
@@ -34,7 +34,7 @@ public class AutorController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value = "/autor", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Autor>> listarAutores(Pageable pageable) {
 		Page<Autor> autor = autorService.listaPaginada(pageable);
 		if (autor.getContent().isEmpty()) {
@@ -50,7 +50,7 @@ public class AutorController {
 	 * @param page
 	 * @return autor
 	 */
-	@RequestMapping(value = "/autor/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Page<Autor>> buscarAutorPorId(@PathVariable(value = "id") Long id,
 			Pageable pageable) {
 		Page<Autor> autor = autorService.buscarPorId(id, pageable);
@@ -67,7 +67,7 @@ public class AutorController {
 	 * @return
 	 * @throws Autor repetido
 	 */
-	@RequestMapping(value = "/autor", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Autor> salvarAutor(@RequestBody Autor autor) throws IOException {
 		if (autorService.existe(autor)) {
 			throw new RuntimeException("Nome Repetido");
@@ -81,7 +81,7 @@ public class AutorController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/autor/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Autor> deletarAutorPorId(@PathVariable("id") Long id) {
 		Optional<Autor> autor = autorService.buscarPorId(id);
 		if (autor == null) {
@@ -97,7 +97,7 @@ public class AutorController {
 	 * @param autor
 	 * @return usuario alterado
 	 */
-	@RequestMapping(value = "/autor", method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT)
 	public ResponseEntity<Autor> atualizarAutor(@RequestBody Autor autor) throws IOException {
 		Optional<Autor> autorExiste = autorService.buscarPorId(autor.getId());
 		if (autorExiste == null) {
@@ -113,7 +113,7 @@ public class AutorController {
 	 * @param page
 	 * @return paginação de autor
 	 */
-	@RequestMapping(value = "/autor/letra/{letra}", method = RequestMethod.GET)
+	@RequestMapping(value = "/letra/{letra}", method = RequestMethod.GET)
 	public ResponseEntity<Page<Autor>> buscarAutorPorLetra(@PathVariable("letra") String letra, Pageable pageable) {
 		Page<Autor> autor = autorService.buscaPorLetra(letra, pageable);
 		if (autor.getContent().isEmpty()) {
@@ -127,7 +127,7 @@ public class AutorController {
 	 * 
 	 * @return lista de autor
 	 */
-	@RequestMapping(value = "/autor/lista", method = RequestMethod.GET)
+	@RequestMapping(value = "/lista", method = RequestMethod.GET)
 	public ResponseEntity<List<Autor>> listaDeNomesTodosAutores() {
 		List<Autor> autor = autorService.listarTodos();
 		if (autor.isEmpty()) {

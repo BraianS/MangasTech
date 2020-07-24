@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 
  */
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/comentario")
 public class ComentarioController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class ComentarioController {
     @Autowired
     private ComentarioService comentarioService;
 
-    @RequestMapping(value = "/comentario/{capituloId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{capituloId}", method = RequestMethod.POST)
     public ResponseEntity<Comentario> salvarComentario(@PathVariable("capituloId") Long id,
             @RequestBody Comentario comentario) {
         Capitulos capitulo = capitulosRepository.findById(id)
@@ -44,13 +44,13 @@ public class ComentarioController {
         return new ResponseEntity<>(comentarioService.salvarComentarioPai(comentarioPai, comentario), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/comentario/{capituloId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{capituloId}", method = RequestMethod.GET)
     public ResponseEntity<List<Comentario>> buscarComentariosPorCapituloId(
             @PathVariable("capituloId") Long capituloId) {
         return new ResponseEntity<>(comentarioService.listarTodosPorCapituloId(capituloId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/comentario/{comentarioId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{comentarioId}", method = RequestMethod.DELETE)
     public ResponseEntity<Comentario> deletarComentario(@PathVariable("comentarioId") Long comentarioId) {
         Comentario comentarioAtual = comentarioService.buscarPorId(comentarioId)
                 .orElseThrow(() -> new RuntimeException("Comentario não encontrado"));
@@ -62,7 +62,7 @@ public class ComentarioController {
         }
     }
 
-    @RequestMapping(value = "/comentario", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<Comentario> atualizarComentario(@RequestBody Comentario comentario) {
         Comentario comentarioAtual = comentarioService.buscarPorId(comentario.getId())
                 .orElseThrow(() -> new RuntimeException("Comentario não encontrado"));

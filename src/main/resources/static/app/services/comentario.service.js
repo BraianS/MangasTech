@@ -37,7 +37,7 @@
         function salvarComentarioPai(comentarioId,comentario){
             return $http({
                 method:'POST',
-                url:'/api/comentarioPai/'+comentarioId,
+                url:'/api/comentario/comentarioPai/'+comentarioId,
                 data:comentario
             }).then(getSalvarComentarioPai)
                 .catch(getSalvarComentarioPaiError);

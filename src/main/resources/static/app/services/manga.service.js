@@ -20,7 +20,7 @@
         };
 
         function listaMangas() {
-            return $http.get('/api/manga/lista')
+            return $http.get('/api/manga/nomes')
                 .then(getListaMangas)
                 .catch(getListaMangasError);
 

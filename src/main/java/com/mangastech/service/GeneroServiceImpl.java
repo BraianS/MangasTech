@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.mangastech.model.Generos;
 import com.mangastech.repository.GeneroRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,10 +44,12 @@ public class GeneroServiceImpl implements GeneroService {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Override
-    public Generos atualizar(Generos genero) {
+    public Generos atualizar(Long id,Generos genero) {
+        this.generoRepository.findById(id).orElseThrow(() -> new RuntimeException("Genero ID:"+id+" não encontrado"));
         if (buscarPorNome(genero.getNome()) != null && buscarPorNome(genero.getNome()).getId() != genero.getId()) {
             throw new RuntimeException("Nome repetido");
         }
+        genero.setId(id);
         return generoRepository.save(genero);
     }
 

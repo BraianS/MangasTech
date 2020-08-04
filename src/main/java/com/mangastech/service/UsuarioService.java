@@ -3,6 +3,7 @@ package com.mangastech.service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
 import com.mangastech.model.Usuario;
 import com.mangastech.payload.JwtResponse;
 import com.mangastech.payload.LoginRequest;
@@ -17,7 +18,7 @@ public interface UsuarioService {
 
     List<Usuario> listarTodos();
 
-    Usuario atualizar(Usuario entity) throws IOException;
+    Usuario atualizar(Long id,Usuario entity) throws IOException;
 
     void deletar(Long id) throws IOException;
 

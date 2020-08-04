@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.mangastech.model.Grupos;
 import com.mangastech.repository.GruposRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,10 +40,12 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Grupos atualizar(Grupos grupos) {
+    public Grupos atualizar(Long id, Grupos grupos) {
+        this.grupoRepository.findById(id).orElseThrow(() -> new RuntimeException("Grupo ID:"+id+" não encontrado"));
         if (buscarPorNome(grupos.getNome()) != null && buscarPorNome(grupos.getNome()).getId() != grupos.getId()) {
             throw new RuntimeException("Nome repetido");
         }
+        grupos.setId(id);
         return grupoRepository.save(grupos);
     }
 

@@ -4,10 +4,18 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import com.mangastech.model.Capitulos;
+import com.mangastech.model.Mangas;
+import com.mangastech.repository.CapitulosRepository;
+import com.mangastech.service.MangaService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,12 +24,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Mangas;
-import com.mangastech.repository.CapitulosRepository;
-import com.mangastech.service.MangaService;
 
 /**
  * @author Braian
@@ -111,17 +113,17 @@ public class MangasController {
 	 * @return manga alterado
 	 */
 	@ResponseBody
-	@RequestMapping(method = RequestMethod.PUT, consumes = { "multipart/form-data" })
-	public ResponseEntity<Mangas> atualizarManga(@RequestPart(value = "mangas") Mangas mangas,
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT, consumes = { "multipart/form-data" })
+	public ResponseEntity<Mangas> atualizarManga(@PathVariable("id") Long id,@RequestPart(value = "mangas") Mangas mangas,
 			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
-		Optional<Mangas> mangaExiste = mangasService.buscarPorId(mangas.getId());
+		Optional<Mangas> mangaExiste = mangasService.buscarPorId(id);
 		if (mangaExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		if (file != null) {
 			mangas.setCapa(file.getBytes());
 		}
-		return new ResponseEntity<>(mangasService.atualizar(mangas), HttpStatus.OK);
+		return new ResponseEntity<>(mangasService.atualizar(id,mangas), HttpStatus.OK);
 	}
 
 	/**

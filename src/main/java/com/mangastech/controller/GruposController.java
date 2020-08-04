@@ -3,6 +3,11 @@ package com.mangastech.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import com.mangastech.model.Autor;
+import com.mangastech.model.Grupos;
+import com.mangastech.service.GrupoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.mangastech.model.Grupos;
-import com.mangastech.service.GrupoService;
 
 /**
  * @author Braian
@@ -95,13 +98,13 @@ public class GruposController {
 	 * @param grupos
 	 * @return autor alterado
 	 */
-	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<Grupos> atualizarGrupo(@RequestBody Grupos grupos) {
-		Optional<Grupos> grupoExiste = grupoService.buscarPorId(grupos.getId());
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	public ResponseEntity<Grupos> atualizarGrupo(@PathVariable("id") Long id,@RequestBody  Grupos grupos) {
+		Optional<Grupos> grupoExiste = grupoService.buscarPorId(id);
 		if (grupoExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(grupoService.atualizar(grupos), HttpStatus.OK);
+		return new ResponseEntity<>(grupoService.atualizar(id,grupos), HttpStatus.OK);
 	}
 
 	/**

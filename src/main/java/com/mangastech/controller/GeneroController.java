@@ -3,6 +3,10 @@ package com.mangastech.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import com.mangastech.model.Generos;
+import com.mangastech.service.GeneroService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.mangastech.model.Generos;
-import com.mangastech.service.GeneroService;
 
 /**
  * @author Braian
@@ -95,13 +97,13 @@ public class GeneroController {
 	 * @param genero
 	 * @return genero editado
 	 */
-	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<Generos> atualizarGenero(@RequestBody Generos genero) {
-		Optional<Generos> generoExiste = generoService.buscarPorId(genero.getId());
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	public ResponseEntity<Generos> atualizarGenero(@PathVariable("id") Long id,@RequestBody  Generos genero) {
+		Optional<Generos> generoExiste = generoService.buscarPorId(id);
 		if (generoExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(generoService.atualizar(genero), HttpStatus.OK);
+		return new ResponseEntity<>(generoService.atualizar(id,genero), HttpStatus.OK);
 	}
 
 	/**

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.mangastech.model.Autor;
 import com.mangastech.repository.AutorRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,10 +54,12 @@ public class AutorServiceImpl implements AutorService {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Override
-    public Autor atualizar(Autor autor) {
+    public Autor atualizar(Long id, Autor autor) {
+        this.autorRepository.findById(id).orElseThrow(() -> new RuntimeException("Autor ID:"+id+" não encontrado"));
         if (buscarPorNome(autor.getNome()) != null && buscarPorNome(autor.getNome()).getId() != autor.getId()) {
             throw new RuntimeException("Nome repetido");
         }
+        autor.setId(id);
         return autorRepository.save(autor);
     }
 

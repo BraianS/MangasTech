@@ -3,10 +3,12 @@ package com.mangastech.service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 import com.mangastech.model.Capitulos;
 import com.mangastech.model.Mangas;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.repository.MangasRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,10 +49,12 @@ public class MangaServiceImpl implements MangaService {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Override
-    public Mangas atualizar(Mangas mangas) {
+    public Mangas atualizar(Long id,Mangas mangas) {
+        this.mangaRepository.findById(id).orElseThrow(() -> new RuntimeException("Manga ID:"+id+" não encontrado"));
         if (buscarPorNome(mangas.getNome()) != null && buscarPorNome(mangas.getNome()).getId() != mangas.getId()) {
             throw new RuntimeException("Nome repetido");
         }
+        mangas.setId(id);
         return mangaRepository.save(mangas);
     }
 

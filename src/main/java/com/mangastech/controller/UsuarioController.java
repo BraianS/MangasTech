@@ -3,7 +3,13 @@ package com.mangastech.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
 import javax.validation.Valid;
+
+import com.mangastech.model.Usuario;
+import com.mangastech.payload.SignUpRequest;
+import com.mangastech.service.UsuarioService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.mangastech.model.Usuario;
-import com.mangastech.payload.SignUpRequest;
-import com.mangastech.service.UsuarioService;
 
 /**
  * @author Braian
@@ -66,13 +69,13 @@ public class UsuarioController {
 	 * @return usuario atualizado
 	 * @throws usuario repetido
 	 */
-	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<Usuario> alterarUsuario(@RequestBody Usuario usuario) throws IOException {
-		Optional<Usuario> usuarioExiste = usuarioService.buscarPorId(usuario.getId());
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	public ResponseEntity<Usuario> alterarUsuario(@PathVariable("id") Long id,@RequestBody  Usuario usuario) throws IOException {
+		Optional<Usuario> usuarioExiste = usuarioService.buscarPorId(id);
 		if (usuarioExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(usuarioService.atualizar(usuario), HttpStatus.OK);
+		return new ResponseEntity<>(usuarioService.atualizar(id,usuario), HttpStatus.OK);
 	}
 
 	/**

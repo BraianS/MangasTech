@@ -16,6 +16,7 @@ import com.mangastech.payload.SignUpRequest;
 import com.mangastech.repository.RoleRepository;
 import com.mangastech.repository.UsuarioRepository;
 import com.mangastech.security.JwtProvider;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -70,11 +71,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    public Usuario atualizar(Usuario usuario) throws IOException {
+    public Usuario atualizar(Long id,Usuario usuario) throws IOException {
+        this.usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário ID:"+id+" não encontrado"));
         if (existsByUsername(usuario.getUsername())
                 && buscarPorUsername(usuario.getUsername()).getId() != usuario.getId()) {
             throw new RuntimeException("Username já existe");
         }
+        usuario.setId(id);
         return usuarioRepository.save(usuario);
     }
 

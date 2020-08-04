@@ -15,7 +15,7 @@ public interface CrudService<T> {
 
     List<T> listarTodos();
 
-    T atualizar(T entity);
+    T atualizar(Long id,T entity);
 
     void deletar(Long id);
 

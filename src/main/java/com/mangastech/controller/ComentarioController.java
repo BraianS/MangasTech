@@ -1,10 +1,12 @@
 package com.mangastech.controller;
 
 import java.util.List;
+
 import com.mangastech.model.Capitulos;
 import com.mangastech.model.Comentario;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.service.ComentarioService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,9 +64,9 @@ public class ComentarioController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<Comentario> atualizarComentario(@RequestBody Comentario comentario) {
-        Comentario comentarioAtual = comentarioService.buscarPorId(comentario.getId())
+    @RequestMapping(value="/{id}",method = RequestMethod.PUT)
+    public ResponseEntity<Comentario> atualizarComentario(@PathVariable("id") Long id,@RequestBody  Comentario comentario) {
+        Comentario comentarioAtual = comentarioService.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Comentario não encontrado"));
         if (comentarioService.comentarioDiferenteDoCriador(comentarioAtual)) {
             throw new RuntimeException("Não pode atualizar o comentário de outro usuario");

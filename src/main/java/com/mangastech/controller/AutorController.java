@@ -3,6 +3,10 @@ package com.mangastech.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import com.mangastech.model.Autor;
+import com.mangastech.service.AutorService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.mangastech.model.Autor;
-import com.mangastech.service.AutorService;
 
 /**
  * @author Braian
@@ -97,13 +99,13 @@ public class AutorController {
 	 * @param autor
 	 * @return usuario alterado
 	 */
-	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<Autor> atualizarAutor(@RequestBody Autor autor) throws IOException {
-		Optional<Autor> autorExiste = autorService.buscarPorId(autor.getId());
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	public ResponseEntity<Autor> atualizarAutor(@PathVariable("id") Long id, @RequestBody Autor autor) throws IOException {
+		Optional<Autor> autorExiste = autorService.buscarPorId(id);
 		if (autorExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(autorService.atualizar(autor), HttpStatus.OK);
+		return new ResponseEntity<>(autorService.atualizar(id,autor), HttpStatus.OK);
 	}
 
 	/**

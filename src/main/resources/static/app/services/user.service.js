@@ -63,10 +63,10 @@
             }
         }
 
-        function atualizarUsuario(usuario) {
+        function atualizarUsuario(id,usuario) {
             return $http({
                 method: 'PUT',
-                url: '/api/usuario', data: usuario
+                url: '/api/usuario/'+id, data: usuario
             })
                 .then(getAtualizarUsuario)
                 .catch(getAtualizarUsuarioError);

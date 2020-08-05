@@ -109,10 +109,10 @@
 
 		function updateManga() {
 			if (vm.formNovoManga.$valid) {
-				return mangaService.atualizarManga(vm.manga, vm.recebeImagem)
+				return mangaService.atualizarManga(vm.manga.id,vm.manga, vm.recebeImagem)
 					.then(function (data) {
 						vm.manga = {};
-						vm.recebeImagem = "";
+						vm.recebeImagem = [];
 						vm.mensagem = data;
 						carregarMangas();
 						carregarGeneros();

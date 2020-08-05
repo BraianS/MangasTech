@@ -91,10 +91,10 @@
             }
         }
 
-        function atualizarManga(manga, imagem) {
+        function atualizarManga(id,manga, imagem) {
             return $http({
                 method: 'PUT',
-                url: '/api/manga',
+                url: '/api/manga/'+id,
                 headers: { 'Content-Type': undefined },
                 transformRequest: function (data) {
                     var formData = new FormData();

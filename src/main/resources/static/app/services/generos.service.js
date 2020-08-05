@@ -80,10 +80,10 @@
 			}
 		}
 
-		function atualizarGenero(genero) {
+		function atualizarGenero(id,genero) {
 			return $http({
 				method: 'PUT',
-				url: '/api/genero', data: genero
+				url: '/api/genero/'+id, data: genero
 			}).then(getAtualizarGenero)
 				.catch(getAtualizarGenerosError);
 

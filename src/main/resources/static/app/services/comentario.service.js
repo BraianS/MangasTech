@@ -85,10 +85,10 @@
             }
         }
 
-        function atualizarComentario(comentario){
+        function atualizarComentario(id,comentario){
             return $http({
                 method:'PUT',
-                url:'/api/comentario',
+                url:'/api/comentario/'+id,
                 data:comentario
             }).then(getAtualizarComentario)
                 .catch(getAtualizarComentarioError);

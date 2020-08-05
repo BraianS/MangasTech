@@ -129,7 +129,7 @@
         }
 
         function atualizarComentario() {
-            return comentarioService.atualizarComentario(vm.comentarioPai)
+            return comentarioService.atualizarComentario(vm.comentarioPai.id,vm.comentarioPai)
                 .then(function (response) {
                     console.log(response);
                     buscarComentariosDoCapitulo();

@@ -54,7 +54,7 @@
 		}
 
 		function atualizarGeneros() {
-			generoService.atualizarGenero(vm.genero)
+			generoService.atualizarGenero(vm.genero.id,vm.genero)
 				.then(function (data) {
 					vm.genero = {};
 					vm.formGenero.$setPristine(true);

@@ -96,10 +96,10 @@
             }
         }
 
-        function atualizarAutor(autor) {
+        function atualizarAutor(id,autor) {
             return $http({
                 method: 'PUT',
-                url: '/api/autor', data: autor
+                url: '/api/autor/'+id, data: autor
             }).then(getAtualizarAutor)
                 .catch(getAtualizarAutorError);
 

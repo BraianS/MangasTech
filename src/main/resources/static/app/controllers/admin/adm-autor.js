@@ -64,7 +64,7 @@
 		}
 
 		function updateAutor() {
-			return autorService.atualizarAutor(vm.autores)
+			return autorService.atualizarAutor(vm.autores.id,vm.autores)
 				.then(function (data) {
 					vm.mensagem = data;
 					cancelar();

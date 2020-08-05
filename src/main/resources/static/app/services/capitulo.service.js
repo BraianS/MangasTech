@@ -87,7 +87,7 @@
         }
 
         function listaNumerosDePaginas(capituloId) {
-            return $http.get('/api/pagina/numeroDePaginas' + capituloId)
+            return $http.get('/api/pagina/numeroDePaginas/' + capituloId)
                 .then(getPaginas)
                 .catch(getPaginasError);
 

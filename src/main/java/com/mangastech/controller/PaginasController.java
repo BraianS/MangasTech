@@ -34,7 +34,7 @@ public class PaginasController {
 	 * @return pagina
 	 */
 	@RequestMapping(value = "/{capituloID}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Page<Paginas>> bucarPaginaPorCapitulo(@PathVariable(value = "id") Capitulos capituloID,
+	public @ResponseBody ResponseEntity<Page<Paginas>> bucarPaginaPorCapitulo(@PathVariable(value = "capituloID") Capitulos capituloID,
 			Pageable pageable) {
 		Page<Paginas> paginas = paginaService.buscarPaginaPorCapitulo(capituloID, pageable);
 		if (paginas.getContent().isEmpty()) {
@@ -51,8 +51,8 @@ public class PaginasController {
 	 * @return lista de capitulos
 	 */
 	@RequestMapping(value = "/numeroDePaginas/{capituloID}", method = RequestMethod.GET)
-	public ResponseEntity<List<Paginas>> listarPaginasPorCapituloId(@PathVariable("capituloID") Capitulos id) {
-		List<Paginas> paginas = paginaService.listarPaginasPorCapitulo(id);
+	public ResponseEntity<List<Paginas>> listarPaginasPorCapituloId(@PathVariable("capituloID") Capitulos capituloID) {
+		List<Paginas> paginas = paginaService.listarPaginasPorCapitulo(capituloID);
 		if (paginas.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

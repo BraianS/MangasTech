@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class GrupoServiceImpl implements GrupoService {
+public class GrupoServiceImpl {
 
     @Autowired
     private GruposRepository grupoRepository;
@@ -41,7 +41,7 @@ public class GrupoServiceImpl implements GrupoService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public Grupos atualizar(Long id, Grupos grupos) {
-        this.grupoRepository.findById(id).orElseThrow(() -> new RuntimeException("Grupo ID:"+id+" não encontrado"));
+        this.grupoRepository.findById(id).orElseThrow(() -> new RuntimeException("Grupo ID:" + id + " não encontrado"));
         if (buscarPorNome(grupos.getNome()) != null && buscarPorNome(grupos.getNome()).getId() != grupos.getId()) {
             throw new RuntimeException("Nome repetido");
         }
@@ -65,7 +65,6 @@ public class GrupoServiceImpl implements GrupoService {
         return grupoRepository.findByNomeStartingWith(letra, pageable);
     }
 
-    @Override
     public Grupos buscarPorNome(String nome) {
         if (nome != null) {
             return grupoRepository.findOneByNome(nome);
@@ -73,12 +72,10 @@ public class GrupoServiceImpl implements GrupoService {
         return null;
     }
 
-    @Override
     public Optional<Grupos> buscarPorId(Long id) {
         return grupoRepository.findById(id);
     }
 
-    @Override
     public boolean existe(Grupos grupo) {
         return buscarPorNome(grupo.getNome()) != null;
     }

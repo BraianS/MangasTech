@@ -1,20 +1,36 @@
 package com.mangastech.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import com.mangastech.model.Autor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.mangastech.model.Autor;
 
 /**
  * @author Braian
  *
  */
-public interface AutorService extends CrudService<Autor> {
+public interface AutorService {
 
-	Autor buscarPorNome(String nome);
+    Autor salvar(Autor autor);
 
-	Page<Autor> listaPaginada(Pageable pageable);
+    List<Autor> listarTodos();
 
-	Page<Autor> buscarPorId(Long id, Pageable pageable);
+    Autor atualizar(Long id, Autor autor);
 
-	Page<Autor> buscaPorLetra(String nome, Pageable pageable);
+    void deletar(Long id);
+
+    Optional<Autor> buscarPorId(Long id);
+
+    boolean existe(Autor autor);
+
+    Autor buscarPorNome(String nome);
+
+    Page<Autor> listaPaginada(Pageable pageable);
+
+    Page<Autor> buscarPorId(Long id, Pageable pageable);
+
+    Page<Autor> buscaPorLetra(String nome, Pageable pageable);
 }

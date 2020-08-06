@@ -23,7 +23,6 @@ public class AutorServiceImpl implements AutorService {
     private AutorRepository autorRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @Override
     public Autor salvar(Autor autor) {
         if (buscarPorNome(autor.getNome()) != null) {
             throw new RuntimeException("Nome repetido");
@@ -32,30 +31,25 @@ public class AutorServiceImpl implements AutorService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @Override
     public void deletar(Long id) {
         autorRepository.deleteById(id);
     }
 
-    @Override
     public List<Autor> listarTodos() {
         return autorRepository.findAllIdAndNome();
     }
 
-    @Override
     public Page<Autor> listaPaginada(Pageable pageable) {
         return autorRepository.findAll(pageable);
     }
 
-    @Override
     public Page<Autor> buscarPorId(Long id, Pageable pageable) {
         return autorRepository.findAllMangasByAutor(id, pageable);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @Override
     public Autor atualizar(Long id, Autor autor) {
-        this.autorRepository.findById(id).orElseThrow(() -> new RuntimeException("Autor ID:"+id+" não encontrado"));
+        this.autorRepository.findById(id).orElseThrow(() -> new RuntimeException("Autor ID:" + id + " não encontrado"));
         if (buscarPorNome(autor.getNome()) != null && buscarPorNome(autor.getNome()).getId() != autor.getId()) {
             throw new RuntimeException("Nome repetido");
         }
@@ -63,12 +57,10 @@ public class AutorServiceImpl implements AutorService {
         return autorRepository.save(autor);
     }
 
-    @Override
     public Page<Autor> buscaPorLetra(String nome, Pageable pageable) {
         return autorRepository.findByNomeStartingWith(nome, pageable);
     }
 
-    @Override
     public Autor buscarPorNome(String nome) {
         if (nome != null) {
             return autorRepository.findOneByNome(nome);
@@ -76,12 +68,10 @@ public class AutorServiceImpl implements AutorService {
         return null;
     }
 
-    @Override
     public Optional<Autor> buscarPorId(Long id) {
         return autorRepository.findById(id);
     }
 
-    @Override
     public boolean existe(Autor autor) {
         return buscarPorNome(autor.getNome()) != null;
     }

@@ -28,7 +28,6 @@ public class MangaServiceImpl implements MangaService {
     private CapitulosRepository capitulosRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @Override
     public Mangas salvar(Mangas manga) {
         if (buscarPorNome(manga.getNome()) != null) {
             throw new RuntimeException("Nome repetido");
@@ -36,21 +35,18 @@ public class MangaServiceImpl implements MangaService {
         return mangaRepository.save(manga);
     }
 
-    @Override
     public Page<Mangas> listaPaginada(Pageable pageable) {
-        return mangaRepository.findAll(PageRequest.of(pageable.getPageNumber(), 20, Direction.ASC,"nome"));
+        return mangaRepository.findAll(PageRequest.of(pageable.getPageNumber(), 20, Direction.ASC, "nome"));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @Override
     public void deletar(Long id) {
         mangaRepository.deleteById(id);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @Override
-    public Mangas atualizar(Long id,Mangas mangas) {
-        this.mangaRepository.findById(id).orElseThrow(() -> new RuntimeException("Manga ID:"+id+" não encontrado"));
+    public Mangas atualizar(Long id, Mangas mangas) {
+        this.mangaRepository.findById(id).orElseThrow(() -> new RuntimeException("Manga ID:" + id + " não encontrado"));
         if (buscarPorNome(mangas.getNome()) != null && buscarPorNome(mangas.getNome()).getId() != mangas.getId()) {
             throw new RuntimeException("Nome repetido");
         }
@@ -58,34 +54,28 @@ public class MangaServiceImpl implements MangaService {
         return mangaRepository.save(mangas);
     }
 
-    @Override
     public Page<Mangas> buscaPorLetra(String nome, Pageable pageable) {
         return mangaRepository.findByNomeStartingWith(nome, pageable);
     }
 
-    @Override
     public List<Mangas> listarTodos() {
         return mangaRepository.findAllIdAndNome();
     }
 
-    @Override
     public Page<Mangas> buscarPorNome(String nome, Pageable pageable) {
         return mangaRepository.findByNomeContaining(nome, pageable);
     }
 
-    @Override
     public List<Mangas> buscarTop10Mangas() {
         return mangaRepository.findTop10ByOrderByIdDesc();
     }
 
     @Transactional
-    @Override
     public Optional<Mangas> buscarPorId(Long id) {
         mangaRepository.incrementaAcessos(id);
         return mangaRepository.findById(id);
     }
 
-    @Override
     public Mangas buscarPorNome(String nome) {
         if (nome != null) {
             mangaRepository.findOneByNome(nome);
@@ -93,14 +83,12 @@ public class MangaServiceImpl implements MangaService {
         return null;
     }
 
-    @Override
     public boolean existe(Mangas manga) {
         return buscarPorNome(manga.getNome()) != null;
     }
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN')")
-    @Override
     public void deletarCapituloPorManga(Long mangaId, Long capituloId) {
         Mangas manga = buscarPorId(mangaId).orElse(null);
         Capitulos capitulo = capitulosRepository.findById(capituloId).orElse(null);
@@ -111,12 +99,10 @@ public class MangaServiceImpl implements MangaService {
         mangaRepository.save(manga);
     }
 
-    @Override
     public List<Mangas> listarCapitulosPorData(Date data) {
         return mangaRepository.findDistinctMangasByCapituloData(data);
     }
 
-    @Override
     public List<Mangas> Top10MangasAcessados() {
         return mangaRepository.findTop10ByOrderByAcessosDesc();
     }

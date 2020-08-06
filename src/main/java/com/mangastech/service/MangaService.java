@@ -3,15 +3,27 @@ package com.mangastech.service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import com.mangastech.model.Mangas;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.mangastech.model.Mangas;
 
 /**
  * @author Braian
  *
  */
-public interface MangaService extends CrudService<Mangas> {
+public interface MangaService {
+
+	Mangas salvar(Mangas entity);
+
+	List<Mangas> listarTodos();
+
+	Mangas atualizar(Long id, Mangas entity);
+
+	void deletar(Long id);
+
+	boolean existe(Mangas entity);
 
 	Mangas buscarPorNome(String nome);
 
@@ -25,7 +37,7 @@ public interface MangaService extends CrudService<Mangas> {
 
 	List<Mangas> buscarTop10Mangas();
 
-	void deletarCapituloPorManga(Long mangaId,Long capituloId);
+	void deletarCapituloPorManga(Long mangaId, Long capituloId);
 
 	List<Mangas> listarCapitulosPorData(Date data);
 

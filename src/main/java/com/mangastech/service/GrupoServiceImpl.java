@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class GrupoServiceImpl {
+public class GrupoServiceImpl implements GrupoService {
 
     @Autowired
     private GruposRepository grupoRepository;

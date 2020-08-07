@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mangastech.model.Grupos;
+import com.mangastech.payload.NomeRequest;
 import com.mangastech.repository.GruposRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,11 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Grupos salvar(Grupos grupos) {
-        if (buscarPorNome(grupos.getNome()) != null) {
+    public Grupos salvar(NomeRequest nomeRequest) {
+        if (buscarPorNome(nomeRequest.getNome()) != null) {
             throw new RuntimeException("Nome repetido");
         }
-        return grupoRepository.save(grupos);
+        return grupoRepository.save(new Grupos(nomeRequest.getNome()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -40,13 +41,13 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Grupos atualizar(Long id, Grupos grupos) {
-        this.grupoRepository.findById(id).orElseThrow(() -> new RuntimeException("Grupo ID:" + id + " não encontrado"));
-        if (buscarPorNome(grupos.getNome()) != null && buscarPorNome(grupos.getNome()).getId() != grupos.getId()) {
+    public Grupos atualizar(Long id, NomeRequest nomeRequest) {
+       Grupos grupo = this.grupoRepository.findById(id).orElseThrow(() -> new RuntimeException("Grupo ID:" + id + " não encontrado"));
+        if (buscarPorNome(nomeRequest.getNome()) != null && buscarPorNome(grupo.getNome()).getId() != grupo.getId()) {
             throw new RuntimeException("Nome repetido");
-        }
-        grupos.setId(id);
-        return grupoRepository.save(grupos);
+        }       
+        grupo.setNome(nomeRequest.getNome());
+        return grupoRepository.save(grupo);
     }
 
     public Page<Grupos> buscarPorId(Long id, Pageable pageable) {
@@ -76,7 +77,7 @@ public class GrupoServiceImpl implements GrupoService {
         return grupoRepository.findById(id);
     }
 
-    public boolean existe(Grupos grupo) {
-        return buscarPorNome(grupo.getNome()) != null;
+    public boolean existe(NomeRequest nomeRequest) {
+        return buscarPorNome(nomeRequest.getNome()) != null;
     }
 }

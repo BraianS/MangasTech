@@ -2,7 +2,14 @@ package com.mangastech.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mangastech.model.audit.DateAudit;
 
@@ -40,6 +47,10 @@ public class Generos extends DateAudit {
 	}
 
 	public Generos() {
+	}
+
+	public Generos(String nome){
+		this.nome = nome;
 	}
 
 	public Generos(Long id, String nome) {

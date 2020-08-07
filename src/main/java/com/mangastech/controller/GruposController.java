@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.mangastech.model.Autor;
 import com.mangastech.model.Grupos;
+import com.mangastech.payload.NomeRequest;
 import com.mangastech.service.GrupoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,11 +70,11 @@ public class GruposController {
 	 * @throws Autor repetido
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Grupos> salvarGrupo(@RequestBody Grupos grupos) throws IOException {
-		if (grupoService.existe(grupos)) {
+	public ResponseEntity<Grupos> salvarGrupo(@RequestBody NomeRequest nomeRequest) throws IOException {
+		if (grupoService.existe(nomeRequest)) {
 			throw new RuntimeException("Nome repetido");
 		}
-		return new ResponseEntity<>(grupoService.salvar(grupos), HttpStatus.OK);
+		return new ResponseEntity<>(grupoService.salvar(nomeRequest), HttpStatus.OK);
 	}
 
 	/**
@@ -99,12 +100,12 @@ public class GruposController {
 	 * @return autor alterado
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
-	public ResponseEntity<Grupos> atualizarGrupo(@PathVariable("id") Long id,@RequestBody  Grupos grupos) {
+	public ResponseEntity<Grupos> atualizarGrupo(@PathVariable("id") Long id,@RequestBody NomeRequest nomeRequest) {
 		Optional<Grupos> grupoExiste = grupoService.buscarPorId(id);
 		if (grupoExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(grupoService.atualizar(id,grupos), HttpStatus.OK);
+		return new ResponseEntity<>(grupoService.atualizar(id,nomeRequest), HttpStatus.OK);
 	}
 
 	/**

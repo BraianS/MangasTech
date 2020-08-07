@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mangastech.model.Autor;
+import com.mangastech.payload.AutorRequest;
 import com.mangastech.repository.AutorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,11 @@ public class AutorServiceImpl implements AutorService {
     private AutorRepository autorRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Autor salvar(Autor autor) {
-        if (buscarPorNome(autor.getNome()) != null) {
+    public Autor salvar(AutorRequest autorRequest) {
+        if (buscarPorNome(autorRequest.getNome()) != null) {
             throw new RuntimeException("Nome repetido");
         }
-        return autorRepository.save(autor);
+        return autorRepository.save(new Autor(autorRequest.getNome(), autorRequest.getInfo()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -48,9 +49,9 @@ public class AutorServiceImpl implements AutorService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Autor atualizar(Long id, Autor autor) {
-        this.autorRepository.findById(id).orElseThrow(() -> new RuntimeException("Autor ID:" + id + " não encontrado"));
-        if (buscarPorNome(autor.getNome()) != null && buscarPorNome(autor.getNome()).getId() != autor.getId()) {
+    public Autor atualizar(Long id, AutorRequest autorRequest) {
+        Autor autor = this.autorRepository.findById(id).orElseThrow(() -> new RuntimeException("Autor ID:" + id + " não encontrado"));
+        if (buscarPorNome(autorRequest.getNome()) != null && buscarPorNome(autor.getNome()).getId() != autor.getId()) {
             throw new RuntimeException("Nome repetido");
         }
         autor.setId(id);
@@ -72,7 +73,7 @@ public class AutorServiceImpl implements AutorService {
         return autorRepository.findById(id);
     }
 
-    public boolean existe(Autor autor) {
-        return buscarPorNome(autor.getNome()) != null;
+    public boolean existe(AutorRequest autorRequest) {
+        return buscarPorNome(autorRequest.getNome()) != null;
     }
 }

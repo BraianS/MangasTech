@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mangastech.model.Generos;
+import com.mangastech.payload.NomeRequest;
 import com.mangastech.service.GeneroService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,11 +69,11 @@ public class GeneroController {
 	 * @throws genero repetido
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Generos> salvarGenero(@RequestBody Generos genero) throws IOException {
-		if (generoService.existe(genero)) {
+	public ResponseEntity<Generos> salvarGenero(@RequestBody NomeRequest nomeRequest) throws IOException {
+		if (generoService.existe(nomeRequest)) {
 			throw new RuntimeException("Nome repetido");
 		}
-		return new ResponseEntity<>(generoService.salvar(genero), HttpStatus.CREATED);
+		return new ResponseEntity<>(generoService.salvar(nomeRequest), HttpStatus.CREATED);
 	}
 
 	/**
@@ -98,12 +99,12 @@ public class GeneroController {
 	 * @return genero editado
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
-	public ResponseEntity<Generos> atualizarGenero(@PathVariable("id") Long id,@RequestBody  Generos genero) {
+	public ResponseEntity<Generos> atualizarGenero(@PathVariable("id") Long id,@RequestBody  NomeRequest nomeRequest) {
 		Optional<Generos> generoExiste = generoService.buscarPorId(id);
 		if (generoExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(generoService.atualizar(id,genero), HttpStatus.OK);
+		return new ResponseEntity<>(generoService.atualizar(id,nomeRequest), HttpStatus.OK);
 	}
 
 	/**

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mangastech.model.Autor;
+import com.mangastech.payload.AutorRequest;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,17 +15,17 @@ import org.springframework.data.domain.Pageable;
  */
 public interface AutorService {
 
-    Autor salvar(Autor autor);
+    Autor salvar(AutorRequest autorRequest);
 
     List<Autor> listarTodos();
 
-    Autor atualizar(Long id, Autor autor);
+    Autor atualizar(Long id, AutorRequest autorRequest);
 
     void deletar(Long id);
 
     Optional<Autor> buscarPorId(Long id);
 
-    boolean existe(Autor autor);
+    boolean existe(AutorRequest autorRequest);
 
     Autor buscarPorNome(String nome);
 

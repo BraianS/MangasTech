@@ -2,7 +2,12 @@ package com.mangastech.model;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mangastech.model.audit.DateAudit;
 
@@ -64,6 +69,11 @@ public class Autor extends DateAudit {
 
 	public Autor(Long id, String nome, String info) {
 		this.id = id;
+		this.nome = nome;
+		this.info = info;
+	}
+
+	public Autor(String nome, String info){
 		this.nome = nome;
 		this.info = info;
 	}

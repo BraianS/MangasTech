@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mangastech.model.Generos;
+import com.mangastech.payload.NomeRequest;
 import com.mangastech.repository.GeneroRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,11 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Generos salvar(Generos generos) {
-        if (buscarPorNome(generos.getNome()) != null) {
+    public Generos salvar(NomeRequest nomeRequest) {
+        if (buscarPorNome(nomeRequest.getNome()) != null) {
             throw new RuntimeException("Nome repetido");
         }
-        return generoRepository.save(generos);
+        return generoRepository.save(new Generos(nomeRequest.getNome()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -40,13 +41,13 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Generos atualizar(Long id, Generos genero) {
-        this.generoRepository.findById(id)
+    public Generos atualizar(Long id, NomeRequest nomeRequest) {
+        Generos genero = this.generoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Genero ID:" + id + " não encontrado"));
-        if (buscarPorNome(genero.getNome()) != null && buscarPorNome(genero.getNome()).getId() != genero.getId()) {
+        if (buscarPorNome(nomeRequest.getNome()) != null && buscarPorNome(genero.getNome()).getId() != genero.getId()) {
             throw new RuntimeException("Nome repetido");
         }
-        genero.setId(id);
+        genero.setNome(nomeRequest.getNome());
         return generoRepository.save(genero);
     }
 
@@ -69,7 +70,8 @@ public class GeneroServiceImpl implements GeneroService {
         return generoRepository.findById(id);
     }
 
-    public boolean existe(Generos genero) {
-        return buscarPorNome(genero.getNome()) != null;
+    public boolean existe(NomeRequest nomeRequest) {
+        return buscarPorNome(nomeRequest.getNome()) != null;
     }
+
 }

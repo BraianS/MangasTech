@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mangastech.model.Grupos;
+import com.mangastech.payload.NomeRequest;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,17 +15,17 @@ import org.springframework.data.domain.Pageable;
  */
 public interface GrupoService {
 
-    Grupos salvar(Grupos grupo);
+    Grupos salvar(NomeRequest nomeRequest);
 
     List<Grupos> listarTodos();
 
-    Grupos atualizar(Long id, Grupos grupo);
+    Grupos atualizar(Long id, NomeRequest nomeRequest);
 
     void deletar(Long id);
 
     Optional<Grupos> buscarPorId(Long id);
 
-    boolean existe(Grupos grupo);
+    boolean existe(NomeRequest nomeRequest);
 
     Grupos buscarPorNome(String nome);
 

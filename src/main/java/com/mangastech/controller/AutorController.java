@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mangastech.model.Autor;
+import com.mangastech.payload.AutorRequest;
 import com.mangastech.service.AutorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,11 +71,11 @@ public class AutorController {
 	 * @throws Autor repetido
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Autor> salvarAutor(@RequestBody Autor autor) throws IOException {
-		if (autorService.existe(autor)) {
+	public ResponseEntity<Autor> salvarAutor(@RequestBody AutorRequest autorRequest) throws IOException {
+		if (autorService.existe(autorRequest)) {
 			throw new RuntimeException("Nome Repetido");
 		}
-		return new ResponseEntity<>(autorService.salvar(autor), HttpStatus.OK);
+		return new ResponseEntity<>(autorService.salvar(autorRequest), HttpStatus.OK);
 	}
 
 	/**
@@ -100,12 +101,12 @@ public class AutorController {
 	 * @return usuario alterado
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
-	public ResponseEntity<Autor> atualizarAutor(@PathVariable("id") Long id, @RequestBody Autor autor) throws IOException {
+	public ResponseEntity<Autor> atualizarAutor(@PathVariable("id") Long id, @RequestBody AutorRequest autorRequest) throws IOException {
 		Optional<Autor> autorExiste = autorService.buscarPorId(id);
 		if (autorExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(autorService.atualizar(id,autor), HttpStatus.OK);
+		return new ResponseEntity<>(autorService.atualizar(id,autorRequest), HttpStatus.OK);
 	}
 
 	/**

@@ -1,13 +1,16 @@
 package com.mangastech.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import com.mangastech.model.Mangas;
+import com.mangastech.payload.MangaRequest;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Braian
@@ -15,15 +18,15 @@ import org.springframework.data.domain.Pageable;
  */
 public interface MangaService {
 
-	Mangas salvar(Mangas entity);
+	Mangas salvar(MangaRequest mangaRequest,MultipartFile capa) throws IOException;
 
 	List<Mangas> listarTodos();
 
-	Mangas atualizar(Long id, Mangas entity);
+	Mangas atualizar(Long id, MangaRequest mangaRequest,MultipartFile capa)  throws IOException;
 
 	void deletar(Long id);
 
-	boolean existe(Mangas entity);
+	boolean existe(MangaRequest mangaRequest) ;
 
 	Mangas buscarPorNome(String nome);
 

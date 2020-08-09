@@ -1,12 +1,17 @@
 package com.mangastech.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.mangastech.model.Autor;
 import com.mangastech.model.Capitulos;
+import com.mangastech.model.Generos;
 import com.mangastech.model.Mangas;
+import com.mangastech.payload.MangaRequest;
 import com.mangastech.repository.CapitulosRepository;
+import com.mangastech.repository.GeneroRepository;
 import com.mangastech.repository.MangasRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class MangaServiceImpl implements MangaService {
@@ -27,12 +33,15 @@ public class MangaServiceImpl implements MangaService {
     @Autowired
     private CapitulosRepository capitulosRepository;
 
+    @Autowired
+    private GeneroRepository generoRepository;
+
     @PreAuthorize("hasRole('ADMIN')")
-    public Mangas salvar(Mangas manga) {
-        if (buscarPorNome(manga.getNome()) != null) {
+    public Mangas salvar(MangaRequest mangaRequest, MultipartFile capa) throws IOException {
+        if (buscarPorNome(mangaRequest.getNome()) != null) {
             throw new RuntimeException("Nome repetido");
         }
-        return mangaRepository.save(manga);
+        return mangaRepository.save(this.transformarEmObjeto(mangaRequest, capa));
     }
 
     public Page<Mangas> listaPaginada(Pageable pageable) {
@@ -45,13 +54,13 @@ public class MangaServiceImpl implements MangaService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Mangas atualizar(Long id, Mangas mangas) {
-        this.mangaRepository.findById(id).orElseThrow(() -> new RuntimeException("Manga ID:" + id + " não encontrado"));
-        if (buscarPorNome(mangas.getNome()) != null && buscarPorNome(mangas.getNome()).getId() != mangas.getId()) {
+    public Mangas atualizar(Long id, MangaRequest mangaRequest, MultipartFile capa) throws IOException {
+        Mangas manga = this.mangaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Manga ID:" + id + " não encontrado"));
+        if (buscarPorNome(mangaRequest.getNome()) != null && buscarPorNome(manga.getNome()).getId() != manga.getId()) {
             throw new RuntimeException("Nome repetido");
         }
-        mangas.setId(id);
-        return mangaRepository.save(mangas);
+        return this.mangaRepository.save(this.transformarEmObjeto(mangaRequest, capa));
     }
 
     public Page<Mangas> buscaPorLetra(String nome, Pageable pageable) {
@@ -83,8 +92,8 @@ public class MangaServiceImpl implements MangaService {
         return null;
     }
 
-    public boolean existe(Mangas manga) {
-        return buscarPorNome(manga.getNome()) != null;
+    public boolean existe(MangaRequest mangaRequest) {
+        return buscarPorNome(mangaRequest.getNome()) != null;
     }
 
     @Transactional
@@ -105,5 +114,26 @@ public class MangaServiceImpl implements MangaService {
 
     public List<Mangas> Top10MangasAcessados() {
         return mangaRepository.findTop10ByOrderByAcessosDesc();
+    }
+
+    private Mangas transformarEmObjeto(MangaRequest mangaRequest, MultipartFile capa) throws IOException {
+        Mangas manga = new Mangas();
+        if (capa != null) {
+            manga.setCapa(capa.getBytes());
+        }
+        manga.setNome(mangaRequest.getNome());
+        manga.setStatus(mangaRequest.getStatus());
+        manga.setDataLancado(mangaRequest.getLancamento());
+        if (mangaRequest.getAutor() != null) {
+            manga.setAutor(new Autor(mangaRequest.getAutor().getId()));
+        }
+        if (mangaRequest.getGeneros().size() > 1) {
+            mangaRequest.getGeneros().forEach((genero) -> {
+                this.generoRepository.findById(genero.getId())
+                        .ifPresent(generos -> manga.getGenero().add(new Generos(genero.getId(), null)));
+            });
+        }
+        manga.setDescricao(mangaRequest.getDescricao());
+        return manga;
     }
 }

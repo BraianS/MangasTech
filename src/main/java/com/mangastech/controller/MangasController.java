@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.mangastech.model.Capitulos;
 import com.mangastech.model.Mangas;
+import com.mangastech.payload.MangaRequest;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.service.MangaService;
 
@@ -79,15 +80,12 @@ public class MangasController {
 	 */
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public ResponseEntity<Mangas> salvarManga(@RequestPart(value = "mangas") Mangas mangas,
-			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
-		if (mangasService.existe(mangas)) {
+	public ResponseEntity<Mangas> salvarManga(@RequestPart(value = "mangas") MangaRequest mangaRequest,
+			@RequestPart(value = "capa", required = false) MultipartFile capa) throws IOException {
+		if (mangasService.existe(mangaRequest)) {
 			throw new RuntimeException("Manga Repetido");
 		}
-		if (file != null) {
-			mangas.setCapa(file.getBytes());
-		}
-		return new ResponseEntity<>(mangasService.salvar(mangas), HttpStatus.CREATED);
+		return new ResponseEntity<>(mangasService.salvar(mangaRequest,capa), HttpStatus.CREATED);
 	}
 
 	/**
@@ -114,16 +112,13 @@ public class MangasController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT, consumes = { "multipart/form-data" })
-	public ResponseEntity<Mangas> atualizarManga(@PathVariable("id") Long id,@RequestPart(value = "mangas") Mangas mangas,
-			@RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
+	public ResponseEntity<Mangas> atualizarManga(@PathVariable("id") Long id,@RequestPart(value = "mangas") MangaRequest mangaRequest,
+			@RequestPart(value = "capa", required = false) MultipartFile capa) throws IOException {
 		Optional<Mangas> mangaExiste = mangasService.buscarPorId(id);
 		if (mangaExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		if (file != null) {
-			mangas.setCapa(file.getBytes());
-		}
-		return new ResponseEntity<>(mangasService.atualizar(id,mangas), HttpStatus.OK);
+		return new ResponseEntity<>(mangasService.atualizar(id,mangaRequest,capa), HttpStatus.OK);
 	}
 
 	/**

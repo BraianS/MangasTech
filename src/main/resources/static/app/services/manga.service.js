@@ -58,10 +58,10 @@
                     formData.append('mangas', new Blob([angular.toJson(data.mangas)], {
                         type: "application/json"
                     }));
-                    formData.append('file', data.file);
+                    formData.append('capa', data.capa);
                     return formData;
                 },
-                data: { mangas: manga, file: imagem }
+                data: { mangas: manga, capa: imagem }
             })
                 .then(getSalvarMangas)
                 .catch(getSalvarMangasError)

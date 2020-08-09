@@ -58,6 +58,10 @@ public class Autor extends DateAudit {
 	public Autor() {
 	}
 
+	public Autor(Long id) {
+		this.id = id;
+	}
+
 	public Autor(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;

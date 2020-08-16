@@ -1,6 +1,12 @@
 package com.mangastech.controller;
 
 import java.util.List;
+
+import com.mangastech.model.Capitulos;
+import com.mangastech.model.Paginas;
+import com.mangastech.service.PaginasService;
+
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,10 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Paginas;
-import com.mangastech.service.PaginasService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 /**
  * @author Braian
  *
@@ -26,16 +33,16 @@ public class PaginasController {
 	@Autowired
 	private PaginasService paginaService;
 
-	/**
-	 * Método busca pagina por capitulo ID
-	 * 
-	 * @param id
-	 * @param page
-	 * @return pagina
-	 */
+	@Operation(description="Busca capítulo pelo ID")
 	@RequestMapping(value = "/{capituloID}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<Page<Paginas>> bucarPaginaPorCapitulo(@PathVariable(value = "capituloID") Capitulos capituloID,
-			Pageable pageable) {
+	@PageableAsQueryParam
+	@ApiResponses( value= {
+        @ApiResponse( responseCode = "404",description = "Nenhuma Página encontrada"),
+		@ApiResponse( responseCode = "200",description = "Retorna a Página")
+	})
+	public @ResponseBody ResponseEntity<Page<Paginas>> bucarPaginaPorCapitulo(
+		@PathVariable(value = "capituloID") Capitulos capituloID,
+		@Parameter(hidden = true) Pageable pageable) {
 		Page<Paginas> paginas = paginaService.buscarPaginaPorCapitulo(capituloID, pageable);
 		if (paginas.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -43,14 +50,12 @@ public class PaginasController {
 		return new ResponseEntity<>(paginas, HttpStatus.OK);
 	}
 
-	/**
-	 * 
-	 * Método lista numero de paginas por capitulo ID
-	 * 
-	 * @param id
-	 * @return lista de capitulos
-	 */
 	@RequestMapping(value = "/numeroDePaginas/{capituloID}", method = RequestMethod.GET)
+	@Operation(description="Lista números de páginas por capítulo ID")
+	@ApiResponses( value= {
+        @ApiResponse( responseCode = "404",description = "Nenhuma Página encontrada"),
+		@ApiResponse( responseCode = "200",description = "Retorna lista de Páginas por capítulo ID")
+	})
 	public ResponseEntity<List<Paginas>> listarPaginasPorCapituloId(@PathVariable("capituloID") Capitulos capituloID) {
 		List<Paginas> paginas = paginaService.listarPaginasPorCapitulo(capituloID);
 		if (paginas.isEmpty()) {

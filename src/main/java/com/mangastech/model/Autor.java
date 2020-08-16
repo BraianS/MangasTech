@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mangastech.model.audit.DateAudit;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * @author Braian
  *
@@ -21,12 +23,15 @@ public class Autor extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
 
+	@Schema(description = "Nome do Autor")
 	@Column(name = "nome", length = 50)
 	private String nome;
 
+	@Schema(description = "informação sobre o Autor")
 	@Column(columnDefinition = "TEXT")
 	private String info;
 
+	@Schema(description = "Mangas criados pelo Autor")
 	@OneToMany(mappedBy = "autor", orphanRemoval = true)
 	private Set<Mangas> manga = new HashSet<>();
 

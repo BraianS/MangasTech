@@ -1,5 +1,7 @@
 package com.mangastech.model.audit;
 
+
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
@@ -7,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @MappedSuperclass
 @JsonIgnoreProperties(
@@ -17,10 +21,12 @@ public abstract class UsuarioAudit  extends DateAudit{
 
     private static final long serialVersionUID = 1L;
 
+    @Schema(description = "Nome de quem criou o Usuário")
     @CreatedBy
     @Column(updatable=false)
     private String criadoPor;
 
+    @Schema(description = "Nome de quem atualizou o Usuário")
     @LastModifiedBy
     private String atualizadoPor;
 

@@ -1,11 +1,14 @@
 package com.mangastech.controller;
 
 import java.io.IOException;
+
 import javax.validation.Valid;
+
 import com.mangastech.model.Usuario;
 import com.mangastech.payload.LoginRequest;
 import com.mangastech.payload.SignUpRequest;
 import com.mangastech.service.UsuarioService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 /**
  * @author Braian
  *
@@ -25,13 +32,12 @@ public class AuthenticacaoController {
 	@Autowired
 	public UsuarioService usuarioService;
 
-	/**
-	 * Método registrar um usuario
-	 * 
-	 * @param usuario
-	 * @return
-	 */
 	@RequestMapping(value = "/registrar", method = RequestMethod.POST)
+	@Operation(description="Registrar um novo Usuário",security = {@SecurityRequirement(name = "JWT")})
+	@ApiResponses( value= {
+		@ApiResponse(responseCode = "500",description = "Exception username já existe"),
+		@ApiResponse( responseCode = "201",description = "Retorna Usuário criado")
+	})
 	public ResponseEntity<Usuario> salvarNovoUsuario(@Valid @RequestBody SignUpRequest signupRequest)
 			throws IOException {
 		if (usuarioService.existsByUsername(signupRequest.getUsername())) {
@@ -40,17 +46,13 @@ public class AuthenticacaoController {
 		return new ResponseEntity<Usuario>(usuarioService.salvaNovoUsuario(signupRequest), HttpStatus.CREATED);
 	}
 
-	/**
-	 * Método autenticar um usuario
-	 * 
-	 * @param username
-	 * @param password
-	 * @param response
-	 * @return Token
-	 * @throws IOException
-	 */
 	@RequestMapping(value = "/autenticar", method = RequestMethod.POST)
-	public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) throws IOException {
+	@Operation(description="Autenticar o Usuário",security = {@SecurityRequirement(name = "JWT")})
+	@ApiResponses( value= {
+		@ApiResponse( responseCode = "404",description = "Usuário não encontrado"),
+		@ApiResponse( responseCode = "201",description = "Retorna Usuário autenticado")
+	})
+	public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
 		if (usuarioService.existsByUsername(loginRequest.getUsername()) == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

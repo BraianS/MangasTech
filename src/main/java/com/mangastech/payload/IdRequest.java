@@ -1,6 +1,11 @@
 package com.mangastech.payload;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema
 public class IdRequest {
+
+    @Schema(description = "ID a ser recebido")
     private Long id;
 
     public IdRequest(Long id) {

@@ -1,5 +1,7 @@
 package com.mangastech.model;
 
+
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +15,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mangastech.model.audit.DateAudit;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * @author Braian
  *
@@ -23,9 +27,11 @@ public class Generos extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
 
+	@Schema(description = "Nome do Gênero")
 	@Column(name = "nome", length = 50)
 	private String nome;
 
+	@Schema(description = "Mangas organizados por Gênero")
 	@ManyToMany(mappedBy = "genero", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Set<Mangas> manga = new HashSet<>();
 

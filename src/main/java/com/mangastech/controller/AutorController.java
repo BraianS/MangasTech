@@ -8,10 +8,12 @@ import com.mangastech.model.Autor;
 import com.mangastech.payload.AutorRequest;
 import com.mangastech.service.AutorService;
 
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +22,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 /**
  * @author Braian
  *
  */
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 @RestController
 @RequestMapping(value = "/api/autor")
 public class AutorController {
@@ -31,14 +38,14 @@ public class AutorController {
 	@Autowired
 	private AutorService autorService;
 
-	/**
-	 * Método Paginação de Autor
-	 * 
-	 * @param page
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Page<Autor>> listarAutores(Pageable pageable) {
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PageableAsQueryParam
+	@Operation(description="Busca os autores")
+	@ApiResponses( value= {
+		@ApiResponse( responseCode = "204", description  = "Nenhum conteúdo"),
+		@ApiResponse( responseCode = "200",description = "Retorna a paginação de autores com lista de mangas")
+	})
+	public ResponseEntity<Page<Autor>> listarAutores(@Parameter(hidden = true) Pageable pageable) {
 		Page<Autor> autor = autorService.listaPaginada(pageable);
 		if (autor.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -46,16 +53,15 @@ public class AutorController {
 		return new ResponseEntity<>(autor, HttpStatus.OK);
 	}
 
-	/**
-	 * Método busca todos os mangas por um autor ID
-	 * 
-	 * @param id
-	 * @param page
-	 * @return autor
-	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@Operation(description="Busca os mangas pelo autor ID")
+	@PageableAsQueryParam
+	@ApiResponses( value= {
+		@ApiResponse( responseCode = "404",description = "Nenhum conteúdo encontrado"),
+		@ApiResponse( responseCode = "200",description = "Retorna paginação de mangas")
+	})
 	public @ResponseBody ResponseEntity<Page<Autor>> buscarAutorPorId(@PathVariable(value = "id") Long id,
-			Pageable pageable) {
+		@Parameter(hidden = true) Pageable pageable) {
 		Page<Autor> autor = autorService.buscarPorId(id, pageable);
 		if (autor.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -63,28 +69,27 @@ public class AutorController {
 		return new ResponseEntity<>(autor, HttpStatus.OK);
 	}
 
-	/**
-	 * Método para registrar autor
-	 * 
-	 * @param autor
-	 * @return
-	 * @throws Autor repetido
-	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Autor> salvarAutor(@RequestBody AutorRequest autorRequest) throws IOException {
+	@Operation(description="Registrar um novo Autor",
+	security = {@SecurityRequirement(name = "JWT")})
+	@ApiResponses( value= {
+		@ApiResponse( responseCode = "500",description = "Nome repetido"),
+		@ApiResponse( responseCode = "401",description = "Não autorizado"),
+		@ApiResponse( responseCode = "200",description = "Retorna o Autor salvo")
+	})
+	public ResponseEntity<Autor> salvarAutor(@RequestBody AutorRequest autorRequest) {
 		if (autorService.existe(autorRequest)) {
 			throw new RuntimeException("Nome Repetido");
 		}
 		return new ResponseEntity<>(autorService.salvar(autorRequest), HttpStatus.OK);
 	}
 
-	/**
-	 * Método deletar autor por ID
-	 * 
-	 * @param id
-	 * @return
-	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@Operation(description="Deletar Autor por ID",security = {@SecurityRequirement(name = "JWT")})
+	@ApiResponses( value= {
+		@ApiResponse( responseCode = "404",description = "Nenhum conteúdo encontrado"),
+		@ApiResponse( responseCode = "200",description = "Autor deletado")
+	})
 	public ResponseEntity<Autor> deletarAutorPorId(@PathVariable("id") Long id) {
 		Optional<Autor> autor = autorService.buscarPorId(id);
 		if (autor == null) {
@@ -94,13 +99,12 @@ public class AutorController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	/**
-	 * Método editar um autor
-	 * 
-	 * @param autor
-	 * @return usuario alterado
-	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	@Operation(description="Atualizar o Autor pelo ID",security = {@SecurityRequirement(name = "JWT")})
+	@ApiResponses( value= {
+		@ApiResponse( responseCode = "404",description = "Nenhum conteúdo encontrado"),
+		@ApiResponse( responseCode = "200",description = "Retorna o Autor Atualizado")
+	})
 	public ResponseEntity<Autor> atualizarAutor(@PathVariable("id") Long id, @RequestBody AutorRequest autorRequest) throws IOException {
 		Optional<Autor> autorExiste = autorService.buscarPorId(id);
 		if (autorExiste == null) {
@@ -109,15 +113,16 @@ public class AutorController {
 		return new ResponseEntity<>(autorService.atualizar(id,autorRequest), HttpStatus.OK);
 	}
 
-	/**
-	 * Método buscar autor por LETRA
-	 * 
-	 * @param letra
-	 * @param page
-	 * @return paginação de autor
-	 */
 	@RequestMapping(value = "/letra/{letra}", method = RequestMethod.GET)
-	public ResponseEntity<Page<Autor>> buscarAutorPorLetra(@PathVariable("letra") String letra, Pageable pageable) {
+	@PageableAsQueryParam
+	@Operation(description="Buscar Autor por letra")
+	@ApiResponses( value= {
+		@ApiResponse( responseCode = "404",description = "Nenhum conteúdo encontrado"),
+		@ApiResponse( responseCode = "200",description = "Retorna as paginas dos Autores por letra")
+	})
+	public ResponseEntity<Page<Autor>> buscarAutorPorLetra(
+		@PathVariable("letra") String letra,
+		@Parameter(hidden = true) Pageable pageable) {
 		Page<Autor> autor = autorService.buscaPorLetra(letra, pageable);
 		if (autor.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -125,12 +130,12 @@ public class AutorController {
 		return new ResponseEntity<>(autor, HttpStatus.OK);
 	}
 
-	/**
-	 * Método lista o ID e Nome dos autores
-	 * 
-	 * @return lista de autor
-	 */
 	@RequestMapping(value = "/lista", method = RequestMethod.GET)
+	@Operation(description="Lista o ID e o nome de todos os Autores")
+	@ApiResponses( value= {
+		@ApiResponse( responseCode = "204",description = "Nenhum conteúdo encontrado"),
+		@ApiResponse( responseCode = "200",description = "Autor deletado")
+	})
 	public ResponseEntity<List<Autor>> listaDeNomesTodosAutores() {
 		List<Autor> autor = autorService.listarTodos();
 		if (autor.isEmpty()) {

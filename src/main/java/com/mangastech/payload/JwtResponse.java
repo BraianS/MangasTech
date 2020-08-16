@@ -1,13 +1,20 @@
 package com.mangastech.payload;
 
 import java.util.Collection;
+
 import org.springframework.security.core.GrantedAuthority;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class JwtResponse {
 
+	@Schema(description = "Token de acesso")
     private String accessToken;
+	@Schema(description = "Tipo do Token")
     private String tokenType = "Bearer";
+	@Schema(description = "Username do Usuário")
     private String username;
+	@Schema(description = "Cargos do Usuário")
     private Collection<? extends GrantedAuthority> authorities;
 
     public JwtResponse(String accessToken,String username, Collection<? extends GrantedAuthority> authorities) {

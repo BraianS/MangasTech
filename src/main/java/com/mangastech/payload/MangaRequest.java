@@ -5,13 +5,23 @@ import java.util.Set;
 
 import com.mangastech.model.Status;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema
 public class MangaRequest extends NomeRequest {
+
     private byte[] capa;
     private String nome;
+
+    @Schema(description="Status do Manga",example = "COMPLETO")
     private Status status;
+    @Schema(description="Ano de lançamento do Manga",example = "1990")
     private Integer lancamento;
+    @Schema(description = "ID do Autor")
     private IdRequest autor;
-    private Set<IdRequest> generos = new HashSet<IdRequest>() ;    
+    @Schema(description = "Lista de ID dos gêneros")
+    private Set<IdRequest> generos = new HashSet<IdRequest>();
+    @Schema(description="Descrição do Manga")
     private String descricao;
 
     public MangaRequest() {

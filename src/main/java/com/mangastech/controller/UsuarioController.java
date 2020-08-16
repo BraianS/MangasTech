@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 /**
  * @author Braian
  *
@@ -30,13 +34,12 @@ public class UsuarioController {
 	@Autowired
 	public UsuarioService usuarioService;
 
-	/**
-	 * Método busca lista de usuarios
-	 * 
-	 * @param usuario
-	 * @return lista usuarios
-	 */
 	@RequestMapping(method = RequestMethod.GET)
+	@Operation(description="Busca usuário pelo ID")
+	@ApiResponses( value= {
+        @ApiResponse( responseCode = "204",description = "Nenhuma usuário encontrado"),
+		@ApiResponse( responseCode = "200",description = "Retorna lista de usuários")
+	})
 	public ResponseEntity<List<Usuario>> listarTodos() {
 		List<Usuario> usuario = usuarioService.listarTodos();
 		if (usuario.isEmpty()) {
@@ -45,14 +48,12 @@ public class UsuarioController {
 		return new ResponseEntity<>(usuario, HttpStatus.OK);
 	}
 
-	/**
-	 * Método deletar um usuario por ID
-	 * 
-	 * @param id
-	 * @return
-	 * @throws usuario não encontrado / Não pode deletar sua conta
-	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@Operation(description="Deletar o usuário pelo ID",security = {@SecurityRequirement(name = "JWT")})
+	@ApiResponses( value= {
+        @ApiResponse( responseCode = "204",description = "Nenhuma usuário encontrado"),
+		@ApiResponse( responseCode = "200",description = "Usuário deletado")
+	})
 	public ResponseEntity<Usuario> deletarUsuario(@PathVariable(value = "id") Long id) throws IOException {
 		Optional<Usuario> usuario = usuarioService.buscarPorId(id);
 		if (usuario == null) {
@@ -62,14 +63,12 @@ public class UsuarioController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	/**
-	 * Método atualizar usuario
-	 * 
-	 * @param usuario
-	 * @return usuario atualizado
-	 * @throws usuario repetido
-	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT)
+	@Operation(description="Atualiza o usuário pelo seu ID",security = {@SecurityRequirement(name = "JWT")})
+	@ApiResponses( value= {
+        @ApiResponse( responseCode = "404",description = "Nenhum usuário encontrado"),
+		@ApiResponse( responseCode = "200",description = "Retorna usuário atualizado")
+	})
 	public ResponseEntity<Usuario> alterarUsuario(@PathVariable("id") Long id,@RequestBody  Usuario usuario) throws IOException {
 		Optional<Usuario> usuarioExiste = usuarioService.buscarPorId(id);
 		if (usuarioExiste == null) {
@@ -78,14 +77,14 @@ public class UsuarioController {
 		return new ResponseEntity<>(usuarioService.atualizar(id,usuario), HttpStatus.OK);
 	}
 
-	/**
-	 * Método salvar usuario
-	 * 
-	 * @param signUpRequest
-	 * @return
-	 * @throws usuario repetido / email repetido / role vazio
-	 */
 	@RequestMapping(method = RequestMethod.POST)
+	@Operation(description="Salva um novo usuário",security = {@SecurityRequirement(name = "JWT")})
+	@ApiResponses( value= {
+		@ApiResponse( responseCode = "500",description = "Exception nome do usuário repetido"),
+		@ApiResponse( responseCode = "500",description = "Exception email do usuário repetido"),
+		@ApiResponse( responseCode = "500",description = "Role(Cargo) do usuário"),
+		@ApiResponse( responseCode = "200",description = "Retorna o usuário salvo")
+	})
 	public ResponseEntity<Usuario> cadastrarUsuario(@Valid @RequestBody SignUpRequest signUpRequest) throws IOException {
 		if (usuarioService.existsByUsername(signUpRequest.getUsername())) {
 			throw new RuntimeException("Usuário repetido");

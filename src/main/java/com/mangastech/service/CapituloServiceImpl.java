@@ -2,13 +2,18 @@ package com.mangastech.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import javax.management.RuntimeErrorException;
+
 import com.mangastech.model.Capitulos;
 import com.mangastech.model.Mangas;
 import com.mangastech.model.Paginas;
+import com.mangastech.payload.CapituloRequest;
 import com.mangastech.repository.CapitulosRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mangastech.repository.GruposRepository;
+import com.mangastech.repository.MangasRepository;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,37 +25,61 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class CapituloServiceImpl implements CapituloService {
 
-    @Autowired
-    private CapitulosRepository capitulosRepository;
+	private final GruposRepository grupoRepository;
+	private final MangasRepository mangaRepository;
+	private final CapitulosRepository capitulosRepository;
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @Override
-    public Capitulos salvar(Capitulos capitulo, List<MultipartFile> paginas) throws IOException {
-        List<Paginas> ListPaginas = new ArrayList<Paginas>();
-        int count = 1;
-        final long limit = 2 * 1024 * 1024;
+	public CapituloServiceImpl(
+			GruposRepository gruposRepository,
+			MangasRepository mangaRepository,
+			CapitulosRepository capitulosRepository) {
+		this.grupoRepository = gruposRepository;
+		this.mangaRepository = mangaRepository;
+		this.capitulosRepository = capitulosRepository;
+	}
 
-        if (!paginas.isEmpty()) {
-            for (MultipartFile file : paginas) {
-                if (file.getSize() < limit) {
-                    Paginas pagina = new Paginas();
-                    pagina.setCapitulo(capitulo);
-                    pagina.setPagina(file.getBytes());
-                    pagina.setNumeroPagina(count);
-                    ListPaginas.add(pagina);
-                    count++;
-                } else {
-                    System.out.println("Arquivo muito grande: " + file.getOriginalFilename());
-                }
-            }
-        }
-        capitulo.setPagina(ListPaginas);
-        capitulo.setLancamento(new Date());
-        return capitulosRepository.save(capitulo);
-    }
+	@PreAuthorize("hasRole('ADMIN')")
+	@Override
+	public Capitulos salvar(CapituloRequest capituloRequest, List<MultipartFile> paginas) throws IOException {
+		List<Paginas> novasPaginas = new ArrayList<>();
+		int count = 1;
+		final long DOISMB = 2 * 1024 * 1024;
 
-    @Override
-    public List<Capitulos> buscarPorId(Mangas id) {
-        return capitulosRepository.findAllCapitulosByManga(id);
-    }
+		Capitulos novoCapitulo = new Capitulos();
+
+		this.grupoRepository.findById(capituloRequest.getGrupo().getId())
+				.ifPresentOrElse(grupo -> novoCapitulo.setGrupo(grupo), () -> {
+					throw new RuntimeException("Grupo não encontrado com o ID: " + capituloRequest.getGrupo().getId());
+				});
+
+		this.mangaRepository.findById(capituloRequest.getManga().getId())
+				.ifPresentOrElse(manga -> novoCapitulo.setManga(manga), () -> {
+					throw new RuntimeException("Manga não encontrado com o ID: " + capituloRequest.getManga().getId());
+				});
+
+		if (!paginas.isEmpty()) {
+			for (MultipartFile file : paginas) {
+				if (file.getSize() < DOISMB) {
+					Paginas novaPagina = new Paginas();
+
+					novaPagina.setCapitulo(novoCapitulo);
+					novaPagina.setPagina(file.getBytes());
+					novaPagina.setNumeroPagina(count);
+					novasPaginas.add(novaPagina);
+					count++;
+				} else {
+					System.out.println("Arquivo muito grande: " + file.getOriginalFilename());
+				}
+			}
+		}
+		novoCapitulo.setPagina(novasPaginas);
+		novoCapitulo.setLancamento(capituloRequest.getLancamento());
+		novoCapitulo.setCapitulo(capituloRequest.getCapitulo());
+		return capitulosRepository.save(novoCapitulo);
+	}
+
+	@Override
+	public List<Capitulos> buscarCapitulosPorMandaId(Long mangaId) {
+		return capitulosRepository.findAllCapitulosByManga(mangaId);
+	}
 }

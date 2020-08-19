@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.mangastech.model.Capitulos;
 import com.mangastech.model.Mangas;
+import com.mangastech.payload.CapituloRequest;
 import com.mangastech.service.CapituloService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,8 +33,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 @RequestMapping(value = "/api/capitulo")
 public class CapitulosController {
 
-	@Autowired
-	private CapituloService capituloService;
+	private final CapituloService capituloService;
+
+	public CapitulosController(CapituloService capituloService){
+		this.capituloService = capituloService;
+	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@Operation(description="Busca capítulos pelo ID do manga")
@@ -43,12 +46,12 @@ public class CapitulosController {
 		@ApiResponse( responseCode = "200",description = "Retorna lista capítulos")
 	})
 	public @ResponseBody ResponseEntity<List<Capitulos>> listarCapitulosPorManga(
-			@PathVariable(value = "id") Mangas id) {
-		List<Capitulos> capitulo = capituloService.buscarPorId(id);
-		if (capitulo.isEmpty()) {
+			@PathVariable(value = "id") Long mangaId) {
+		List<Capitulos> capitulos = capituloService.buscarCapitulosPorMandaId(mangaId);
+		if (capitulos.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(capituloService.buscarPorId(id), HttpStatus.OK);
+		return new ResponseEntity<>(capitulos, HttpStatus.OK);
 	}
 
 	@ResponseBody
@@ -59,14 +62,14 @@ public class CapitulosController {
 		@ApiResponse( responseCode = "200",description = "Retorna o capítulo salvo")
 	})
 	public ResponseEntity<Capitulos> salvarCapitulo(
-			@RequestPart(value = "capitulo") @Parameter(schema =@Schema(type = "string",format = "binary")) Capitulos capitulo,
+			@RequestPart(value = "capitulo") @Parameter(schema =@Schema(type = "string",format = "binary")) CapituloRequest capituloRequest,
 			@RequestPart("paginas") List<MultipartFile> paginas) throws IOException {
-		if (capitulo == null) {
+		if (capituloRequest == null) {
 			throw new IOException("Capitulo vazio");
 		}
 		if (paginas.isEmpty()) {
 			throw new IOException("Paginas vazias");
 		}
-		return new ResponseEntity<>(capituloService.salvar(capitulo, paginas), HttpStatus.OK);
+		return new ResponseEntity<>(capituloService.salvar(capituloRequest, paginas), HttpStatus.OK);
 	}
 }

@@ -4,19 +4,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mangastech.model.Capitulo;
-import com.mangastech.model.Manga;
 import com.mangastech.model.Pagina;
 import com.mangastech.payload.CapituloRequest;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.repository.GruposRepository;
 import com.mangastech.repository.MangasRepository;
-
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Braian

@@ -2,10 +2,6 @@ package com.mangastech.controller;
 
 import java.util.List;
 
-import com.mangastech.model.Capitulo;
-import com.mangastech.model.Pagina;
-import com.mangastech.service.PaginasService;
-
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.mangastech.model.Capitulo;
+import com.mangastech.model.Pagina;
+import com.mangastech.service.PaginasService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

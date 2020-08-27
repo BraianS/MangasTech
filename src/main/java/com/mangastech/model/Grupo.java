@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "Grupos")
-public class Grupos extends DateAudit {
+public class Grupo extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,7 +30,7 @@ public class Grupos extends DateAudit {
 
 	@Schema(description = "Capítulos de cada manga enviado pelo Grupo")
 	@OneToMany(mappedBy = "grupo", orphanRemoval = true)
-	private List<Capitulos> capitulo = new ArrayList<>();
+	private List<Capitulo> capitulo = new ArrayList<>();
 
 	public String getNome() {
 		return nome;
@@ -40,23 +40,23 @@ public class Grupos extends DateAudit {
 		this.nome = nome;
 	}
 
-	public List<Capitulos> getCapitulo() {
+	public List<Capitulo> getCapitulo() {
 		return capitulo;
 	}
 
-	public void setCapitulo(List<Capitulos> capitulo) {
+	public void setCapitulo(List<Capitulo> capitulo) {
 		this.capitulo = capitulo;
 	}
 
-	public Grupos() {
+	public Grupo() {
 	}
 
-	public Grupos(Long id, String nome) {
+	public Grupo(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public Grupos(String nome) {
+	public Grupo(String nome) {
 		this.nome = nome;
 	}
 

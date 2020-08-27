@@ -2,8 +2,8 @@ package com.mangastech.controller;
 
 import java.util.List;
 
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Paginas;
+import com.mangastech.model.Capitulo;
+import com.mangastech.model.Pagina;
 import com.mangastech.service.PaginasService;
 
 import org.springdoc.core.converters.models.PageableAsQueryParam;
@@ -40,10 +40,10 @@ public class PaginasController {
         @ApiResponse( responseCode = "404",description = "Nenhuma Página encontrada"),
 		@ApiResponse( responseCode = "200",description = "Retorna a Página")
 	})
-	public @ResponseBody ResponseEntity<Page<Paginas>> bucarPaginaPorCapitulo(
-		@PathVariable(value = "capituloID") Capitulos capituloID,
+	public @ResponseBody ResponseEntity<Page<Pagina>> bucarPaginaPorCapitulo(
+		@PathVariable(value = "capituloID") Capitulo capituloID,
 		@Parameter(hidden = true) Pageable pageable) {
-		Page<Paginas> paginas = paginaService.buscarPaginaPorCapitulo(capituloID, pageable);
+		Page<Pagina> paginas = paginaService.buscarPaginaPorCapitulo(capituloID, pageable);
 		if (paginas.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -56,8 +56,8 @@ public class PaginasController {
         @ApiResponse( responseCode = "404",description = "Nenhuma Página encontrada"),
 		@ApiResponse( responseCode = "200",description = "Retorna lista de Páginas por capítulo ID")
 	})
-	public ResponseEntity<List<Paginas>> listarPaginasPorCapituloId(@PathVariable("capituloID") Capitulos capituloID) {
-		List<Paginas> paginas = paginaService.listarPaginasPorCapitulo(capituloID);
+	public ResponseEntity<List<Pagina>> listarPaginasPorCapituloId(@PathVariable("capituloID") Capitulo capituloID) {
+		List<Pagina> paginas = paginaService.listarPaginasPorCapitulo(capituloID);
 		if (paginas.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

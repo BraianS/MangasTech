@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.mangastech.model.Mangas;
+import com.mangastech.model.Manga;
 import com.mangastech.repository.BaseRepository;
 
 /**
@@ -20,21 +20,21 @@ import com.mangastech.repository.BaseRepository;
  *
  */
 @Repository
-public interface MangasRepository extends BaseRepository<Mangas>, JpaRepository<Mangas, Long> {
+public interface MangasRepository extends BaseRepository<Manga>, JpaRepository<Manga, Long> {
 
-	Page<Mangas> findByNomeContaining(String nome, Pageable pageable);
+	Page<Manga> findByNomeContaining(String nome, Pageable pageable);
 
-	List<Mangas> findTop10ByOrderByIdDesc();
+	List<Manga> findTop10ByOrderByIdDesc();
 
 	@Query("SELECT m FROM Mangas m LEFT JOIN FETCH m.capitulo AS capitulo WHERE m.id=:id ORDER BY capitulo.id DESC")
-	Optional<Mangas> findById(@Param("id") Long id);
+	Optional<Manga> findById(@Param("id") Long id);
 
 	@Query("SELECT DISTINCT m FROM Mangas m JOIN FETCH m.capitulo c WHERE c.lancamento = :data GROUP BY c.id ORDER BY c.id DESC")
-	List<Mangas> findDistinctMangasByCapituloData(@Param("data") Date data);
+	List<Manga> findDistinctMangasByCapituloData(@Param("data") Date data);
 
 	@Modifying
 	@Query("UPDATE Mangas set acessos = acessos +1 WHERE id=:id")
 	Integer incrementaAcessos(@Param("id")Long id);
 
-	List<Mangas> findTop10ByOrderByAcessosDesc();
+	List<Manga> findTop10ByOrderByAcessosDesc();
 }

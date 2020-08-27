@@ -1,8 +1,8 @@
 package com.mangastech.service;
 
 import java.util.List;
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Paginas;
+import com.mangastech.model.Capitulo;
+import com.mangastech.model.Pagina;
 import com.mangastech.repository.PaginasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,12 +17,12 @@ public class PaginasServiceImpl implements PaginasService {
     private PaginasRepository paginaRepository;
 
     @Override
-    public Page<Paginas> buscarPaginaPorCapitulo(Capitulos id, Pageable pageable) {
+    public Page<Pagina> buscarPaginaPorCapitulo(Capitulo id, Pageable pageable) {
         return paginaRepository.findPaginasByCapitulo(id, PageRequest.of(pageable.getPageNumber(), 1));
     }
 
     @Override
-    public List<Paginas> listarPaginasPorCapitulo(Capitulos id) {
+    public List<Pagina> listarPaginasPorCapitulo(Capitulo id) {
         return paginaRepository.findNumeroPaginasByCapitulo(id);
     }
 }

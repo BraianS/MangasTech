@@ -3,7 +3,7 @@ package com.mangastech.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.mangastech.model.Grupos;
+import com.mangastech.model.Grupo;
 import com.mangastech.payload.NomeRequest;
 import com.mangastech.repository.GruposRepository;
 
@@ -23,16 +23,16 @@ public class GrupoServiceImpl implements GrupoService {
     @Autowired
     private GruposRepository grupoRepository;
 
-    public Page<Grupos> listaPaginada(Pageable pageable) {
+    public Page<Grupo> listaPaginada(Pageable pageable) {
         return grupoRepository.pageAllIdAndNome(pageable);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Grupos salvar(NomeRequest nomeRequest) {
+    public Grupo salvar(NomeRequest nomeRequest) {
         if (buscarPorNome(nomeRequest.getNome()) != null) {
             throw new RuntimeException("Nome repetido");
         }
-        return grupoRepository.save(new Grupos(nomeRequest.getNome()));
+        return grupoRepository.save(new Grupo(nomeRequest.getNome()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -41,8 +41,8 @@ public class GrupoServiceImpl implements GrupoService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Grupos atualizar(Long id, NomeRequest nomeRequest) {
-       Grupos grupo = this.grupoRepository.findById(id).orElseThrow(() -> new RuntimeException("Grupo ID:" + id + " não encontrado"));
+    public Grupo atualizar(Long id, NomeRequest nomeRequest) {
+       Grupo grupo = this.grupoRepository.findById(id).orElseThrow(() -> new RuntimeException("Grupo ID:" + id + " não encontrado"));
         if (buscarPorNome(nomeRequest.getNome()) != null && buscarPorNome(grupo.getNome()).getId() != grupo.getId()) {
             throw new RuntimeException("Nome repetido");
         }       
@@ -50,30 +50,30 @@ public class GrupoServiceImpl implements GrupoService {
         return grupoRepository.save(grupo);
     }
 
-    public Page<Grupos> buscarPorId(Long id, Pageable pageable) {
-        Page<Grupos> grupos = grupoRepository.findDistinctMangasByAutor(id, pageable);
+    public Page<Grupo> buscarPorId(Long id, Pageable pageable) {
+        Page<Grupo> grupos = grupoRepository.findDistinctMangasByAutor(id, pageable);
         if (!grupos.getContent().isEmpty()) {
             return grupos;
         }
         return null;
     }
 
-    public List<Grupos> listarTodos() {
+    public List<Grupo> listarTodos() {
         return grupoRepository.findAllIdAndNome();
     }
 
-    public Page<Grupos> buscaPorLetra(String letra, Pageable pageable) {
+    public Page<Grupo> buscaPorLetra(String letra, Pageable pageable) {
         return grupoRepository.findByNomeStartingWith(letra, pageable);
     }
 
-    public Grupos buscarPorNome(String nome) {
+    public Grupo buscarPorNome(String nome) {
         if (nome != null) {
             return grupoRepository.findOneByNome(nome);
         }
         return null;
     }
 
-    public Optional<Grupos> buscarPorId(Long id) {
+    public Optional<Grupo> buscarPorId(Long id) {
         return grupoRepository.findById(id);
     }
 

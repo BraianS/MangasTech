@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "Mangas")
-public class Mangas extends DateAudit {
+public class Manga extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,7 +47,7 @@ public class Mangas extends DateAudit {
 	@Schema(description = "Status do Manga(Completo,Lançado,Pausado)")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", length = 50)
-	private Status status;
+	private Statu status;
 
 	@Schema(description = "Ano de lançamento")
 	@Column(name = "lancamento")
@@ -59,7 +59,7 @@ public class Mangas extends DateAudit {
 
 	@Schema(description = "Capítulos do Manga")
 	@OneToMany(mappedBy = "manga", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Capitulos> capitulo;
+	private List<Capitulo> capitulo;
 
 	@Schema(description = "Autor que criou o Manga")
 	@ManyToOne
@@ -73,7 +73,7 @@ public class Mangas extends DateAudit {
 	@Schema(description = "Generos do Manga")
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(joinColumns = @JoinColumn(name = "manga_id"), inverseJoinColumns = @JoinColumn(name = "genero_id"))
-	private Set<Generos> genero = new HashSet<>();
+	private Set<Genero> genero = new HashSet<>();
 
 	public Long getAcessos() {
 		return this.acessos;
@@ -91,11 +91,11 @@ public class Mangas extends DateAudit {
 		this.nome = nome;
 	}
 
-	public Status getStatus() {
+	public Statu getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(Statu status) {
 		this.status = status;
 	}
 
@@ -115,11 +115,11 @@ public class Mangas extends DateAudit {
 		this.descricao = descricao;
 	}
 
-	public List<Capitulos> getCapitulo() {
+	public List<Capitulo> getCapitulo() {
 		return capitulo;
 	}
 
-	public void setcapitulo(List<Capitulos> capitulo) {
+	public void setcapitulo(List<Capitulo> capitulo) {
 		this.capitulo = capitulo;
 	}
 
@@ -133,15 +133,15 @@ public class Mangas extends DateAudit {
 	}
 
 	@JsonIgnoreProperties("manga")
-	public Set<Generos> getGenero() {
+	public Set<Genero> getGenero() {
 		return genero;
 	}
 
-	public void setGenero(Set<Generos> genero) {
+	public void setGenero(Set<Genero> genero) {
 		this.genero = genero;
 	}
 
-	public Mangas(Long id) {
+	public Manga(Long id) {
 		this.id = id;
 	}
 
@@ -153,20 +153,20 @@ public class Mangas extends DateAudit {
 		this.capa = capa;
 	}
 
-	public boolean removerCapitulo(Capitulos c){
+	public boolean removerCapitulo(Capitulo c){
 		c.setManga(null);
 		return capitulo.remove(c);
 	}
 
-	public Mangas() {
+	public Manga() {
 	}
 
-	public Mangas(Long id, String nome) {
+	public Manga(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public Mangas(String nome, Status status, Integer lancamento, Autor autor) {
+	public Manga(String nome, Statu status, Integer lancamento, Autor autor) {
 		super();
 		this.nome = nome;
 		this.status = status;

@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Mangas;
-import com.mangastech.model.Paginas;
+import com.mangastech.model.Capitulo;
+import com.mangastech.model.Manga;
+import com.mangastech.model.Pagina;
 import com.mangastech.payload.CapituloRequest;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.repository.GruposRepository;
@@ -40,12 +40,12 @@ public class CapituloServiceImpl implements CapituloService {
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@Override
-	public Capitulos salvar(CapituloRequest capituloRequest, List<MultipartFile> paginas) throws IOException {
-		List<Paginas> novasPaginas = new ArrayList<>();
+	public Capitulo salvar(CapituloRequest capituloRequest, List<MultipartFile> paginas) throws IOException {
+		List<Pagina> novasPaginas = new ArrayList<>();
 		int count = 1;
 		final long DOISMB = 2 * 1024 * 1024;
 
-		Capitulos novoCapitulo = new Capitulos();
+		Capitulo novoCapitulo = new Capitulo();
 
 		this.grupoRepository.findById(capituloRequest.getGrupo().getId())
 				.ifPresentOrElse(grupo -> novoCapitulo.setGrupo(grupo), () -> {
@@ -60,7 +60,7 @@ public class CapituloServiceImpl implements CapituloService {
 		if (!paginas.isEmpty()) {
 			for (MultipartFile file : paginas) {
 				if (file.getSize() < DOISMB) {
-					Paginas novaPagina = new Paginas();
+					Pagina novaPagina = new Pagina();
 
 					novaPagina.setCapitulo(novoCapitulo);
 					novaPagina.setPagina(file.getBytes());
@@ -79,7 +79,7 @@ public class CapituloServiceImpl implements CapituloService {
 	}
 
 	@Override
-	public List<Capitulos> buscarCapitulosPorMandaId(Long mangaId) {
+	public List<Capitulo> buscarCapitulosPorMandaId(Long mangaId) {
 		return capitulosRepository.findAllCapitulosByManga(mangaId);
 	}
 }

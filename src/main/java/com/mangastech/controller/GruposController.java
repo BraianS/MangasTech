@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import com.mangastech.model.Grupos;
+import com.mangastech.model.Grupo;
 import com.mangastech.payload.NomeRequest;
 import com.mangastech.service.GrupoService;
 
@@ -43,8 +43,8 @@ public class GruposController {
         @ApiResponse( responseCode = "204",description = "Nenhum grupo encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna paginação de grupos")
 	})
-	public ResponseEntity<Page<Grupos>> listarGrupos(@Parameter(hidden = true) Pageable pageable) {
-		Page<Grupos> grupos = grupoService.listaPaginada(pageable);
+	public ResponseEntity<Page<Grupo>> listarGrupos(@Parameter(hidden = true) Pageable pageable) {
+		Page<Grupo> grupos = grupoService.listaPaginada(pageable);
 		if (grupos.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -58,10 +58,10 @@ public class GruposController {
         @ApiResponse( responseCode = "204",description = "Nenhum grupo encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna paginação de mangas")
 	})
-	public ResponseEntity<Page<Grupos>> buscarGrupoPorId(
+	public ResponseEntity<Page<Grupo>> buscarGrupoPorId(
 		@PathVariable(value = "id") Long id,
 		@Parameter(hidden = true) Pageable pageable) {
-		Page<Grupos> grupos = grupoService.buscarPorId(id, pageable);
+		Page<Grupo> grupos = grupoService.buscarPorId(id, pageable);
 		if (grupos.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -74,7 +74,7 @@ public class GruposController {
         @ApiResponse( responseCode = "500",description = "Exception nome repetido"),
 		@ApiResponse( responseCode = "200",description = "Retorna grupo salvo")
 	})
-	public ResponseEntity<Grupos> salvarGrupo(@RequestBody NomeRequest nomeRequest) throws IOException {
+	public ResponseEntity<Grupo> salvarGrupo(@RequestBody NomeRequest nomeRequest) throws IOException {
 		if (grupoService.existe(nomeRequest)) {
 			throw new RuntimeException("Nome repetido");
 		}
@@ -87,8 +87,8 @@ public class GruposController {
         @ApiResponse( responseCode = "404",description = "Nenhum grupo encontrado"),
 		@ApiResponse( responseCode = "200",description = "O grupo foi deletado")
 	})
-	public ResponseEntity<Grupos> deletarGrupoPorId(@PathVariable(value = "id") Long id) {
-		Optional<Grupos> grupo = grupoService.buscarPorId(id);
+	public ResponseEntity<Grupo> deletarGrupoPorId(@PathVariable(value = "id") Long id) {
+		Optional<Grupo> grupo = grupoService.buscarPorId(id);
 		if (grupo == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -102,8 +102,8 @@ public class GruposController {
         @ApiResponse( responseCode = "404",description = "Nenhum grupo encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna grupo atualizado")
 	})
-	public ResponseEntity<Grupos> atualizarGrupo(@PathVariable("id") Long id,@RequestBody NomeRequest nomeRequest) {
-		Optional<Grupos> grupoExiste = grupoService.buscarPorId(id);
+	public ResponseEntity<Grupo> atualizarGrupo(@PathVariable("id") Long id,@RequestBody NomeRequest nomeRequest) {
+		Optional<Grupo> grupoExiste = grupoService.buscarPorId(id);
 		if (grupoExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -116,8 +116,8 @@ public class GruposController {
         @ApiResponse( responseCode = "204",description = "Nenhum grupo encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna lista de grupos")
 	})
-	public ResponseEntity<List<Grupos>> listaDeNomesTodosGrupos() {
-		List<Grupos> grupo = grupoService.listarTodos();
+	public ResponseEntity<List<Grupo>> listaDeNomesTodosGrupos() {
+		List<Grupo> grupo = grupoService.listarTodos();
 		if (grupo.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -131,10 +131,10 @@ public class GruposController {
         @ApiResponse( responseCode = "404",description = "Nenhum grupo encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna paginação de grupos")
 	})
-	public ResponseEntity<Page<Grupos>> buscarGrupoPorLetra(
+	public ResponseEntity<Page<Grupo>> buscarGrupoPorLetra(
 		@PathVariable("letra") String letra,
 		@Parameter(hidden = true) Pageable pageable) {
-		Page<Grupos> grupos = grupoService.buscaPorLetra(letra, pageable);
+		Page<Grupo> grupos = grupoService.buscaPorLetra(letra, pageable);
 		if (grupos.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

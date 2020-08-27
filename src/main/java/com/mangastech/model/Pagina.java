@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "paginas")
-public class Paginas {
+public class Pagina {
 
 	@Schema(description = "O banco de dados cria o ID")
 	@Id
@@ -41,7 +41,7 @@ public class Paginas {
 	@Schema(description = "Capítulo onde será salvo a pagina")
 	@ManyToOne
 	@JoinColumn(name = "capitulo_id")
-	private Capitulos capitulo;
+	private Capitulo capitulo;
 
 	public byte[] getPagina() {
 		return pagina;
@@ -59,18 +59,18 @@ public class Paginas {
 		this.numeroPagina = string;
 	}
 
-	public Capitulos getCapitulo() {
+	public Capitulo getCapitulo() {
 		return capitulo;
 	}
 
-	public void setCapitulo(Capitulos capitulo) {
+	public void setCapitulo(Capitulo capitulo) {
 		this.capitulo = capitulo;
 	}
 
-	public Paginas() {
+	public Pagina() {
 	}
 
-	public Paginas(Long id, int numeroPagina) {
+	public Pagina(Long id, int numeroPagina) {
 		this.id = id;
 		this.numeroPagina = numeroPagina;
 	}

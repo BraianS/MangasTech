@@ -5,19 +5,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Mangas;
+import com.mangastech.model.Capitulo;
+import com.mangastech.model.Manga;
 
 /**
  * @author Braian
  *
  */
 @Repository
-public interface CapitulosRepository extends JpaRepository<Capitulos, Long> {
+public interface CapitulosRepository extends JpaRepository<Capitulo, Long> {
 
 	@Query("SELECT c FROM Capitulos as c where c.manga.id =:id ORDER BY c.id ASC")
-	List<Capitulos> findAllCapitulosByManga(@Param("id") Long mangaId);
+	List<Capitulo> findAllCapitulosByManga(@Param("id") Long mangaId);
 
 	@Query("SELECT c FROM Capitulos as c WHERE manga_id =:manga AND id=:capitulo")
-	Capitulos findOne(@Param("manga")Long mangaId, @Param("capitulo") Long capituloId);
+	Capitulo findOne(@Param("manga")Long mangaId, @Param("capitulo") Long capituloId);
 }

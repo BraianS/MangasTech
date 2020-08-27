@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import com.mangastech.model.Generos;
+import com.mangastech.model.Genero;
 import com.mangastech.payload.NomeRequest;
 import com.mangastech.service.GeneroService;
 
@@ -43,8 +43,8 @@ public class GeneroController {
         @ApiResponse( responseCode = "204",description = "Nenhum gênero encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna a paginação de gêneros com lista de mangas")
 	})
-	public ResponseEntity<Page<Generos>> listarGeneros(@Parameter(hidden = true) Pageable pageable) {
-		Page<Generos> generos = generoService.listaPaginada(pageable);
+	public ResponseEntity<Page<Genero>> listarGeneros(@Parameter(hidden = true) Pageable pageable) {
+		Page<Genero> generos = generoService.listaPaginada(pageable);
 		if (generos.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -58,10 +58,10 @@ public class GeneroController {
         @ApiResponse( responseCode = "404",description = "Nenhum gênero encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna paginação de mangas")
 	})
-	public ResponseEntity<Page<Generos>> buscarGeneroPorId(
+	public ResponseEntity<Page<Genero>> buscarGeneroPorId(
 		@PathVariable(value = "id") Long id,
 		@Parameter(hidden = true) Pageable pageable) {
-		Page<Generos> generoAtual = generoService.buscarPorId(id, pageable);
+		Page<Genero> generoAtual = generoService.buscarPorId(id, pageable);
 		if (generoAtual.getContent().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -74,7 +74,7 @@ public class GeneroController {
         @ApiResponse( responseCode = "500",description = "Exception Nome repetido"),
 		@ApiResponse( responseCode = "200",description = "Retorna gênero salvo")
 	})
-	public ResponseEntity<Generos> salvarGenero(@RequestBody NomeRequest nomeRequest) throws IOException {
+	public ResponseEntity<Genero> salvarGenero(@RequestBody NomeRequest nomeRequest) throws IOException {
 		if (generoService.existe(nomeRequest)) {
 			throw new RuntimeException("Nome repetido");
 		}
@@ -87,8 +87,8 @@ public class GeneroController {
         @ApiResponse( responseCode = "404",description = "Nenhum gênero encontrado"),
 		@ApiResponse( responseCode = "200",description = "Gênero deletado")
 	})
-	public ResponseEntity<Generos> deletarGeneroPorId(@PathVariable(value = "id") Long id) {
-		Optional<Generos> genero = generoService.buscarPorId(id);
+	public ResponseEntity<Genero> deletarGeneroPorId(@PathVariable(value = "id") Long id) {
+		Optional<Genero> genero = generoService.buscarPorId(id);
 		if (genero == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -102,8 +102,8 @@ public class GeneroController {
         @ApiResponse( responseCode = "404",description = "Nenhum gênero encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna gênero atualizado")
 	})
-	public ResponseEntity<Generos> atualizarGenero(@PathVariable("id") Long id,@RequestBody  NomeRequest nomeRequest) {
-		Optional<Generos> generoExiste = generoService.buscarPorId(id);
+	public ResponseEntity<Genero> atualizarGenero(@PathVariable("id") Long id,@RequestBody  NomeRequest nomeRequest) {
+		Optional<Genero> generoExiste = generoService.buscarPorId(id);
 		if (generoExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -116,8 +116,8 @@ public class GeneroController {
         @ApiResponse( responseCode = "204",description = "Nenhum gênero encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna uma lista de nomes de gêneros")
 	})
-	public ResponseEntity<List<Generos>> listaDeNomesTodosGeneros() {
-		List<Generos> genero = generoService.listarTodos();
+	public ResponseEntity<List<Genero>> listaDeNomesTodosGeneros() {
+		List<Genero> genero = generoService.listarTodos();
 		if (genero.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}

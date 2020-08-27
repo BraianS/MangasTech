@@ -7,19 +7,19 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Paginas;
+import com.mangastech.model.Capitulo;
+import com.mangastech.model.Pagina;
 
 /**
  * @author Braian
  *
  */
 @Repository
-public interface PaginasRepository extends CrudRepository<Paginas, Long> {
+public interface PaginasRepository extends CrudRepository<Pagina, Long> {
 
 	@Query("SELECT p FROM Paginas as p WHERE p.capitulo =:id ORDER BY numeroPagina ASC")
-	Page<Paginas> findPaginasByCapitulo(@Param("id") Capitulos id, Pageable pageable);
+	Page<Pagina> findPaginasByCapitulo(@Param("id") Capitulo id, Pageable pageable);
 
 	@Query("Select new Paginas(p.id,p.numeroPagina) FROM Paginas p WHERE p.capitulo =:id ORDER BY p.numeroPagina ASC")
-	List<Paginas> findNumeroPaginasByCapitulo(@Param("id") Capitulos id);
+	List<Pagina> findNumeroPaginasByCapitulo(@Param("id") Capitulo id);
 }

@@ -3,7 +3,7 @@ package com.mangastech.payload;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.mangastech.model.Status;
+import com.mangastech.model.Statu;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -14,7 +14,7 @@ public class MangaRequest extends NomeRequest {
     private String nome;
 
     @Schema(description="Status do Manga",example = "COMPLETO")
-    private Status status;
+    private Statu status;
     @Schema(description="Ano de lançamento do Manga",example = "1990")
     private Integer lancamento;
     @Schema(description = "ID do Autor")
@@ -27,7 +27,7 @@ public class MangaRequest extends NomeRequest {
     public MangaRequest() {
     }
 
-    public MangaRequest(byte[] capa, String nome, Status status, Integer lancamento, IdRequest autor, Set<IdRequest> generos, String descricao) {
+    public MangaRequest(byte[] capa, String nome, Statu status, Integer lancamento, IdRequest autor, Set<IdRequest> generos, String descricao) {
         this.capa = capa;
         this.nome = nome;
         this.status = status;
@@ -53,11 +53,11 @@ public class MangaRequest extends NomeRequest {
         this.nome = nome;
     }
 
-    public Status getStatus() {
+    public Statu getStatus() {
         return this.status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(Statu status) {
         this.status = status;
     }
 

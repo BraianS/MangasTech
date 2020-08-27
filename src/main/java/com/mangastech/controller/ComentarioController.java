@@ -2,7 +2,7 @@ package com.mangastech.controller;
 
 import java.util.List;
 
-import com.mangastech.model.Capitulos;
+import com.mangastech.model.Capitulo;
 import com.mangastech.model.Comentario;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.service.ComentarioService;
@@ -44,7 +44,7 @@ public class ComentarioController {
 	})
     public ResponseEntity<Comentario> salvarComentario(@PathVariable("capituloId") Long id,
             @RequestBody Comentario comentario) {
-        Capitulos capitulo = capitulosRepository.findById(id)
+        Capitulo capitulo = capitulosRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Capitulo não encontrado"));
         return new ResponseEntity<>(comentarioService.salvarComentario(capitulo, comentario), HttpStatus.OK);
     }

@@ -2,7 +2,7 @@ package com.mangastech.service;
 
 import java.util.List;
 import java.util.Optional;
-import com.mangastech.model.Capitulos;
+import com.mangastech.model.Capitulo;
 import com.mangastech.model.Comentario;
 
 /**
@@ -13,7 +13,7 @@ public interface ComentarioService {
 
     Optional<Comentario> buscarPorId(Long id);
 
-    Comentario salvarComentario(Capitulos capitulo, Comentario comentario);
+    Comentario salvarComentario(Capitulo capitulo, Comentario comentario);
 
     Comentario salvarComentarioPai(Comentario comentarioPai, Comentario comentarioAtual);
 

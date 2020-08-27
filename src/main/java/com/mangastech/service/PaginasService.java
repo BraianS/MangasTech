@@ -3,8 +3,8 @@ package com.mangastech.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Paginas;
+import com.mangastech.model.Capitulo;
+import com.mangastech.model.Pagina;
 
 /**
  * @author Braian
@@ -12,7 +12,7 @@ import com.mangastech.model.Paginas;
  */
 public interface PaginasService {
 
-	Page<Paginas> buscarPaginaPorCapitulo(Capitulos id, Pageable pageable);
+	Page<Pagina> buscarPaginaPorCapitulo(Capitulo id, Pageable pageable);
 
-	List<Paginas> listarPaginasPorCapitulo(Capitulos id);
+	List<Pagina> listarPaginasPorCapitulo(Capitulo id);
 }

@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "Capitulos")
-public class Capitulos extends DateAudit {
+public class Capitulo extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,24 +46,24 @@ public class Capitulos extends DateAudit {
 	@Schema(description = "O Grupo que enviou os capítulos")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "grupo_id")
-	private Grupos grupo;
+	private Grupo grupo;
 
 	@Schema(description = "O Manga onde será enviado o capítulos")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "manga_id")
-	public Mangas manga;
+	public Manga manga;
 
 	@Schema(description = "Paginas de cada capítulo")
 	@OneToMany(mappedBy = "capitulo", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Paginas> pagina;
+	private List<Pagina> pagina;
 
 	@JsonIgnore
-	public List<Paginas> getPagina() {
+	public List<Pagina> getPagina() {
 		return pagina;
 	}
 
 	@JsonProperty(access = Access.WRITE_ONLY)
-	public void setPagina(List<Paginas> pagina) {
+	public void setPagina(List<Pagina> pagina) {
 		this.pagina = pagina;
 	}
 
@@ -84,25 +84,25 @@ public class Capitulos extends DateAudit {
 	}
 
 	@JsonIgnore
-	public Mangas getManga() {
+	public Manga getManga() {
 		return manga;
 	}
 
 	@JsonProperty(access = Access.WRITE_ONLY)
-	public void setManga(Mangas manga) {
+	public void setManga(Manga manga) {
 		this.manga = manga;
 	}
 
 	@JsonIgnoreProperties("capitulo")
-	public Grupos getGrupo() {
+	public Grupo getGrupo() {
 		return grupo;
 	}
 
-	public void setGrupo(Grupos grupo) {
+	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
 
-	public Capitulos(Long id, Date lancamento, Long capitulo, Grupos grupo, Mangas manga) {
+	public Capitulo(Long id, Date lancamento, Long capitulo, Grupo grupo, Manga manga) {
 		super();
 		this.id = id;
 		this.lancamento = lancamento;
@@ -111,7 +111,7 @@ public class Capitulos extends DateAudit {
 		this.manga = manga;
 	}
 
-	public Capitulos() {
+	public Capitulo() {
 		super();
 	}
 

@@ -51,7 +51,7 @@ public class Comentario extends UsuarioAudit {
     @Schema(description = "Capítulo onde terá o Comentário")
     @ManyToOne
     @JoinColumn(name = "capitulo_id")
-    private Capitulos capitulo;
+    private Capitulo capitulo;
 
     public String getComentario() {
         return this.comentario;
@@ -79,11 +79,11 @@ public class Comentario extends UsuarioAudit {
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
-    public Capitulos getCapitulo() {
+    public Capitulo getCapitulo() {
         return this.capitulo;
     }
 
-    public void setCapitulo(Capitulos capitulo) {
+    public void setCapitulo(Capitulo capitulo) {
         this.capitulo = capitulo;
     }
 }

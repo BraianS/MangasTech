@@ -2,7 +2,7 @@ package com.mangastech.service;
 
 import java.util.List;
 import java.util.Optional;
-import com.mangastech.model.Capitulos;
+import com.mangastech.model.Capitulo;
 import com.mangastech.model.Comentario;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.repository.ComentarioRepository;
@@ -32,7 +32,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Override
-    public Comentario salvarComentario(Capitulos capitulo, Comentario comentario) {
+    public Comentario salvarComentario(Capitulo capitulo, Comentario comentario) {
         if (comentario != null) {
             comentario.setCapitulo(capitulo);
             return comentarioRepository.save(comentario);

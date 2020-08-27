@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "Generos")
-public class Generos extends DateAudit {
+public class Genero extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class Generos extends DateAudit {
 
 	@Schema(description = "Mangas organizados por Gênero")
 	@ManyToMany(mappedBy = "genero", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	private Set<Mangas> manga = new HashSet<>();
+	private Set<Manga> manga = new HashSet<>();
 
 	public String getNome() {
 		return nome;
@@ -44,22 +44,22 @@ public class Generos extends DateAudit {
 	}
 
 	@JsonIgnoreProperties("genero")
-	public Set<Mangas> getManga() {
+	public Set<Manga> getManga() {
 		return manga;
 	}
 
-	public void setManga(Set<Mangas> manga) {
+	public void setManga(Set<Manga> manga) {
 		this.manga = manga;
 	}
 
-	public Generos() {
+	public Genero() {
 	}
 
-	public Generos(String nome){
+	public Genero(String nome){
 		this.nome = nome;
 	}
 
-	public Generos(Long id, String nome) {
+	public Genero(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}

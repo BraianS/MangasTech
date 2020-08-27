@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Mangas;
+import com.mangastech.model.Capitulo;
+import com.mangastech.model.Manga;
 import com.mangastech.payload.MangaRequest;
 import com.mangastech.repository.CapitulosRepository;
 import com.mangastech.service.MangaService;
@@ -51,8 +51,8 @@ public class MangasController {
         @ApiResponse( responseCode = "204",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna paginação de mangas")
 	})
-	public @ResponseBody ResponseEntity<Page<Mangas>> listarMangas(@Parameter(hidden = true) Pageable pageable) {
-		final Page<Mangas> mangas = mangasService.listaPaginada(pageable);
+	public @ResponseBody ResponseEntity<Page<Manga>> listarMangas(@Parameter(hidden = true) Pageable pageable) {
+		final Page<Manga> mangas = mangasService.listaPaginada(pageable);
 		if (mangas == null) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -65,12 +65,12 @@ public class MangasController {
         @ApiResponse( responseCode = "404",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna o Manga")
 	})
-	public ResponseEntity<Mangas> buscarAutorPorId(@PathVariable(value = "id") final Long id) {
-		final Mangas manga = mangasService.buscarPorId(id).get();
+	public ResponseEntity<Manga> buscarAutorPorId(@PathVariable(value = "id") final Long id) {
+		final Manga manga = mangasService.buscarPorId(id).get();
 		if (manga == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Mangas>(manga, HttpStatus.OK);
+		return new ResponseEntity<Manga>(manga, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST,
@@ -83,7 +83,7 @@ public class MangasController {
         @ApiResponse( responseCode = "500",description = "Exception manga repetido"),
 		@ApiResponse( responseCode = "200",description = "Retorna manga salvo")
 	})
-	public ResponseEntity<Mangas> salvarManga(
+	public ResponseEntity<Manga> salvarManga(
 		@RequestPart(value = "capa", required = false) @Parameter(description = "Seleciona uma foto como capa do manga") MultipartFile capa,
 		@RequestPart(value = "mangas",required = true) 
 			@Parameter(schema =@Schema(type = "string",format = "binary")) MangaRequest mangaRequest)
@@ -100,8 +100,8 @@ public class MangasController {
         @ApiResponse( responseCode = "404",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Manga deletado")
 	})
-	public ResponseEntity<Mangas> deletarMangaPorId(@PathVariable(value = "id") final Long id) {
-		final Optional<Mangas> manga = mangasService.buscarPorId(id);
+	public ResponseEntity<Manga> deletarMangaPorId(@PathVariable(value = "id") final Long id) {
+		final Optional<Manga> manga = mangasService.buscarPorId(id);
 		if (manga == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -116,12 +116,12 @@ public class MangasController {
         @ApiResponse( responseCode = "404",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna manga atualizado")
 	})
-	public ResponseEntity<Mangas> atualizarManga(
+	public ResponseEntity<Manga> atualizarManga(
 			@PathVariable("id") final Long id,
 			@RequestPart(value = "mangas",required = true)
 				@Parameter(schema =@Schema(type = "string",format = "binary")) final MangaRequest mangaRequest,
 			@RequestPart(value = "capa", required = false) final MultipartFile capa) throws IOException {
-		final Optional<Mangas> mangaExiste = mangasService.buscarPorId(id);
+		final Optional<Manga> mangaExiste = mangasService.buscarPorId(id);
 		if (mangaExiste == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -135,10 +135,10 @@ public class MangasController {
         @ApiResponse( responseCode = "404",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna paginação de mangas por Letra")
 	})
-	public @ResponseBody ResponseEntity<Page<Mangas>> buscarMangaPorLetra(
+	public @ResponseBody ResponseEntity<Page<Manga>> buscarMangaPorLetra(
 		@PathVariable(value = "letra") final String letra,
 		@Parameter(hidden = true) Pageable pageable) {
-		final Page<Mangas> mangas = mangasService.buscaPorLetra(letra, pageable);
+		final Page<Manga> mangas = mangasService.buscaPorLetra(letra, pageable);
 		if (mangas == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -152,10 +152,10 @@ public class MangasController {
         @ApiResponse( responseCode = "404",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna paginação de mangas por nome em qualquer posição")
 	})
-	public ResponseEntity<Page<Mangas>> buscarMangaPorNome(
+	public ResponseEntity<Page<Manga>> buscarMangaPorNome(
 		@PathVariable(value = "nome") final String nome,
 		@Parameter(hidden = true) Pageable pageable) {
-		final Page<Mangas> mangas = mangasService.buscarPorNome(nome, pageable);
+		final Page<Manga> mangas = mangasService.buscarPorNome(nome, pageable);
 		if (mangas == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -168,8 +168,8 @@ public class MangasController {
         @ApiResponse( responseCode = "204",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna lista de top 10 mangas")
 	})
-	public ResponseEntity<List<Mangas>> buscarTop10Mangas() {
-		final List<Mangas> mangas = mangasService.buscarTop10Mangas();
+	public ResponseEntity<List<Manga>> buscarTop10Mangas() {
+		final List<Manga> mangas = mangasService.buscarTop10Mangas();
 		if (mangas.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -182,8 +182,8 @@ public class MangasController {
         @ApiResponse( responseCode = "204",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna paginação de nomes dos mangas")
 	})
-	public ResponseEntity<List<Mangas>> listaDeNomesTodosMangas() {
-		final List<Mangas> mangas = mangasService.listarTodos();
+	public ResponseEntity<List<Manga>> listaDeNomesTodosMangas() {
+		final List<Manga> mangas = mangasService.listarTodos();
 		if (mangas.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -196,8 +196,8 @@ public class MangasController {
         @ApiResponse( responseCode = "204",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna lista dos 10 mangas mais acessados")
 	})
-	public ResponseEntity<List<Mangas>> top10MangasAcessados() {
-		final List<Mangas> mangas = mangasService.Top10MangasAcessados();
+	public ResponseEntity<List<Manga>> top10MangasAcessados() {
+		final List<Manga> mangas = mangasService.Top10MangasAcessados();
 		if (mangas.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -210,9 +210,9 @@ public class MangasController {
         @ApiResponse( responseCode = "204",description = "Nenhum manga encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna lista de capítulos por data")
 	})
-	public ResponseEntity<List<Mangas>> carregarMangaECapitulos(
+	public ResponseEntity<List<Manga>> carregarMangaECapitulos(
 			@RequestParam(name = "date") @DateTimeFormat(pattern = "dd-MM-yyyy") final Date date) {
-		final List<Mangas> mangas = mangasService.listarCapitulosPorData(date);
+		final List<Manga> mangas = mangasService.listarCapitulosPorData(date);
 		if (mangas.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -226,10 +226,10 @@ public class MangasController {
 		@ApiResponse( responseCode = "500",description = "Exception capítulo não encontrado"),
 		@ApiResponse( responseCode = "200",description = "Capítulo deletado")
 	})
-	public ResponseEntity<Mangas> deletarCapituloPorMangaId(@PathVariable("manga") final Long mangaId,
+	public ResponseEntity<Manga> deletarCapituloPorMangaId(@PathVariable("manga") final Long mangaId,
 			@PathVariable("capitulo") final Long capituloId) throws IOException {
-		final Mangas manga = mangasService.buscarPorId(mangaId).get();
-		final Capitulos capitulo = capituloRepo.findById(capituloId).orElse(null);
+		final Manga manga = mangasService.buscarPorId(mangaId).get();
+		final Capitulo capitulo = capituloRepo.findById(capituloId).orElse(null);
 		if (manga == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

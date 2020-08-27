@@ -3,7 +3,7 @@ package com.mangastech.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.mangastech.model.Grupos;
+import com.mangastech.model.Grupo;
 import com.mangastech.payload.NomeRequest;
 
 import org.springframework.data.domain.Page;
@@ -15,23 +15,23 @@ import org.springframework.data.domain.Pageable;
  */
 public interface GrupoService {
 
-    Grupos salvar(NomeRequest nomeRequest);
+    Grupo salvar(NomeRequest nomeRequest);
 
-    List<Grupos> listarTodos();
+    List<Grupo> listarTodos();
 
-    Grupos atualizar(Long id, NomeRequest nomeRequest);
+    Grupo atualizar(Long id, NomeRequest nomeRequest);
 
     void deletar(Long id);
 
-    Optional<Grupos> buscarPorId(Long id);
+    Optional<Grupo> buscarPorId(Long id);
 
     boolean existe(NomeRequest nomeRequest);
 
-    Grupos buscarPorNome(String nome);
+    Grupo buscarPorNome(String nome);
 
-    Page<Grupos> listaPaginada(Pageable pageable);
+    Page<Grupo> listaPaginada(Pageable pageable);
 
-    Page<Grupos> buscarPorId(Long id, Pageable pageable);
+    Page<Grupo> buscarPorId(Long id, Pageable pageable);
 
-    Page<Grupos> buscaPorLetra(String letra, Pageable pageable);
+    Page<Grupo> buscaPorLetra(String letra, Pageable pageable);
 }

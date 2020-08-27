@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.mangastech.model.Grupos;
+import com.mangastech.model.Grupo;
 import com.mangastech.repository.BaseRepository;
 
 /**
@@ -14,8 +14,8 @@ import com.mangastech.repository.BaseRepository;
  *
  */
 @Repository
-public interface GruposRepository extends BaseRepository<Grupos>, JpaRepository<Grupos, Long> {
+public interface GruposRepository extends BaseRepository<Grupo>, JpaRepository<Grupo, Long> {
 
 	@Query("SELECT DISTINCT capitulo.manga FROM Grupos g JOIN g.capitulo as capitulo WHERE g.id =:id  ORDER BY capitulo.manga.nome ASC")
-	Page<Grupos> findDistinctMangasByAutor(@Param("id") Long id, Pageable pageable);
+	Page<Grupo> findDistinctMangasByAutor(@Param("id") Long id, Pageable pageable);
 }

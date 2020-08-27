@@ -3,7 +3,7 @@ package com.mangastech.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.mangastech.model.Generos;
+import com.mangastech.model.Genero;
 import com.mangastech.payload.NomeRequest;
 import com.mangastech.repository.GeneroRepository;
 
@@ -23,16 +23,16 @@ public class GeneroServiceImpl implements GeneroService {
     @Autowired
     private GeneroRepository generoRepository;
 
-    public Page<Generos> listaPaginada(Pageable pageable) {
+    public Page<Genero> listaPaginada(Pageable pageable) {
         return generoRepository.findAll(pageable);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Generos salvar(NomeRequest nomeRequest) {
+    public Genero salvar(NomeRequest nomeRequest) {
         if (buscarPorNome(nomeRequest.getNome()) != null) {
             throw new RuntimeException("Nome repetido");
         }
-        return generoRepository.save(new Generos(nomeRequest.getNome()));
+        return generoRepository.save(new Genero(nomeRequest.getNome()));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -41,8 +41,8 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    public Generos atualizar(Long id, NomeRequest nomeRequest) {
-        Generos genero = this.generoRepository.findById(id)
+    public Genero atualizar(Long id, NomeRequest nomeRequest) {
+        Genero genero = this.generoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Genero ID:" + id + " não encontrado"));
         if (buscarPorNome(nomeRequest.getNome()) != null && buscarPorNome(genero.getNome()).getId() != genero.getId()) {
             throw new RuntimeException("Nome repetido");
@@ -51,22 +51,22 @@ public class GeneroServiceImpl implements GeneroService {
         return generoRepository.save(genero);
     }
 
-    public Page<Generos> buscarPorId(Long id, Pageable pageable) {
+    public Page<Genero> buscarPorId(Long id, Pageable pageable) {
         return generoRepository.findAllMangasByGenero(id, pageable);
     }
 
-    public List<Generos> listarTodos() {
+    public List<Genero> listarTodos() {
         return generoRepository.findAllIdAndNome();
     }
 
-    public Generos buscarPorNome(String nome) {
+    public Genero buscarPorNome(String nome) {
         if (nome != null) {
             return generoRepository.findOneByNome(nome);
         }
         return null;
     }
 
-    public Optional<Generos> buscarPorId(Long id) {
+    public Optional<Genero> buscarPorId(Long id) {
         return generoRepository.findById(id);
     }
 

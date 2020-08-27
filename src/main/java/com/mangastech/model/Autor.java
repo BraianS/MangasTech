@@ -33,7 +33,7 @@ public class Autor extends DateAudit {
 
 	@Schema(description = "Mangas criados pelo Autor")
 	@OneToMany(mappedBy = "autor", orphanRemoval = true)
-	private Set<Mangas> manga = new HashSet<>();
+	private Set<Manga> manga = new HashSet<>();
 
 	public String getNome() {
 		return nome;
@@ -44,11 +44,11 @@ public class Autor extends DateAudit {
 	}
 
 	@JsonIgnoreProperties("autor")
-	public Set<Mangas> getManga() {
+	public Set<Manga> getManga() {
 		return manga;
 	}
 
-	public void setManga(Set<Mangas> manga) {
+	public void setManga(Set<Manga> manga) {
 		this.manga = manga;
 	}
 

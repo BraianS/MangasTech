@@ -3,8 +3,8 @@ package com.mangastech.controller;
 import java.io.IOException;
 import java.util.List;
 
-import com.mangastech.model.Capitulos;
-import com.mangastech.model.Mangas;
+import com.mangastech.model.Capitulo;
+import com.mangastech.model.Manga;
 import com.mangastech.payload.CapituloRequest;
 import com.mangastech.service.CapituloService;
 
@@ -45,9 +45,9 @@ public class CapitulosController {
 		@ApiResponse( responseCode = "404",description = "Nenhum conteúdo encontrado"),
 		@ApiResponse( responseCode = "200",description = "Retorna lista capítulos")
 	})
-	public @ResponseBody ResponseEntity<List<Capitulos>> listarCapitulosPorManga(
+	public @ResponseBody ResponseEntity<List<Capitulo>> listarCapitulosPorManga(
 			@PathVariable(value = "id") Long mangaId) {
-		List<Capitulos> capitulos = capituloService.buscarCapitulosPorMandaId(mangaId);
+		List<Capitulo> capitulos = capituloService.buscarCapitulosPorMandaId(mangaId);
 		if (capitulos.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -61,7 +61,7 @@ public class CapitulosController {
 		@ApiResponse( responseCode = "500",description = "Capítulo vazio / Paginas vazias"),
 		@ApiResponse( responseCode = "200",description = "Retorna o capítulo salvo")
 	})
-	public ResponseEntity<Capitulos> salvarCapitulo(
+	public ResponseEntity<Capitulo> salvarCapitulo(
 			@RequestPart(value = "capitulo") @Parameter(schema =@Schema(type = "string",format = "binary")) CapituloRequest capituloRequest,
 			@RequestPart("paginas") List<MultipartFile> paginas) throws IOException {
 		if (capituloRequest == null) {

@@ -1,6 +1,11 @@
 package com.mangastech.payload;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * @author Braian
+ *
+ */
 public class AutorRequest extends NomeRequest {
 
     @Schema(description = "Informação sobre o Autor",

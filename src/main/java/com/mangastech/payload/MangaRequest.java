@@ -7,6 +7,10 @@ import com.mangastech.model.Statu;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * @author Braian
+ *
+ */
 @Schema
 public class MangaRequest extends NomeRequest {
 

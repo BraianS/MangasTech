@@ -8,6 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
 
+/**
+ * @author Braian
+ *
+ */
 @Component
 public class JwtProvider {
 

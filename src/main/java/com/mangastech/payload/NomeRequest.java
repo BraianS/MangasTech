@@ -2,6 +2,10 @@ package com.mangastech.payload;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * @author Braian
+ *
+ */
 public class NomeRequest {
 
     @Schema(description="Inserir um nome",example = "nome")

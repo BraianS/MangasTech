@@ -8,6 +8,10 @@ import javax.validation.constraints.Size;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * @author Braian
+ *
+ */
 public class SignUpRequest {
 
 	@Schema(description = "Seu nome",example = " Silva",required = true)

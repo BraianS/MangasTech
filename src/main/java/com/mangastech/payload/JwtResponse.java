@@ -6,6 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * @author Braian
+ *
+ */
 public class JwtResponse {
 
 	@Schema(description = "Token de acesso")

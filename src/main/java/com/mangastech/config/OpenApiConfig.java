@@ -10,6 +10,11 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+
+/**
+ * @author Braian
+ *
+ */
 @SecurityScheme(
 	name="JWT",
 	type = SecuritySchemeType.HTTP,

@@ -31,6 +31,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
  *
  */
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+/**
+ * @author Braian
+ *
+ */
 @RestController
 @RequestMapping(value = "/api/autor")
 public class AutorController {

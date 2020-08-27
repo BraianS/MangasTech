@@ -13,6 +13,10 @@ import javax.persistence.Table;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * @author Braian
+ *
+ */
 @Entity
 @Table(name = "roles")
 public class Role {

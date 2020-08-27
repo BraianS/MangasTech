@@ -10,6 +10,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Braian
+ *
+ */
 @Component
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 

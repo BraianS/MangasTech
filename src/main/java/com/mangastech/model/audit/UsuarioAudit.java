@@ -12,6 +12,10 @@ import org.springframework.data.annotation.LastModifiedBy;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * @author Braian
+ *
+ */
 @MappedSuperclass
 @JsonIgnoreProperties(
     value={"criadoPor","atualizadoPor"},

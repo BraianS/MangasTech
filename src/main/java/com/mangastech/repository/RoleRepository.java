@@ -6,6 +6,10 @@ import com.mangastech.model.RoleNome;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Braian
+ *
+ */
 @Repository
 public interface RoleRepository extends BaseRepository<Role>,JpaRepository<Role,Long>{
     Optional<Role> findByNome(RoleNome roleNome);

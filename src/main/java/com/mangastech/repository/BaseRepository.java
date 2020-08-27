@@ -7,9 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
-/**
- * Interface com métodos personalizados para ser estendido
- * 
+/** 
  * @author Braian
  * 
  */

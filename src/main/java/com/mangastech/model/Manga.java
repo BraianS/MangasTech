@@ -24,6 +24,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mangastech.model.audit.DateAudit;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Braian
@@ -31,6 +36,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "Mangas")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Manga extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
@@ -64,6 +74,7 @@ public class Manga extends DateAudit {
 	@Schema(description = "Autor que criou o Manga")
 	@ManyToOne
 	@JoinColumn(name = "autor_id")
+	@JsonIgnoreProperties("manga")
 	private Autor autor;
 
 	@Schema(description = "Contador de acessos do Manga")
@@ -73,92 +84,12 @@ public class Manga extends DateAudit {
 	@Schema(description = "Generos do Manga")
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(joinColumns = @JoinColumn(name = "manga_id"), inverseJoinColumns = @JoinColumn(name = "genero_id"))
+	@JsonIgnoreProperties("manga")
 	private Set<Genero> genero = new HashSet<>();
-
-	public Long getAcessos() {
-		return this.acessos;
-	}
-
-	public void setAcessos(Long acessos) {
-		this.acessos = acessos;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Statu getStatus() {
-		return status;
-	}
-
-	public void setStatus(Statu status) {
-		this.status = status;
-	}
-
-	public Integer getDataLancado() {
-		return lancamento;
-	}
-
-	public void setDataLancado(Integer dataLancado) {
-		this.lancamento = dataLancado;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public List<Capitulo> getCapitulo() {
-		return capitulo;
-	}
-
-	public void setcapitulo(List<Capitulo> capitulo) {
-		this.capitulo = capitulo;
-	}
-
-	@JsonIgnoreProperties("manga")
-	public Autor getAutor() {
-		return autor;
-	}
-
-	public void setAutor(Autor autor) {
-		this.autor = autor;
-	}
-
-	@JsonIgnoreProperties("manga")
-	public Set<Genero> getGenero() {
-		return genero;
-	}
-
-	public void setGenero(Set<Genero> genero) {
-		this.genero = genero;
-	}
-
-	public Manga(Long id) {
-		this.id = id;
-	}
-
-	public byte[] getCapa() {
-		return capa;
-	}
-
-	public void setCapa(byte[] capa) {
-		this.capa = capa;
-	}
 
 	public boolean removerCapitulo(Capitulo c){
 		c.setManga(null);
 		return capitulo.remove(c);
-	}
-
-	public Manga() {
 	}
 
 	public Manga(Long id, String nome) {
@@ -174,10 +105,4 @@ public class Manga extends DateAudit {
 		this.autor = autor;
 	}
 
-	@Override
-	public String toString() {
-		return "MangasEntity [id=" + id + ", nome=" + nome + ", status=" + status + ", dataLancado=" + lancamento
-				+ ", descricao=" + descricao + ", capitulo=" + capitulo + ", autor=" + autor + ", genero=" + genero
-				+ "]";
-	}
 }

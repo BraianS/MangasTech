@@ -1,9 +1,5 @@
 package com.mangastech.model;
 
-
-
-import java.util.Arrays;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Braian
@@ -22,6 +23,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "paginas")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Pagina {
 
 	@Schema(description = "O banco de dados cria o ID")
@@ -43,41 +49,8 @@ public class Pagina {
 	@JoinColumn(name = "capitulo_id")
 	private Capitulo capitulo;
 
-	public byte[] getPagina() {
-		return pagina;
-	}
-
-	public void setPagina(byte[] pagina) {
-		this.pagina = pagina;
-	}
-
-	public int getNumeroPagina() {
-		return numeroPagina;
-	}
-
-	public void setNumeroPagina(int string) {
-		this.numeroPagina = string;
-	}
-
-	public Capitulo getCapitulo() {
-		return capitulo;
-	}
-
-	public void setCapitulo(Capitulo capitulo) {
-		this.capitulo = capitulo;
-	}
-
-	public Pagina() {
-	}
-
 	public Pagina(Long id, int numeroPagina) {
 		this.id = id;
 		this.numeroPagina = numeroPagina;
-	}
-
-	@Override
-	public String toString() {
-		return "PaginasEntity [id=" + id + ", numeroPagina=" + numeroPagina + ", fotos=" + Arrays.toString(pagina)
-				+ ", capitulo=" + capitulo + "]";
 	}
 }

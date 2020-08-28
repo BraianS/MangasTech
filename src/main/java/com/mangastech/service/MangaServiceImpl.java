@@ -127,7 +127,7 @@ public class MangaServiceImpl implements MangaService {
         }
         manga.setNome(mangaRequest.getNome());
         manga.setStatus(mangaRequest.getStatus());
-        manga.setDataLancado(mangaRequest.getLancamento());
+        manga.setLancamento(mangaRequest.getLancamento());
         if (mangaRequest.getAutor() != null) {
             manga.setAutor(new Autor(mangaRequest.getAutor().getId()));
         }

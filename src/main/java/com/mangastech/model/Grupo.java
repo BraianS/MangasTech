@@ -13,6 +13,11 @@ import javax.persistence.Table;
 import com.mangastech.model.audit.DateAudit;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Braian
@@ -20,6 +25,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "Grupos")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Grupo extends DateAudit {
 
 	private static final long serialVersionUID = 1L;
@@ -32,25 +42,6 @@ public class Grupo extends DateAudit {
 	@OneToMany(mappedBy = "grupo", orphanRemoval = true)
 	private List<Capitulo> capitulo = new ArrayList<>();
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public List<Capitulo> getCapitulo() {
-		return capitulo;
-	}
-
-	public void setCapitulo(List<Capitulo> capitulo) {
-		this.capitulo = capitulo;
-	}
-
-	public Grupo() {
-	}
-
 	public Grupo(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
@@ -58,10 +49,5 @@ public class Grupo extends DateAudit {
 
 	public Grupo(String nome) {
 		this.nome = nome;
-	}
-
-	@Override
-	public String toString() {
-		return "{" + " nome='" + getNome() + "'" + ", capitulo='" + getCapitulo() + "'" + "}";
 	}
 }

@@ -1,7 +1,5 @@
 package com.mangastech.model;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +19,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mangastech.model.audit.UsuarioAudit;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Braian
@@ -28,62 +31,35 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "Comentario")
-@JsonIgnoreProperties(value= {"capitulo"},allowGetters=true)
+@JsonIgnoreProperties(value = { "capitulo" }, allowGetters = true)
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Comentario extends UsuarioAudit {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Comentário do Usuário")
-    @Lob
-    private String comentario;
+	@Schema(description = "Comentário do Usuário")
+	@Lob
+	private String comentario;
 
-    @Schema(description = "Comentário Pai")
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "pai_id", nullable = true)
-    private Comentario pai;
+	@Schema(description = "Comentário Pai")
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "pai_id", nullable = true)
+	private Comentario pai;
 
-    @Schema(description = "Comentário Filho")
-    @JsonManagedReference
-    @OneToMany(mappedBy = "pai", orphanRemoval = true)
-    private List<Comentario> filho = new ArrayList<>();
+	@Schema(description = "Comentário Filho")
+	@JsonManagedReference
+	@OneToMany(mappedBy = "pai", orphanRemoval = true)
+	private List<Comentario> filho = new ArrayList<>();
 
-    @Schema(description = "Capítulo onde terá o Comentário")
-    @ManyToOne
-    @JoinColumn(name = "capitulo_id")
-    private Capitulo capitulo;
-
-    public String getComentario() {
-        return this.comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
-
-    public Comentario getPai() {
-        return this.pai;
-    }
-
-    public void setPai(Comentario pai) {
-        this.pai = pai;
-    }
-
-    public List<Comentario> getFilho() {
-        return this.filho;
-    }
-
-    public void setFilho(List<Comentario> filho) {
-        this.filho = filho;
-    }
-
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
-    public Capitulo getCapitulo() {
-        return this.capitulo;
-    }
-
-    public void setCapitulo(Capitulo capitulo) {
-        this.capitulo = capitulo;
-    }
+	@Schema(description = "Capítulo onde terá o Comentário")
+	@ManyToOne
+	@JoinColumn(name = "capitulo_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
+	private Capitulo capitulo;
 }

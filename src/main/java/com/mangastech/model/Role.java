@@ -12,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Braian
@@ -19,6 +24,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Entity
 @Table(name = "roles")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Role {
 
 	@Schema(description = "O banco de dados cria o ID")
@@ -30,28 +40,4 @@ public class Role {
 	@Enumerated(EnumType.STRING)
 	@Column(length = 60)
 	private RoleNome nome;
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Role() {
-	}
-
-	public RoleNome getNome() {
-		return this.nome;
-	}
-
-	public void setNome(RoleNome nome) {
-		this.nome = nome;
-	}
-
-	public Role(Long id, RoleNome nome) {
-		this.id = id;
-		this.nome = nome;
-	}
 }

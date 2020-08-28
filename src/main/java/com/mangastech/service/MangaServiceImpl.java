@@ -20,9 +20,9 @@ import com.mangastech.model.Capitulo;
 import com.mangastech.model.Genero;
 import com.mangastech.model.Manga;
 import com.mangastech.payload.MangaRequest;
-import com.mangastech.repository.CapitulosRepository;
+import com.mangastech.repository.CapituloRepository;
 import com.mangastech.repository.GeneroRepository;
-import com.mangastech.repository.MangasRepository;
+import com.mangastech.repository.MangaRepository;
 
 /**
  * @author Braian
@@ -32,10 +32,10 @@ import com.mangastech.repository.MangasRepository;
 public class MangaServiceImpl implements MangaService {
 
     @Autowired
-    private MangasRepository mangaRepository;
+    private MangaRepository mangaRepository;
 
     @Autowired
-    private CapitulosRepository capitulosRepository;
+    private CapituloRepository capituloRepository;
 
     @Autowired
     private GeneroRepository generoRepository;
@@ -104,7 +104,7 @@ public class MangaServiceImpl implements MangaService {
     @PreAuthorize("hasRole('ADMIN')")
     public void deletarCapituloPorManga(Long mangaId, Long capituloId) {
         Manga manga = buscarPorId(mangaId).orElse(null);
-        Capitulo capitulo = capitulosRepository.findById(capituloId).orElse(null);
+        Capitulo capitulo = capituloRepository.findById(capituloId).orElse(null);
         if (manga != null && !manga.getCapitulo().contains(capitulo)) {
             throw new RuntimeException("Manga ou capitulo não encontrados");
         }

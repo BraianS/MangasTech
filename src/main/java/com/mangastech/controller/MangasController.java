@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mangastech.model.Capitulo;
 import com.mangastech.model.Manga;
 import com.mangastech.payload.MangaRequest;
-import com.mangastech.repository.CapitulosRepository;
+import com.mangastech.repository.CapituloRepository;
 import com.mangastech.service.MangaService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,7 +47,7 @@ public class MangasController {
 	private MangaService mangasService;
 
 	@Autowired
-	private CapitulosRepository capituloRepo;
+	private CapituloRepository capituloRepo;
 
 	@RequestMapping(method = RequestMethod.GET)
 	@Operation(description="Listar todos os mangas")

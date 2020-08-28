@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mangastech.model.Capitulo;
 import com.mangastech.model.Comentario;
-import com.mangastech.repository.CapitulosRepository;
+import com.mangastech.repository.CapituloRepository;
 import com.mangastech.repository.ComentarioRepository;
 
 /**
@@ -25,7 +25,7 @@ public class ComentarioServiceImpl implements ComentarioService {
     public ComentarioRepository comentarioRepository;
 
     @Autowired
-    public CapitulosRepository capituloRepository;
+    public CapituloRepository capituloRepository;
 
     @Override
     public Optional<Comentario> buscarPorId(Long id) {

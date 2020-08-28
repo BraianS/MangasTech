@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mangastech.model.Capitulo;
 import com.mangastech.model.Comentario;
-import com.mangastech.repository.CapitulosRepository;
+import com.mangastech.repository.CapituloRepository;
 import com.mangastech.service.ComentarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 public class ComentarioController {
 
     @Autowired
-    private CapitulosRepository capitulosRepository;
+    private CapituloRepository capituloRepository;
 
     @Autowired
     private ComentarioService comentarioService;
@@ -44,7 +44,7 @@ public class ComentarioController {
 	})
     public ResponseEntity<Comentario> salvarComentario(@PathVariable("capituloId") Long id,
             @RequestBody Comentario comentario) {
-        Capitulo capitulo = capitulosRepository.findById(id)
+        Capitulo capitulo = capituloRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Capitulo não encontrado"));
         return new ResponseEntity<>(comentarioService.salvarComentario(capitulo, comentario), HttpStatus.OK);
     }

@@ -19,20 +19,20 @@ import com.mangastech.model.Manga;
  *
  */
 @Repository
-public interface MangasRepository extends BaseRepository<Manga>, JpaRepository<Manga, Long> {
+public interface MangaRepository extends BaseRepository<Manga>, JpaRepository<Manga, Long> {
 
 	Page<Manga> findByNomeContaining(String nome, Pageable pageable);
 
 	List<Manga> findTop10ByOrderByIdDesc();
 
-	@Query("SELECT m FROM Mangas m LEFT JOIN FETCH m.capitulo AS capitulo WHERE m.id=:id ORDER BY capitulo.id DESC")
+	@Query("SELECT m FROM Manga m LEFT JOIN FETCH m.capitulo AS capitulo WHERE m.id=:id ORDER BY capitulo.id DESC")
 	Optional<Manga> findById(@Param("id") Long id);
 
-	@Query("SELECT DISTINCT m FROM Mangas m JOIN FETCH m.capitulo c WHERE c.lancamento = :data GROUP BY c.id ORDER BY c.id DESC")
+	@Query("SELECT DISTINCT m FROM Manga m JOIN FETCH m.capitulo c WHERE c.lancamento = :data GROUP BY c.id ORDER BY c.id DESC")
 	List<Manga> findDistinctMangasByCapituloData(@Param("data") Date data);
 
 	@Modifying
-	@Query("UPDATE Mangas set acessos = acessos +1 WHERE id=:id")
+	@Query("UPDATE Manga set acessos = acessos +1 WHERE id=:id")
 	Integer incrementaAcessos(@Param("id")Long id);
 
 	List<Manga> findTop10ByOrderByAcessosDesc();

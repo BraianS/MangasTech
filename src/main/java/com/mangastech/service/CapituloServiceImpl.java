@@ -11,9 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mangastech.model.Capitulo;
 import com.mangastech.model.Pagina;
 import com.mangastech.payload.CapituloRequest;
-import com.mangastech.repository.CapitulosRepository;
+import com.mangastech.repository.CapituloRepository;
 import com.mangastech.repository.GruposRepository;
-import com.mangastech.repository.MangasRepository;
+import com.mangastech.repository.MangaRepository;
 
 /**
  * @author Braian
@@ -23,16 +23,16 @@ import com.mangastech.repository.MangasRepository;
 public class CapituloServiceImpl implements CapituloService {
 
 	private final GruposRepository grupoRepository;
-	private final MangasRepository mangaRepository;
-	private final CapitulosRepository capitulosRepository;
+	private final MangaRepository mangaRepository;
+	private final CapituloRepository capituloRepository;
 
 	public CapituloServiceImpl(
 			GruposRepository gruposRepository,
-			MangasRepository mangaRepository,
-			CapitulosRepository capitulosRepository) {
+			MangaRepository mangaRepository,
+			CapituloRepository capituloRepository) {
 		this.grupoRepository = gruposRepository;
 		this.mangaRepository = mangaRepository;
-		this.capitulosRepository = capitulosRepository;
+		this.capituloRepository = capituloRepository;
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
@@ -72,11 +72,11 @@ public class CapituloServiceImpl implements CapituloService {
 		novoCapitulo.setPagina(novasPaginas);
 		novoCapitulo.setLancamento(capituloRequest.getLancamento());
 		novoCapitulo.setCapitulo(capituloRequest.getCapitulo());
-		return capitulosRepository.save(novoCapitulo);
+		return capituloRepository.save(novoCapitulo);
 	}
 
 	@Override
 	public List<Capitulo> buscarCapitulosPorMandaId(Long mangaId) {
-		return capitulosRepository.findAllCapitulosByManga(mangaId);
+		return capituloRepository.findAllCapitulosByManga(mangaId);
 	}
 }

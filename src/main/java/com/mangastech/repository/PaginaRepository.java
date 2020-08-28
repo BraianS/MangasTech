@@ -17,11 +17,11 @@ import com.mangastech.model.Pagina;
  *
  */
 @Repository
-public interface PaginasRepository extends CrudRepository<Pagina, Long> {
+public interface PaginaRepository extends CrudRepository<Pagina, Long> {
 
-	@Query("SELECT p FROM Paginas as p WHERE p.capitulo =:id ORDER BY numeroPagina ASC")
+	@Query("SELECT p FROM Pagina as p WHERE p.capitulo =:id ORDER BY numeroPagina ASC")
 	Page<Pagina> findPaginasByCapitulo(@Param("id") Capitulo id, Pageable pageable);
 
-	@Query("Select new Paginas(p.id,p.numeroPagina) FROM Paginas p WHERE p.capitulo =:id ORDER BY p.numeroPagina ASC")
+	@Query("Select new Pagina(p.id,p.numeroPagina) FROM Pagina p WHERE p.capitulo =:id ORDER BY p.numeroPagina ASC")
 	List<Pagina> findNumeroPaginasByCapitulo(@Param("id") Capitulo id);
 }

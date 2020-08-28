@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mangastech.model.Capitulo;
 import com.mangastech.model.Pagina;
-import com.mangastech.repository.PaginasRepository;
+import com.mangastech.repository.PaginaRepository;
 
 /**
  * @author Braian
@@ -20,7 +20,7 @@ import com.mangastech.repository.PaginasRepository;
 public class PaginasServiceImpl implements PaginasService {
 
     @Autowired
-    private PaginasRepository paginaRepository;
+    private PaginaRepository paginaRepository;
 
     @Override
     public Page<Pagina> buscarPaginaPorCapitulo(Capitulo id, Pageable pageable) {

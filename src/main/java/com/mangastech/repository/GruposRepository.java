@@ -16,6 +16,6 @@ import com.mangastech.model.Grupo;
 @Repository
 public interface GruposRepository extends BaseRepository<Grupo>, JpaRepository<Grupo, Long> {
 
-	@Query("SELECT DISTINCT capitulo.manga FROM Grupos g JOIN g.capitulo as capitulo WHERE g.id =:id  ORDER BY capitulo.manga.nome ASC")
+	@Query("SELECT DISTINCT capitulo.manga FROM Grupo g JOIN g.capitulo as capitulo WHERE g.id =:id  ORDER BY capitulo.manga.nome ASC")
 	Page<Grupo> findDistinctMangasByAutor(@Param("id") Long id, Pageable pageable);
 }

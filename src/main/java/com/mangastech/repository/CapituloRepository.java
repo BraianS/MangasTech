@@ -14,11 +14,11 @@ import com.mangastech.model.Capitulo;
  *
  */
 @Repository
-public interface CapitulosRepository extends JpaRepository<Capitulo, Long> {
+public interface CapituloRepository extends JpaRepository<Capitulo, Long> {
 
-	@Query("SELECT c FROM Capitulos as c where c.manga.id =:id ORDER BY c.id ASC")
+	@Query("SELECT c FROM Capitulo as c where c.manga.id =:id ORDER BY c.id ASC")
 	List<Capitulo> findAllCapitulosByManga(@Param("id") Long mangaId);
 
-	@Query("SELECT c FROM Capitulos as c WHERE manga_id =:manga AND id=:capitulo")
+	@Query("SELECT c FROM Capitulo as c WHERE manga_id =:manga AND id=:capitulo")
 	Capitulo findOne(@Param("manga")Long mangaId, @Param("capitulo") Long capituloId);
 }

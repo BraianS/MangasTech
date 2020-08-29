@@ -55,6 +55,8 @@ public class AutorServiceImpl implements AutorService {
             throw new RuntimeException("Nome repetido");
         }
         autor.setId(id);
+        autor.setNome(autorRequest.getNome());
+        autor.setInfo(autorRequest.getInfo());
         return autorRepository.save(autor);
     }
 

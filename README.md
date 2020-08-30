@@ -16,10 +16,14 @@ https://mangastech.herokuapp.com/
 
 1. [Clone o repositório MangasTech](https://github.com/BraianS/MangasTech.git).
 1. Importe o projeto usando Maven
+1. Instale o [lombok no eclipse](https://projectlombok.org/download)
+    * Execute o download do jar e aponte para o eclipse.exe or sts.exe ou qualquer IDE .exe
+    * Reinicie a IDE para completar
+1. Se usar o Visual Studio Code basta [instalar o plugin do lombok](https://projectlombok.org/setup/vscode)
 
 ## Uso
 
- digite no seu terminal para executar o projeto.
+ Digite no seu terminal para executar o projeto.
 > mvnw clean spring-boot:run
 
  Abra a Url.
@@ -38,6 +42,8 @@ https://mangastech.herokuapp.com/
 * Spring Security
 * Java 1.8
 * MySql
+* Lombok
+* OpenAPI 3.0
 
 ## Contribuindo
 
@@ -67,6 +73,16 @@ Se não quiser usar MySql pode comentar as linhas acima no `Application.properti
   <scope>runtime</scope>
 </dependency>
 ```
+
+Para fazer delombok basta usar o comando
+> mvnw lombok:delombok -Pdlombok
+
+A saída estará na pasta `\target\generated-sources\delombok\`
+
+Para acessar a documentação do Swagger
+
+* http://localhost:8080/v3/api-docs
+* http://localhost:8080/swagger-ui.html
 
 ## Autor
 

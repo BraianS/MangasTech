@@ -2,10 +2,6 @@
 
 MangasTech é um projeto para organizar, inserir, editar, visualizar os Mangas. Usando Spring Boot com JSON Web Token (JWT), AngularJs e BootStrap no Front-End.
 
-## URL
-
-https://mangastech.herokuapp.com/
-
 ## Requisitos
 
 * Java 1.8
